@@ -22,6 +22,16 @@
 		4FF9AD0F18DDEBA5008C9CC3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACF318DDEBA5008C9CC3 /* CoreData.framework */; };
 		4FF9AD1718DDEBA5008C9CC3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FF9AD1518DDEBA5008C9CC3 /* InfoPlist.strings */; };
 		4FF9AD1918DDEBA5008C9CC3 /* RendezvousTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9AD1818DDEBA5008C9CC3 /* RendezvousTests.m */; };
+		4FF9AD2618DDEBE5008C9CC3 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FF9AD2518DDEBE5008C9CC3 /* Storyboard.storyboard */; };
+		4FF9AD2918DE0ADD008C9CC3 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9AD2818DE0ADD008C9CC3 /* LoginViewController.m */; };
+		4FF9AD2C18DE0AF9008C9CC3 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9AD2B18DE0AF9008C9CC3 /* HomeViewController.m */; };
+		4FF9AD2F18DE0B25008C9CC3 /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9AD2E18DE0B25008C9CC3 /* ContactsViewController.m */; };
+		4FF9AD3218DE0B55008C9CC3 /* MeetingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9AD3118DE0B55008C9CC3 /* MeetingViewController.m */; };
+		4FF9AD3518DE0B72008C9CC3 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9AD3418DE0B72008C9CC3 /* SettingsViewController.m */; };
+		4FF9AD3818DE1394008C9CC3 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9AD3718DE1394008C9CC3 /* TableViewController.m */; };
+		4FF9AD3C18DF0A71008C9CC3 /* HomeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9AD3B18DF0A71008C9CC3 /* HomeCell.m */; };
+		4FF9AD3F18DF2778008C9CC3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9AD3E18DF2778008C9CC3 /* MapKit.framework */; };
+		4FF9AD4218DF27EC008C9CC3 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9AD4118DF27EC008C9CC3 /* LocationViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +63,24 @@
 		4FF9AD1418DDEBA5008C9CC3 /* RendezvousTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RendezvousTests-Info.plist"; sourceTree = "<group>"; };
 		4FF9AD1618DDEBA5008C9CC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4FF9AD1818DDEBA5008C9CC3 /* RendezvousTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RendezvousTests.m; sourceTree = "<group>"; };
+		4FF9AD2518DDEBE5008C9CC3 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Storyboard.storyboard; path = ../Storyboard.storyboard; sourceTree = "<group>"; };
+		4FF9AD2718DE0ADD008C9CC3 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		4FF9AD2818DE0ADD008C9CC3 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		4FF9AD2A18DE0AF9008C9CC3 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		4FF9AD2B18DE0AF9008C9CC3 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		4FF9AD2D18DE0B25008C9CC3 /* ContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsViewController.h; sourceTree = "<group>"; };
+		4FF9AD2E18DE0B25008C9CC3 /* ContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsViewController.m; sourceTree = "<group>"; };
+		4FF9AD3018DE0B55008C9CC3 /* MeetingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingViewController.h; sourceTree = "<group>"; };
+		4FF9AD3118DE0B55008C9CC3 /* MeetingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetingViewController.m; sourceTree = "<group>"; };
+		4FF9AD3318DE0B72008C9CC3 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		4FF9AD3418DE0B72008C9CC3 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		4FF9AD3618DE1394008C9CC3 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
+		4FF9AD3718DE1394008C9CC3 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
+		4FF9AD3A18DF0A71008C9CC3 /* HomeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeCell.h; sourceTree = "<group>"; };
+		4FF9AD3B18DF0A71008C9CC3 /* HomeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeCell.m; sourceTree = "<group>"; };
+		4FF9AD3E18DF2778008C9CC3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		4FF9AD4018DF27EC008C9CC3 /* LocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
+		4FF9AD4118DF27EC008C9CC3 /* LocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +90,7 @@
 			files = (
 				4FF9ACF018DDEBA5008C9CC3 /* CoreGraphics.framework in Frameworks */,
 				4FF9ACF418DDEBA5008C9CC3 /* CoreData.framework in Frameworks */,
+				4FF9AD3F18DF2778008C9CC3 /* MapKit.framework in Frameworks */,
 				4FF9ACF218DDEBA5008C9CC3 /* UIKit.framework in Frameworks */,
 				4FF9ACEE18DDEBA5008C9CC3 /* Foundation.framework in Frameworks */,
 			);
@@ -103,6 +132,7 @@
 		4FF9ACEC18DDEBA5008C9CC3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4FF9AD3E18DF2778008C9CC3 /* MapKit.framework */,
 				4FF9ACED18DDEBA5008C9CC3 /* Foundation.framework */,
 				4FF9ACEF18DDEBA5008C9CC3 /* CoreGraphics.framework */,
 				4FF9ACF118DDEBA5008C9CC3 /* UIKit.framework */,
@@ -115,11 +145,14 @@
 		4FF9ACF518DDEBA5008C9CC3 /* Rendezvous */ = {
 			isa = PBXGroup;
 			children = (
-				4FF9ACFE18DDEBA5008C9CC3 /* AppDelegate.h */,
-				4FF9ACFF18DDEBA5008C9CC3 /* AppDelegate.m */,
+				4FF9AD2218DDEBB0008C9CC3 /* Model */,
+				4FF9AD2318DDEBB6008C9CC3 /* View */,
+				4FF9AD2418DDEBBF008C9CC3 /* Controller */,
 				4FF9AD0418DDEBA5008C9CC3 /* Images.xcassets */,
 				4FF9AD0118DDEBA5008C9CC3 /* Rendezvous.xcdatamodeld */,
 				4FF9ACF618DDEBA5008C9CC3 /* Supporting Files */,
+				4FF9AD3618DE1394008C9CC3 /* TableViewController.h */,
+				4FF9AD3718DE1394008C9CC3 /* TableViewController.m */,
 			);
 			path = Rendezvous;
 			sourceTree = "<group>";
@@ -151,6 +184,60 @@
 				4FF9AD1518DDEBA5008C9CC3 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4FF9AD2218DDEBB0008C9CC3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4FF9ACFE18DDEBA5008C9CC3 /* AppDelegate.h */,
+				4FF9ACFF18DDEBA5008C9CC3 /* AppDelegate.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		4FF9AD2318DDEBB6008C9CC3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4FF9AD3918DF0A48008C9CC3 /* Cells */,
+				4FF9AD2518DDEBE5008C9CC3 /* Storyboard.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		4FF9AD2418DDEBBF008C9CC3 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4FF9AD3D18DF0A84008C9CC3 /* Cells */,
+				4FF9AD2718DE0ADD008C9CC3 /* LoginViewController.h */,
+				4FF9AD2818DE0ADD008C9CC3 /* LoginViewController.m */,
+				4FF9AD2A18DE0AF9008C9CC3 /* HomeViewController.h */,
+				4FF9AD2B18DE0AF9008C9CC3 /* HomeViewController.m */,
+				4FF9AD2D18DE0B25008C9CC3 /* ContactsViewController.h */,
+				4FF9AD2E18DE0B25008C9CC3 /* ContactsViewController.m */,
+				4FF9AD3018DE0B55008C9CC3 /* MeetingViewController.h */,
+				4FF9AD3118DE0B55008C9CC3 /* MeetingViewController.m */,
+				4FF9AD3318DE0B72008C9CC3 /* SettingsViewController.h */,
+				4FF9AD3418DE0B72008C9CC3 /* SettingsViewController.m */,
+				4FF9AD4018DF27EC008C9CC3 /* LocationViewController.h */,
+				4FF9AD4118DF27EC008C9CC3 /* LocationViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		4FF9AD3918DF0A48008C9CC3 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		4FF9AD3D18DF0A84008C9CC3 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				4FF9AD3A18DF0A71008C9CC3 /* HomeCell.h */,
+				4FF9AD3B18DF0A71008C9CC3 /* HomeCell.m */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,6 +287,13 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Penning;
 				TargetAttributes = {
+					4FF9ACE918DDEBA5008C9CC3 = {
+						SystemCapabilities = {
+							com.apple.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 					4FF9AD0918DDEBA5008C9CC3 = {
 						TestTargetID = 4FF9ACE918DDEBA5008C9CC3;
 					};
@@ -230,6 +324,7 @@
 			files = (
 				4FF9ACFA18DDEBA5008C9CC3 /* InfoPlist.strings in Resources */,
 				4FF9AD0518DDEBA5008C9CC3 /* Images.xcassets in Resources */,
+				4FF9AD2618DDEBE5008C9CC3 /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,8 +343,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FF9AD3218DE0B55008C9CC3 /* MeetingViewController.m in Sources */,
+				4FF9AD2918DE0ADD008C9CC3 /* LoginViewController.m in Sources */,
+				4FF9AD3C18DF0A71008C9CC3 /* HomeCell.m in Sources */,
+				4FF9AD4218DF27EC008C9CC3 /* LocationViewController.m in Sources */,
+				4FF9AD2F18DE0B25008C9CC3 /* ContactsViewController.m in Sources */,
+				4FF9AD3518DE0B72008C9CC3 /* SettingsViewController.m in Sources */,
+				4FF9AD3818DE1394008C9CC3 /* TableViewController.m in Sources */,
 				4FF9AD0318DDEBA5008C9CC3 /* Rendezvous.xcdatamodeld in Sources */,
 				4FF9AD0018DDEBA5008C9CC3 /* AppDelegate.m in Sources */,
+				4FF9AD2C18DE0AF9008C9CC3 /* HomeViewController.m in Sources */,
 				4FF9ACFC18DDEBA5008C9CC3 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
