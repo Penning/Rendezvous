@@ -22,6 +22,8 @@
 		49661CFA18E0E4CD007E5CE6 /* login-button-small-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 49661CF618E0E4CD007E5CE6 /* login-button-small-pressed@2x.png */; };
 		49661CFB18E0E4CD007E5CE6 /* login-button-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 49661CF718E0E4CD007E5CE6 /* login-button-small.png */; };
 		49661CFC18E0E4CD007E5CE6 /* login-button-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 49661CF818E0E4CD007E5CE6 /* login-button-small@2x.png */; };
+		49ECB00C18E11E5E003C960D /* rendezvous_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 49ECB00B18E11E5E003C960D /* rendezvous_logo.png */; };
+		49ECB00F18E1214B003C960D /* appIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 49ECB00E18E1214B003C960D /* appIcon.png */; };
 		4FF9ACEE18DDEBA5008C9CC3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACED18DDEBA5008C9CC3 /* Foundation.framework */; };
 		4FF9ACF018DDEBA5008C9CC3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACEF18DDEBA5008C9CC3 /* CoreGraphics.framework */; };
 		4FF9ACF218DDEBA5008C9CC3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACF118DDEBA5008C9CC3 /* UIKit.framework */; };
@@ -75,6 +77,8 @@
 		49661CF618E0E4CD007E5CE6 /* login-button-small-pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-button-small-pressed@2x.png"; sourceTree = "<group>"; };
 		49661CF718E0E4CD007E5CE6 /* login-button-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-button-small.png"; sourceTree = "<group>"; };
 		49661CF818E0E4CD007E5CE6 /* login-button-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-button-small@2x.png"; sourceTree = "<group>"; };
+		49ECB00B18E11E5E003C960D /* rendezvous_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rendezvous_logo.png; sourceTree = "<group>"; };
+		49ECB00E18E1214B003C960D /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
 		4FF9ACEA18DDEBA5008C9CC3 /* Rendezvous.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rendezvous.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF9ACED18DDEBA5008C9CC3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4FF9ACEF18DDEBA5008C9CC3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -151,6 +155,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		49ECB00D18E11F7E003C960D /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				4FF9AD2718DE0ADD008C9CC3 /* LoginViewController.h */,
+				4FF9AD2818DE0ADD008C9CC3 /* LoginViewController.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
 		4FF9ACE118DDEBA5008C9CC3 = {
 			isa = PBXGroup;
 			children = (
@@ -210,6 +223,8 @@
 		4FF9ACF618DDEBA5008C9CC3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				49ECB00E18E1214B003C960D /* appIcon.png */,
+				49ECB00B18E11E5E003C960D /* rendezvous_logo.png */,
 				49661CF518E0E4CD007E5CE6 /* login-button-small-pressed.png */,
 				49661CF618E0E4CD007E5CE6 /* login-button-small-pressed@2x.png */,
 				49661CF718E0E4CD007E5CE6 /* login-button-small.png */,
@@ -262,8 +277,7 @@
 			isa = PBXGroup;
 			children = (
 				4FF9AD3D18DF0A84008C9CC3 /* Cells */,
-				4FF9AD2718DE0ADD008C9CC3 /* LoginViewController.h */,
-				4FF9AD2818DE0ADD008C9CC3 /* LoginViewController.m */,
+				49ECB00D18E11F7E003C960D /* Login */,
 				4FF9AD2A18DE0AF9008C9CC3 /* HomeViewController.h */,
 				4FF9AD2B18DE0AF9008C9CC3 /* HomeViewController.m */,
 				4FF9AD2D18DE0B25008C9CC3 /* ContactsViewController.h */,
@@ -380,7 +394,9 @@
 			files = (
 				49661CFA18E0E4CD007E5CE6 /* login-button-small-pressed@2x.png in Resources */,
 				49661CFB18E0E4CD007E5CE6 /* login-button-small.png in Resources */,
+				49ECB00F18E1214B003C960D /* appIcon.png in Resources */,
 				49661CF918E0E4CD007E5CE6 /* login-button-small-pressed.png in Resources */,
+				49ECB00C18E11E5E003C960D /* rendezvous_logo.png in Resources */,
 				4FF9ACFA18DDEBA5008C9CC3 /* InfoPlist.strings in Resources */,
 				4FF9AD0518DDEBA5008C9CC3 /* Images.xcassets in Resources */,
 				49661CFC18E0E4CD007E5CE6 /* login-button-small@2x.png in Resources */,

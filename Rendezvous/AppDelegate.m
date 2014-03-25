@@ -34,12 +34,26 @@
     [PFFacebookUtils initializeFacebook];
 
     //Change tint and navbar colors
-    [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0xF76655)];
-    [[UINavigationBar appearance] setBackgroundColor:UIColorFromRGB(0xF76655) ];
-    [[UINavigationBar appearance] setTintColor:UIColorFromRGB(0xF76655)];
-    [[UIView appearance] setTintColor:UIColorFromRGB(0xF76655)];
-    [[UIButton appearance] setTintColor:UIColorFromRGB(0xF76655)];
+//    [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0xF76655)];
+//    [[UINavigationBar appearance] setBackgroundColor:UIColorFromRGB(0xF76655) ];
+//    [[UINavigationBar appearance] setTintColor:UIColorFromRGB(0xF76655)];
+//    [[UIView appearance] setTintColor:UIColorFromRGB(0xF76655)];
+//    [[UIButton appearance] setTintColor:UIColorFromRGB(0xF76655)];
+//    [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
+//
+//    NSDictionary *textTitleOptions = [NSDictionary dictionaryWithObjectsAndKeys:UIColorFromRGB(0xffffff), UITextAttributeTextColor, [UIColor whiteColor], UITextAttributeTextShadowColor, nil];
+//    [[UINavigationBar appearance] setTitleTextAttributes:textTitleOptions];
+
+    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setBackgroundColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UIView appearance] setTintColor:[UIColor whiteColor]];
+    [[UIButton appearance] setTintColor:[UIColor whiteColor]];
     [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
+
+    NSDictionary *textTitleOptions = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], UITextAttributeTextColor, [UIColor whiteColor], UITextAttributeTextShadowColor, nil];
+    [[UINavigationBar appearance] setTitleTextAttributes:textTitleOptions];
+
 
     return YES;
 }
