@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import <Parse/Parse.h>
+
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @implementation AppDelegate
 
@@ -17,8 +20,27 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    
-    
+
+    //Parse setup
+    [Parse setApplicationId:@"aZPN4SiTApTkjRRj6heYGQ6Qkig6rVslPAD8hvyf"
+                  clientKey:@"jalcrCGQosyYPapT1QgD5B4dUH5qjlf9mIpFe61O"];
+
+    //Parse Analytics
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+
+    // ****************************************************************************
+    // Your Facebook application id is configured in Info.plist.
+    // ****************************************************************************
+    [PFFacebookUtils initializeFacebook];
+
+    //Change tint and navbar colors
+    [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0xF76655)];
+    [[UINavigationBar appearance] setBackgroundColor:UIColorFromRGB(0xF76655) ];
+    [[UINavigationBar appearance] setTintColor:UIColorFromRGB(0xF76655)];
+    [[UIView appearance] setTintColor:UIColorFromRGB(0xF76655)];
+    [[UIButton appearance] setTintColor:UIColorFromRGB(0xF76655)];
+    [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
+
     return YES;
 }
 
@@ -42,10 +64,14 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+
+    // Facebook SDK
+    [FBAppCall handleDidBecomeActiveWithSession:[PFFacebookUtils session]];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    [[PFFacebookUtils session] close];
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
 }
@@ -143,6 +169,15 @@
 - (NSURL *)applicationDocumentsDirectory
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+// ****************************************************************************
+// App switching methods to support Facebook Single Sign-On.
+// ****************************************************************************
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [FBAppCall handleOpenURL:url
+                  sourceApplication:sourceApplication
+                        withSession:[PFFacebookUtils session]];
 }
 
 @end

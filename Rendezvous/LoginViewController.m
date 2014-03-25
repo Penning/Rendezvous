@@ -2,11 +2,13 @@
 //  LoginViewController.m
 //  Rendezvous
 //
-//  Created by Adam Oxner on 3/22/14.
+//  Created by Sumedha Pramod on 3/24/14.
 //  Copyright (c) 2014 Penning. All rights reserved.
 //
 
 #import "LoginViewController.h"
+#import <Parse/Parse.h>
+#import "HomeViewController.h"
 
 @interface LoginViewController ()
 
@@ -27,6 +29,11 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
+    // Check if user is cached and linked to Facebook, if so, bypass login
+    if ([PFUser currentUser] && [PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
+        [self.navigationController pushViewController:[[HomeViewController alloc] init] animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,5 +52,29 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (IBAction)login:(id)sender {
+    // The permissions requested from the user
+    NSArray *permissionsArray = @[ @"user_about_me", @"user_relationships", @"user_birthday", @"user_location"];
+
+    // Login PFUser using Facebook
+    [PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error) {
+        [_activityIndicator stopAnimating]; // Hide loading indicator
+
+        if (!user) {
+            if (!error) {
+                NSLog(@"Uh oh. The user cancelled the Facebook login.");
+            } else {
+                NSLog(@"Uh oh. An error occurred: %@", error);
+            }
+        } else if (user.isNew) {
+            NSLog(@"User with facebook signed up and logged in!");
+            [self.navigationController pushViewController:[[HomeViewController alloc] init] animated:YES];
+        } else {
+            NSLog(@"User with facebook logged in!");
+            [self.navigationController pushViewController:[[HomeViewController alloc] init] animated:YES];
+        }
+    }];
+}
 
 @end
