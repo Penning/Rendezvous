@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		495EA70718E1D22E00DF3D31 /* poi_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 495EA70618E1D22E00DF3D31 /* poi_bg.png */; };
+		495EA70918E1D2BE00DF3D31 /* poi_bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = 495EA70818E1D2BE00DF3D31 /* poi_bg2.png */; };
 		49661CDA18E0D8DA007E5CE6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49661CD918E0D8DA007E5CE6 /* AudioToolbox.framework */; };
 		49661CDC18E0D8DE007E5CE6 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49661CDB18E0D8DE007E5CE6 /* CFNetwork.framework */; };
 		49661CDE18E0D8E8007E5CE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49661CDD18E0D8E8007E5CE6 /* CoreLocation.framework */; };
@@ -62,6 +64,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		495EA70618E1D22E00DF3D31 /* poi_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poi_bg.png; sourceTree = "<group>"; };
+		495EA70818E1D2BE00DF3D31 /* poi_bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poi_bg2.png; sourceTree = "<group>"; };
 		49661CD918E0D8DA007E5CE6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		49661CDB18E0D8DE007E5CE6 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		49661CDD18E0D8E8007E5CE6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -223,6 +227,8 @@
 		4FF9ACF618DDEBA5008C9CC3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				495EA70618E1D22E00DF3D31 /* poi_bg.png */,
+				495EA70818E1D2BE00DF3D31 /* poi_bg2.png */,
 				49ECB00E18E1214B003C960D /* appIcon.png */,
 				49ECB00B18E11E5E003C960D /* rendezvous_logo.png */,
 				49661CF518E0E4CD007E5CE6 /* login-button-small-pressed.png */,
@@ -393,6 +399,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				49661CFA18E0E4CD007E5CE6 /* login-button-small-pressed@2x.png in Resources */,
+				495EA70918E1D2BE00DF3D31 /* poi_bg2.png in Resources */,
+				495EA70718E1D22E00DF3D31 /* poi_bg.png in Resources */,
 				49661CFB18E0E4CD007E5CE6 /* login-button-small.png in Resources */,
 				49ECB00F18E1214B003C960D /* appIcon.png in Resources */,
 				49661CF918E0E4CD007E5CE6 /* login-button-small-pressed.png in Resources */,
