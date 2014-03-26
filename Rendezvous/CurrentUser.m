@@ -8,6 +8,7 @@
 
 #import "CurrentUser.h"
 #import <Parse/Parse.h>
+#import "Friend.h"
 
 @implementation CurrentUser
 
@@ -30,14 +31,11 @@
                                                   NSDictionary* result,
                                                   NSError *error) {
         NSArray *friends = result[@"data"];
-        //        NSLog(@"%@", friends);
-        int count = 0;
         for (NSDictionary<FBGraphUser>* friend in friends) {
-//            NSLog(@"Found a friend: %@", friend.name);
-            [_friends addObject:friend];
-            count++;
+            Friend *fbFriend;
+            [_friends addObject:[fbFriend initWithObject:friend]];
         }
-        NSLog(@"Found %i friends!", count);
+        NSLog(@"Found %lu friends!", _friends.count);
     }];
 }
 
