@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDelegate.h"
 
 @interface ContactsViewController : UITableViewController
+
+@property (strong, nonatomic) AppDelegate *appDelegate;
 
 @end
