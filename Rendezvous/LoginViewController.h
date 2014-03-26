@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppDelegate.h"
 
 @interface LoginViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UIButton *loginButton;
@@ -19,5 +20,7 @@
 
 - (IBAction)login:(id)sender;
 - (IBAction)logout:(id)sender;
+
+@property (strong, nonatomic) AppDelegate *appDelegate;
 
 @end
