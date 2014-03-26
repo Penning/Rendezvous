@@ -168,6 +168,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		49BD483C18E2B1FE00EAD526 /* ContactsView */ = {
+			isa = PBXGroup;
+			children = (
+				4FF9AD2D18DE0B25008C9CC3 /* ContactsViewController.h */,
+				4FF9AD2E18DE0B25008C9CC3 /* ContactsViewController.m */,
+			);
+			name = ContactsView;
+			sourceTree = "<group>";
+		};
 		49ECB00D18E11F7E003C960D /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -299,8 +308,7 @@
 				49ECB00D18E11F7E003C960D /* Login */,
 				4FF9AD2A18DE0AF9008C9CC3 /* HomeViewController.h */,
 				4FF9AD2B18DE0AF9008C9CC3 /* HomeViewController.m */,
-				4FF9AD2D18DE0B25008C9CC3 /* ContactsViewController.h */,
-				4FF9AD2E18DE0B25008C9CC3 /* ContactsViewController.m */,
+				49BD483C18E2B1FE00EAD526 /* ContactsView */,
 				4FF9AD3018DE0B55008C9CC3 /* MeetingViewController.h */,
 				4FF9AD3118DE0B55008C9CC3 /* MeetingViewController.m */,
 				4FF9AD3318DE0B72008C9CC3 /* SettingsViewController.h */,
