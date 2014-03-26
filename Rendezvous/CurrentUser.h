@@ -27,7 +27,7 @@
 @property (nonatomic, strong) NSMutableArray *friends;
 
 - (void) initFromRequest:(NSDictionary *) userData;
-
+- (void) getMyInformation;
 - (NSURL *) getPictureURL;
 
 @end

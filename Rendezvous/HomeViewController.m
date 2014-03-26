@@ -9,12 +9,16 @@
 #import "HomeViewController.h"
 #import "MeetingViewController.h"
 #import <Parse/Parse.h>
+#import "CurrentUser.h"
+#import "ContactsViewController.h"
 
 @interface HomeViewController ()
 
 @end
 
-@implementation HomeViewController
+@implementation HomeViewController {
+    CurrentUser *current_user;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -136,6 +140,19 @@
          MeetingViewController *vc = (MeetingViewController *)[segue destinationViewController];
          [[vc nameTextField] setHidden:YES];
          [vc initFromHome];
+     } else if([[segue identifier] isEqualToString:@"new_meeting_segue"]) {
+         _appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+         current_user = _appDelegate.user;
+
+         if(current_user.friends.count == 0) {
+             [current_user getMyInformation];
+         }
+
+         ContactsViewController *vc = (ContactsViewController *)[segue destinationViewController];
+         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
+                                                      ascending:YES];
+         NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+         vc.friends = [current_user.friends sortedArrayUsingDescriptors:sortDescriptors];
      }
      
  }

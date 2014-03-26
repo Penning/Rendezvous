@@ -22,6 +22,7 @@
 		49661CFA18E0E4CD007E5CE6 /* login-button-small-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 49661CF618E0E4CD007E5CE6 /* login-button-small-pressed@2x.png */; };
 		49661CFB18E0E4CD007E5CE6 /* login-button-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 49661CF718E0E4CD007E5CE6 /* login-button-small.png */; };
 		49661CFC18E0E4CD007E5CE6 /* login-button-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 49661CF818E0E4CD007E5CE6 /* login-button-small@2x.png */; };
+		49BD483B18E27BE600EAD526 /* ContactsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BD483A18E27BE600EAD526 /* ContactsCell.m */; };
 		49ECB00C18E11E5E003C960D /* rendezvous_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 49ECB00B18E11E5E003C960D /* rendezvous_logo.png */; };
 		49ECB00F18E1214B003C960D /* appIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 49ECB00E18E1214B003C960D /* appIcon.png */; };
 		49FE6EE718E25B2400626238 /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 49FE6EE618E25B2400626238 /* CurrentUser.m */; };
@@ -81,6 +82,8 @@
 		49661CF618E0E4CD007E5CE6 /* login-button-small-pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-button-small-pressed@2x.png"; sourceTree = "<group>"; };
 		49661CF718E0E4CD007E5CE6 /* login-button-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-button-small.png"; sourceTree = "<group>"; };
 		49661CF818E0E4CD007E5CE6 /* login-button-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-button-small@2x.png"; sourceTree = "<group>"; };
+		49BD483918E27BE600EAD526 /* ContactsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsCell.h; sourceTree = "<group>"; };
+		49BD483A18E27BE600EAD526 /* ContactsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsCell.m; sourceTree = "<group>"; };
 		49ECB00B18E11E5E003C960D /* rendezvous_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rendezvous_logo.png; sourceTree = "<group>"; };
 		49ECB00E18E1214B003C960D /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
 		49FE6EE518E25B2400626238 /* CurrentUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentUser.h; sourceTree = "<group>"; };
@@ -322,6 +325,8 @@
 			children = (
 				4FF9AD3A18DF0A71008C9CC3 /* HomeCell.h */,
 				4FF9AD3B18DF0A71008C9CC3 /* HomeCell.m */,
+				49BD483918E27BE600EAD526 /* ContactsCell.h */,
+				49BD483A18E27BE600EAD526 /* ContactsCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -439,6 +444,7 @@
 			files = (
 				4FF9AD3218DE0B55008C9CC3 /* MeetingViewController.m in Sources */,
 				49FE6EEA18E2721D00626238 /* Friend.m in Sources */,
+				49BD483B18E27BE600EAD526 /* ContactsCell.m in Sources */,
 				4FF9AD2918DE0ADD008C9CC3 /* LoginViewController.m in Sources */,
 				4FF9AD3C18DF0A71008C9CC3 /* HomeCell.m in Sources */,
 				4FF9AD4218DF27EC008C9CC3 /* LocationViewController.m in Sources */,
