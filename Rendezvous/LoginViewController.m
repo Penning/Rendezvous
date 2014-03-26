@@ -40,7 +40,7 @@
         _loginButton.titleLabel.text = @"Log in";
         [_profile_picture setHidden:YES];
         [_loggedin_label setHidden:YES];
-        [_logo setHidden:NO];
+        [ _logo setHidden:NO];
         [_loginButton setHidden:NO];
         [_logoutButton setHidden:YES];
     }

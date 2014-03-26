@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		495EA70718E1D22E00DF3D31 /* poi_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 495EA70618E1D22E00DF3D31 /* poi_bg.png */; };
+		495EA70918E1D2BE00DF3D31 /* poi_bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = 495EA70818E1D2BE00DF3D31 /* poi_bg2.png */; };
 		49661CDA18E0D8DA007E5CE6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49661CD918E0D8DA007E5CE6 /* AudioToolbox.framework */; };
 		49661CDC18E0D8DE007E5CE6 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49661CDB18E0D8DE007E5CE6 /* CFNetwork.framework */; };
 		49661CDE18E0D8E8007E5CE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49661CDD18E0D8E8007E5CE6 /* CoreLocation.framework */; };
@@ -22,6 +24,7 @@
 		49661CFC18E0E4CD007E5CE6 /* login-button-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 49661CF818E0E4CD007E5CE6 /* login-button-small@2x.png */; };
 		49ECB00C18E11E5E003C960D /* rendezvous_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 49ECB00B18E11E5E003C960D /* rendezvous_logo.png */; };
 		49ECB00F18E1214B003C960D /* appIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 49ECB00E18E1214B003C960D /* appIcon.png */; };
+		49FE6EE718E25B2400626238 /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 49FE6EE618E25B2400626238 /* CurrentUser.m */; };
 		4FF9ACEE18DDEBA5008C9CC3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACED18DDEBA5008C9CC3 /* Foundation.framework */; };
 		4FF9ACF018DDEBA5008C9CC3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACEF18DDEBA5008C9CC3 /* CoreGraphics.framework */; };
 		4FF9ACF218DDEBA5008C9CC3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACF118DDEBA5008C9CC3 /* UIKit.framework */; };
@@ -62,6 +65,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		495EA70618E1D22E00DF3D31 /* poi_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poi_bg.png; sourceTree = "<group>"; };
+		495EA70818E1D2BE00DF3D31 /* poi_bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poi_bg2.png; sourceTree = "<group>"; };
 		49661CD918E0D8DA007E5CE6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		49661CDB18E0D8DE007E5CE6 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		49661CDD18E0D8E8007E5CE6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -77,6 +82,8 @@
 		49661CF818E0E4CD007E5CE6 /* login-button-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-button-small@2x.png"; sourceTree = "<group>"; };
 		49ECB00B18E11E5E003C960D /* rendezvous_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rendezvous_logo.png; sourceTree = "<group>"; };
 		49ECB00E18E1214B003C960D /* appIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appIcon.png; sourceTree = "<group>"; };
+		49FE6EE518E25B2400626238 /* CurrentUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentUser.h; sourceTree = "<group>"; };
+		49FE6EE618E25B2400626238 /* CurrentUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentUser.m; sourceTree = "<group>"; };
 		4FF9ACEA18DDEBA5008C9CC3 /* Rendezvous.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rendezvous.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF9ACED18DDEBA5008C9CC3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4FF9ACEF18DDEBA5008C9CC3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -223,6 +230,8 @@
 		4FF9ACF618DDEBA5008C9CC3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				495EA70618E1D22E00DF3D31 /* poi_bg.png */,
+				495EA70818E1D2BE00DF3D31 /* poi_bg2.png */,
 				49ECB00E18E1214B003C960D /* appIcon.png */,
 				49ECB00B18E11E5E003C960D /* rendezvous_logo.png */,
 				49661CF518E0E4CD007E5CE6 /* login-button-small-pressed.png */,
@@ -260,6 +269,8 @@
 			children = (
 				4FF9ACFE18DDEBA5008C9CC3 /* AppDelegate.h */,
 				4FF9ACFF18DDEBA5008C9CC3 /* AppDelegate.m */,
+				49FE6EE518E25B2400626238 /* CurrentUser.h */,
+				49FE6EE618E25B2400626238 /* CurrentUser.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -393,6 +404,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				49661CFA18E0E4CD007E5CE6 /* login-button-small-pressed@2x.png in Resources */,
+				495EA70918E1D2BE00DF3D31 /* poi_bg2.png in Resources */,
+				495EA70718E1D22E00DF3D31 /* poi_bg.png in Resources */,
 				49661CFB18E0E4CD007E5CE6 /* login-button-small.png in Resources */,
 				49ECB00F18E1214B003C960D /* appIcon.png in Resources */,
 				49661CF918E0E4CD007E5CE6 /* login-button-small-pressed.png in Resources */,
@@ -425,6 +438,7 @@
 				4FF9AD4218DF27EC008C9CC3 /* LocationViewController.m in Sources */,
 				4FF9AD2F18DE0B25008C9CC3 /* ContactsViewController.m in Sources */,
 				4FF9AD3518DE0B72008C9CC3 /* SettingsViewController.m in Sources */,
+				49FE6EE718E25B2400626238 /* CurrentUser.m in Sources */,
 				4FF9AD3818DE1394008C9CC3 /* TableViewController.m in Sources */,
 				4FF9AD0318DDEBA5008C9CC3 /* Rendezvous.xcdatamodeld in Sources */,
 				4FF9AD0018DDEBA5008C9CC3 /* AppDelegate.m in Sources */,
