@@ -8,6 +8,7 @@
 
 #import "HomeViewController.h"
 #import "MeetingViewController.h"
+#import <Parse/Parse.h>
 
 @interface HomeViewController ()
 
@@ -29,7 +30,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,6 +47,13 @@
 - (void)cellDoubleTapped:(HomeCell *)sender{
     // a cell was double tapped
     [self performSegueWithIdentifier:@"close_meeting_segue" sender:self];
+}
+
+- (IBAction)logoutBtnHit:(id)sender {
+    // logout btn hit
+    
+    [PFUser logOut];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - Table view data source
@@ -78,6 +86,7 @@
  
      return cell;
  }
+
  
 
 /*

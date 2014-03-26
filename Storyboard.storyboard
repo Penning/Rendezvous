@@ -75,6 +75,7 @@
                         <outlet property="logo" destination="eLS-sI-TFA" id="e1h-1R-D4o"/>
                         <outlet property="logoutButton" destination="3vK-pD-hTd" id="AaH-XH-a1W"/>
                         <outlet property="profile_picture" destination="Nqe-6T-2Gu" id="KKY-8l-i09"/>
+                        <segue destination="44V-bZ-Ujm" kind="push" identifier="login_segue" id="YEy-8s-FyR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RoF-xU-CSA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -85,10 +86,13 @@
         <scene sceneID="H5o-Hq-BXw">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Sek-Td-CUG" sceneMemberID="viewController">
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="fyp-4e-TIg">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="j4T-yg-Qbp">
+                        <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="vLf-wb-run" kind="relationship" relationship="rootViewController" id="AMy-H8-I2b"/>
                     </connections>
@@ -217,7 +221,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="Qr8-Uw-Jr1">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="pXb-5s-yy4"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="pXb-5s-yy4">
+                            <connections>
+                                <action selector="logoutBtnHit:" destination="44V-bZ-Ujm" id="UC5-mm-XA2"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="action" id="4q2-Yy-6Lc">
                             <connections>
                                 <segue destination="zea-Io-IAS" kind="push" id="8or-Kr-g7q"/>
@@ -225,6 +233,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="logoutBtn" destination="pXb-5s-yy4" id="h30-PQ-E7q"/>
                         <segue destination="CMH-LF-aW1" kind="push" identifier="home_details_segue" id="4aF-VO-qgM"/>
                         <segue destination="sMU-rU-8vu" kind="push" identifier="close_meeting_segue" id="eFx-Qn-ie5"/>
                     </connections>
@@ -243,7 +252,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="v9i-vn-Ib9">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="v9i-vn-Ib9" id="mZS-Mo-t2g">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
