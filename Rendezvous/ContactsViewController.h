@@ -12,5 +12,6 @@
 @interface ContactsViewController : UITableViewController
 
 @property (strong, nonatomic) AppDelegate *appDelegate;
+@property (strong, nonatomic) NSArray *friends;
 
 @end

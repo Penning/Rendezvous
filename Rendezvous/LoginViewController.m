@@ -44,6 +44,7 @@
     // Check if user is cached and linked to Facebook, if so, bypass login
     if ([PFUser currentUser]) {
         [self displayUserInfo];
+        [self performSegueWithIdentifier:@"login_segue" sender:self];
     } else {
         _loginButton.titleLabel.text = @"Log in";
         [_profile_picture setHidden:YES];
@@ -138,10 +139,10 @@
                 }
             } else if (user.isNew) {
                 NSLog(@"User with facebook signed up and logged in!");
-                //            [self.navigationController pushViewController:[[HomeViewController alloc] init] animated:YES];
+                [self performSegueWithIdentifier:@"login_segue" sender:self];
             } else {
                 NSLog(@"User with facebook logged in!");
-                //            [self.navigationController pushViewController:[[HomeViewController alloc] init] animated:YES];
+                [self performSegueWithIdentifier:@"login_segue" sender:self];
             }
         }];
         [self displayUserInfo];
