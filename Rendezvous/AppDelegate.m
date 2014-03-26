@@ -44,15 +44,15 @@
 //    NSDictionary *textTitleOptions = [NSDictionary dictionaryWithObjectsAndKeys:UIColorFromRGB(0xffffff), UITextAttributeTextColor, [UIColor whiteColor], UITextAttributeTextShadowColor, nil];
 //    [[UINavigationBar appearance] setTitleTextAttributes:textTitleOptions];
 
-    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setBackgroundColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UIView appearance] setTintColor:[UIColor whiteColor]];
-    [[UIButton appearance] setTintColor:[UIColor whiteColor]];
-    [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
+//    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
+//    [[UINavigationBar appearance] setBackgroundColor:[UIColor whiteColor]];
+//    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+//    [[UIView appearance] setTintColor:[UIColor whiteColor]];
+//    [[UIButton appearance] setTintColor:[UIColor whiteColor]];
+//    [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
 
-    NSDictionary *textTitleOptions = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], UITextAttributeTextColor, [UIColor whiteColor], UITextAttributeTextShadowColor, nil];
-    [[UINavigationBar appearance] setTitleTextAttributes:textTitleOptions];
+//    NSDictionary *textTitleOptions = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], UITextAttributeTextColor, [UIColor whiteColor], UITextAttributeTextShadowColor, nil];
+//    [[UINavigationBar appearance] setTitleTextAttributes:textTitleOptions];
 
 
     return YES;
