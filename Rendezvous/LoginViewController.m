@@ -36,6 +36,7 @@
     // Check if user is cached and linked to Facebook, if so, bypass login
     if ([PFUser currentUser]) {
         [self displayUserInfo];
+        [self performSegueWithIdentifier:@"login_segue" sender:self];
     } else {
         _loginButton.titleLabel.text = @"Log in";
         [_profile_picture setHidden:YES];

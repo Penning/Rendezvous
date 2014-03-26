@@ -221,7 +221,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="Qr8-Uw-Jr1">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="pXb-5s-yy4"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="pXb-5s-yy4">
+                            <connections>
+                                <action selector="logoutBtnHit:" destination="44V-bZ-Ujm" id="UC5-mm-XA2"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="action" id="4q2-Yy-6Lc">
                             <connections>
                                 <segue destination="zea-Io-IAS" kind="push" id="8or-Kr-g7q"/>
@@ -229,6 +233,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="logoutBtn" destination="pXb-5s-yy4" id="h30-PQ-E7q"/>
                         <segue destination="CMH-LF-aW1" kind="push" identifier="home_details_segue" id="4aF-VO-qgM"/>
                         <segue destination="sMU-rU-8vu" kind="push" identifier="close_meeting_segue" id="eFx-Qn-ie5"/>
                     </connections>

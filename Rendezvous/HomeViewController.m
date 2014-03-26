@@ -8,6 +8,7 @@
 
 #import "HomeViewController.h"
 #import "MeetingViewController.h"
+#import <Parse/Parse.h>
 
 @interface HomeViewController ()
 
@@ -48,6 +49,13 @@
     [self performSegueWithIdentifier:@"close_meeting_segue" sender:self];
 }
 
+- (IBAction)logoutBtnHit:(id)sender {
+    // logout btn hit
+    
+    [PFUser logOut];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -78,6 +86,7 @@
  
      return cell;
  }
+
  
 
 /*
