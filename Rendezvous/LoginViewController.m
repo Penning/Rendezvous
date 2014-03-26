@@ -46,12 +46,8 @@
         [self displayUserInfo];
         [self performSegueWithIdentifier:@"login_segue" sender:self];
     } else {
-        _loginButton.titleLabel.text = @"Log in";
-        [_profile_picture setHidden:YES];
-        [_loggedin_label setHidden:YES];
-        [ _logo setHidden:NO];
-        [_loginButton setHidden:NO];
-        [_logoutButton setHidden:YES];
+        current_user = nil;
+        [self logoutAction];
     }
 }
 
@@ -150,7 +146,7 @@
     }
 }
 
-- (IBAction)logout:(id)sender {
+- (void) logoutAction {
     [PFUser logOut]; // Log out
     _loginButton.titleLabel.text = @"Log in";
     [_profile_picture setHidden:YES];
@@ -158,6 +154,10 @@
     [_logo setHidden:NO];
     [_loginButton setHidden:NO];
     [_logoutButton setHidden:YES];
+}
+
+- (IBAction)logout:(id)sender {
+    [self logoutAction];
 }
 
 @end

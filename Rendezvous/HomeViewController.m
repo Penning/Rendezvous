@@ -8,9 +8,9 @@
 
 #import "HomeViewController.h"
 #import "MeetingViewController.h"
+#import "ContactsViewController.h"
 #import <Parse/Parse.h>
 #import "CurrentUser.h"
-#import "ContactsViewController.h"
 
 @interface HomeViewController ()
 
@@ -58,6 +58,7 @@
     
     [PFUser logOut];
     [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController.visibleViewController viewDidLoad];
 }
 
 #pragma mark - Table view data source

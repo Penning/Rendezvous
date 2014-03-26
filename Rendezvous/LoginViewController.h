@@ -19,6 +19,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *logo;
 
 - (IBAction)login:(id)sender;
+- (void) logoutAction;
 - (IBAction)logout:(id)sender;
 
 @property (strong, nonatomic) AppDelegate *appDelegate;
