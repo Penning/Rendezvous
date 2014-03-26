@@ -16,10 +16,12 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize user = _user;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    _user = [[CurrentUser alloc] init];
 
     //Parse setup
     [Parse setApplicationId:@"aZPN4SiTApTkjRRj6heYGQ6Qkig6rVslPAD8hvyf"

@@ -9,12 +9,16 @@
 #import "LoginViewController.h"
 #import <Parse/Parse.h>
 #import "HomeViewController.h"
+#import "CurrentUser.h"
 
 @interface LoginViewController ()
 
 @end
 
-@implementation LoginViewController
+@implementation LoginViewController {
+    CurrentUser *current_user;
+    NSMutableDictionary *fbFriends;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,6 +36,10 @@
     [_loggedin_label setHidden:YES];
     [_logo setHidden:NO];
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
+
+    fbFriends = [[NSMutableDictionary alloc] init];
+    _appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    current_user = _appDelegate.user;
 
     // Check if user is cached and linked to Facebook, if so, bypass login
     if ([PFUser currentUser]) {
@@ -58,17 +66,12 @@
         if (!error) {
             // result is a dictionary with the user's Facebook data
             NSDictionary *userData = (NSDictionary *)result;
-
-            NSString *name = userData[@"name"];
-            _loggedin_label.text = [NSString stringWithFormat:@"%@", name];
-
-            NSString *facebookID = userData[@"id"];
-            NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID]];
+            [current_user initFromRequest:userData];
 
             // Download the user's facebook profile picture
             _imageData = [[NSMutableData alloc] init]; // the data will be loaded in here
 
-            NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:pictureURL
+            NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[current_user getPictureURL]
                                                                       cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                                   timeoutInterval:2.0f];
             // Run network request asynchronously
