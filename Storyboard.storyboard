@@ -234,6 +234,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="logoutBtn" destination="pXb-5s-yy4" id="h30-PQ-E7q"/>
+                        <outlet property="tableView" destination="YVj-AO-F1X" id="GA4-Xd-445"/>
                         <segue destination="CMH-LF-aW1" kind="push" identifier="home_details_segue" id="4aF-VO-qgM"/>
                         <segue destination="sMU-rU-8vu" kind="push" identifier="close_meeting_segue" id="eFx-Qn-ie5"/>
                     </connections>
@@ -302,7 +303,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MiB-Rf-4dY">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Meeting Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MiB-Rf-4dY">
                                 <rect key="frame" x="20" y="103" width="280" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -335,6 +336,9 @@
                                 <state key="normal" title="Send/ Contacts">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="sendContactsBtnHit:" destination="CMH-LF-aW1" eventType="touchUpInside" id="qxT-Wj-bQl"/>
+                                </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Come to me" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tja-oq-TsW">
                                 <rect key="frame" x="20" y="440" width="95" height="21"/>
@@ -352,6 +356,13 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="numMeetersLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="moL-sP-TjI">
+                                <rect key="frame" x="80" y="385" width="161" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -361,6 +372,7 @@
                         <outlet property="detailsTextView" destination="PsJ-Fj-tXR" id="ioV-S4-kIR"/>
                         <outlet property="nameLabel" destination="HaL-TV-jCd" id="Q32-uu-fg9"/>
                         <outlet property="nameTextField" destination="MiB-Rf-4dY" id="gBf-Vs-bpG"/>
+                        <outlet property="numMeetersLabel" destination="moL-sP-TjI" id="6YP-cx-paH"/>
                         <outlet property="sendContactsButton" destination="22r-ZD-fc0" id="pyG-an-pel"/>
                     </connections>
                 </viewController>
@@ -432,6 +444,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="PvW-AV-8gg"/>
+        <segue reference="4aF-VO-qgM"/>
     </inferredMetricsTieBreakers>
 </document>

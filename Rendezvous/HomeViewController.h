@@ -9,14 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "HomeCell.h"
 #import "AppDelegate.h"
-
 @interface HomeViewController : UIViewController
 
 - (void)cellDoubleTapped:(HomeCell *)sender;
 - (void)cellSingleTapped:(HomeCell *)sender;
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *logoutBtn;
-
-@property (strong, nonatomic) AppDelegate *appDelegate;
+@property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
+@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end

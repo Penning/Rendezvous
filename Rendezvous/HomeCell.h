@@ -15,6 +15,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *acceptedLabel;
 @property (strong, nonatomic) UIViewController *parentController;
 
-- (void)initializeGenstureRecognizer;
+- (void)initializeGestureRecognizer;
 
 @end

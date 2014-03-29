@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Meeting.h"
+
 
 @interface MeetingViewController : UIViewController
 
@@ -16,6 +18,10 @@
 
 @property (strong, nonatomic) IBOutlet UISwitch *comeToMeSwitch;
 @property (strong, nonatomic) IBOutlet UIButton *sendContactsButton;
+@property (strong, nonatomic) IBOutlet UILabel *numMeetersLabel;
+
+@property (strong, nonatomic) NSArray *meeters;
+@property (strong, nonatomic) Meeting *meeting;
 
 - (void)initFromHome;
 - (void)initFromContacts;

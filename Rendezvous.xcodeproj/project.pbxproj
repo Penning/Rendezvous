@@ -54,6 +54,7 @@
 		4FF9AD4218DF27EC008C9CC3 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9AD4118DF27EC008C9CC3 /* LocationViewController.m */; };
 		4FF9AD4418E25776008C9CC3 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9AD4318E25776008C9CC3 /* Parse.framework */; };
 		4FF9AD4618E2586F008C9CC3 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9AD4518E2586F008C9CC3 /* FacebookSDK.framework */; };
+		4FF9AD4918E6FCBF008C9CC3 /* Meeting.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9AD4818E6FCBF008C9CC3 /* Meeting.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +129,8 @@
 		4FF9AD4118DF27EC008C9CC3 /* LocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
 		4FF9AD4318E25776008C9CC3 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		4FF9AD4518E2586F008C9CC3 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		4FF9AD4718E6FCBF008C9CC3 /* Meeting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Meeting.h; sourceTree = "<group>"; };
+		4FF9AD4818E6FCBF008C9CC3 /* Meeting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Meeting.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,13 +180,13 @@
 			name = ContactsView;
 			sourceTree = "<group>";
 		};
-		49ECB00D18E11F7E003C960D /* Login */ = {
+		49ECB00D18E11F7E003C960D /* LoginView */ = {
 			isa = PBXGroup;
 			children = (
 				4FF9AD2718DE0ADD008C9CC3 /* LoginViewController.h */,
 				4FF9AD2818DE0ADD008C9CC3 /* LoginViewController.m */,
 			);
-			name = Login;
+			name = LoginView;
 			sourceTree = "<group>";
 		};
 		4FF9ACE118DDEBA5008C9CC3 = {
@@ -288,6 +291,8 @@
 				49FE6EE618E25B2400626238 /* CurrentUser.m */,
 				49FE6EE818E2721D00626238 /* Friend.h */,
 				49FE6EE918E2721D00626238 /* Friend.m */,
+				4FF9AD4718E6FCBF008C9CC3 /* Meeting.h */,
+				4FF9AD4818E6FCBF008C9CC3 /* Meeting.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -305,16 +310,12 @@
 			isa = PBXGroup;
 			children = (
 				4FF9AD3D18DF0A84008C9CC3 /* Cells */,
-				49ECB00D18E11F7E003C960D /* Login */,
-				4FF9AD2A18DE0AF9008C9CC3 /* HomeViewController.h */,
-				4FF9AD2B18DE0AF9008C9CC3 /* HomeViewController.m */,
+				49ECB00D18E11F7E003C960D /* LoginView */,
+				4FF9AD4B18E70BCD008C9CC3 /* HomeView */,
 				49BD483C18E2B1FE00EAD526 /* ContactsView */,
-				4FF9AD3018DE0B55008C9CC3 /* MeetingViewController.h */,
-				4FF9AD3118DE0B55008C9CC3 /* MeetingViewController.m */,
-				4FF9AD3318DE0B72008C9CC3 /* SettingsViewController.h */,
-				4FF9AD3418DE0B72008C9CC3 /* SettingsViewController.m */,
-				4FF9AD4018DF27EC008C9CC3 /* LocationViewController.h */,
-				4FF9AD4118DF27EC008C9CC3 /* LocationViewController.m */,
+				4FF9AD4A18E7084D008C9CC3 /* MeetingView */,
+				4FF9AD4C18E70BDF008C9CC3 /* SettingsView */,
+				4FF9AD4D18E70BE6008C9CC3 /* LocationView */,
 				4FF9AD3618DE1394008C9CC3 /* TableViewController.h */,
 				4FF9AD3718DE1394008C9CC3 /* TableViewController.m */,
 			);
@@ -337,6 +338,42 @@
 				49BD483A18E27BE600EAD526 /* ContactsCell.m */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		4FF9AD4A18E7084D008C9CC3 /* MeetingView */ = {
+			isa = PBXGroup;
+			children = (
+				4FF9AD3018DE0B55008C9CC3 /* MeetingViewController.h */,
+				4FF9AD3118DE0B55008C9CC3 /* MeetingViewController.m */,
+			);
+			name = MeetingView;
+			sourceTree = "<group>";
+		};
+		4FF9AD4B18E70BCD008C9CC3 /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				4FF9AD2A18DE0AF9008C9CC3 /* HomeViewController.h */,
+				4FF9AD2B18DE0AF9008C9CC3 /* HomeViewController.m */,
+			);
+			name = HomeView;
+			sourceTree = "<group>";
+		};
+		4FF9AD4C18E70BDF008C9CC3 /* SettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				4FF9AD3318DE0B72008C9CC3 /* SettingsViewController.h */,
+				4FF9AD3418DE0B72008C9CC3 /* SettingsViewController.m */,
+			);
+			name = SettingsView;
+			sourceTree = "<group>";
+		};
+		4FF9AD4D18E70BE6008C9CC3 /* LocationView */ = {
+			isa = PBXGroup;
+			children = (
+				4FF9AD4018DF27EC008C9CC3 /* LocationViewController.h */,
+				4FF9AD4118DF27EC008C9CC3 /* LocationViewController.m */,
+			);
+			name = LocationView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -463,6 +500,7 @@
 				4FF9AD0318DDEBA5008C9CC3 /* Rendezvous.xcdatamodeld in Sources */,
 				4FF9AD0018DDEBA5008C9CC3 /* AppDelegate.m in Sources */,
 				4FF9AD2C18DE0AF9008C9CC3 /* HomeViewController.m in Sources */,
+				4FF9AD4918E6FCBF008C9CC3 /* Meeting.m in Sources */,
 				4FF9ACFC18DDEBA5008C9CC3 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

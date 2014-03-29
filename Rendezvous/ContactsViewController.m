@@ -157,6 +157,7 @@
     if ([[segue identifier] isEqualToString:@"contacts_details_segue"]) {
         MeetingViewController *vc = (MeetingViewController *)[segue destinationViewController];
         [vc initFromContacts];
+        [vc setMeeters:meeters];
     }
 }
 

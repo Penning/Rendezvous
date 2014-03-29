@@ -11,16 +11,21 @@
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
-@implementation AppDelegate
+@implementation AppDelegate{
+    int lastId;
+}
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize user = _user;
+@synthesize home = _home;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    lastId = 0;
+    
     _user = [[CurrentUser alloc] init];
 
     //Parse setup
@@ -34,6 +39,9 @@
     // Your Facebook application id is configured in Info.plist.
     // ****************************************************************************
     [PFFacebookUtils initializeFacebook];
+    
+    
+    
 
     //Change tint and navbar colors
 //    [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0xF76655)];
@@ -58,6 +66,10 @@
 
 
     return YES;
+}
+
+-(int)getId{
+    return ++lastId;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

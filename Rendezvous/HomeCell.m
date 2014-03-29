@@ -23,7 +23,7 @@
     return self;
 }
 
-- (void)initializeGenstureRecognizer {
+- (void)initializeGestureRecognizer {
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(doSingleTap:)];
     singleTap.numberOfTapsRequired = 1;
     [self addGestureRecognizer:singleTap];
