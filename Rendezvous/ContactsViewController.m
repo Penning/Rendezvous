@@ -15,7 +15,9 @@
 
 @end
 
-@implementation ContactsViewController
+@implementation ContactsViewController{
+    NSMutableArray *meeters;
+}
 
 @synthesize friends;
 
@@ -31,6 +33,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (meeters == nil) {
+        meeters = [[NSMutableArray alloc] init];
+    }
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,7 +70,44 @@
     // Configure the cell...
     [cell initCellDisplay:[friends objectAtIndex:indexPath.row]];
     
+    
+    // show checkmark if meeter
+    BOOL isMeeter = NO;
+    for (Friend *f in meeters) {
+        if (f.facebookID == ((Friend *)[friends objectAtIndex:indexPath.row]).facebookID) {
+            isMeeter = YES;
+            break;
+        }
+    }
+    if (isMeeter) {
+        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+    }else{
+        [cell setAccessoryType:UITableViewCellAccessoryNone];
+    }
+    
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if ([cell accessoryType] == UITableViewCellAccessoryNone) {
+        // add to meeting
+
+        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+        [meeters addObject:[friends objectAtIndex:indexPath.row]];
+    }else{
+        // remove from meeting
+        
+        [cell setAccessoryType:UITableViewCellAccessoryNone];
+        for (Friend *f in meeters) {
+            if (f.facebookID == ((Friend*)[friends objectAtIndex:indexPath.row]).facebookID) {
+                [meeters removeObject:f];
+                break;
+            }
+        }
+    }
+    
 }
 
 /*
