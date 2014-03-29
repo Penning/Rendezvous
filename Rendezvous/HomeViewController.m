@@ -19,6 +19,7 @@
 @implementation HomeViewController {
     CurrentUser *current_user;
     AppDelegate *appDelegate;
+    NSIndexPath *lastSelected;
 }
 
 @synthesize fetchedResultsController = _fetchedResultsController;
@@ -85,11 +86,13 @@
 
 - (void)cellSingleTapped:(HomeCell *)sender{
     // a cell was single tapped
+    lastSelected = sender.indexPath;
     [self performSegueWithIdentifier:@"home_details_segue" sender:self];
 }
 
 - (void)cellDoubleTapped:(HomeCell *)sender{
     // a cell was double tapped
+    lastSelected = sender.indexPath;
     [self performSegueWithIdentifier:@"close_meeting_segue" sender:self];
 }
 
@@ -162,6 +165,7 @@
     
     HomeCell *cell = (HomeCell *)cell1;
     
+    [cell setIndexPath:indexPath];
     [cell initializeGestureRecognizer];
     [cell setParentController:self];
     
@@ -182,45 +186,11 @@
      return cell;
  }
 
- 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 
 #pragma mark - Navigation
  
@@ -229,8 +199,9 @@
  {
      if ([[segue identifier] isEqualToString:@"home_details_segue"]) {
          MeetingViewController *vc = (MeetingViewController *)[segue destinationViewController];
-         [[vc nameTextField] setHidden:YES];
+         [vc setMeetingObject:[_fetchedResultsController objectAtIndexPath:lastSelected]];
          [vc initFromHome];
+         
      } else if([[segue identifier] isEqualToString:@"new_meeting_segue"]) {
          appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
          current_user = appDelegate.user;

@@ -15,6 +15,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *acceptedLabel;
 @property (strong, nonatomic) UIViewController *parentController;
 
+@property (strong, nonatomic) NSIndexPath *indexPath;
+
 - (void)initializeGestureRecognizer;
 
 @end

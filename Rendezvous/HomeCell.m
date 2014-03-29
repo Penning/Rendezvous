@@ -12,6 +12,7 @@
 @implementation HomeCell
 
 @synthesize parentController = _parentController;
+@synthesize indexPath = _indexPath;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

@@ -21,6 +21,7 @@
 @implementation MeetingViewController
 
 @synthesize meeters = _meeters;
+@synthesize meetingObject = _meetingObject;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -37,24 +38,39 @@
     
     // Do any additional setup after loading the view.
     if (home) {
+        [self.nameLabel setText:[self.meetingObject valueForKey:@"meeting_name"]];
         [self.nameLabel setHidden:NO];
+        [self.numMeetersLabel setText:[NSString stringWithFormat:@"%lu invitees", (unsigned long)[self.meetingObject mutableSetValueForKey:@"invites"].count]];
         [self.nameTextField setHidden:YES];
         [self.sendContactsButton setTitle:@"Edit Contacts" forState:UIControlStateNormal];
+        [self.detailsTextView setText:[_meetingObject valueForKey:@"meeting_description"]];
     }else{
         [self.nameLabel setHidden:YES];
         [self.nameTextField setHidden:NO];
-        [self.nameTextField setDelegate:self];
-        [self.detailsTextView setDelegate:self];
         [self.numMeetersLabel setText:[NSString stringWithFormat:@"%lu invitees", (unsigned long)_meeters.count]];
         [self.sendContactsButton setTitle:@"Send Invites" forState:UIControlStateNormal];
     }
+    
+    [self.comeToMeSwitch setOn:((NSNumber *)[_meetingObject valueForKey:@"is_ComeToMe"]).boolValue];
+    self.detailsTextView.delegate = self;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
+- (BOOL) textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    // hides keyboard on return
+    
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        [_meetingObject setValue:textView.text forKey:@"meeting_description"];
+        [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
+        return NO;
+    }
     
     return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+        [textField resignFirstResponder];
+        return NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -143,6 +159,51 @@
     }
     
     
+    [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
+}
+
+
+- (IBAction)comeToMeSwitched:(id)sender {
+    [_meetingObject setValue:[NSNumber numberWithBool:[self.comeToMeSwitch isOn]] forKey:@"is_ComeToMe"];
+    [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
+}
+
+- (IBAction)deleteBtnHit:(id)sender {
+    UIAlertView * alert = [[UIAlertView alloc]
+                           initWithTitle:@"Cancel Meeting"
+                           message:@"Are you sure you want to cancel this meeting?"
+                           delegate:self
+                           cancelButtonTitle:@"No"
+                           otherButtonTitles:@"Yes", nil];
+    alert.alertViewStyle = UIAlertViewStyleDefault;
+    [alert show];
+}
+
+// alertview handler
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex) {
+        case 0:
+            // cancel
+            break;
+        case 1:
+            // ok
+            [self deleteMeeting];
+            [self.navigationController popToViewController:((AppDelegate *)[[UIApplication sharedApplication] delegate]).home animated:YES];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)deleteMeeting{
+    NSMutableSet *ppl = [_meetingObject mutableSetValueForKey:@"invites"];
+    for (NSManagedObject *p in ppl) {
+        [((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext deleteObject:p];
+    }
+    
+    [((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext deleteObject:_meetingObject];
+    [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
 }
 
 /*

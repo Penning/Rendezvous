@@ -23,6 +23,8 @@
 @property (strong, nonatomic) NSArray *meeters;
 @property (strong, nonatomic) Meeting *meeting;
 
+@property (strong, nonatomic) NSManagedObject *meetingObject;
+
 - (void)initFromHome;
 - (void)initFromContacts;
 
