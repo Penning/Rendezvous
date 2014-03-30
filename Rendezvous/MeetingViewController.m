@@ -47,6 +47,7 @@
     }else{
         [self.nameLabel setHidden:YES];
         [self.nameTextField setHidden:NO];
+        [self.nameTextField setDelegate:self];
         [self.numMeetersLabel setText:[NSString stringWithFormat:@"%lu invitees", (unsigned long)_meeters.count]];
         [self.sendContactsButton setTitle:@"Send Invites" forState:UIControlStateNormal];
     }
@@ -70,7 +71,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
         [textField resignFirstResponder];
-        return NO;
+        return YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -197,6 +198,9 @@
 }
 
 - (void)deleteMeeting{
+    if (_meetingObject == nil) {
+        return;
+    }
     NSMutableSet *ppl = [_meetingObject mutableSetValueForKey:@"invites"];
     for (NSManagedObject *p in ppl) {
         [((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext deleteObject:p];

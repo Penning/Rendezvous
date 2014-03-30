@@ -437,6 +437,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Location" id="4ZF-86-BPY"/>
+                    <connections>
+                        <outlet property="mapView" destination="x1s-KO-yfi" id="W94-lx-4k9"/>
+                        <outlet property="tableView" destination="d2f-tH-ZN9" id="Fi6-xG-UwO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ppb-5W-5mo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
