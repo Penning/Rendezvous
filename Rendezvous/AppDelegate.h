@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CurrentUser.h"
+#import "HomeViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -17,8 +18,14 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
+
 // Current User
 @property (readonly, strong, nonatomic) CurrentUser *user;
+
+// home view controller
+@property (strong, nonatomic) UIViewController *home;
+
+- (int)getId;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

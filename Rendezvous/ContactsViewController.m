@@ -18,6 +18,7 @@
 @implementation ContactsViewController
 
 @synthesize friends;
+@synthesize meeters;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -34,7 +35,7 @@
 
 //    BOOL found;
 //
-//    // Loop through the books and create our keys
+//    // Loop through the friends and create our keys
 //    for (NSDictionary *friend in friends) {
 //        NSString *c = [[friend objectForKey:@"name"] substringToIndex:1];
 //
@@ -62,6 +63,20 @@
 //    }
 //
 //    [self.tableView reloadData];
+    
+    if (meeters == nil) {
+        meeters = [[NSMutableArray alloc] init];
+    }
+    
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    if ([meeters count] > 0) {
+        [self.navigationController setToolbarHidden:NO animated:animated];
+    }else{
+        [self.navigationController setToolbarHidden:YES animated:animated];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -93,8 +108,58 @@
     // Configure the cell...
     [cell initCellDisplay:[friends objectAtIndex:indexPath.row]];
     
+    
+    // show checkmark if meeter
+    BOOL isMeeter = NO;
+    for (Friend *f in meeters) {
+        if (f.facebookID == ((Friend *)[friends objectAtIndex:indexPath.row]).facebookID) {
+            isMeeter = YES;
+            break;
+        }
+    }
+    if (isMeeter) {
+        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+    }else{
+        [cell setAccessoryType:UITableViewCellAccessoryNone];
+    }
+    
     return cell;
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if ([cell accessoryType] == UITableViewCellAccessoryNone) {
+        // add to meeting
+
+        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+        [meeters addObject:[friends objectAtIndex:indexPath.row]];
+    }else{
+        // remove from meeting
+        
+        [cell setAccessoryType:UITableViewCellAccessoryNone];
+        for (Friend *f in meeters) {
+            if (f.facebookID == ((Friend*)[friends objectAtIndex:indexPath.row]).facebookID) {
+                [meeters removeObject:f];
+                break;
+            }
+        }
+    }
+    
+    if ([meeters count] > 0) {
+        // show toolbar
+        [self.navigationController setToolbarHidden:NO animated:YES];
+    }else{
+        // hide toolbar
+        [self.navigationController setToolbarHidden:YES animated:YES];
+    }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+}
+
+
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -137,13 +202,20 @@
 
 #pragma mark - Navigation
 
+- (IBAction)sendBtnHit:(id)sender {
+    // TODO: send meeting to Parse
+}
+
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"contacts_details_segue"]) {
         MeetingViewController *vc = (MeetingViewController *)[segue destinationViewController];
         [vc initFromContacts];
+        [vc setMeeters:meeters];
     }
+    
+    [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
  

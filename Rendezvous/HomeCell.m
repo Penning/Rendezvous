@@ -12,6 +12,7 @@
 @implementation HomeCell
 
 @synthesize parentController = _parentController;
+@synthesize indexPath = _indexPath;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -23,7 +24,7 @@
     return self;
 }
 
-- (void)initializeGenstureRecognizer {
+- (void)initializeGestureRecognizer {
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget: self action:@selector(doSingleTap:)];
     singleTap.numberOfTapsRequired = 1;
     [self addGestureRecognizer:singleTap];
