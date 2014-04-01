@@ -9,6 +9,7 @@
 #import "MeetingViewController.h"
 #import "AppDelegate.h"
 #import "Friend.h"
+#import "ContactsViewController.h"
 
 @interface MeetingViewController (){
     BOOL home;
@@ -38,11 +39,11 @@
     
     // Do any additional setup after loading the view.
     if (home) {
-        [self.nameLabel setText:[self.meetingObject valueForKey:@"meeting_name"]];
+        [self.nameLabel setText:[_meetingObject valueForKey:@"meeting_name"]];
         [self.nameLabel setHidden:NO];
-        [self.numMeetersLabel setText:[NSString stringWithFormat:@"%lu invitees", (unsigned long)[self.meetingObject mutableSetValueForKey:@"invites"].count]];
+        [self.numMeetersLabel setText:[NSString stringWithFormat:@"%lu invitees", (unsigned long)[_meetingObject mutableSetValueForKey:@"invites"].count]];
         [self.nameTextField setHidden:YES];
-        [self.sendContactsButton setTitle:@"Edit Contacts" forState:UIControlStateNormal];
+        [self.sendContactsButton setTitle:@"Edit Invites" forState:UIControlStateNormal];
         [self.detailsTextView setText:[_meetingObject valueForKey:@"meeting_description"]];
     }else{
         [self.nameLabel setHidden:YES];
@@ -149,7 +150,7 @@
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
         
-        // TODO: send meeting & invites
+        // TODO: send meeting & invites to Parse
         
         
         // unwind segue to home
@@ -157,6 +158,8 @@
         
     }else{
         // TODO: go to contacts
+        
+        [self performSegueWithIdentifier:@"meeting_contacts_segue" sender:self];
     }
     
     
@@ -210,15 +213,27 @@
     [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"meeting_contacts_segue"]) {
+        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        CurrentUser *current_user = appDelegate.user;
+        
+        if(current_user.friends.count == 0) {
+            [current_user getMyInformation];
+        }
+        
+        ContactsViewController *vc = (ContactsViewController *)[segue destinationViewController];
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
+                                                                       ascending:YES];
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+        vc.friends = [current_user.friends sortedArrayUsingDescriptors:sortDescriptors];
+    }
 }
-*/
+
 
 @end

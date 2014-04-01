@@ -49,6 +49,8 @@
         current_user = nil;
         [self logoutAction];
     }
+    
+    [self.navigationController setToolbarHidden:YES animated:NO];
 }
 
 - (void)displayUserInfo {

@@ -15,11 +15,10 @@
 
 @end
 
-@implementation ContactsViewController{
-    NSMutableArray *meeters;
-}
+@implementation ContactsViewController
 
 @synthesize friends;
+@synthesize meeters;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -39,6 +38,14 @@
     }
     
     
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    if ([meeters count] > 0) {
+        [self.navigationController setToolbarHidden:NO animated:animated];
+    }else{
+        [self.navigationController setToolbarHidden:YES animated:animated];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -108,7 +115,20 @@
         }
     }
     
+    if ([meeters count] > 0) {
+        // show toolbar
+        
+        [self.navigationController setToolbarHidden:NO animated:YES];
+    }else{
+        // hide toolbar
+        
+        [self.navigationController setToolbarHidden:YES animated:YES];
+    }
+    
 }
+
+
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -151,6 +171,10 @@
 
 #pragma mark - Navigation
 
+- (IBAction)sendBtnHit:(id)sender {
+    // TODO: send meeting to Parse
+}
+
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -159,6 +183,8 @@
         [vc initFromContacts];
         [vc setMeeters:meeters];
     }
+    
+    [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
  

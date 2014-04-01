@@ -74,6 +74,10 @@
     [appDelegate setHome:self];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [self.navigationController setToolbarHidden:YES animated:animated];
+}
+
 - (void)viewDidUnload {
     self.fetchedResultsController = nil;
 }
