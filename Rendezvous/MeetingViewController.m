@@ -57,6 +57,10 @@
     self.detailsTextView.delegate = self;
 }
 
+- (void) viewWillAppear:(BOOL)animated{
+    [self.navigationController setToolbarHidden:YES animated:animated];
+}
+
 - (BOOL) textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     // hides keyboard on return
     
