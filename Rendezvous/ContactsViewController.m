@@ -31,6 +31,37 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+//    BOOL found;
+//
+//    // Loop through the books and create our keys
+//    for (NSDictionary *friend in friends) {
+//        NSString *c = [[friend objectForKey:@"name"] substringToIndex:1];
+//
+//        found = NO;
+//
+//        for (NSString *str in [self.sections allKeys]) {
+//            if ([str isEqualToString:c]) {
+//                found = YES;
+//            }
+//        }
+//
+//        if (!found) {
+//            [self.sections setValue:[[NSMutableArray alloc] init] forKey:c];
+//        }
+//    }
+//
+//    // Loop again and sort the books into their respective keys
+//    for (NSDictionary *friend in friends) {
+//        [[self.sections objectForKey:[[book objectForKey:@"name"] substringToIndex:1]] addObject:book];
+//    }
+//
+//    // Sort each section array
+//    for (NSString *key in [self.sections allKeys]) {
+//        [[self.sections objectForKey:key] sortUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
+//    }
+//
+//    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
