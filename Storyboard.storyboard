@@ -492,7 +492,7 @@
                     <toolbarItems>
                         <barButtonItem title="Edit" id="Kka-HL-tSX">
                             <connections>
-                                <segue destination="CMH-LF-aW1" kind="push" id="agR-79-IxN"/>
+                                <segue destination="CMH-LF-aW1" kind="push" identifier="contacts_details_segue" id="agR-79-IxN"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="D4I-nU-Eeh"/>
@@ -713,6 +713,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="4aF-VO-qgM"/>
+        <segue reference="agR-79-IxN"/>
     </inferredMetricsTieBreakers>
 </document>

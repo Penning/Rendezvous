@@ -117,13 +117,13 @@
     
     if ([meeters count] > 0) {
         // show toolbar
-        
         [self.navigationController setToolbarHidden:NO animated:YES];
     }else{
         // hide toolbar
-        
         [self.navigationController setToolbarHidden:YES animated:YES];
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
 
