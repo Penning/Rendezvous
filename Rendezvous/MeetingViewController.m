@@ -19,7 +19,7 @@
 
 
 
-@implementation MeetingViewController{
+@implementation MeetingViewController {
     NSString *tempName;
 }
 
@@ -62,6 +62,10 @@
 
 - (void) viewWillAppear:(BOOL)animated{
     [self.navigationController setToolbarHidden:YES animated:animated];
+}
+
+- (void) textViewDidBeginEditing:(UITextView *) textView {
+    [textView setText:@""];
 }
 
 - (BOOL) textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
