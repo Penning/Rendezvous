@@ -19,7 +19,9 @@
 
 
 
-@implementation MeetingViewController
+@implementation MeetingViewController{
+    NSString *tempName;
+}
 
 @synthesize meeters = _meeters;
 @synthesize meetingObject = _meetingObject;
@@ -45,6 +47,7 @@
         [self.nameTextField setHidden:YES];
         [self.sendContactsButton setTitle:@"Edit Invites" forState:UIControlStateNormal];
         [self.detailsTextView setText:[_meetingObject valueForKey:@"meeting_description"]];
+        [self.nameTextField setText:tempName];
     }else{
         [self.nameLabel setHidden:YES];
         [self.nameTextField setHidden:NO];
@@ -93,12 +96,20 @@
     home = false;
 }
 
+
 - (IBAction)sendContactsBtnHit:(id)sender {
     
     if (!home) {
         // check for name
-        if ([self.nameLabel.text isEqualToString:@""]) {
-            NSLog(@"No meeting name! Ragequit.");
+        if ([self.nameTextField.text isEqualToString:@""]) {
+            UIAlertView * alert = [[UIAlertView alloc]
+                                   initWithTitle:@"No name"
+                                   message:@"Please enter a meeting title"
+                                   delegate:nil
+                                   cancelButtonTitle:@"No"
+                                   otherButtonTitles:nil];
+            alert.alertViewStyle = UIAlertViewStyleDefault;
+            [alert show];
             return;
         }
         
