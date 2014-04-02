@@ -2,7 +2,7 @@
 //  ContactsViewController.m
 //  Rendezvous
 //
-//  Created by Adam Oxner on 3/22/14.
+//  Created by Sumedha Pramod on 3/22/14.
 //  Copyright (c) 2014 Penning. All rights reserved.
 //
 
