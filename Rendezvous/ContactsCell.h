@@ -12,6 +12,7 @@
 @interface ContactsCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UILabel *contactName;
+@property (strong, nonatomic) IBOutlet UIImageView *profilePicture;
 
 - (void)initCellDisplay:(Friend *) fbFriend;
 - (void)initCellDisplayWithString:(NSString *)name;

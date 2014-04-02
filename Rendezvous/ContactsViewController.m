@@ -111,7 +111,6 @@
     // Configure the cell...
     [cell initCellDisplay:[friends objectAtIndex:indexPath.row]];
     
-    
     // show checkmark if meeter
     BOOL isMeeter = NO;
     for (Friend *f in meeters) {

@@ -13,10 +13,16 @@
 
 @property (nonatomic, strong) NSString *facebookID;
 
+//Profile picture
+@property (nonatomic, strong) NSURL *pictureURL;
+
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *first_name;
 @property (nonatomic, strong) NSString *last_name;
 
+@property (nonatomic, strong) UIImageView *profile_picture;
+
 - (Friend *) initWithObject:(NSDictionary<FBGraphUser>*) friend;
+- (NSURL *) getPictureURL;
 
 @end
