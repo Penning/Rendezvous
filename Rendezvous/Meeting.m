@@ -15,7 +15,7 @@
 @synthesize name = _name;
 @synthesize description = _description;
 @synthesize meeters = _meeters;
-@synthesize reason = _reason;
+@synthesize reasons = _reasons;
 
 @synthesize acceptedMeeters = _acceptedMeeters;
 

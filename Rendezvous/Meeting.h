@@ -13,7 +13,7 @@
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *description;
 @property (strong, nonatomic) NSArray *meeters;
-@property (strong, nonatomic) NSString *reason;
+@property (strong, nonatomic) NSMutableArray *reasons;
 
 @property (readonly) NSArray *acceptedMeeters;
 

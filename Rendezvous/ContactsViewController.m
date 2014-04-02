@@ -7,7 +7,7 @@
 //
 
 #import "ContactsViewController.h"
-#import "MeetingViewController.h"
+#import "MeetingReasonViewController.h"
 #import "CurrentUser.h"
 #import "ContactsCell.h"
 
@@ -203,17 +203,11 @@
 
 
 #pragma mark - Navigation
-
-- (IBAction)sendBtnHit:(id)sender {
-    // TODO: send meeting to Parse
-}
-
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"contacts_details_segue"]) {
-        MeetingViewController *vc = (MeetingViewController *)[segue destinationViewController];
-        [vc initFromContacts];
+    if ([[segue identifier] isEqualToString:@"reason_segue"]) {
+        MeetingReasonViewController *vc = (MeetingReasonViewController *)[segue destinationViewController];
         [vc setMeeters:meeters];
     }
     
