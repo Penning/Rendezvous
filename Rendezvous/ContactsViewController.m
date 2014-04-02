@@ -15,7 +15,9 @@
 
 @end
 
-@implementation ContactsViewController
+@implementation ContactsViewController{
+    NSString *meetingName;
+}
 
 @synthesize friends;
 @synthesize meeters;
@@ -68,7 +70,8 @@
         meeters = [[NSMutableArray alloc] init];
     }
     
-    
+    meetingName = [NSString stringWithFormat:@"meeting%u", arc4random() % 9999];
+    [self.meetingNameBarBtn setTitle:meetingName];
 }
 
 - (void)viewWillAppear:(BOOL)animated{

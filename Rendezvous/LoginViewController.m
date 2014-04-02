@@ -41,6 +41,12 @@
     _appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     current_user = _appDelegate.user;
 
+    
+    
+    [self.navigationController setToolbarHidden:YES animated:NO];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
     // Check if user is cached and linked to Facebook, if so, bypass login
     if ([PFUser currentUser]) {
         [self displayUserInfo];
@@ -49,8 +55,6 @@
         current_user = nil;
         [self logoutAction];
     }
-    
-    [self.navigationController setToolbarHidden:YES animated:NO];
 }
 
 - (void)displayUserInfo {
@@ -134,7 +138,17 @@
                     NSLog(@"Uh oh. The user cancelled the Facebook login.");
                 } else {
                     NSLog(@"Uh oh. An error occurred: %@", error);
+                    
+                    UIAlertView * alert = [[UIAlertView alloc]
+                                          initWithTitle:@"Login Error"
+                                          message:@"Uh oh. An error occured."
+                                          delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+                    alert.alertViewStyle = UIAlertViewStyleDefault;
+                    [alert show];
                 }
+                return;
             } else if (user.isNew) {
                 NSLog(@"User with facebook signed up and logged in!");
                 [self performSegueWithIdentifier:@"login_segue" sender:self];
@@ -142,8 +156,9 @@
                 NSLog(@"User with facebook logged in!");
                 [self performSegueWithIdentifier:@"login_segue" sender:self];
             }
+            [self displayUserInfo];
         }];
-        [self displayUserInfo];
+        
 //        [_loginButton setTitle: @"Log out" forState: UIControlStateApplication];
     }
 }
