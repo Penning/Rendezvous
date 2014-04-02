@@ -26,16 +26,15 @@
 
 //    NSLog(@"%@", userData);
 
-    FBRequest *friendsRequest = [FBRequest requestForMyFriends];
-    [friendsRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
-                                                  NSDictionary* result,
-                                                  NSError *error) {
-        NSArray *friends = result[@"data"];
+    FBRequest *friendRequest = [FBRequest requestForGraphPath:@"me/friends?fields=name,picture"];
+    [friendRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        NSArray *data = [result objectForKey:@"data"];
         _friends = [[NSMutableArray alloc] init];
-        for (NSDictionary<FBGraphUser>* friend in friends) {
+        for (FBGraphObject<FBGraphUser> *friend in data) {
             [_friends addObject:[[Friend alloc] initWithObject:friend]];
+//            NSLog(@"friend :%@", friend);
         }
-        NSLog(@"Found %lu friends!", _friends.count);
+        NSLog(@"Found %i friends!", _friends.count);
     }];
 }
 

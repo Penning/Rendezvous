@@ -8,16 +8,23 @@
 
 #import "Friend.h"
 
-@implementation Friend
+@implementation Friend {
+    NSMutableData *imageData;
+}
 
 - (Friend *) initWithObject:(NSDictionary<FBGraphUser>*) friend {
     _name = friend.name;
-    _first_name = friend.first_name;
-    _last_name = friend.last_name;
-    
+
     _facebookID = friend.id;
 
+    _pictureURL = [[[friend objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
+    NSLog(@"PICTURE URL: %@", _pictureURL);
+
     return self;
+}
+
+- (NSURL *) getPictureURL {
+    return _pictureURL;
 }
 
 @end

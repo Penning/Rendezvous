@@ -7,6 +7,7 @@
 //
 
 #import "ContactsCell.h"
+#import "SDWebImage/UIImageView+WebCache.h"
 
 @implementation ContactsCell
 
@@ -35,6 +36,7 @@
 
 - (void)initCellDisplay:(Friend *) fbFriend {
     _contactName.text = fbFriend.name;
+    [_profilePicture setImageWithURL:fbFriend.pictureURL placeholderImage:[UIImage imageNamed:@"111-user.png"]];
 }
 
 - (void)initCellDisplayWithString:(NSString *) name {
