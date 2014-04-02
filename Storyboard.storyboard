@@ -351,6 +351,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="poi_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="gRj-e8-bYD">
+                                <rect key="frame" x="0.0" y="0.0" width="332" height="465"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Tt-b4-6qe">
                                 <rect key="frame" x="20" y="197" width="280" height="138"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -434,7 +438,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.40000000596046448" green="0.80000001192092896" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="Qr8-Uw-Jr1">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="pXb-5s-yy4">
@@ -710,6 +714,7 @@
     </scenes>
     <resources>
         <image name="login-button-small.png" width="151" height="43"/>
+        <image name="poi_bg.png" width="640" height="1136"/>
         <image name="rendezvous_btn.png" width="1235" height="571"/>
         <image name="rendezvous_logo.png" width="1235" height="571"/>
     </resources>
