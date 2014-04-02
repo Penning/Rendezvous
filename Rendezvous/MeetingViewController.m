@@ -60,9 +60,6 @@
     self.detailsTextView.delegate = self;
 }
 
-- (void) viewWillAppear:(BOOL)animated{
-    [self.navigationController setToolbarHidden:YES animated:animated];
-}
 
 - (void) textViewDidBeginEditing:(UITextView *) textView {
     [textView setText:@""];
