@@ -22,6 +22,7 @@
 		49661CFA18E0E4CD007E5CE6 /* login-button-small-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 49661CF618E0E4CD007E5CE6 /* login-button-small-pressed@2x.png */; };
 		49661CFB18E0E4CD007E5CE6 /* login-button-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 49661CF718E0E4CD007E5CE6 /* login-button-small.png */; };
 		49661CFC18E0E4CD007E5CE6 /* login-button-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 49661CF818E0E4CD007E5CE6 /* login-button-small@2x.png */; };
+		499679DD18EC73D2009CC8E8 /* rendezvous_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 499679DC18EC73D2009CC8E8 /* rendezvous_btn.png */; };
 		49BD483B18E27BE600EAD526 /* ContactsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BD483A18E27BE600EAD526 /* ContactsCell.m */; };
 		49ECB00C18E11E5E003C960D /* rendezvous_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 49ECB00B18E11E5E003C960D /* rendezvous_logo.png */; };
 		49ECB00F18E1214B003C960D /* appIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 49ECB00E18E1214B003C960D /* appIcon.png */; };
@@ -82,6 +83,7 @@
 		49661CF618E0E4CD007E5CE6 /* login-button-small-pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-button-small-pressed@2x.png"; sourceTree = "<group>"; };
 		49661CF718E0E4CD007E5CE6 /* login-button-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-button-small.png"; sourceTree = "<group>"; };
 		49661CF818E0E4CD007E5CE6 /* login-button-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-button-small@2x.png"; sourceTree = "<group>"; };
+		499679DC18EC73D2009CC8E8 /* rendezvous_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rendezvous_btn.png; sourceTree = "<group>"; };
 		49BD483918E27BE600EAD526 /* ContactsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsCell.h; sourceTree = "<group>"; };
 		49BD483A18E27BE600EAD526 /* ContactsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsCell.m; sourceTree = "<group>"; };
 		49ECB00B18E11E5E003C960D /* rendezvous_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rendezvous_logo.png; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 		4FF9ACF618DDEBA5008C9CC3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				499679DC18EC73D2009CC8E8 /* rendezvous_btn.png */,
 				495EA70618E1D22E00DF3D31 /* poi_bg.png */,
 				495EA70818E1D2BE00DF3D31 /* poi_bg2.png */,
 				49ECB00E18E1214B003C960D /* appIcon.png */,
@@ -419,6 +422,7 @@
 				ORGANIZATIONNAME = Penning;
 				TargetAttributes = {
 					4FF9ACE918DDEBA5008C9CC3 = {
+						DevelopmentTeam = 69ZDK4Y6QX;
 						SystemCapabilities = {
 							com.apple.iOS = {
 								enabled = 1;
@@ -462,6 +466,7 @@
 				49ECB00C18E11E5E003C960D /* rendezvous_logo.png in Resources */,
 				4FF9ACFA18DDEBA5008C9CC3 /* InfoPlist.strings in Resources */,
 				4FF9AD0518DDEBA5008C9CC3 /* Images.xcassets in Resources */,
+				499679DD18EC73D2009CC8E8 /* rendezvous_btn.png in Resources */,
 				49661CFC18E0E4CD007E5CE6 /* login-button-small@2x.png in Resources */,
 				4FF9AD2618DDEBE5008C9CC3 /* Storyboard.storyboard in Resources */,
 			);
@@ -614,7 +619,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Adam Oxner (CBW8YF627J)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -626,6 +632,7 @@
 				INFOPLIST_FILE = "Rendezvous/Rendezvous-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -635,7 +642,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Adam Oxner (CBW8YF627J)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -647,6 +655,7 @@
 				INFOPLIST_FILE = "Rendezvous/Rendezvous-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
