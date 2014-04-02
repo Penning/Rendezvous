@@ -48,21 +48,20 @@
         [self.sendContactsButton setTitle:@"Edit Invites" forState:UIControlStateNormal];
         [self.detailsTextView setText:[_meetingObject valueForKey:@"meeting_description"]];
         [self.nameTextField setText:tempName];
+        [self.comeToMeSwitch setEnabled:NO];
     }else{
         [self.nameLabel setHidden:YES];
         [self.nameTextField setHidden:NO];
         [self.nameTextField setDelegate:self];
         [self.numMeetersLabel setText:[NSString stringWithFormat:@"%lu invitees", (unsigned long)_meeters.count]];
         [self.sendContactsButton setTitle:@"Send Invites" forState:UIControlStateNormal];
+        [self.comeToMeSwitch setEnabled:YES];
     }
     
     [self.comeToMeSwitch setOn:((NSNumber *)[_meetingObject valueForKey:@"is_ComeToMe"]).boolValue];
     self.detailsTextView.delegate = self;
 }
 
-- (void) viewWillAppear:(BOOL)animated{
-    [self.navigationController setToolbarHidden:YES animated:animated];
-}
 
 - (void) textViewDidBeginEditing:(UITextView *) textView {
     [textView setText:@""];

@@ -82,6 +82,10 @@
     }
 }
 
+- (void) viewWillDisappear:(BOOL)animated{
+    [self.navigationController setToolbarHidden:YES animated:animated];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
