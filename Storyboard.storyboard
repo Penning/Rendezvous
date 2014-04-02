@@ -30,7 +30,7 @@
                                     <action selector="logout:" destination="vLf-wb-run" eventType="touchUpInside" id="ViG-eI-VAw"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rendezvous_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="eLS-sI-TFA">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rendezvous_logo" translatesAutoresizingMaskIntoConstraints="NO" id="eLS-sI-TFA">
                                 <rect key="frame" x="20" y="194" width="280" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -39,7 +39,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <inset key="contentEdgeInsets" minX="44" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="Log in" backgroundImage="login-button-small.png">
+                                <state key="normal" title="Log in" backgroundImage="login-button-small">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -351,14 +351,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="poi_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="gRj-e8-bYD">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="poi_bg" translatesAutoresizingMaskIntoConstraints="NO" id="gRj-e8-bYD">
                                 <rect key="frame" x="0.0" y="0.0" width="332" height="465"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Tt-b4-6qe">
                                 <rect key="frame" x="20" y="197" width="280" height="138"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="rendezvous_btn.png">
+                                <state key="normal" image="rendezvous_btn">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -745,7 +745,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="poi_bg2.png" translatesAutoresizingMaskIntoConstraints="NO" id="lC2-LF-HfN">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="poi_bg2" translatesAutoresizingMaskIntoConstraints="NO" id="lC2-LF-HfN">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
@@ -753,7 +753,7 @@
                                 <rect key="frame" x="58" y="88" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
-                                <state key="normal" image="125-food.png">
+                                <state key="normal" image="125-food">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -766,7 +766,7 @@
                                 <rect key="frame" x="187" y="88" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
-                                <state key="normal" image="144-martini.png">
+                                <state key="normal" image="144-martini">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -779,7 +779,7 @@
                                 <rect key="frame" x="58" y="193" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
-                                <state key="normal" image="34-coffee.png">
+                                <state key="normal" image="34-coffee">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -792,7 +792,7 @@
                                 <rect key="frame" x="187" y="193" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
-                                <state key="normal" image="45-movie-1.png">
+                                <state key="normal" image="45-movie-1">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -805,7 +805,7 @@
                                 <rect key="frame" x="58" y="300" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
-                                <state key="normal" image="80-shopping-cart.png">
+                                <state key="normal" image="80-shopping-cart">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -818,7 +818,7 @@
                                 <rect key="frame" x="187" y="300" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
-                                <state key="normal" image="98-palette.png">
+                                <state key="normal" image="98-palette">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -831,7 +831,7 @@
                                 <rect key="frame" x="58" y="405" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
-                                <state key="normal" image="96-book.png">
+                                <state key="normal" image="96-book">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -844,7 +844,7 @@
                                 <rect key="frame" x="187" y="405" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
-                                <state key="normal" image="65-note.png">
+                                <state key="normal" image="65-note">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -871,19 +871,20 @@
         </scene>
     </scenes>
     <resources>
-        <image name="125-food.png" width="29" height="23"/>
-        <image name="144-martini.png" width="22" height="24"/>
-        <image name="34-coffee.png" width="24" height="26"/>
-        <image name="45-movie-1.png" width="19" height="25"/>
-        <image name="65-note.png" width="15" height="24"/>
-        <image name="80-shopping-cart.png" width="26" height="19"/>
-        <image name="96-book.png" width="18" height="26"/>
-        <image name="98-palette.png" width="24" height="20"/>
+        <image name="125-food" width="29" height="23"/>
+        <image name="144-martini" width="22" height="24"/>
+        <image name="34-coffee" width="24" height="26"/>
+        <image name="45-movie-1" width="19" height="25"/>
+        <image name="65-note" width="15" height="24"/>
+        <image name="80-shopping-cart" width="26" height="19"/>
+        <image name="96-book" width="18" height="26"/>
+        <image name="98-palette" width="24" height="20"/>
+        <image name="login-button-small" width="151" height="43"/>
         <image name="login-button-small.png" width="151" height="43"/>
-        <image name="poi_bg.png" width="640" height="1136"/>
-        <image name="poi_bg2.png" width="640" height="1136"/>
-        <image name="rendezvous_btn.png" width="1235" height="571"/>
-        <image name="rendezvous_logo.png" width="1235" height="571"/>
+        <image name="poi_bg" width="640" height="1136"/>
+        <image name="poi_bg2" width="640" height="1136"/>
+        <image name="rendezvous_btn" width="1235" height="571"/>
+        <image name="rendezvous_logo" width="1235" height="571"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
@@ -891,6 +892,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="agR-79-IxN"/>
+        <segue reference="4aF-VO-qgM"/>
     </inferredMetricsTieBreakers>
 </document>
