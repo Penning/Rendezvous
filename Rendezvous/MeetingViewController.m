@@ -64,6 +64,10 @@
     self.detailsTextView.delegate = self;
 }
 
+- (void) viewWillAppear:(BOOL)animated{
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
 
 - (void) textViewDidBeginEditing:(UITextView *) textView {
     [textView setText:@""];
@@ -174,7 +178,7 @@
         
         
         // unwind segue to home
-        // [self.navigationController popToViewController:appDelegate.home animated:YES];
+        [self.navigationController popToViewController:appDelegate.home animated:YES];
         
     }else{
         // TODO: go to contacts
