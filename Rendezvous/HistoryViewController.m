@@ -1,22 +1,20 @@
 //
-//  HomeViewController.m
+//  HistoryViewController.m
 //  Rendezvous
 //
-//  Created by Adam Oxner on 3/22/14.
+//  Created by Adam Oxner on 4/2/14.
 //  Copyright (c) 2014 Penning. All rights reserved.
 //
 
-#import "HomeViewController.h"
-#import "MeetingViewController.h"
-#import "ContactsViewController.h"
-#import <Parse/Parse.h>
+#import "HistoryViewController.h"
 #import "CurrentUser.h"
+#import "AppDelegate.h"
 
-@interface HomeViewController ()
+@interface HistoryViewController ()
 
 @end
 
-@implementation HomeViewController {
+@implementation HistoryViewController {
     CurrentUser *current_user;
     AppDelegate *appDelegate;
     NSIndexPath *lastSelected;
@@ -25,16 +23,14 @@
 @synthesize fetchedResultsController = _fetchedResultsController;
 @synthesize managedObjectContext = _managedObjectContext;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithStyle:(UITableViewStyle)style
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
     }
     return self;
 }
-
-
 
 - (void)viewDidLoad
 {
@@ -51,13 +47,13 @@
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
     [fetchRequest setEntity:fetchEntity];
-
+    
     
     _fetchedResultsController = [[NSFetchedResultsController alloc]
-                  initWithFetchRequest:fetchRequest
-                  managedObjectContext:context
-                  sectionNameKeyPath:nil
-                  cacheName:@"meeting_cache"];
+                                 initWithFetchRequest:fetchRequest
+                                 managedObjectContext:context
+                                 sectionNameKeyPath:nil
+                                 cacheName:@"history_cache"];
     [_fetchedResultsController setDelegate:self];
     
     
@@ -66,43 +62,12 @@
     if (!success) {
         NSLog(@"Core data error. Could not fetch results controller.");
     }
-
-    
-    [[self navigationController] setNavigationBarHidden:NO animated:YES];
-    [self.tableView reloadData];
-    
-    [appDelegate setHome:self];
-}
-
-
-- (void)viewDidUnload {
-    self.fetchedResultsController = nil;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)cellSingleTapped:(HomeCell *)sender{
-    // a cell was single tapped
-    lastSelected = sender.indexPath;
-    [self performSegueWithIdentifier:@"home_details_segue" sender:self];
-}
-
-- (void)cellDoubleTapped:(HomeCell *)sender{
-    // a cell was double tapped
-    lastSelected = sender.indexPath;
-    [self performSegueWithIdentifier:@"close_meeting_segue" sender:self];
-}
-
-- (IBAction)logoutBtnHit:(id)sender {
-    // logout btn hit
-    
-    [PFUser logOut];
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    [self.navigationController.visibleViewController viewDidLoad];
 }
 
 #pragma mark - Table view data source
@@ -128,7 +93,7 @@
     NSFetchedResultsController *theFetchedResultsController =
     [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                         managedObjectContext:_managedObjectContext sectionNameKeyPath:nil
-                                                   cacheName:@"meeting_cache"];
+                                                   cacheName:@"history_cache"];
     self.fetchedResultsController = theFetchedResultsController;
     _fetchedResultsController.delegate = self;
     
@@ -164,60 +129,28 @@
 - (void)configureCell:(UITableViewCell *)cell1 atIndexPath:(NSIndexPath *)indexPath{
     NSManagedObject *meeting_object = [_fetchedResultsController objectAtIndexPath:indexPath];
     
-    HomeCell *cell = (HomeCell *)cell1;
+    [cell1.textLabel setText:[meeting_object valueForKey:@"meeting_name"]];
+    [cell1.detailTextLabel setText:[NSString stringWithFormat:@"From: %@", [meeting_object valueForKeyPath:@"admin.name"]]];
     
-    [cell setIndexPath:indexPath];
-    [cell initializeGestureRecognizer];
-    [cell setParentController:self];
-    
-    [cell.meetingName setText:[meeting_object valueForKey:@"meeting_name"]];
-    [cell.meetingAdmin setText:[meeting_object valueForKeyPath:@"admin.name"]];
 }
 
- - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
- {
-     HomeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"home_cell"];
-     if (cell == nil) {
-         cell = [[HomeCell alloc] init];
-     }
-     
-     // Configure the cell...
-     [self configureCell:cell atIndexPath:indexPath];
- 
-     return cell;
- }
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"history_cell"];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"history_cell"];
+    }
+    
+    // Configure the cell...
+    [self configureCell:cell atIndexPath:indexPath];
+    
+    return cell;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
-
-#pragma mark - Navigation
- 
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
-     if ([[segue identifier] isEqualToString:@"home_details_segue"]) {
-         MeetingViewController *vc = (MeetingViewController *)[segue destinationViewController];
-         [vc setMeetingObject:[_fetchedResultsController objectAtIndexPath:lastSelected]];
-         [vc initFromHome];
-         
-     } else if([[segue identifier] isEqualToString:@"new_meeting_segue"]) {
-         appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-         current_user = appDelegate.user;
-
-         if(current_user.friends.count == 0) {
-             [current_user getMyInformation];
-         }
-
-         ContactsViewController *vc = (ContactsViewController *)[segue destinationViewController];
-         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
-                                                      ascending:YES];
-         NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-         vc.friends = [current_user.friends sortedArrayUsingDescriptors:sortDescriptors];
-     }
-     
- }
 
 #pragma mark - FetchedResultsController delegates
 
@@ -276,5 +209,15 @@
 }
 
 
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end
