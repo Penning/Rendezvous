@@ -36,6 +36,11 @@
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     reasons = [[NSMutableArray alloc] init];
     // Do any additional setup after loading the view.
+    // [[self navigationController] setNavigationBarHidden:YES animated:YES];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+//    [self.navigationController setToolbarHidden:NO animated:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -150,6 +155,10 @@
 
 - (IBAction)sendMeeting:(id)sender {
     //Send meeting to Parse
+}
+
+- (IBAction)back:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

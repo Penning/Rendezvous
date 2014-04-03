@@ -48,12 +48,14 @@
         [self.sendContactsButton setTitle:@"Edit Invites" forState:UIControlStateNormal];
         [self.detailsTextView setText:[_meetingObject valueForKey:@"meeting_description"]];
         [self.nameTextField setText:tempName];
+        [self.comeToMeSwitch setEnabled:NO];
     }else{
         [self.nameLabel setHidden:YES];
         [self.nameTextField setHidden:NO];
         [self.nameTextField setDelegate:self];
         [self.numMeetersLabel setText:[NSString stringWithFormat:@"%lu invitees", (unsigned long)_meeters.count]];
         [self.sendContactsButton setTitle:@"Send Invites" forState:UIControlStateNormal];
+        [self.comeToMeSwitch setEnabled:YES];
     }
 
     NSLog(@"Reasons: %@", _reasons);
@@ -62,9 +64,6 @@
     self.detailsTextView.delegate = self;
 }
 
-- (void) viewWillAppear:(BOOL)animated{
-    [self.navigationController setToolbarHidden:YES animated:animated];
-}
 
 - (void) textViewDidBeginEditing:(UITextView *) textView {
     [textView setText:@""];
@@ -175,7 +174,7 @@
         
         
         // unwind segue to home
-        [self.navigationController popToViewController:appDelegate.home animated:YES];
+        // [self.navigationController popToViewController:appDelegate.home animated:YES];
         
     }else{
         // TODO: go to contacts
@@ -240,20 +239,20 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"meeting_contacts_segue"]) {
-        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        CurrentUser *current_user = appDelegate.user;
-        
-        if(current_user.friends.count == 0) {
-            [current_user getMyInformation];
-        }
-        
-        ContactsViewController *vc = (ContactsViewController *)[segue destinationViewController];
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
-                                                                       ascending:YES];
-        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-        vc.friends = [current_user.friends sortedArrayUsingDescriptors:sortDescriptors];
-    }
+//    if ([segue.identifier isEqualToString:@"meeting_contacts_segue"]) {
+//        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//        CurrentUser *current_user = appDelegate.user;
+//        
+//        if(current_user.friends.count == 0) {
+//            [current_user getMyInformation];
+//        }
+//        
+//        ContactsViewController *vc = (ContactsViewController *)[segue destinationViewController];
+//        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
+//                                                                       ascending:YES];
+//        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+//        vc.friends = [current_user.friends sortedArrayUsingDescriptors:sortDescriptors];
+//    }
 }
 
 
