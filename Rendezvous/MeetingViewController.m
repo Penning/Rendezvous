@@ -51,6 +51,11 @@
         [self.detailsTextView setText:[_meetingObject valueForKey:@"meeting_description"]];
         [self.nameTextField setText:tempName];
         [self.comeToMeSwitch setEnabled:NO];
+        NSSet *rez = [_meetingObject mutableSetValueForKeyPath:@"reasons"];
+        for (NSString *r in rez) {
+            [self.reasonsLabel setText:[self.reasonsLabel.text stringByAppendingString:[NSString stringWithFormat:@" %@", [r valueForKey:@"reason"]]]];
+        }
+        
         
     }else{
         // if making a new event
@@ -60,6 +65,10 @@
         [self.numMeetersLabel setText:[NSString stringWithFormat:@"%lu invitees", (unsigned long)_meeters.count]];
         [self.sendContactsButton setTitle:@"Send Invites" forState:UIControlStateNormal];
         [self.comeToMeSwitch setEnabled:YES];
+        for (NSString *r in _reasons) {
+            [self.reasonsLabel setText:[self.reasonsLabel.text stringByAppendingString:[NSString stringWithFormat:@" %@", r]]];
+        }
+        
     }
 
     
@@ -155,7 +164,7 @@
         }
         
         // add invitees to meeting
-        [meeting_object setValue:friendsSet forKeyPath:@"invites"];
+        [meeting_object setValue:friendsSet forKey:@"invites"];
         
         // create Person object for self
         NSManagedObject *meAdmin = [NSEntityDescription
@@ -176,7 +185,7 @@
             NSManagedObject *newReason = [NSEntityDescription
                                           insertNewObjectForEntityForName:@"Meeting_reason"
                                           inManagedObjectContext:context];
-            [newReason setValue:r forKeyPath:@"reason"];
+            [newReason setValue:r forKey:@"reason"];
             [reasonsSet addObject:newReason];
         }
         [meeting_object setValue:reasonsSet forKeyPath:@"reasons"];
