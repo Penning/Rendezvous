@@ -598,6 +598,7 @@
                                 </state>
                                 <connections>
                                     <action selector="sendContactsBtnHit:" destination="CMH-LF-aW1" eventType="touchUpInside" id="qxT-Wj-bQl"/>
+                                    <segue destination="44V-bZ-Ujm" kind="push" id="r2J-45-Uk9"/>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Come to me!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tja-oq-TsW">
@@ -649,41 +650,11 @@
                         <outlet property="nameTextField" destination="MiB-Rf-4dY" id="gBf-Vs-bpG"/>
                         <outlet property="numMeetersLabel" destination="moL-sP-TjI" id="6YP-cx-paH"/>
                         <outlet property="sendContactsButton" destination="22r-ZD-fc0" id="pyG-an-pel"/>
-                        <segue destination="0IK-DO-bWB" kind="push" identifier="meeting_contacts_segue" id="gT1-5y-1Wi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aw4-VH-TBH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2321" y="135"/>
-        </scene>
-        <!--Contacts View Controller - Edit Invites-->
-        <scene sceneID="qxT-8R-22G">
-            <objects>
-                <tableViewController id="0IK-DO-bWB" customClass="ContactsViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="7p7-Hh-tdr">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="RLf-i9-CAm">
-                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RLf-i9-CAm" id="mfD-8c-5AE">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="0IK-DO-bWB" id="cZs-lw-Lbm"/>
-                            <outlet property="delegate" destination="0IK-DO-bWB" id="CLM-pG-ioS"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Edit Invites" id="QjI-pm-Rd2"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vhl-Va-wgd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2764" y="135"/>
         </scene>
         <!--Location View Controller - Location-->
         <scene sceneID="8Ev-bO-a8e">
@@ -968,6 +939,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="r2J-45-Uk9"/>
         <segue reference="b0F-Ey-isj"/>
     </inferredMetricsTieBreakers>
 </document>

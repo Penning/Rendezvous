@@ -239,20 +239,20 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"meeting_contacts_segue"]) {
-        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        CurrentUser *current_user = appDelegate.user;
-        
-        if(current_user.friends.count == 0) {
-            [current_user getMyInformation];
-        }
-        
-        ContactsViewController *vc = (ContactsViewController *)[segue destinationViewController];
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
-                                                                       ascending:YES];
-        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-        vc.friends = [current_user.friends sortedArrayUsingDescriptors:sortDescriptors];
-    }
+//    if ([segue.identifier isEqualToString:@"meeting_contacts_segue"]) {
+//        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//        CurrentUser *current_user = appDelegate.user;
+//        
+//        if(current_user.friends.count == 0) {
+//            [current_user getMyInformation];
+//        }
+//        
+//        ContactsViewController *vc = (ContactsViewController *)[segue destinationViewController];
+//        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
+//                                                                       ascending:YES];
+//        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+//        vc.friends = [current_user.friends sortedArrayUsingDescriptors:sortDescriptors];
+//    }
 }
 
 
