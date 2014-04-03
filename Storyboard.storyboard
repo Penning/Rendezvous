@@ -232,21 +232,37 @@
             </objects>
             <point key="canvasLocation" x="920" y="-1057"/>
         </scene>
-        <!--Table View Controller - History-->
+        <!--History View Controller - History-->
         <scene sceneID="uMz-U9-4nE">
             <objects>
-                <tableViewController id="2Y5-vT-BOy" sceneMemberID="viewController">
+                <tableViewController id="2Y5-vT-BOy" customClass="HistoryViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="66l-VB-Hus">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="VED-xK-RXM">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="history_cell" textLabel="LZD-lM-3ay" detailTextLabel="1qH-IR-eOH" style="IBUITableViewCellStyleSubtitle" id="VED-xK-RXM">
                                 <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VED-xK-RXM" id="LXs-fz-gxi">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LZD-lM-3ay">
+                                            <rect key="frame" x="15" y="3" width="34" height="22"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1qH-IR-eOH">
+                                            <rect key="frame" x="15" y="25" width="43" height="15"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -521,9 +537,10 @@
                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="DhL-bW-hpg"/>
-                        <barButtonItem title="Next" style="done" id="zbE-6F-wuo">
+                        <barButtonItem title="OK" style="done" id="zbE-6F-wuo">
                             <connections>
-                                <segue destination="A0z-Vv-c9D" kind="push" identifier="reason_segue" id="hjk-wC-Exb"/>
+                                <action selector="sendBtnHit:" destination="5vL-M4-hZj" id="v8u-t8-gYI"/>
+                                <segue destination="A0z-Vv-c9D" kind="push" id="pNb-pH-XxT"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
@@ -585,6 +602,7 @@
                                 </state>
                                 <connections>
                                     <action selector="sendContactsBtnHit:" destination="CMH-LF-aW1" eventType="touchUpInside" id="qxT-Wj-bQl"/>
+                                    <segue destination="A0z-Vv-c9D" kind="push" id="Gri-in-nhe"/>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Come to me!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tja-oq-TsW">
@@ -641,7 +659,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aw4-VH-TBH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1922" y="135"/>
+            <point key="canvasLocation" x="2112" y="135"/>
         </scene>
         <!--Contacts View Controller - Edit Invites-->
         <scene sceneID="qxT-8R-22G">
@@ -670,7 +688,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vhl-Va-wgd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2348" y="135"/>
+            <point key="canvasLocation" x="2112" y="873"/>
         </scene>
         <!--Location View Controller - Location-->
         <scene sceneID="8Ev-bO-a8e">
@@ -915,6 +933,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="VNc-pk-KSU"/>
+                        <barButtonItem title="Send" style="done" id="li7-dQ-0ng"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="4k0-Ey-40L"/>
                     <connections>
                         <outlet property="arts" destination="WaR-Jg-u1y" id="byj-gg-d9G"/>
@@ -956,5 +978,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="b0F-Ey-isj"/>
         <segue reference="LbF-ob-sXQ"/>
+        <segue reference="agR-79-IxN"/>
+        <segue reference="pNb-pH-XxT"/>
+>>>>>>> adam_dev
     </inferredMetricsTieBreakers>
 </document>
