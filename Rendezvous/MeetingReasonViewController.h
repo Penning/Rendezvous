@@ -11,6 +11,14 @@
 @interface MeetingReasonViewController : UIViewController
 
 @property (strong, nonatomic) NSMutableArray *meeters;
+@property (strong, nonatomic) IBOutlet UIButton *food;
+@property (strong, nonatomic) IBOutlet UIButton *drinks;
+@property (strong, nonatomic) IBOutlet UIButton *coffee;
+@property (strong, nonatomic) IBOutlet UIButton *entertainment;
+@property (strong, nonatomic) IBOutlet UIButton *shopping;
+@property (strong, nonatomic) IBOutlet UIButton *arts;
+@property (strong, nonatomic) IBOutlet UIButton *studying;
+@property (strong, nonatomic) IBOutlet UIButton *music;
 
 - (IBAction)foodSelected:(id)sender;
 - (IBAction)drinksSelected:(id)sender;

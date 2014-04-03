@@ -21,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *numMeetersLabel;
 
 @property (strong, nonatomic) NSArray *meeters;
+@property (strong, nonatomic) NSArray *reasons;
 @property (strong, nonatomic) Meeting *meeting;
 
 @property (strong, nonatomic) NSManagedObject *meetingObject;
