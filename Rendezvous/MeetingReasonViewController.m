@@ -9,11 +9,15 @@
 #import "MeetingReasonViewController.h"
 #import "MeetingViewController.h"
 
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:0.3]
+
 @interface MeetingReasonViewController ()
 
 @end
 
-@implementation MeetingReasonViewController
+@implementation MeetingReasonViewController {
+    NSMutableArray *reasons;
+}
 
 @synthesize meeters;
 
@@ -30,6 +34,7 @@
 {
     [super viewDidLoad];
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    reasons = [[NSMutableArray alloc] init];
     // Do any additional setup after loading the view.
 }
 
@@ -47,6 +52,7 @@
     if ([[segue identifier] isEqualToString:@"contacts_details_segue"]) {
         MeetingViewController *vc = (MeetingViewController *)[segue destinationViewController];
         [vc initFromContacts];
+        [vc setReasons:reasons];
         [vc setMeeters:meeters];
     }
     // Get the new view controller using [segue destinationViewController].
@@ -55,30 +61,95 @@
 
 
 - (IBAction)foodSelected:(id)sender {
+    if(![reasons containsObject:@"food"]) {
+        [reasons addObject:@"food"];
+        [_food setBackgroundColor:UIColorFromRGB(0x000000)];
+    }
+    else {
+        [reasons removeObject:@"food"];
+        [_food setBackgroundColor:UIColorFromRGB(0xffffff)];
+    }
 }
 
 - (IBAction)drinksSelected:(id)sender {
+    if(![reasons containsObject:@"drinks"]) {
+        [reasons addObject:@"drinks"];
+        [_drinks setBackgroundColor:UIColorFromRGB(0x000000)];
+    }
+    else {
+        [reasons removeObject:@"drinks"];
+        [_drinks setBackgroundColor:UIColorFromRGB(0xffffff)];
+    }
 }
 
 - (IBAction)coffeeSelected:(id)sender {
+    if(![reasons containsObject:@"coffee"]) {
+        [reasons addObject:@"coffee"];
+        [_coffee setBackgroundColor:UIColorFromRGB(0x000000)];
+    }
+    else {
+        [reasons removeObject:@"coffee"];
+        [_coffee setBackgroundColor:UIColorFromRGB(0xffffff)];
+    }
 }
 
 - (IBAction)entertainmentSelected:(id)sender {
+    if(![reasons containsObject:@"entertainment"]) {
+        [reasons addObject:@"entertainment"];
+        [_entertainment setBackgroundColor:UIColorFromRGB(0x000000)];
+    }
+    else {
+        [reasons removeObject:@"entertainment"];
+        [_entertainment setBackgroundColor:UIColorFromRGB(0xffffff)];
+    }
 }
 
 - (IBAction)shoppingSelected:(id)sender {
+    if(![reasons containsObject:@"shopping"]) {
+        [reasons addObject:@"shopping"];
+        [_shopping setBackgroundColor:UIColorFromRGB(0x000000)];
+    }
+    else {
+        [reasons removeObject:@"shopping"];
+        [_shopping setBackgroundColor:UIColorFromRGB(0xffffff)];
+    }
 }
 
 - (IBAction)artsSelected:(id)sender {
+    if(![reasons containsObject:@"arts"]) {
+        [reasons addObject:@"arts"];
+        [_arts setBackgroundColor:UIColorFromRGB(0x000000)];
+    }
+    else {
+        [reasons removeObject:@"arts"];
+        [_arts setBackgroundColor:UIColorFromRGB(0xffffff)];
+    }
 }
 
 - (IBAction)studyingSelected:(id)sender {
+    if(![reasons containsObject:@"studying"]) {
+        [reasons addObject:@"studying"];
+        [_studying setBackgroundColor:UIColorFromRGB(0x000000)];
+    }
+    else {
+        [reasons removeObject:@"studying"];
+        [_studying setBackgroundColor:UIColorFromRGB(0xffffff)];
+    }
 }
 
 - (IBAction)musicSelected:(id)sender {
+    if(![reasons containsObject:@"music"]) {
+        [reasons addObject:@"music"];
+        [_music setBackgroundColor:UIColorFromRGB(0x000000)];
+    }
+    else {
+        [reasons removeObject:@"music"];
+        [_music setBackgroundColor:UIColorFromRGB(0xffffff)];
+    }
 }
 
 - (IBAction)sendMeeting:(id)sender {
+    //Send meeting to Parse
 }
 
 @end

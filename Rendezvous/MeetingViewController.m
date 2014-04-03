@@ -55,6 +55,8 @@
         [self.numMeetersLabel setText:[NSString stringWithFormat:@"%lu invitees", (unsigned long)_meeters.count]];
         [self.sendContactsButton setTitle:@"Send Invites" forState:UIControlStateNormal];
     }
+
+    NSLog(@"Reasons: %@", _reasons);
     
     [self.comeToMeSwitch setOn:((NSNumber *)[_meetingObject valueForKey:@"is_ComeToMe"]).boolValue];
     self.detailsTextView.delegate = self;

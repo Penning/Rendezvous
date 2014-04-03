@@ -474,7 +474,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="friendCell" rowHeight="40" id="v9i-vn-Ib9" customClass="ContactsCell">
-                                <rect key="frame" x="0.0" y="86" width="320" height="40"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="40"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="v9i-vn-Ib9" id="mZS-Mo-t2g">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="39"/>
@@ -902,6 +902,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="4k0-Ey-40L"/>
+                    <connections>
+                        <outlet property="arts" destination="WaR-Jg-u1y" id="byj-gg-d9G"/>
+                        <outlet property="coffee" destination="HlD-og-sWp" id="d8h-TP-aTY"/>
+                        <outlet property="drinks" destination="F4W-h8-xUz" id="KGk-L8-gwk"/>
+                        <outlet property="entertainment" destination="hU1-R8-Tdf" id="13V-wH-bi6"/>
+                        <outlet property="food" destination="0dO-Jl-H6d" id="FEl-i7-JM7"/>
+                        <outlet property="music" destination="rla-zP-zSV" id="slA-mF-P2L"/>
+                        <outlet property="shopping" destination="LqP-xF-fPs" id="Qxh-dY-QYj"/>
+                        <outlet property="studying" destination="naX-NA-Si3" id="N5D-wE-0gO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PJa-DX-yrL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
