@@ -67,23 +67,23 @@
 
 
 - (IBAction)foodSelected:(id)sender {
-    if(![reasons containsObject:@"food"]) {
-        [reasons addObject:@"food"];
+    if(![reasons containsObject:@"restaurants"]) {
+        [reasons addObject:@"restaurants"];
         [_food setBackgroundColor:UIColorFromRGB(0x000000)];
     }
     else {
-        [reasons removeObject:@"food"];
+        [reasons removeObject:@"restaurants"];
         [_food setBackgroundColor:UIColorFromRGB(0xffffff)];
     }
 }
 
 - (IBAction)drinksSelected:(id)sender {
-    if(![reasons containsObject:@"drinks"]) {
-        [reasons addObject:@"drinks"];
+    if(![reasons containsObject:@"bars"]) {
+        [reasons addObject:@"bars"];
         [_drinks setBackgroundColor:UIColorFromRGB(0x000000)];
     }
     else {
-        [reasons removeObject:@"drinks"];
+        [reasons removeObject:@"bars"];
         [_drinks setBackgroundColor:UIColorFromRGB(0xffffff)];
     }
 }
@@ -100,12 +100,12 @@
 }
 
 - (IBAction)entertainmentSelected:(id)sender {
-    if(![reasons containsObject:@"entertainment"]) {
-        [reasons addObject:@"entertainment"];
+    if(![reasons containsObject:@"movietheaters"]) {
+        [reasons addObject:@"movietheaters"];
         [_entertainment setBackgroundColor:UIColorFromRGB(0x000000)];
     }
     else {
-        [reasons removeObject:@"entertainment"];
+        [reasons removeObject:@"movietheaters"];
         [_entertainment setBackgroundColor:UIColorFromRGB(0xffffff)];
     }
 }
@@ -133,23 +133,23 @@
 }
 
 - (IBAction)studyingSelected:(id)sender {
-    if(![reasons containsObject:@"studying"]) {
-        [reasons addObject:@"studying"];
+    if(![reasons containsObject:@"libraries"]) {
+        [reasons addObject:@"libraries"];
         [_studying setBackgroundColor:UIColorFromRGB(0x000000)];
     }
     else {
-        [reasons removeObject:@"studying"];
+        [reasons removeObject:@"libraries"];
         [_studying setBackgroundColor:UIColorFromRGB(0xffffff)];
     }
 }
 
 - (IBAction)musicSelected:(id)sender {
-    if(![reasons containsObject:@"music"]) {
-        [reasons addObject:@"music"];
+    if(![reasons containsObject:@"musicvenues"]) {
+        [reasons addObject:@"musicvenues"];
         [_music setBackgroundColor:UIColorFromRGB(0x000000)];
     }
     else {
-        [reasons removeObject:@"music"];
+        [reasons removeObject:@"musicvenues"];
         [_music setBackgroundColor:UIColorFromRGB(0xffffff)];
     }
 }
@@ -159,7 +159,7 @@
 }
 
 - (IBAction)back:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    //[self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
