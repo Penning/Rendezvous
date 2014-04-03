@@ -627,8 +627,8 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Let's met for..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J5W-JZ-9wJ">
-                                <rect key="frame" x="97" y="315" width="127" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Let's meet for..." textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J5W-JZ-9wJ">
+                                <rect key="frame" x="20" y="315" width="280" height="62"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
@@ -649,6 +649,7 @@
                         <outlet property="nameLabel" destination="HaL-TV-jCd" id="Q32-uu-fg9"/>
                         <outlet property="nameTextField" destination="MiB-Rf-4dY" id="gBf-Vs-bpG"/>
                         <outlet property="numMeetersLabel" destination="moL-sP-TjI" id="6YP-cx-paH"/>
+                        <outlet property="reasonsLabel" destination="J5W-JZ-9wJ" id="qu9-tF-8Kr"/>
                         <outlet property="sendContactsButton" destination="22r-ZD-fc0" id="pyG-an-pel"/>
                     </connections>
                 </viewController>

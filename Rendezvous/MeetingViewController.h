@@ -29,4 +29,6 @@
 - (void)initFromHome;
 - (void)initFromContacts;
 
+@property (strong, nonatomic) IBOutlet UILabel *reasonsLabel;
+
 @end
