@@ -31,6 +31,7 @@
 		49967A0A18ECB8FD009CC8E8 /* UIImage+WebP.m in Sources */ = {isa = PBXBuildFile; fileRef = 499679FB18ECB8FD009CC8E8 /* UIImage+WebP.m */; };
 		49967A0B18ECB8FD009CC8E8 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 499679FD18ECB8FD009CC8E8 /* UIImageView+WebCache.m */; };
 		49967A2118ECC653009CC8E8 /* MeetingReasonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49967A2018ECC653009CC8E8 /* MeetingReasonViewController.m */; };
+		49967A2418EDCBF0009CC8E8 /* LocationSuggestionsLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 49967A2318EDCBF0009CC8E8 /* LocationSuggestionsLookup.m */; };
 		49BD483B18E27BE600EAD526 /* ContactsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BD483A18E27BE600EAD526 /* ContactsCell.m */; };
 		49FE6EE718E25B2400626238 /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 49FE6EE618E25B2400626238 /* CurrentUser.m */; };
 		49FE6EEA18E2721D00626238 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 49FE6EE918E2721D00626238 /* Friend.m */; };
@@ -114,6 +115,8 @@
 		499679FD18ECB8FD009CC8E8 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		49967A1F18ECC653009CC8E8 /* MeetingReasonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingReasonViewController.h; sourceTree = "<group>"; };
 		49967A2018ECC653009CC8E8 /* MeetingReasonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetingReasonViewController.m; sourceTree = "<group>"; };
+		49967A2218EDCBF0009CC8E8 /* LocationSuggestionsLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationSuggestionsLookup.h; sourceTree = "<group>"; };
+		49967A2318EDCBF0009CC8E8 /* LocationSuggestionsLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationSuggestionsLookup.m; sourceTree = "<group>"; };
 		49BD483918E27BE600EAD526 /* ContactsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsCell.h; sourceTree = "<group>"; };
 		49BD483A18E27BE600EAD526 /* ContactsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsCell.m; sourceTree = "<group>"; };
 		49FE6EE518E25B2400626238 /* CurrentUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentUser.h; sourceTree = "<group>"; };
@@ -358,6 +361,8 @@
 				49FE6EE918E2721D00626238 /* Friend.m */,
 				4FF9AD4718E6FCBF008C9CC3 /* Meeting.h */,
 				4FF9AD4818E6FCBF008C9CC3 /* Meeting.m */,
+				49967A2218EDCBF0009CC8E8 /* LocationSuggestionsLookup.h */,
+				49967A2318EDCBF0009CC8E8 /* LocationSuggestionsLookup.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -560,6 +565,7 @@
 				499679FE18ECB8FD009CC8E8 /* MKAnnotationView+WebCache.m in Sources */,
 				499679FF18ECB8FD009CC8E8 /* NSData+ImageContentType.m in Sources */,
 				49967A0818ECB8FD009CC8E8 /* UIImage+GIF.m in Sources */,
+				49967A2418EDCBF0009CC8E8 /* LocationSuggestionsLookup.m in Sources */,
 				49967A0718ECB8FD009CC8E8 /* UIButton+WebCache.m in Sources */,
 				4FF9AD0318DDEBA5008C9CC3 /* Rendezvous.xcdatamodeld in Sources */,
 				49967A0B18ECB8FD009CC8E8 /* UIImageView+WebCache.m in Sources */,

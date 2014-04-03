@@ -2,7 +2,7 @@
 //  LocationViewController.m
 //  Rendezvous
 //
-//  Created by Adam Oxner on 3/23/14.
+//  Created by Adam Oxner, Sumedha Pramod on 3/23/14.
 //  Copyright (c) 2014 Penning. All rights reserved.
 //
 
