@@ -33,13 +33,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    
     reasons = [[NSMutableArray alloc] init];
     // Do any additional setup after loading the view.
     // [[self navigationController] setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
+    [[self navigationController] setNavigationBarHidden:YES animated:animated];
 //    [self.navigationController setToolbarHidden:NO animated:animated];
 }
 
