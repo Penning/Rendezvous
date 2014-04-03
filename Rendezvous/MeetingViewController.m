@@ -172,7 +172,7 @@
         
         
         // unwind segue to home
-        [self.navigationController popToViewController:appDelegate.home animated:YES];
+        // [self.navigationController popToViewController:appDelegate.home animated:YES];
         
     }else{
         // TODO: go to contacts

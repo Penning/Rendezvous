@@ -537,9 +537,10 @@
                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="DhL-bW-hpg"/>
-                        <barButtonItem title="Send" style="done" id="zbE-6F-wuo">
+                        <barButtonItem title="OK" style="done" id="zbE-6F-wuo">
                             <connections>
                                 <action selector="sendBtnHit:" destination="5vL-M4-hZj" id="v8u-t8-gYI"/>
+                                <segue destination="A0z-Vv-c9D" kind="push" id="pNb-pH-XxT"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
@@ -601,6 +602,7 @@
                                 </state>
                                 <connections>
                                     <action selector="sendContactsBtnHit:" destination="CMH-LF-aW1" eventType="touchUpInside" id="qxT-Wj-bQl"/>
+                                    <segue destination="A0z-Vv-c9D" kind="push" id="Gri-in-nhe"/>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Come to me!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tja-oq-TsW">
@@ -629,16 +631,6 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KG2-XS-uUW">
-                                <rect key="frame" x="125" y="334" width="71" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Reason?">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="A0z-Vv-c9D" kind="push" id="tT1-2j-f2F"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -661,7 +653,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aw4-VH-TBH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1922" y="135"/>
+            <point key="canvasLocation" x="2112" y="135"/>
         </scene>
         <!--Contacts View Controller - Edit Invites-->
         <scene sceneID="qxT-8R-22G">
@@ -690,7 +682,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vhl-Va-wgd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2348" y="135"/>
+            <point key="canvasLocation" x="2112" y="873"/>
         </scene>
         <!--Location View Controller - Location-->
         <scene sceneID="8Ev-bO-a8e">
@@ -879,11 +871,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="VNc-pk-KSU"/>
+                        <barButtonItem title="Send" style="done" id="li7-dQ-0ng"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="4k0-Ey-40L"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PJa-DX-yrL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1916" y="804"/>
+            <point key="canvasLocation" x="2678" y="135"/>
         </scene>
     </scenes>
     <resources>
@@ -908,6 +904,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="4aF-VO-qgM"/>
+        <segue reference="agR-79-IxN"/>
+        <segue reference="pNb-pH-XxT"/>
     </inferredMetricsTieBreakers>
 </document>
