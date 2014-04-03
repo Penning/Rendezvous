@@ -25,6 +25,7 @@
 
 @synthesize meeters = _meeters;
 @synthesize meetingObject = _meetingObject;
+@synthesize reasons = _reasons;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,6 +42,7 @@
     
     // Do any additional setup after loading the view.
     if (home) {
+        // if editing established event
         [self.nameLabel setText:[_meetingObject valueForKey:@"meeting_name"]];
         [self.nameLabel setHidden:NO];
         [self.numMeetersLabel setText:[NSString stringWithFormat:@"%lu invitees", (unsigned long)[_meetingObject mutableSetValueForKey:@"invites"].count]];
@@ -49,7 +51,9 @@
         [self.detailsTextView setText:[_meetingObject valueForKey:@"meeting_description"]];
         [self.nameTextField setText:tempName];
         [self.comeToMeSwitch setEnabled:NO];
+        
     }else{
+        // if making a new event
         [self.nameLabel setHidden:YES];
         [self.nameTextField setHidden:NO];
         [self.nameTextField setDelegate:self];
@@ -58,7 +62,6 @@
         [self.comeToMeSwitch setEnabled:YES];
     }
 
-    NSLog(@"Reasons: %@", _reasons);
     
     [self.comeToMeSwitch setOn:((NSNumber *)[_meetingObject valueForKey:@"is_ComeToMe"]).boolValue];
     self.detailsTextView.delegate = self;
@@ -167,12 +170,24 @@
         [meAdmin setValue:meeting_object forKeyPath:@"administors"];
         [meeting_object setValue:meAdmin forKeyPath:@"admin"];
         
+        // add reasons
+        NSMutableSet *reasonsSet = [[NSMutableSet alloc] init];
+        for (NSString *r in _reasons) {
+            NSManagedObject *newReason = [NSEntityDescription
+                                          insertNewObjectForEntityForName:@"Meeting_reason"
+                                          inManagedObjectContext:context];
+            [newReason setValue:r forKeyPath:@"reason"];
+            [reasonsSet addObject:newReason];
+        }
+        [meeting_object setValue:reasonsSet forKeyPath:@"reasons"];
         
         // save it!
         NSError *error;
         if (![context save:&error]) {
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
+        
+        [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
         
         // TODO: send meeting & invites to Parse
         
