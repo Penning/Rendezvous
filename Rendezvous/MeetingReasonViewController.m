@@ -40,7 +40,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    [self.navigationController setToolbarHidden:NO animated:animated];
+//    [self.navigationController setToolbarHidden:NO animated:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -155,6 +155,10 @@
 
 - (IBAction)sendMeeting:(id)sender {
     //Send meeting to Parse
+}
+
+- (IBAction)back:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

@@ -34,7 +34,7 @@
             [_friends addObject:[[Friend alloc] initWithObject:friend]];
 //            NSLog(@"friend :%@", friend);
         }
-        NSLog(@"Found %i friends!", _friends.count);
+        NSLog(@"Found %lu friends!", (unsigned long)_friends.count);
     }];
 }
 

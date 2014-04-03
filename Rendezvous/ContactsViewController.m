@@ -213,6 +213,7 @@
     if ([[segue identifier] isEqualToString:@"reason_segue"]) {
         MeetingReasonViewController *vc = (MeetingReasonViewController *)[segue destinationViewController];
         [vc setMeeters:meeters];
+        [vc setFriends:friends];
     }
     
     [self.navigationController setToolbarHidden:YES animated:YES];

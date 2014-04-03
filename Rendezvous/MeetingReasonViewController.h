@@ -20,6 +20,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *studying;
 @property (strong, nonatomic) IBOutlet UIButton *music;
 
+@property (strong, nonatomic) NSArray *friends;
+
 - (IBAction)foodSelected:(id)sender;
 - (IBAction)drinksSelected:(id)sender;
 - (IBAction)coffeeSelected:(id)sender;
@@ -29,5 +31,8 @@
 - (IBAction)studyingSelected:(id)sender;
 - (IBAction)musicSelected:(id)sender;
 - (IBAction)sendMeeting:(id)sender;
+
+//Back to contacts
+- (IBAction)back:(id)sender;
 
 @end
