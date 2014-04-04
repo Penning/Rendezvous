@@ -81,6 +81,8 @@
     }else{
         [self.navigationController setToolbarHidden:YES animated:animated];
     }
+    
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void) viewWillDisappear:(BOOL)animated{
