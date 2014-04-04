@@ -32,7 +32,12 @@
 - (IBAction)musicSelected:(id)sender;
 - (IBAction)sendMeeting:(id)sender;
 
+- (void)initForSend;
+
 //Back to contacts
 - (IBAction)back:(id)sender;
+
+
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *okToolbarBtn;
 
 @end

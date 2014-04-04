@@ -328,6 +328,16 @@
                     <view key="view" contentMode="scaleToFill" id="1ph-cf-6DQ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jmj-os-gGd">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Privacy Policy" id="4AK-wU-ic2"/>
@@ -527,7 +537,11 @@
                         </connections>
                     </tableView>
                     <toolbarItems>
-                        <barButtonItem title="Edit" id="Kka-HL-tSX"/>
+                        <barButtonItem title="Edit" id="Kka-HL-tSX">
+                            <connections>
+                                <action selector="editBtnHit:" destination="5vL-M4-hZj" id="uC8-Wm-dxf"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="D4I-nU-Eeh"/>
                         <barButtonItem title="Meeting1234" id="J8U-ik-oN0">
                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -535,8 +549,7 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="DhL-bW-hpg"/>
                         <barButtonItem title="OK" style="done" id="zbE-6F-wuo">
                             <connections>
-                                <action selector="sendBtnHit:" destination="5vL-M4-hZj" id="v8u-t8-gYI"/>
-                                <segue destination="A0z-Vv-c9D" kind="push" id="pNb-pH-XxT"/>
+                                <action selector="okBtnHit:" destination="5vL-M4-hZj" id="4eF-f3-BZZ"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
@@ -545,6 +558,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="meetingNameBarBtn" destination="J8U-ik-oN0" id="WbT-gO-YKX"/>
+                        <segue destination="A0z-Vv-c9D" kind="push" identifier="reason_segue" id="5bs-cu-24J"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ieB-rd-4aZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -889,8 +903,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Yg4-Rc-wx8"/>
                                     <barButtonItem title="OK" style="done" id="nC7-je-pum">
                                         <connections>
-                                            <action selector="sendMeeting:" destination="A0z-Vv-c9D" id="jrj-6d-dqA"/>
-                                            <segue destination="CMH-LF-aW1" kind="push" identifier="contacts_details_segue" id="b0F-Ey-isj"/>
+                                            <action selector="okToolbarBtnHit:" destination="A0z-Vv-c9D" id="SRS-g4-r7y"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -908,8 +921,10 @@
                         <outlet property="entertainment" destination="hU1-R8-Tdf" id="13V-wH-bi6"/>
                         <outlet property="food" destination="0dO-Jl-H6d" id="FEl-i7-JM7"/>
                         <outlet property="music" destination="rla-zP-zSV" id="slA-mF-P2L"/>
+                        <outlet property="okToolbarBtn" destination="nC7-je-pum" id="3ky-9N-knb"/>
                         <outlet property="shopping" destination="LqP-xF-fPs" id="Qxh-dY-QYj"/>
                         <outlet property="studying" destination="naX-NA-Si3" id="N5D-wE-0gO"/>
+                        <segue destination="CMH-LF-aW1" kind="push" identifier="contacts_details_segue" id="ZE6-Iq-goc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PJa-DX-yrL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -939,6 +954,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="b0F-Ey-isj"/>
+        <segue reference="4aF-VO-qgM"/>
     </inferredMetricsTieBreakers>
 </document>

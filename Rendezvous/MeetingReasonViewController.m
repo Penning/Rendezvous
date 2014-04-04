@@ -17,6 +17,7 @@
 
 @implementation MeetingReasonViewController {
     NSMutableArray *reasons;
+    BOOL okShouldBeSend;
 }
 
 @synthesize meeters;
@@ -35,8 +36,12 @@
     [super viewDidLoad];
     
     reasons = [[NSMutableArray alloc] init];
-    // Do any additional setup after loading the view.
-    // [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    
+    if (okShouldBeSend) {
+        [self.okToolbarBtn setTitle:@"Send"];
+    }else{
+        [self.okToolbarBtn setTitle:@"OK"];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -48,6 +53,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)initForSend{
+    okShouldBeSend = YES;
 }
 
 #pragma mark - Navigation
@@ -160,6 +169,14 @@
 
 - (IBAction)back:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)okToolbarBtnHit:(id)sender {
+    if (okShouldBeSend) {
+        // save 'n send
+    }else{
+        [self performSegueWithIdentifier:@"contacts_details_segue" sender:self];
+    }
 }
 
 @end

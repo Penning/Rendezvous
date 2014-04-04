@@ -16,6 +16,7 @@
 @end
 
 @implementation ContactsViewController{
+    BOOL useShortcut;
     NSString *meetingName;
 }
 
@@ -165,7 +166,15 @@
 }
 
 
+- (IBAction)okBtnHit:(id)sender {
+    useShortcut = YES;
+    [self performSegueWithIdentifier:@"reason_segue" sender:self];
+}
 
+- (IBAction)editBtnHit:(id)sender {
+    useShortcut = NO;
+    [self performSegueWithIdentifier:@"reason_segue" sender:self];
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -214,6 +223,9 @@
         MeetingReasonViewController *vc = (MeetingReasonViewController *)[segue destinationViewController];
         [vc setMeeters:meeters];
         [vc setFriends:friends];
+        if (useShortcut) {
+            [vc initForSend];
+        }
     }
     
     [self.navigationController setToolbarHidden:YES animated:YES];
