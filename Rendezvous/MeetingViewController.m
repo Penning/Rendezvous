@@ -198,7 +198,19 @@
         
         [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
         
-        // TODO: send meeting & invites to Parse
+        
+        
+        PFObject *meetingParse = [PFObject objectWithClassName:@"Meeting"];
+        meetingParse[@"name"] = self.nameTextField.text;
+        meetingParse[@"admin_fb_id"] = [appDelegate user].facebookID;
+        
+        [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (!error) {
+                [meeting_object setValue:meetingParse.objectId forKey:@"parse_object_id"];
+                [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
+            }
+        }];
+        
         
         
         // unwind segue to home

@@ -225,6 +225,7 @@
         MeetingReasonViewController *vc = (MeetingReasonViewController *)[segue destinationViewController];
         [vc setMeeters:meeters];
         [vc setFriends:friends];
+        [vc setMeetingName:meetingName];
         if (useShortcut) {
             [vc initForSend];
         }

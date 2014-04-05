@@ -537,7 +537,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems>
-                        <barButtonItem title="Edit" id="Kka-HL-tSX">
+                        <barButtonItem title="Details" id="Kka-HL-tSX">
                             <connections>
                                 <action selector="editBtnHit:" destination="5vL-M4-hZj" id="uC8-Wm-dxf"/>
                             </connections>
@@ -920,6 +920,7 @@
                         <outlet property="drinks" destination="F4W-h8-xUz" id="KGk-L8-gwk"/>
                         <outlet property="entertainment" destination="hU1-R8-Tdf" id="13V-wH-bi6"/>
                         <outlet property="food" destination="0dO-Jl-H6d" id="FEl-i7-JM7"/>
+                        <outlet property="meetingNameBarButtonItem" destination="3ns-uo-xL2" id="ZTC-hT-9MO"/>
                         <outlet property="music" destination="rla-zP-zSV" id="slA-mF-P2L"/>
                         <outlet property="okToolbarBtn" destination="nC7-je-pum" id="3ky-9N-knb"/>
                         <outlet property="shopping" destination="LqP-xF-fPs" id="Qxh-dY-QYj"/>
@@ -954,6 +955,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="4aF-VO-qgM"/>
+        <segue reference="ZE6-Iq-goc"/>
     </inferredMetricsTieBreakers>
 </document>
