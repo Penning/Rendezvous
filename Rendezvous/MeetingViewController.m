@@ -199,10 +199,15 @@
         [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
         
         
+        // save to parse
         
         PFObject *meetingParse = [PFObject objectWithClassName:@"Meeting"];
         meetingParse[@"name"] = self.nameTextField.text;
         meetingParse[@"admin_fb_id"] = [appDelegate user].facebookID;
+        meetingParse[@"status"] = @"initial";
+        [meetingParse addUniqueObjectsFromArray:_reasons forKey:@"reasons"];
+        meetingParse[@"comeToMe"] = [NSNumber numberWithBool:self.comeToMeSwitch.isOn];
+        
         
         [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (!error) {
@@ -211,6 +216,7 @@
             }
         }];
         
+        // TODO: send invites
         
         
         // unwind segue to home
@@ -279,20 +285,19 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-//    if ([segue.identifier isEqualToString:@"meeting_contacts_segue"]) {
-//        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//        CurrentUser *current_user = appDelegate.user;
-//        
-//        if(current_user.friends.count == 0) {
-//            [current_user getMyInformation];
-//        }
-//        
-//        ContactsViewController *vc = (ContactsViewController *)[segue destinationViewController];
-//        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
-//                                                                       ascending:YES];
-//        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-//        vc.friends = [current_user.friends sortedArrayUsingDescriptors:sortDescriptors];
-//    }
+    
+    if([[segue identifier] isEqualToString:@"meeting_contacts_segue"]) {
+        
+        if(((AppDelegate *)[[UIApplication sharedApplication] delegate]).user.friends.count == 0) {
+            [((AppDelegate *)[[UIApplication sharedApplication] delegate]).user getMyInformation];
+        }
+        
+        ContactsViewController *vc = (ContactsViewController *)[segue destinationViewController];
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
+                                                                       ascending:YES];
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+        vc.friends = [((AppDelegate *)[[UIApplication sharedApplication] delegate]).user.friends sortedArrayUsingDescriptors:sortDescriptors];
+    }
 }
 
 

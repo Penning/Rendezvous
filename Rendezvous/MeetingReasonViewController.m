@@ -253,6 +253,10 @@
         PFObject *meetingParse = [PFObject objectWithClassName:@"Meeting"];
         meetingParse[@"name"] = _meetingName;
         meetingParse[@"admin_fb_id"] = [appDelegate user].facebookID;
+        meetingParse[@"status"] = @"initial";
+        [meetingParse addUniqueObjectsFromArray:reasons forKey:@"reasons"];
+        meetingParse[@"comeToMe"] = @NO;
+        
         
         [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (!error) {
