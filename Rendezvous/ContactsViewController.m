@@ -135,11 +135,11 @@
     
     NSString *tempMeetingName = @"w/: ";
     for (Friend *f in meeters) {
-        if (tempMeetingName.length > 25) {
+        if (tempMeetingName.length > 20) {
             tempMeetingName = [tempMeetingName stringByAppendingString:@"& more"];
             break;
         }else{
-            tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@"%@ ", f.first_name]];
+            tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@"%@, ", f.first_name]];
         }
     }
     meetingName = tempMeetingName;

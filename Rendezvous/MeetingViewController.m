@@ -43,6 +43,16 @@
     // Do any additional setup after loading the view.
     if (home) {
         // if editing established event
+        
+        if ([((AppDelegate *)[[UIApplication sharedApplication] delegate]).user.facebookID isEqualToString:[_meetingObject valueForKeyPath:@"admin.facebook_id"]]) {
+            // is admin
+            
+        }else{
+            // not admin
+            [self.detailsTextView setUserInteractionEnabled:NO];
+            [self.sendContactsButton setHidden:YES];
+        }
+        
         [self.nameLabel setText:[_meetingObject valueForKey:@"meeting_name"]];
         [self.nameLabel setHidden:NO];
         [self.numMeetersLabel setText:[NSString stringWithFormat:@"%lu invitees", (unsigned long)[_meetingObject mutableSetValueForKey:@"invites"].count]];
