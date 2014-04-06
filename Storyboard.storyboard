@@ -272,7 +272,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="History" id="zxZ-DZ-pm7">
-                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="yEQ-7l-4V3"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="yEQ-7l-4V3">
+                            <connections>
+                                <action selector="deleteBtnHit:" destination="2Y5-vT-BOy" id="mJG-ld-OCa"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UUO-qN-VRL" userLabel="First Responder" sceneMemberID="firstResponder"/>

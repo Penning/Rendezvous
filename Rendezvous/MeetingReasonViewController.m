@@ -182,7 +182,6 @@
     if (okShouldBeSend) {
         
         
-        
         // __Core Data stuff ahead__
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         
@@ -194,9 +193,9 @@
         [meeting_object setValue:self.meetingName forKey:@"meeting_name"];
         [meeting_object setValue:@"" forKeyPath:@"meeting_description"];
         
-        [meeting_object setValue:[NSNumber numberWithBool:NO] forKeyPath:@"is_ComeToMe"];
-        [meeting_object setValue:[NSNumber numberWithInt:[appDelegate getId]] forKeyPath:@"id"];
+        [meeting_object setValue:@NO forKeyPath:@"is_ComeToMe"];
         [meeting_object setValue:[NSDate date] forKeyPath:@"created_date"];
+        [meeting_object setValue:@NO forKey:@"is_old"];
         
         // create friends
         NSMutableSet *friendsSet = [[NSMutableSet alloc] init];
@@ -244,18 +243,17 @@
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
         
+        [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
         
         
-        
-        
-        // send to parse
-        
+        // save to Parse
         PFObject *meetingParse = [PFObject objectWithClassName:@"Meeting"];
-        meetingParse[@"name"] = _meetingName;
+        meetingParse[@"name"] = self.meetingName;
         meetingParse[@"admin_fb_id"] = [appDelegate user].facebookID;
         meetingParse[@"status"] = @"initial";
         [meetingParse addUniqueObjectsFromArray:reasons forKey:@"reasons"];
         meetingParse[@"comeToMe"] = @NO;
+        meetingParse[@"meeting_description"] = @"";
         
         
         [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -265,19 +263,11 @@
             }
         }];
         
-        
         // TODO: send invites
         
         
-        
         // unwind segue to home
-        [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
         [self.navigationController popToViewController:appDelegate.home animated:YES];
-        
-        // save locally
-        
-        
-        // go home
         
     }else{
         [self performSegueWithIdentifier:@"contacts_details_segue" sender:self];

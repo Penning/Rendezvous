@@ -70,6 +70,34 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)deleteBtnHit:(id)sender {
+    // query for
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity =
+    [NSEntityDescription entityForName:@"Meeting"
+                inManagedObjectContext:_managedObjectContext];
+    [request setEntity:entity];
+    
+    NSPredicate *predicate =
+    [NSPredicate predicateWithFormat:@"is_old == %@", @YES];
+    [request setPredicate:predicate];
+    
+    NSError *error;
+    NSArray *resultsArray = [_managedObjectContext executeFetchRequest:request error:&error];
+    if (resultsArray != nil && resultsArray.count > 0) {
+        // delete
+        for (NSManagedObject *o in resultsArray) {
+            [_managedObjectContext deleteObject:o];
+        }
+        
+        NSError *error = nil;
+        [_managedObjectContext save:&error];
+        if (error) {
+            NSLog(@"Error saving: %@", error);
+        }
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSFetchedResultsController *)fetchedResultsController {
