@@ -16,6 +16,7 @@
 @property (strong, nonatomic) UIViewController *parentController;
 
 @property (strong, nonatomic) NSIndexPath *indexPath;
+@property (strong, nonatomic) NSString *adminFbId;
 
 - (void)initializeGestureRecognizer;
 

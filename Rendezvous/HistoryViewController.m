@@ -39,6 +39,7 @@
     //fetched results controller
     appDelegate = [[UIApplication sharedApplication] delegate];
     NSManagedObjectContext *context = [appDelegate managedObjectContext];
+    _managedObjectContext = context;
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *fetchEntity = [NSEntityDescription entityForName:@"Meeting" inManagedObjectContext:context];
@@ -47,7 +48,8 @@
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
     [fetchRequest setEntity:fetchEntity];
-    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"is_old == %@", @YES];
+    [fetchRequest setPredicate:predicate];
     
     _fetchedResultsController = [[NSFetchedResultsController alloc]
                                  initWithFetchRequest:fetchRequest
@@ -73,9 +75,7 @@
 - (IBAction)deleteBtnHit:(id)sender {
     // query for
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity =
-    [NSEntityDescription entityForName:@"Meeting"
-                inManagedObjectContext:_managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Meeting" inManagedObjectContext:_managedObjectContext];
     [request setEntity:entity];
     
     NSPredicate *predicate =
