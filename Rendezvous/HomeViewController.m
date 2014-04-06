@@ -51,7 +51,8 @@
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
     [fetchRequest setEntity:fetchEntity];
-
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"is_old == %@", @NO];
+    [fetchRequest setPredicate:predicate];
     
     _fetchedResultsController = [[NSFetchedResultsController alloc]
                   initWithFetchRequest:fetchRequest
@@ -77,6 +78,10 @@
 
 - (void)viewDidUnload {
     self.fetchedResultsController = nil;
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning

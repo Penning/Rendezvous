@@ -147,8 +147,8 @@
             [meeting_object setValue:self.detailsTextView.text forKeyPath:@"meeting_description"];
         }
         [meeting_object setValue:[NSNumber numberWithBool:self.comeToMeSwitch.isOn] forKeyPath:@"is_ComeToMe"];
-        [meeting_object setValue:[NSNumber numberWithInt:[appDelegate getId]] forKeyPath:@"id"];
         [meeting_object setValue:[NSDate date] forKeyPath:@"created_date"];
+        [meeting_object setValue:@NO forKey:@"is_old"];
         
         // create friends
         NSMutableSet *friendsSet = [[NSMutableSet alloc] init];
@@ -199,14 +199,14 @@
         [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
         
         
-        // save to parse
-        
+        // save to Parse
         PFObject *meetingParse = [PFObject objectWithClassName:@"Meeting"];
         meetingParse[@"name"] = self.nameTextField.text;
         meetingParse[@"admin_fb_id"] = [appDelegate user].facebookID;
         meetingParse[@"status"] = @"initial";
         [meetingParse addUniqueObjectsFromArray:_reasons forKey:@"reasons"];
         meetingParse[@"comeToMe"] = [NSNumber numberWithBool:self.comeToMeSwitch.isOn];
+        meetingParse[@"meeting_description"] = self.detailsTextView.text;
         
         
         [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -270,13 +270,37 @@
     if (_meetingObject == nil) {
         return;
     }
+    
+    // delete on Parse
+    PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
+    [query getObjectInBackgroundWithId:[_meetingObject valueForKey:@"parse_object_id"] block:^(PFObject *object, NSError *error) {
+        if (!error) {
+            [object deleteInBackground];
+        }
+    }];
+    
+    
+    // delete local relations
+    //
+    //  invites
     NSMutableSet *ppl = [_meetingObject mutableSetValueForKey:@"invites"];
     for (NSManagedObject *p in ppl) {
         [((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext deleteObject:p];
     }
+    [_meetingObject setValue:nil forKey:@"invites"];
+    //  reasons
+    NSMutableSet *rsns = [_meetingObject mutableSetValueForKey:@"reasons"];
+    for (NSManagedObject *r in rsns) {
+        [((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext deleteObject:r];
+    }
+    [_meetingObject setValue:nil forKey:@"reasons"];
     
-    [((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext deleteObject:_meetingObject];
+    // mark as old
+    [_meetingObject setValue:@YES forKey:@"is_old"];
+    
     [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
+    
+    
 }
 
 

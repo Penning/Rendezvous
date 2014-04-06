@@ -135,9 +135,9 @@
 
             if (!user) {
                 if (!error) {
-                    NSLog(@"Uh oh. The user cancelled the Facebook login.");
+                    NSLog(@"Uh-oh. The user cancelled the Facebook login.");
                 } else {
-                    NSLog(@"Uh oh. An error occurred: %@", error);
+                    NSLog(@"Uh-oh. An error occurred: %@", error);
                     
                     UIAlertView * alert = [[UIAlertView alloc]
                                           initWithTitle:@"Login Error"
@@ -156,7 +156,9 @@
                 NSLog(@"User with facebook logged in!");
                 [self performSegueWithIdentifier:@"login_segue" sender:self];
             }
+            
             [self displayUserInfo];
+            [_appDelegate.user getMyInformation];
         }];
         
 //        [_loginButton setTitle: @"Log out" forState: UIControlStateApplication];
