@@ -35,43 +35,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-//    BOOL found;
-//
-//    // Loop through the friends and create our keys
-//    for (NSDictionary *friend in friends) {
-//        NSString *c = [[friend objectForKey:@"name"] substringToIndex:1];
-//
-//        found = NO;
-//
-//        for (NSString *str in [self.sections allKeys]) {
-//            if ([str isEqualToString:c]) {
-//                found = YES;
-//            }
-//        }
-//
-//        if (!found) {
-//            [self.sections setValue:[[NSMutableArray alloc] init] forKey:c];
-//        }
-//    }
-//
-//    // Loop again and sort the books into their respective keys
-//    for (NSDictionary *friend in friends) {
-//        [[self.sections objectForKey:[[book objectForKey:@"name"] substringToIndex:1]] addObject:book];
-//    }
-//
-//    // Sort each section array
-//    for (NSString *key in [self.sections allKeys]) {
-//        [[self.sections objectForKey:key] sortUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
-//    }
-//
-//    [self.tableView reloadData];
     
     if (meeters == nil) {
         meeters = [[NSMutableArray alloc] init];
     }
     
-    meetingName = [NSString stringWithFormat:@"meeting%u", arc4random() % 9999];
+    meetingName = @"";
     [self.meetingNameBarBtn setTitle:meetingName];
 }
 
@@ -143,6 +112,7 @@
 
         [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
         [meeters addObject:[friends objectAtIndex:indexPath.row]];
+        
     }else{
         // remove from meeting
         
@@ -162,6 +132,19 @@
         // hide toolbar
         [self.navigationController setToolbarHidden:YES animated:YES];
     }
+    
+    NSString *tempMeetingName = @"w/: ";
+    for (Friend *f in meeters) {
+        if (tempMeetingName.length > 25) {
+            tempMeetingName = [tempMeetingName stringByAppendingString:@"& more"];
+            break;
+        }else{
+            tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@"%@ ", f.first_name]];
+        }
+    }
+    meetingName = tempMeetingName;
+    
+    [self.meetingNameBarBtn setTitle:meetingName];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     

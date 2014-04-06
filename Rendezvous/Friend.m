@@ -14,6 +14,9 @@
 
 - (Friend *) initWithObject:(NSDictionary<FBGraphUser>*) friend {
     _name = friend.name;
+    
+    _first_name = [[friend.name componentsSeparatedByString:@" "] objectAtIndex:0];
+    _last_name = [[friend.name componentsSeparatedByString:@" "] objectAtIndex:1];
 
     _facebookID = friend.id;
 
