@@ -23,6 +23,7 @@
 @property (nonatomic, strong) UIImageView *profile_picture;
 
 - (Friend *) initWithObject:(NSDictionary<FBGraphUser>*) friend;
+- (Friend *) initWithManagedObject:(NSManagedObject *) person;
 - (NSURL *) getPictureURL;
 
 @end

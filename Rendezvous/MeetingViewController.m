@@ -333,6 +333,16 @@
                                                                        ascending:YES];
         NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
         vc.friends = [((AppDelegate *)[[UIApplication sharedApplication] delegate]).user.friends sortedArrayUsingDescriptors:sortDescriptors];
+        
+        NSMutableArray *tempMeeters = [[NSMutableArray alloc] init];
+        NSSet *ppl = [_meetingObject mutableSetValueForKey:@"invites"];
+        for (NSManagedObject *person in ppl) {
+            Friend *f = [[Friend alloc] initWithManagedObject:person];
+            [tempMeeters addObject:f];
+        }
+        vc.meeters = tempMeeters;
+        
+        [vc setMeetingObject:_meetingObject];
     }
 }
 

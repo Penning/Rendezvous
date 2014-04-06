@@ -26,6 +26,17 @@
     return self;
 }
 
+- (Friend *) initWithManagedObject:(NSManagedObject *) person{
+    self = [super init];
+    
+    _name = [person valueForKey:@"name"];
+    _first_name = [person valueForKey:@"first_name"];
+    _last_name = [person valueForKey:@"last_name"];
+    _facebookID = [person valueForKey:@"facebook_id"];
+    
+    return self;
+}
+
 - (NSURL *) getPictureURL {
     return _pictureURL;
 }

@@ -22,6 +22,7 @@
 
 @synthesize friends;
 @synthesize meeters;
+@synthesize meetingObject = _meetingObject;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -46,6 +47,17 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     if ([meeters count] > 0) {
+        NSString *tempMeetingName = @"w/: ";
+        for (Friend *f in meeters) {
+            if (tempMeetingName.length > 20) {
+                tempMeetingName = [tempMeetingName stringByAppendingString:@"& more"];
+                break;
+            }else{
+                tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@"%@, ", f.first_name]];
+            }
+        }
+        meetingName = tempMeetingName;
+        [self.meetingNameBarBtn setTitle:meetingName];
         [self.navigationController setToolbarHidden:NO animated:animated];
     }else{
         [self.navigationController setToolbarHidden:YES animated:animated];
@@ -90,7 +102,7 @@
     // show checkmark if meeter
     BOOL isMeeter = NO;
     for (Friend *f in meeters) {
-        if (f.facebookID == ((Friend *)[friends objectAtIndex:indexPath.row]).facebookID) {
+        if ([f.facebookID isEqualToString: ((Friend *)[friends objectAtIndex:indexPath.row]).facebookID]) {
             isMeeter = YES;
             break;
         }
@@ -128,23 +140,25 @@
     if ([meeters count] > 0) {
         // show toolbar
         [self.navigationController setToolbarHidden:NO animated:YES];
+        
+        NSString *tempMeetingName = @"w/: ";
+        for (Friend *f in meeters) {
+            if (tempMeetingName.length > 20) {
+                tempMeetingName = [tempMeetingName stringByAppendingString:@"& more"];
+                break;
+            }else{
+                tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@"%@, ", f.first_name]];
+            }
+        }
+        meetingName = tempMeetingName;
+        
+        [self.meetingNameBarBtn setTitle:meetingName];
     }else{
         // hide toolbar
         [self.navigationController setToolbarHidden:YES animated:YES];
     }
     
-    NSString *tempMeetingName = @"w/: ";
-    for (Friend *f in meeters) {
-        if (tempMeetingName.length > 20) {
-            tempMeetingName = [tempMeetingName stringByAppendingString:@"& more"];
-            break;
-        }else{
-            tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@"%@, ", f.first_name]];
-        }
-    }
-    meetingName = tempMeetingName;
     
-    [self.meetingNameBarBtn setTitle:meetingName];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
@@ -159,6 +173,38 @@
 - (IBAction)editBtnHit:(id)sender {
     useShortcut = NO;
     [self performSegueWithIdentifier:@"reason_segue" sender:self];
+}
+
+- (IBAction)saveEditsBtnHit:(id)sender {
+    
+    // clear invites
+    NSMutableSet *oldInvitesSet = [_meetingObject mutableSetValueForKey:@"invites"];
+    for (NSManagedObject *person in oldInvitesSet) {
+        [((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext deleteObject:person];
+    }
+    [_meetingObject setValue:nil forKey:@"invites"];
+    
+    // create friends
+    NSMutableSet *friendsSet = [[NSMutableSet alloc] init];
+    for (Friend *f in self.meeters) {
+        NSManagedObject *newInvitee = [NSEntityDescription
+                                       insertNewObjectForEntityForName:@"Person"
+                                       inManagedObjectContext:((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext];
+        [newInvitee setValue:f.name forKeyPath:@"name"];
+        [newInvitee setValue:f.first_name forKeyPath:@"first_name"];
+        [newInvitee setValue:f.last_name forKeyPath:@"last_name"];
+        [newInvitee setValue:f.facebookID forKeyPath:@"facebook_id"];
+        [friendsSet addObject:newInvitee];
+    }
+    
+    // add invitees to meeting
+    [_meetingObject setValue:friendsSet forKey:@"invites"];
+    
+    // save
+    [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
+    
+    // go back
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 /*
