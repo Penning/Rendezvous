@@ -451,6 +451,7 @@
                                         <gestureRecognizers/>
                                         <connections>
                                             <outlet property="acceptedLabel" destination="yL7-cZ-s5u" id="Vtk-Rr-Vo8"/>
+                                            <outlet property="doubleTapLabel" destination="6Pw-Ul-M4A" id="BMp-bb-ZXq"/>
                                             <outlet property="meetingAdmin" destination="lyp-9S-aGR" id="489-1o-9C2"/>
                                             <outlet property="meetingName" destination="iEN-Hb-qA0" id="ViC-Nb-a1l"/>
                                         </connections>
@@ -990,6 +991,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ZE6-Iq-goc"/>
+        <segue reference="4aF-VO-qgM"/>
     </inferredMetricsTieBreakers>
 </document>

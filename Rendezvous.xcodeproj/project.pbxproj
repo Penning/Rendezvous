@@ -488,7 +488,7 @@
 				ORGANIZATIONNAME = Penning;
 				TargetAttributes = {
 					4FF9ACE918DDEBA5008C9CC3 = {
-						DevelopmentTeam = 69ZDK4Y6QX;
+						DevelopmentTeam = 87F6T9B9ZQ;
 						SystemCapabilities = {
 							com.apple.iOS = {
 								enabled = 1;
@@ -689,7 +689,7 @@
 		4FF9AD1D18DDEBA5008C9CC3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -712,7 +712,7 @@
 		4FF9AD1E18DDEBA5008C9CC3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

@@ -183,6 +183,12 @@
     
     [cell.meetingName setText:[meeting_object valueForKey:@"meeting_name"]];
     [cell.meetingAdmin setText:[meeting_object valueForKeyPath:@"admin.name"]];
+    
+    if (![[meeting_object valueForKeyPath:@"admin.facebook_id"] isEqualToString:appDelegate.user.facebookID]) {
+        [cell.doubleTapLabel setHidden:YES];
+    }else{
+        [cell.doubleTapLabel setHidden:NO];
+    }
 }
 
  - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

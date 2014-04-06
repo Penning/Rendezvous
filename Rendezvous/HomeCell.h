@@ -14,6 +14,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *meetingAdmin;
 @property (strong, nonatomic) IBOutlet UILabel *acceptedLabel;
 @property (strong, nonatomic) UIViewController *parentController;
+@property (strong, nonatomic) IBOutlet UILabel *doubleTapLabel;
 
 @property (strong, nonatomic) NSIndexPath *indexPath;
 @property (strong, nonatomic) NSString *adminFbId;
