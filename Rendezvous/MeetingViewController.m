@@ -285,7 +285,9 @@
     //  invites
     NSMutableSet *ppl = [_meetingObject mutableSetValueForKey:@"invites"];
     for (NSManagedObject *p in ppl) {
-        [((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext deleteObject:p];
+        if ([p valueForKey:@"administors"] == nil) {
+            [((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext deleteObject:p];
+        }
     }
     [_meetingObject setValue:nil forKey:@"invites"];
     //  reasons
