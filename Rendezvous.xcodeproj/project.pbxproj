@@ -400,6 +400,15 @@
 			name = ContactsView;
 			sourceTree = "<group>";
 		};
+		49CE21FB18F331790026EB40 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				492FEB3518F1D935008BABD1 /* OAuthConsumer */,
+				499679E018ECB8FD009CC8E8 /* SDWebImage */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
 		49ECB00D18E11F7E003C960D /* LoginView */ = {
 			isa = PBXGroup;
 			children = (
@@ -462,7 +471,7 @@
 				4FF9AD0418DDEBA5008C9CC3 /* Images.xcassets */,
 				4FF9AD0118DDEBA5008C9CC3 /* Rendezvous.xcdatamodeld */,
 				4FF9ACF618DDEBA5008C9CC3 /* Supporting Files */,
-				492FEB3518F1D935008BABD1 /* OAuthConsumer */,
+				49CE21FB18F331790026EB40 /* Libraries */,
 			);
 			path = Rendezvous;
 			sourceTree = "<group>";
@@ -470,7 +479,6 @@
 		4FF9ACF618DDEBA5008C9CC3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				499679E018ECB8FD009CC8E8 /* SDWebImage */,
 				4FF9ACF718DDEBA5008C9CC3 /* Rendezvous-Info.plist */,
 				4FF9ACF818DDEBA5008C9CC3 /* InfoPlist.strings */,
 				4FF9ACFB18DDEBA5008C9CC3 /* main.m */,
