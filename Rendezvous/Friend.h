@@ -13,6 +13,8 @@
 
 @property (nonatomic, strong) NSString *facebookID;
 
+@property (nonatomic, strong) NSString *email;
+
 //Profile picture
 @property (nonatomic, strong) NSURL *pictureURL;
 

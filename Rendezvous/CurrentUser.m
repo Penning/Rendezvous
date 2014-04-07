@@ -18,6 +18,8 @@
     _first_name = userData[@"first_name"];
     _last_name = userData[@"last_name"];
 
+    _email = userData[@"email"];
+
     _gender = userData[@"gender"];
 
     _link = userData[@"link"];
