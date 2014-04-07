@@ -16,6 +16,7 @@
 @end
 
 @implementation ContactsViewController{
+    BOOL useShortcut;
     NSString *meetingName;
 }
 
@@ -23,6 +24,7 @@
 @synthesize friendsWithApp;
 @synthesize friendsWithoutApp;
 @synthesize meeters;
+@synthesize meetingObject = _meetingObject;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -41,12 +43,23 @@
         meeters = [[NSMutableArray alloc] init];
     }
     
-    meetingName = [NSString stringWithFormat:@"meeting%u", arc4random() % 9999];
+    meetingName = @"";
     [self.meetingNameBarBtn setTitle:meetingName];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     if ([meeters count] > 0) {
+        NSString *tempMeetingName = @"w/: ";
+        for (Friend *f in meeters) {
+            if (tempMeetingName.length > 20) {
+                tempMeetingName = [tempMeetingName stringByAppendingString:@"& more"];
+                break;
+            }else{
+                tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@"%@, ", f.first_name]];
+            }
+        }
+        meetingName = tempMeetingName;
+        [self.meetingNameBarBtn setTitle:meetingName];
         [self.navigationController setToolbarHidden:NO animated:animated];
     }else{
         [self.navigationController setToolbarHidden:YES animated:animated];
@@ -69,6 +82,8 @@
             [friendsWithoutApp addObject:friend];
         }
     }
+    
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void) viewWillDisappear:(BOOL)animated{
@@ -125,7 +140,7 @@
         // show checkmark if meeter
         BOOL isMeeter = NO;
         for (Friend *f in meeters) {
-            if (f.facebookID == ((Friend *)[friends objectAtIndex:indexPath.row]).facebookID) {
+            if ([f.facebookID isEqualToString: ((Friend *)[friendsWithApp objectAtIndex:indexPath.row]).facebookID]) {
                 isMeeter = YES;
                 break;
             }
@@ -135,10 +150,8 @@
         }else{
             [cell setAccessoryType:UITableViewCellAccessoryNone];
         }
-
     } else {
         [cell initCellDisplay:[friendsWithoutApp objectAtIndex:indexPath.row]];
-        cell.appInstalled = [NSNumber numberWithInt:0];
     }
     
     return cell;
@@ -150,17 +163,19 @@
     ContactsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"friendCell"];
 
     if(indexPath.section == 0) {
-        if ([cell accessoryType] == UITableViewCellAccessoryNone) {
+        if ([cell accessoryType] == UITableViewCellAccessoryNone ||
+            [meeters containsObject:[friendsWithApp objectAtIndex:indexPath.row]]) {
             // add to meeting
 
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-            [meeters addObject:[friends objectAtIndex:indexPath.row]];
+            [meeters addObject:[friendsWithApp objectAtIndex:indexPath.row]];
+
         }else{
             // remove from meeting
 
             [cell setAccessoryType:UITableViewCellAccessoryNone];
             for (Friend *f in meeters) {
-                if (f.facebookID == ((Friend*)[friends objectAtIndex:indexPath.row]).facebookID) {
+                if (f.facebookID == ((Friend*)[friendsWithApp objectAtIndex:indexPath.row]).facebookID) {
                     [meeters removeObject:f];
                     break;
                 }
@@ -170,17 +185,72 @@
         if ([meeters count] > 0) {
             // show toolbar
             [self.navigationController setToolbarHidden:NO animated:YES];
+
+            NSString *tempMeetingName = @"w/: ";
+            for (Friend *f in meeters) {
+                if (tempMeetingName.length > 20) {
+                    tempMeetingName = [tempMeetingName stringByAppendingString:@"& more"];
+                    break;
+                }else{
+                    tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@"%@, ", f.first_name]];
+                }
+            }
+            meetingName = tempMeetingName;
+
+            [self.meetingNameBarBtn setTitle:meetingName];
         }else{
             // hide toolbar
             [self.navigationController setToolbarHidden:YES animated:YES];
         }
-        
+
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     } else {
+        [cell setUserInteractionEnabled:NO];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
 }
 
+- (IBAction)okBtnHit:(id)sender {
+    useShortcut = YES;
+    [self performSegueWithIdentifier:@"reason_segue" sender:self];
+}
+
+- (IBAction)editBtnHit:(id)sender {
+    useShortcut = NO;
+    [self performSegueWithIdentifier:@"reason_segue" sender:self];
+}
+
+- (IBAction)saveEditsBtnHit:(id)sender {
+    
+    // clear invites
+    NSMutableSet *oldInvitesSet = [_meetingObject mutableSetValueForKey:@"invites"];
+    for (NSManagedObject *person in oldInvitesSet) {
+        [((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext deleteObject:person];
+    }
+    [_meetingObject setValue:nil forKey:@"invites"];
+    
+    // create friends
+    NSMutableSet *friendsSet = [[NSMutableSet alloc] init];
+    for (Friend *f in self.meeters) {
+        NSManagedObject *newInvitee = [NSEntityDescription
+                                       insertNewObjectForEntityForName:@"Person"
+                                       inManagedObjectContext:((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext];
+        [newInvitee setValue:f.name forKeyPath:@"name"];
+        [newInvitee setValue:f.first_name forKeyPath:@"first_name"];
+        [newInvitee setValue:f.last_name forKeyPath:@"last_name"];
+        [newInvitee setValue:f.facebookID forKeyPath:@"facebook_id"];
+        [friendsSet addObject:newInvitee];
+    }
+    
+    // add invitees to meeting
+    [_meetingObject setValue:friendsSet forKey:@"invites"];
+    
+    // save
+    [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
+    
+    // go back
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 #pragma mark - Navigation
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -190,6 +260,10 @@
         MeetingReasonViewController *vc = (MeetingReasonViewController *)[segue destinationViewController];
         [vc setMeeters:meeters];
         [vc setFriends:friends];
+        [vc setMeetingName:meetingName];
+        if (useShortcut) {
+            [vc initForSend];
+        }
     }
     
     [self.navigationController setToolbarHidden:YES animated:YES];

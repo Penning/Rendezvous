@@ -121,7 +121,7 @@
                             <tableViewSection headerTitle="Settings" id="4LD-UQ-rQI">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Xq3-1P-rSq" style="IBUITableViewCellStyleDefault" id="fMI-rB-orv">
-                                        <rect key="frame" x="0.0" y="119" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="55" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fMI-rB-orv" id="YOp-IG-Swx">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -141,7 +141,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="ssx-8x-A4G" style="IBUITableViewCellStyleDefault" id="ohs-UV-j7T">
-                                        <rect key="frame" x="0.0" y="163" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="99" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ohs-UV-j7T" id="Nlu-WS-LTM">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -165,7 +165,7 @@
                             <tableViewSection headerTitle="About" id="eqT-MH-THX">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Xew-kv-fS4" style="IBUITableViewCellStyleDefault" id="dfS-LL-HbS">
-                                        <rect key="frame" x="0.0" y="255" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="191" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dfS-LL-HbS" id="7Nm-VM-sNI">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -185,7 +185,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="6Fy-lH-G4E" style="IBUITableViewCellStyleDefault" id="uGd-YK-vTX">
-                                        <rect key="frame" x="0.0" y="299" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="235" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uGd-YK-vTX" id="qkZ-MY-452">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -205,7 +205,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Pc4-Wx-KZ8" style="IBUITableViewCellStyleDefault" id="W8q-qf-8Qx">
-                                        <rect key="frame" x="0.0" y="343" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="279" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="W8q-qf-8Qx" id="3cC-dv-a1o">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -250,7 +250,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="history_cell" textLabel="LZD-lM-3ay" detailTextLabel="1qH-IR-eOH" style="IBUITableViewCellStyleSubtitle" id="VED-xK-RXM">
-                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VED-xK-RXM" id="LXs-fz-gxi">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -280,7 +280,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="History" id="zxZ-DZ-pm7">
-                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="yEQ-7l-4V3"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="yEQ-7l-4V3">
+                            <connections>
+                                <action selector="deleteBtnHit:" destination="2Y5-vT-BOy" id="mJG-ld-OCa"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UUO-qN-VRL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -336,6 +340,16 @@
                     <view key="view" contentMode="scaleToFill" id="1ph-cf-6DQ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jmj-os-gGd">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Privacy Policy" id="4AK-wU-ic2"/>
@@ -445,6 +459,7 @@
                                         <gestureRecognizers/>
                                         <connections>
                                             <outlet property="acceptedLabel" destination="yL7-cZ-s5u" id="Vtk-Rr-Vo8"/>
+                                            <outlet property="doubleTapLabel" destination="6Pw-Ul-M4A" id="BMp-bb-ZXq"/>
                                             <outlet property="meetingAdmin" destination="lyp-9S-aGR" id="489-1o-9C2"/>
                                             <outlet property="meetingName" destination="iEN-Hb-qA0" id="ViC-Nb-a1l"/>
                                         </connections>
@@ -498,7 +513,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="friendCell" rowHeight="40" id="v9i-vn-Ib9" customClass="ContactsCell">
-                                <rect key="frame" x="0.0" y="86" width="320" height="40"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="40"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="v9i-vn-Ib9" id="mZS-Mo-t2g">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="39"/>
@@ -543,7 +558,11 @@
                         </connections>
                     </tableView>
                     <toolbarItems>
-                        <barButtonItem title="Edit" id="Kka-HL-tSX"/>
+                        <barButtonItem title="Details" id="Kka-HL-tSX">
+                            <connections>
+                                <action selector="editBtnHit:" destination="5vL-M4-hZj" id="uC8-Wm-dxf"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="D4I-nU-Eeh"/>
                         <barButtonItem title="Meeting1234" id="J8U-ik-oN0">
                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -551,8 +570,7 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="DhL-bW-hpg"/>
                         <barButtonItem title="OK" style="done" id="zbE-6F-wuo">
                             <connections>
-                                <action selector="sendBtnHit:" destination="5vL-M4-hZj" id="v8u-t8-gYI"/>
-                                <segue destination="A0z-Vv-c9D" kind="push" id="pNb-pH-XxT"/>
+                                <action selector="okBtnHit:" destination="5vL-M4-hZj" id="4eF-f3-BZZ"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
@@ -561,6 +579,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="meetingNameBarBtn" destination="J8U-ik-oN0" id="WbT-gO-YKX"/>
+                        <segue destination="A0z-Vv-c9D" kind="push" identifier="reason_segue" id="5bs-cu-24J"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ieB-rd-4aZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -653,6 +672,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Meeting details" id="Pzb-vi-nbQ">
+                        <barButtonItem key="backBarButtonItem" title=" " id="YR9-qA-AWH"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="stop" id="7SY-7J-jme">
                             <connections>
                                 <action selector="deleteBtnHit:" destination="CMH-LF-aW1" id="vAv-oZ-mtU"/>
@@ -667,11 +687,78 @@
                         <outlet property="numMeetersLabel" destination="moL-sP-TjI" id="6YP-cx-paH"/>
                         <outlet property="reasonsLabel" destination="J5W-JZ-9wJ" id="qu9-tF-8Kr"/>
                         <outlet property="sendContactsButton" destination="22r-ZD-fc0" id="pyG-an-pel"/>
+                        <segue destination="fVJ-xK-Wvc" kind="push" identifier="meeting_contacts_segue" id="29n-BP-nHh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aw4-VH-TBH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2321" y="135"/>
+        </scene>
+        <!--Contacts View Controller - Edit Invites-->
+        <scene sceneID="w1y-R8-KTh">
+            <objects>
+                <tableViewController id="fVJ-xK-Wvc" customClass="ContactsViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="16g-N7-0Ie">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="friendCell" rowHeight="40" id="cau-GE-ucy" customClass="ContactsCell">
+                                <rect key="frame" x="0.0" y="22" width="320" height="40"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cau-GE-ucy" id="2kJ-JI-q1H">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="39"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tdr-A2-Ja3">
+                                            <rect key="frame" x="59" y="11" width="280" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="49g-3d-yC5">
+                                            <rect key="frame" x="11" y="5" width="30" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="15"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </imageView>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="contactName" destination="tdr-A2-Ja3" id="dRY-qZ-53f"/>
+                                    <outlet property="profilePicture" destination="49g-3d-yC5" id="7jD-lW-ejq"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="fVJ-xK-Wvc" id="cjd-cP-fxn"/>
+                            <outlet property="delegate" destination="fVJ-xK-Wvc" id="1z4-1X-B0y"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="ppl..." id="BdE-8M-1k5">
+                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="elS-u4-619"/>
+                        <barButtonItem title="Save" style="done" id="AnK-h7-UKz">
+                            <connections>
+                                <action selector="saveEditsBtnHit:" destination="fVJ-xK-Wvc" id="zeF-2A-NXE"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Edit Invites" id="BtJ-Ye-TCG"/>
+                    <connections>
+                        <outlet property="meetingNameBarBtn" destination="BdE-8M-1k5" id="IZz-dz-0TM"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ipU-va-9HL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2721" y="135"/>
         </scene>
         <!--Location View Controller - Location-->
         <scene sceneID="8Ev-bO-a8e">
@@ -940,8 +1027,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Yg4-Rc-wx8"/>
                                     <barButtonItem title="OK" style="done" id="nC7-je-pum">
                                         <connections>
-                                            <action selector="sendMeeting:" destination="A0z-Vv-c9D" id="jrj-6d-dqA"/>
-                                            <segue destination="CMH-LF-aW1" kind="push" identifier="contacts_details_segue" id="b0F-Ey-isj"/>
+                                            <action selector="okToolbarBtnHit:" destination="A0z-Vv-c9D" id="SRS-g4-r7y"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -958,9 +1044,12 @@
                         <outlet property="drinks" destination="F4W-h8-xUz" id="KGk-L8-gwk"/>
                         <outlet property="entertainment" destination="hU1-R8-Tdf" id="13V-wH-bi6"/>
                         <outlet property="food" destination="0dO-Jl-H6d" id="FEl-i7-JM7"/>
+                        <outlet property="meetingNameBarButtonItem" destination="3ns-uo-xL2" id="ZTC-hT-9MO"/>
                         <outlet property="music" destination="rla-zP-zSV" id="slA-mF-P2L"/>
+                        <outlet property="okToolbarBtn" destination="nC7-je-pum" id="3ky-9N-knb"/>
                         <outlet property="shopping" destination="LqP-xF-fPs" id="Qxh-dY-QYj"/>
                         <outlet property="studying" destination="naX-NA-Si3" id="N5D-wE-0gO"/>
+                        <segue destination="CMH-LF-aW1" kind="push" identifier="contacts_details_segue" id="ZE6-Iq-goc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PJa-DX-yrL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -992,7 +1081,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="YEy-8s-FyR"/>
-        <segue reference="b0F-Ey-isj"/>
+        <segue reference="r2J-45-Uk9"/>
+        <segue reference="4aF-VO-qgM"/>
     </inferredMetricsTieBreakers>
 </document>

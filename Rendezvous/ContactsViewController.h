@@ -19,4 +19,6 @@
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *meetingNameBarBtn;
 
+@property (strong, nonatomic) NSManagedObject *meetingObject;
+
 @end

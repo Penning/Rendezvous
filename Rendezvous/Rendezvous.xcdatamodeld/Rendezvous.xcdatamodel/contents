@@ -2,10 +2,11 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5063" systemVersion="13C64" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Meeting" representedClassName="" syncable="YES">
         <attribute name="created_date" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="is_ComeToMe" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="is_old" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="meeting_description" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="meeting_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parse_object_id" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="admin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="administors" inverseEntity="Person" syncable="YES"/>
         <relationship name="invites" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="meetings" inverseEntity="Person" syncable="YES"/>
         <relationship name="reasons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Meeting_reason" syncable="YES"/>
@@ -22,8 +23,8 @@
         <relationship name="meetings" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meeting" inverseName="invites" inverseEntity="Meeting" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Meeting" positionX="-63" positionY="-18" width="128" height="165"/>
-        <element name="Person" positionX="180" positionY="42" width="128" height="133"/>
+        <element name="Meeting" positionX="-63" positionY="-18" width="128" height="30"/>
         <element name="Meeting_reason" positionX="34" positionY="237" width="128" height="60"/>
+        <element name="Person" positionX="180" positionY="42" width="128" height="133"/>
     </elements>
 </model>

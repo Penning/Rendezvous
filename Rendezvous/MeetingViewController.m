@@ -43,6 +43,16 @@
     // Do any additional setup after loading the view.
     if (home) {
         // if editing established event
+        
+        if ([((AppDelegate *)[[UIApplication sharedApplication] delegate]).user.facebookID isEqualToString:[_meetingObject valueForKeyPath:@"admin.facebook_id"]]) {
+            // is admin
+            
+        }else{
+            // not admin
+            [self.detailsTextView setUserInteractionEnabled:NO];
+            [self.sendContactsButton setHidden:YES];
+        }
+        
         [self.nameLabel setText:[_meetingObject valueForKey:@"meeting_name"]];
         [self.nameLabel setHidden:NO];
         [self.numMeetersLabel setText:[NSString stringWithFormat:@"%lu invitees", (unsigned long)[_meetingObject mutableSetValueForKey:@"invites"].count]];
@@ -147,8 +157,8 @@
             [meeting_object setValue:self.detailsTextView.text forKeyPath:@"meeting_description"];
         }
         [meeting_object setValue:[NSNumber numberWithBool:self.comeToMeSwitch.isOn] forKeyPath:@"is_ComeToMe"];
-        [meeting_object setValue:[NSNumber numberWithInt:[appDelegate getId]] forKeyPath:@"id"];
         [meeting_object setValue:[NSDate date] forKeyPath:@"created_date"];
+        [meeting_object setValue:@NO forKey:@"is_old"];
         
         // create friends
         NSMutableSet *friendsSet = [[NSMutableSet alloc] init];
@@ -198,7 +208,25 @@
         
         [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
         
-        // TODO: send meeting & invites to Parse
+        
+        // save to Parse
+        PFObject *meetingParse = [PFObject objectWithClassName:@"Meeting"];
+        meetingParse[@"name"] = self.nameTextField.text;
+        meetingParse[@"admin_fb_id"] = [appDelegate user].facebookID;
+        meetingParse[@"status"] = @"initial";
+        [meetingParse addUniqueObjectsFromArray:_reasons forKey:@"reasons"];
+        meetingParse[@"comeToMe"] = [NSNumber numberWithBool:self.comeToMeSwitch.isOn];
+        meetingParse[@"meeting_description"] = self.detailsTextView.text;
+        
+        
+        [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (!error) {
+                [meeting_object setValue:meetingParse.objectId forKey:@"parse_object_id"];
+                [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
+            }
+        }];
+        
+        // TODO: send invites
         
         
         // unwind segue to home
@@ -252,13 +280,39 @@
     if (_meetingObject == nil) {
         return;
     }
+    
+    // delete on Parse
+    PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
+    [query getObjectInBackgroundWithId:[_meetingObject valueForKey:@"parse_object_id"] block:^(PFObject *object, NSError *error) {
+        if (!error) {
+            [object deleteInBackground];
+        }
+    }];
+    
+    
+    // delete local relations
+    //
+    //  invites
     NSMutableSet *ppl = [_meetingObject mutableSetValueForKey:@"invites"];
     for (NSManagedObject *p in ppl) {
-        [((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext deleteObject:p];
+        if ([p valueForKey:@"administors"] == nil) {
+            [((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext deleteObject:p];
+        }
     }
+    [_meetingObject setValue:nil forKey:@"invites"];
+    //  reasons
+    NSMutableSet *rsns = [_meetingObject mutableSetValueForKey:@"reasons"];
+    for (NSManagedObject *r in rsns) {
+        [((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext deleteObject:r];
+    }
+    [_meetingObject setValue:nil forKey:@"reasons"];
     
-    [((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext deleteObject:_meetingObject];
+    // mark as old
+    [_meetingObject setValue:@YES forKey:@"is_old"];
+    
     [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
+    
+    
 }
 
 
@@ -267,20 +321,29 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-//    if ([segue.identifier isEqualToString:@"meeting_contacts_segue"]) {
-//        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//        CurrentUser *current_user = appDelegate.user;
-//        
-//        if(current_user.friends.count == 0) {
-//            [current_user getMyInformation];
-//        }
-//        
-//        ContactsViewController *vc = (ContactsViewController *)[segue destinationViewController];
-//        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
-//                                                                       ascending:YES];
-//        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-//        vc.friends = [current_user.friends sortedArrayUsingDescriptors:sortDescriptors];
-//    }
+    
+    if([[segue identifier] isEqualToString:@"meeting_contacts_segue"]) {
+        
+        if(((AppDelegate *)[[UIApplication sharedApplication] delegate]).user.friends.count == 0) {
+            [((AppDelegate *)[[UIApplication sharedApplication] delegate]).user getMyInformation];
+        }
+        
+        ContactsViewController *vc = (ContactsViewController *)[segue destinationViewController];
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
+                                                                       ascending:YES];
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+        vc.friends = [((AppDelegate *)[[UIApplication sharedApplication] delegate]).user.friends sortedArrayUsingDescriptors:sortDescriptors];
+        
+        NSMutableArray *tempMeeters = [[NSMutableArray alloc] init];
+        NSSet *ppl = [_meetingObject mutableSetValueForKey:@"invites"];
+        for (NSManagedObject *person in ppl) {
+            Friend *f = [[Friend alloc] initWithManagedObject:person];
+            [tempMeeters addObject:f];
+        }
+        vc.meeters = tempMeeters;
+        
+        [vc setMeetingObject:_meetingObject];
+    }
 }
 
 

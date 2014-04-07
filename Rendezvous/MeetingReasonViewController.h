@@ -21,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *music;
 
 @property (strong, nonatomic) NSArray *friends;
+@property (strong, nonatomic) NSString *meetingName;
 
 - (IBAction)foodSelected:(id)sender;
 - (IBAction)drinksSelected:(id)sender;
@@ -31,8 +32,14 @@
 - (IBAction)studyingSelected:(id)sender;
 - (IBAction)musicSelected:(id)sender;
 - (IBAction)sendMeeting:(id)sender;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *meetingNameBarButtonItem;
+
+- (void)initForSend;
 
 //Back to contacts
 - (IBAction)back:(id)sender;
+
+
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *okToolbarBtn;
 
 @end
