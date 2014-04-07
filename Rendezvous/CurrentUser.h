@@ -11,6 +11,7 @@
 @interface CurrentUser : NSObject
 
 @property (nonatomic, strong) NSString *facebookID;
+@property (nonatomic, strong) NSString *email;
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *first_name;

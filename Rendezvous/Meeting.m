@@ -16,6 +16,8 @@
 @synthesize description = _description;
 @synthesize meeters = _meeters;
 @synthesize reasons = _reasons;
+@synthesize latitude = _latitude;
+@synthesize longitude = _longitude;
 
 @synthesize acceptedMeeters = _acceptedMeeters;
 

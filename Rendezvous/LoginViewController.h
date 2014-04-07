@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSMutableData *imageData;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) IBOutlet UILabel *loggedin_label;
+@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *profile_picture;
 @property (strong, nonatomic) IBOutlet UIImageView *logo;
 
