@@ -44,7 +44,8 @@
     if (home) {
         // if editing established event
         
-        if ([((AppDelegate *)[[UIApplication sharedApplication] delegate]).user.facebookID isEqualToString:[_meetingObject valueForKeyPath:@"admin.facebook_id"]]) {
+        if ([((AppDelegate *)[[UIApplication sharedApplication] delegate]).user.facebookID
+             isEqualToString:[_meetingObject valueForKeyPath:@"admin.facebook_id"]]) {
             // is admin
             
         }else{
@@ -55,7 +56,9 @@
         
         [self.nameLabel setText:[_meetingObject valueForKey:@"meeting_name"]];
         [self.nameLabel setHidden:NO];
-        [self.numMeetersLabel setText:[NSString stringWithFormat:@"%lu invitees", (unsigned long)[_meetingObject mutableSetValueForKey:@"invites"].count]];
+        [self.numMeetersLabel setText:[NSString
+                                       stringWithFormat:@"%lu invitees",
+                                       (unsigned long)[_meetingObject mutableSetValueForKey:@"invites"].count]];
         [self.nameTextField setHidden:YES];
         [self.sendContactsButton setTitle:@"Edit Invites" forState:UIControlStateNormal];
         [self.detailsTextView setText:[_meetingObject valueForKey:@"meeting_description"]];
@@ -217,6 +220,12 @@
         [meetingParse addUniqueObjectsFromArray:_reasons forKey:@"reasons"];
         meetingParse[@"comeToMe"] = [NSNumber numberWithBool:self.comeToMeSwitch.isOn];
         meetingParse[@"meeting_description"] = self.detailsTextView.text;
+        
+        NSMutableArray *fbIdArray = [[NSMutableArray alloc] init];
+        for (Friend *f in _meeters) {
+            [fbIdArray addObject:f.facebookID];
+        }
+        [meetingParse addUniqueObjectsFromArray:fbIdArray forKey:@"invites"];
         
         
         [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {

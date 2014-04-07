@@ -58,7 +58,7 @@
                   initWithFetchRequest:fetchRequest
                   managedObjectContext:context
                   sectionNameKeyPath:nil
-                  cacheName:@"meeting_cache"];
+                  cacheName:nil];
     [_fetchedResultsController setDelegate:self];
     
     

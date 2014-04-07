@@ -255,6 +255,12 @@
         meetingParse[@"comeToMe"] = @NO;
         meetingParse[@"meeting_description"] = @"";
         
+        NSMutableArray *fbIdArray = [[NSMutableArray alloc] init];
+        for (Friend *f in meeters) {
+            [fbIdArray addObject:f.facebookID];
+        }
+        [meetingParse addUniqueObjectsFromArray:fbIdArray forKey:@"invites"];
+        
         
         [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (!error) {
