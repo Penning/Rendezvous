@@ -56,6 +56,9 @@
 		49FE6EE718E25B2400626238 /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 49FE6EE618E25B2400626238 /* CurrentUser.m */; };
 		49FE6EEA18E2721D00626238 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 49FE6EE918E2721D00626238 /* Friend.m */; };
 		4F2E136318EB407200716C2F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2E136218EB407200716C2F /* Parse.framework */; };
+		4F2E136C18F34EE600716C2F /* main.js in Sources */ = {isa = PBXBuildFile; fileRef = 4F2E136718F34EE600716C2F /* main.js */; };
+		4F2E136D18F34EE600716C2F /* global.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F2E136918F34EE600716C2F /* global.json */; };
+		4F2E136E18F34EE600716C2F /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 4F2E136B18F34EE600716C2F /* index.html */; };
 		4FBA5D3718ECCD6800532689 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBA5D3618ECCD6800532689 /* HistoryViewController.m */; };
 		4FF9ACEE18DDEBA5008C9CC3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACED18DDEBA5008C9CC3 /* Foundation.framework */; };
 		4FF9ACF018DDEBA5008C9CC3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACEF18DDEBA5008C9CC3 /* CoreGraphics.framework */; };
@@ -185,6 +188,9 @@
 		49FE6EE818E2721D00626238 /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Friend.h; sourceTree = "<group>"; };
 		49FE6EE918E2721D00626238 /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Friend.m; sourceTree = "<group>"; };
 		4F2E136218EB407200716C2F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		4F2E136718F34EE600716C2F /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.js; sourceTree = "<group>"; };
+		4F2E136918F34EE600716C2F /* global.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = global.json; sourceTree = "<group>"; };
+		4F2E136B18F34EE600716C2F /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		4FBA5D3518ECCD6800532689 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
 		4FBA5D3618ECCD6800532689 /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
 		4FF9ACEA18DDEBA5008C9CC3 /* Rendezvous.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rendezvous.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -418,9 +424,52 @@
 			name = LoginView;
 			sourceTree = "<group>";
 		};
+		4F2E136418F34EE600716C2F /* js */ = {
+			isa = PBXGroup;
+			children = (
+				4F2E136518F34EE600716C2F /* Rendezvous */,
+			);
+			path = js;
+			sourceTree = "<group>";
+		};
+		4F2E136518F34EE600716C2F /* Rendezvous */ = {
+			isa = PBXGroup;
+			children = (
+				4F2E136618F34EE600716C2F /* cloud */,
+				4F2E136818F34EE600716C2F /* config */,
+				4F2E136A18F34EE600716C2F /* public */,
+			);
+			path = Rendezvous;
+			sourceTree = "<group>";
+		};
+		4F2E136618F34EE600716C2F /* cloud */ = {
+			isa = PBXGroup;
+			children = (
+				4F2E136718F34EE600716C2F /* main.js */,
+			);
+			path = cloud;
+			sourceTree = "<group>";
+		};
+		4F2E136818F34EE600716C2F /* config */ = {
+			isa = PBXGroup;
+			children = (
+				4F2E136918F34EE600716C2F /* global.json */,
+			);
+			path = config;
+			sourceTree = "<group>";
+		};
+		4F2E136A18F34EE600716C2F /* public */ = {
+			isa = PBXGroup;
+			children = (
+				4F2E136B18F34EE600716C2F /* index.html */,
+			);
+			path = public;
+			sourceTree = "<group>";
+		};
 		4FF9ACE118DDEBA5008C9CC3 = {
 			isa = PBXGroup;
 			children = (
+				4F2E136418F34EE600716C2F /* js */,
 				4FF9ACF518DDEBA5008C9CC3 /* Rendezvous */,
 				4FF9AD1218DDEBA5008C9CC3 /* RendezvousTests */,
 				4FF9ACEC18DDEBA5008C9CC3 /* Frameworks */,
@@ -679,6 +728,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F2E136E18F34EE600716C2F /* index.html in Resources */,
+				4F2E136D18F34EE600716C2F /* global.json in Resources */,
 				4FF9ACFA18DDEBA5008C9CC3 /* InfoPlist.strings in Resources */,
 				4FF9AD0518DDEBA5008C9CC3 /* Images.xcassets in Resources */,
 				4FF9AD2618DDEBE5008C9CC3 /* Storyboard.storyboard in Resources */,
@@ -709,6 +760,7 @@
 				492FEB6718F1D935008BABD1 /* OAPlaintextSignatureProvider.m in Sources */,
 				492FEB5C18F1D935008BABD1 /* NSMutableURLRequest+Parameters.m in Sources */,
 				4FF9AD3218DE0B55008C9CC3 /* MeetingViewController.m in Sources */,
+				4F2E136C18F34EE600716C2F /* main.js in Sources */,
 				49967A0518ECB8FD009CC8E8 /* SDWebImageManager.m in Sources */,
 				492FEB5D18F1D935008BABD1 /* NSString+URLEncoding.m in Sources */,
 				49FE6EEA18E2721D00626238 /* Friend.m in Sources */,

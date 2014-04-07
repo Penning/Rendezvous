@@ -74,7 +74,7 @@ Parse.Cloud.afterSave("Meeting", function(request) {
 
 
 					// set state to open once invites are out
-					m2.object.set("state", "open");
+					m2.object.set("status", "open");
 					m2.object.save();
 
 				},
