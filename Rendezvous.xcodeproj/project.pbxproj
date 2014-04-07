@@ -693,7 +693,7 @@
 				ORGANIZATIONNAME = Penning;
 				TargetAttributes = {
 					4FF9ACE918DDEBA5008C9CC3 = {
-						DevelopmentTeam = 69ZDK4Y6QX;
+						DevelopmentTeam = 87F6T9B9ZQ;
 						SystemCapabilities = {
 							com.apple.iOS = {
 								enabled = 1;
@@ -877,6 +877,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "736B7357-8833-49B7-9387-07A4963221F9";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -909,6 +910,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PROVISIONING_PROFILE = "736B7357-8833-49B7-9387-07A4963221F9";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -934,7 +936,7 @@
 				INFOPLIST_FILE = "Rendezvous/Rendezvous-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "736B7357-8833-49B7-9387-07A4963221F9";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -959,7 +961,7 @@
 				INFOPLIST_FILE = "Rendezvous/Rendezvous-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "736B7357-8833-49B7-9387-07A4963221F9";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
