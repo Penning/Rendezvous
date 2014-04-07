@@ -51,13 +51,14 @@
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
     [fetchRequest setEntity:fetchEntity];
-
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"is_old == %@", @NO];
+    [fetchRequest setPredicate:predicate];
     
     _fetchedResultsController = [[NSFetchedResultsController alloc]
                   initWithFetchRequest:fetchRequest
                   managedObjectContext:context
                   sectionNameKeyPath:nil
-                  cacheName:@"meeting_cache"];
+                  cacheName:nil];
     [_fetchedResultsController setDelegate:self];
     
     
@@ -79,6 +80,11 @@
     self.fetchedResultsController = nil;
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [self.tableView reloadData];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -93,6 +99,10 @@
 
 - (void)cellDoubleTapped:(HomeCell *)sender{
     // a cell was double tapped
+    
+    // must be admin
+    if (![appDelegate.user.facebookID isEqualToString:sender.adminFbId]) return;
+    
     lastSelected = sender.indexPath;
     [self performSegueWithIdentifier:@"close_meeting_segue" sender:self];
 }
@@ -169,9 +179,16 @@
     [cell setIndexPath:indexPath];
     [cell initializeGestureRecognizer];
     [cell setParentController:self];
+    [cell setAdminFbId:[meeting_object valueForKeyPath:@"admin.facebook_id"]];
     
     [cell.meetingName setText:[meeting_object valueForKey:@"meeting_name"]];
     [cell.meetingAdmin setText:[meeting_object valueForKeyPath:@"admin.name"]];
+    
+    if (![[meeting_object valueForKeyPath:@"admin.facebook_id"] isEqualToString:appDelegate.user.facebookID]) {
+        [cell.doubleTapLabel setHidden:YES];
+    }else{
+        [cell.doubleTapLabel setHidden:NO];
+    }
 }
 
  - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -234,11 +251,11 @@
     switch(type) {
             
         case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
             
         case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
             
         case NSFetchedResultsChangeUpdate:
@@ -247,9 +264,9 @@
             
         case NSFetchedResultsChangeMove:
             [tableView deleteRowsAtIndexPaths:[NSArray
-                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             [tableView insertRowsAtIndexPaths:[NSArray
-                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
     }
 }
@@ -260,11 +277,11 @@
     switch(type) {
             
         case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
             
         case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
     }
 }

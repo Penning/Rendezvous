@@ -7,6 +7,7 @@
 //
 
 #import "CurrentUser.h"
+#import "AppDelegate.h"
 #import <Parse/Parse.h>
 #import "Friend.h"
 
@@ -17,12 +18,17 @@
     _first_name = userData[@"first_name"];
     _last_name = userData[@"last_name"];
 
+    _email = userData[@"email"];
+
     _gender = userData[@"gender"];
 
     _link = userData[@"link"];
 
     _facebookID = userData[@"id"];
     _pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", _facebookID]];
+    
+    [[PFUser currentUser] setObject:_facebookID forKey:@"facebook_id"];
+    [[PFUser currentUser] saveInBackground];
 
 //    NSLog(@"%@", userData);
 
@@ -36,6 +42,7 @@
         }
         NSLog(@"Found %lu friends!", (unsigned long)_friends.count);
     }];
+    
 }
 
 - (void) getMyInformation {
@@ -45,9 +52,11 @@
     // Send request to Facebook
     [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         if (!error) {
+         
             // result is a dictionary with the user's Facebook data
             NSDictionary *userData = (NSDictionary *)result;
             [self initFromRequest:userData];
+            [((AppDelegate *)[[UIApplication sharedApplication] delegate]) getMeetingUpdates];
         }
     }];
 }

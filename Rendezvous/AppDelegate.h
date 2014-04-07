@@ -30,4 +30,6 @@
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
+- (void)getMeetingUpdates;
+
 @end

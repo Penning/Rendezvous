@@ -13,8 +13,10 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *contactName;
 @property (strong, nonatomic) IBOutlet UIImageView *profilePicture;
+@property (strong, nonatomic) NSNumber *appInstalled;
 
 - (void)initCellDisplay:(Friend *) fbFriend;
 - (void)initCellDisplayWithString:(NSString *)name;
+@property (strong, nonatomic) IBOutlet UIButton *addUserBtn;
 
 @end

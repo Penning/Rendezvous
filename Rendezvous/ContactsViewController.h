@@ -13,8 +13,12 @@
 
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSArray *friends;
+@property (strong, nonatomic) NSMutableArray *friendsWithApp;
+@property (strong, nonatomic) NSMutableArray *friendsWithoutApp;
 @property (strong, nonatomic) NSMutableArray *meeters;
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *meetingNameBarBtn;
+
+@property (strong, nonatomic) NSManagedObject *meetingObject;
 
 @end

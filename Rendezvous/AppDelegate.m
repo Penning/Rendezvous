@@ -27,6 +27,7 @@
     lastId = 0;
     
     _user = [[CurrentUser alloc] init];
+    [_user getMyInformation];
 
     //Parse setup
     [Parse setApplicationId:@"aZPN4SiTApTkjRRj6heYGQ6Qkig6rVslPAD8hvyf"
@@ -47,26 +48,6 @@
      UIRemoteNotificationTypeSound];
     
 
-    //Change tint and navbar colors
-//    [[UINavigationBar appearance] setBarTintColor:UIColorFromRGB(0xF76655)];
-//    [[UINavigationBar appearance] setBackgroundColor:UIColorFromRGB(0xF76655) ];
-//    [[UINavigationBar appearance] setTintColor:UIColorFromRGB(0xF76655)];
-//    [[UIView appearance] setTintColor:UIColorFromRGB(0xF76655)];
-//    [[UIButton appearance] setTintColor:UIColorFromRGB(0xF76655)];
-//    [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
-//
-//    NSDictionary *textTitleOptions = [NSDictionary dictionaryWithObjectsAndKeys:UIColorFromRGB(0xffffff), UITextAttributeTextColor, [UIColor whiteColor], UITextAttributeTextShadowColor, nil];
-//    [[UINavigationBar appearance] setTitleTextAttributes:textTitleOptions];
-
-//    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
-//    [[UINavigationBar appearance] setBackgroundColor:[UIColor whiteColor]];
-//    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-//    [[UIView appearance] setTintColor:[UIColor whiteColor]];
-//    [[UIButton appearance] setTintColor:[UIColor whiteColor]];
-//    [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
-
-//    NSDictionary *textTitleOptions = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], UITextAttributeTextColor, [UIColor whiteColor], UITextAttributeTextShadowColor, nil];
-//    [[UINavigationBar appearance] setTitleTextAttributes:textTitleOptions];
 
 
     return YES;
@@ -102,19 +83,96 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-
+    [_user getMyInformation];
+    
     // Facebook SDK
     [FBAppCall handleDidBecomeActiveWithSession:[PFFacebookUtils session]];
+    
+}
+
+- (void)getMeetingUpdates{
+    
+    // get meeting updates
+    NSString *shouldbethisquery = [NSString stringWithFormat:@"admin_fb_id = '%@'", _user.facebookID];
+    NSLog(shouldbethisquery);
+    NSPredicate *qPredicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"admin_fb_id = '%@'", _user.facebookID]];
+    PFQuery *adminQuery = [PFQuery queryWithClassName:@"Meeting" predicate:qPredicate];
+    
+    [adminQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            NSLog(@"Found %lu meetings on server.", (unsigned long)objects.count);
+            
+            // load objects into core data
+            for (PFObject *foreignMeeting in objects) {
+                
+                // query for
+                NSFetchRequest *request = [[NSFetchRequest alloc] init];
+                NSEntityDescription *entity =
+                [NSEntityDescription entityForName:@"Meeting"
+                            inManagedObjectContext:_managedObjectContext];
+                [request setEntity:entity];
+                
+                NSPredicate *predicate =
+                [NSPredicate predicateWithFormat:@"parse_object_id == %@", foreignMeeting.objectId];
+                [request setPredicate:predicate];
+                
+                NSError *error;
+                NSArray *array = [_managedObjectContext executeFetchRequest:request error:&error];
+                NSManagedObject *localMeeting = nil;
+                if (array != nil && array.count > 0) {
+                    // update
+                    localMeeting = [array objectAtIndex:0];
+                    
+                }else{
+                    // create meeting
+                    localMeeting = [[NSManagedObject alloc]
+                                    initWithEntity:[NSEntityDescription
+                                                    entityForName:@"Meeting"
+                                                    inManagedObjectContext:_managedObjectContext]
+                                    insertIntoManagedObjectContext:_managedObjectContext];
+                    
+                    // create reasons
+                    NSMutableSet *reasonsSet = [[NSMutableSet alloc] init];
+                    for (NSString *foreignReason in [foreignMeeting mutableArrayValueForKey:@"reasons"]) {
+                        NSManagedObject *localReason = [[NSManagedObject alloc]
+                                                        initWithEntity:[NSEntityDescription
+                                                                        entityForName:@"Meeting_reason"
+                                                                        inManagedObjectContext:_managedObjectContext]
+                                                        insertIntoManagedObjectContext:_managedObjectContext];
+                        [localReason setValue:foreignReason forKey:@"reason"];
+                        [reasonsSet addObject:localReason];
+                    }
+                    [localMeeting setValue:reasonsSet forKeyPath:@"reasons"];
+                    
+                    // TODO: create meeters
+                    
+                }
+                
+                [localMeeting setValue:[foreignMeeting valueForKey:@"createdAt"] forKey:@"created_date"];
+                [localMeeting setValue:[foreignMeeting valueForKey:@"name"] forKey:@"meeting_name"];
+                [localMeeting setValue:[foreignMeeting valueForKey:@"meeting_description"] forKey:@"meeting_description"];
+                [localMeeting setValue:[foreignMeeting valueForKey:@"comeToMe"] forKey:@"is_ComeToMe"];
+                [localMeeting setValue:foreignMeeting.objectId forKey:@"parse_object_id"];
+                [localMeeting setValue:@NO forKey:@"is_old"];
+                
+                // save
+                [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
+            }
+        }
+    }];
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     [[PFFacebookUtils session] close];
+    
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
 }

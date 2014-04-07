@@ -13,6 +13,7 @@
 
 @synthesize parentController = _parentController;
 @synthesize indexPath = _indexPath;
+@synthesize adminFbId = _adminFbId;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
