@@ -13,7 +13,7 @@
 -(MeetingLocation *) initFromYelp:(NSDictionary *) data {
     _id = [data objectForKey:@"id"];
     _name = [data objectForKey:@"name"];
-    _distance = [data objectForKey:@"distance"];
+    _distanceFromLoc = [data objectForKey:@"distance"];
 
     _imageURL = [data objectForKey:@"image_url"];
     _url = [data objectForKey:@"url"];
@@ -29,6 +29,10 @@
     _address = [location objectForKey:@"display_address"];
 
     return self;
+}
+
+-(void) printInfoToLog {
+    NSLog(@"%@", _name);
 }
 
 @end

@@ -17,6 +17,8 @@
 
     _facebookID = friend.id;
 
+    _email = [friend objectForKey:@"email"];
+
     _pictureURL = [[[friend objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
     // NSLog(@"PICTURE URL: %@", _pictureURL);
 

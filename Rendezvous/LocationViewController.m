@@ -2,17 +2,25 @@
 //  LocationViewController.m
 //  Rendezvous
 //
-//  Created by Adam Oxner, Sumedha Pramod on 3/23/14.
+//  Created by Sumedha Pramod on 3/23/14.
 //  Copyright (c) 2014 Penning. All rights reserved.
 //
 
 #import "LocationViewController.h"
+#import "LocationSuggestionsLookup.h"
+#import "LocationSuggestionCell.h"
+#import "OAConsumer.h"
+#import "OAToken.h"
+#import "OAMutableURLRequest.h"
 
 @interface LocationViewController ()
 
 @end
 
-@implementation LocationViewController
+@implementation LocationViewController {
+    LocationSuggestionsLookup *locationSuggestionsLookup;
+    NSMutableArray *suggestions;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -26,7 +34,73 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];
+    Meeting *meeting = [[Meeting alloc] init];
+//    [locationSuggestionsLookup getSuggestions:meeting];
+    suggestions = [[NSMutableArray alloc] initWithArray:[locationSuggestionsLookup getSuggestionResults]];
+    [self getSuggestions:meeting];
+    NSLog(@"Suggestions: %@", suggestions);
     // Do any additional setup after loading the view.
+}
+
+- (void) getSuggestions:(Meeting *) meeting {
+    NSLog(@"GETTING SUGGESTIONS...");
+    meeting.reasons = [[NSMutableArray alloc] init];
+    //Using default reasons for testing
+    [meeting.reasons addObject:@"restaurants"];
+    [meeting.reasons addObject:@"bars"];
+    [meeting.reasons addObject:@"coffee"];
+
+    //Get suggestions for each category
+    for(NSString *category in meeting.reasons) {
+        NSLog(@"Searching for %@", category);
+
+        //Using default UMICH lat/lng for testing
+        meeting.latitude = [NSNumber numberWithDouble:42.27806];
+        meeting.longitude = [NSNumber numberWithDouble:-83.73823];
+
+        OAConsumer *consumer = [[OAConsumer alloc] initWithKey:@"5G6EbBnwRp9R-Dm_6324QA" secret:@"BNU1YuTSMRnz9OP-Lr7KKWjkCvM"];
+        OAToken *token = [[OAToken alloc] initWithKey:@"FDPzfW0-aA83L40RNgV5TrJC1tvzfDv-" secret:@"ji6etDgelybVQzWO-Ell8KeB49w"];
+
+        id<OASignatureProviding, NSObject> provider = [[OAHMAC_SHA1SignatureProvider alloc] init];
+        NSString *realm = nil;
+
+
+        //MAX radius is 40,000 meters = 25 miles
+        //Searching w/in 0.5 mile distance from central location (800m)
+        //Limit 5 items/category
+        NSString *url = [NSString stringWithFormat:@"http://api.yelp.com/v2/search?category_filter=%@&radius_filter=800&limit=3&ll=%@,%@", category, meeting.latitude, meeting.longitude];
+
+        NSURL *yelpURL = [NSURL URLWithString:url];
+
+        OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:yelpURL
+                                                                       consumer:consumer
+                                                                          token:token
+                                                                          realm:realm
+                                                              signatureProvider:provider];
+        [request prepare];
+
+        [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+
+            if (!error) {
+                NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+                NSArray *results = [json objectForKey:@"businesses"];
+                //                NSLog(@"Results: %@", results);
+
+                //                int i = 1;
+                for (NSDictionary *location in results) {
+                    //                    NSLog(@"Suggestion #%i: %@", i++, location);
+                    MeetingLocation *meetingLocation = [[MeetingLocation alloc] initFromYelp:location];
+                    [meetingLocation printInfoToLog];
+                    [suggestions addObject:meetingLocation];
+                }
+
+            } else {
+                NSLog(@"ERROR: %@", error);
+            }
+        }];
+        NSLog(@"COUNT: %ld", (long)[suggestions count]);
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -39,69 +113,30 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
+//#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 1;
+    return [locationSuggestionsLookup suggestionCount];
 }
 
 
  - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
  {
-     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"suggestion_cell"];
+     LocationSuggestionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"suggestion_cell"];
      if (cell == nil) {
-         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"suggestion_cell"];
+         cell = [[LocationSuggestionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"suggestion_cell"];
      }
  
      // Configure the cell...
+     [cell initCellDisplay: [suggestions objectAtIndex:indexPath.row]];
  
      return cell;
  }
-
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 
 /*
  #pragma mark - Navigation

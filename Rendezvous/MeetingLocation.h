@@ -12,7 +12,9 @@
 
 @property (strong, nonatomic) NSNumber *id;
 @property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSNumber *distance;
+@property (strong, nonatomic) NSNumber *distanceFromLoc;
+
+@property (strong, nonatomic) NSString *category;
 
 @property (strong, nonatomic) NSString *imageURL;
 @property (strong, nonatomic) NSString *url;
@@ -27,5 +29,6 @@
 @property (strong, nonatomic) NSString *address;
 
 -(MeetingLocation *) initFromYelp:(NSDictionary *) data;
+-(void) printInfoToLog;
 
 @end

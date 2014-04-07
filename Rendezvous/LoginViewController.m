@@ -40,8 +40,6 @@
     fbFriends = [[NSMutableDictionary alloc] init];
     _appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     current_user = _appDelegate.user;
-
-    
     
     [self.navigationController setToolbarHidden:YES animated:NO];
 }
@@ -70,6 +68,10 @@
             // result is a dictionary with the user's Facebook data
             NSDictionary *userData = (NSDictionary *)result;
             [current_user initFromRequest:userData];
+
+            _nameLabel.text = current_user.name;
+            [[PFUser currentUser] setValue:current_user.name forKey:@"name"];
+            [[PFUser currentUser] save];
 
             // Download the user's facebook profile picture
             _imageData = [[NSMutableData alloc] init]; // the data will be loaded in here
@@ -127,7 +129,7 @@
 - (IBAction)login:(id)sender {
     if(![PFUser currentUser] && ![PFFacebookUtils isLinkedWithUser:[PFUser currentUser]]) {
         // The permissions requested from the user
-        NSArray *permissionsArray = @[ @"basic_info", @"user_location", @"user_groups", @"user_relationships"];
+        NSArray *permissionsArray = @[ @"basic_info", @"email", @"user_location", @"user_groups", @"user_relationships"];
 
         // Login PFUser using Facebook
         [PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error) {
@@ -150,6 +152,8 @@
                 }
                 return;
             } else if (user.isNew) {
+//                [[PFUser currentUser] setValue:current_user.name forKey:@"name"];
+//                [[PFUser currentUser] saveEventually];
                 NSLog(@"User with facebook signed up and logged in!");
                 [self performSegueWithIdentifier:@"login_segue" sender:self];
             } else {

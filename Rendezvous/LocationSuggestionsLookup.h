@@ -12,5 +12,7 @@
 @interface LocationSuggestionsLookup : NSObject
 
 - (void) getSuggestions:(Meeting *) meeting;
+- (NSArray *) getSuggestionResults;
+- (NSInteger) suggestionCount;
 
 @end
