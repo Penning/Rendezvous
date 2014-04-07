@@ -20,7 +20,6 @@ Parse.Cloud.define("getAverageLatLong", function (request, response) {
             var common_lat_long =
             { "latitude": latitude_sum / meeting_list.length, "longitude": longitude_sum / meeting_list.length };
 
-            // need to restructure to send array with the response 
             response.success(common_lat_long);
         },
         error: function () {
