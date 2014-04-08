@@ -57,6 +57,7 @@
 		49FE6EEA18E2721D00626238 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 49FE6EE918E2721D00626238 /* Friend.m */; };
 		4F2E136318EB407200716C2F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2E136218EB407200716C2F /* Parse.framework */; };
 		4F6985DC18F3841A005EC437 /* main.js in Sources */ = {isa = PBXBuildFile; fileRef = 4F6985DB18F3841A005EC437 /* main.js */; };
+		4F6985E018F387C8005EC437 /* AcceptDeclineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6985DF18F387C8005EC437 /* AcceptDeclineController.m */; };
 		4FBA5D3718ECCD6800532689 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBA5D3618ECCD6800532689 /* HistoryViewController.m */; };
 		4FF9ACEE18DDEBA5008C9CC3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACED18DDEBA5008C9CC3 /* Foundation.framework */; };
 		4FF9ACF018DDEBA5008C9CC3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACEF18DDEBA5008C9CC3 /* CoreGraphics.framework */; };
@@ -187,6 +188,8 @@
 		49FE6EE918E2721D00626238 /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Friend.m; sourceTree = "<group>"; };
 		4F2E136218EB407200716C2F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		4F6985DB18F3841A005EC437 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.js; sourceTree = "<group>"; };
+		4F6985DE18F387C8005EC437 /* AcceptDeclineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AcceptDeclineController.h; sourceTree = "<group>"; };
+		4F6985DF18F387C8005EC437 /* AcceptDeclineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcceptDeclineController.m; sourceTree = "<group>"; };
 		4FBA5D3518ECCD6800532689 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
 		4FBA5D3618ECCD6800532689 /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
 		4FF9ACEA18DDEBA5008C9CC3 /* Rendezvous.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rendezvous.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -428,6 +431,15 @@
 			path = js;
 			sourceTree = "<group>";
 		};
+		4F6985DD18F3875D005EC437 /* AcceptDeclineView */ = {
+			isa = PBXGroup;
+			children = (
+				4F6985DE18F387C8005EC437 /* AcceptDeclineController.h */,
+				4F6985DF18F387C8005EC437 /* AcceptDeclineController.m */,
+			);
+			name = AcceptDeclineView;
+			sourceTree = "<group>";
+		};
 		4FF9ACE118DDEBA5008C9CC3 = {
 			isa = PBXGroup;
 			children = (
@@ -545,6 +557,7 @@
 				49BD483C18E2B1FE00EAD526 /* ContactsView */,
 				49967A1E18ECC61D009CC8E8 /* MeetingReasonView */,
 				4FF9AD4A18E7084D008C9CC3 /* MeetingView */,
+				4F6985DD18F3875D005EC437 /* AcceptDeclineView */,
 				4FF9AD4C18E70BDF008C9CC3 /* SettingsView */,
 				4FF9AD4D18E70BE6008C9CC3 /* LocationView */,
 			);
@@ -713,6 +726,7 @@
 			files = (
 				49967A0918ECB8FD009CC8E8 /* UIImage+MultiFormat.m in Sources */,
 				49967A0A18ECB8FD009CC8E8 /* UIImage+WebP.m in Sources */,
+				4F6985E018F387C8005EC437 /* AcceptDeclineController.m in Sources */,
 				492FEB6A18F1D935008BABD1 /* OAServiceTicket.m in Sources */,
 				492FEB6418F1D935008BABD1 /* OADataFetcher.m in Sources */,
 				492FEB6618F1D935008BABD1 /* OAMutableURLRequest.m in Sources */,

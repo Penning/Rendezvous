@@ -221,6 +221,10 @@
         meetingParse[@"comeToMe"] = [NSNumber numberWithBool:self.comeToMeSwitch.isOn];
         meetingParse[@"meeting_description"] = self.detailsTextView.text;
         
+        
+
+        
+        
         NSMutableArray *fbIdArray = [[NSMutableArray alloc] init];
         for (Friend *f in _meeters) {
             [fbIdArray addObject:f.facebookID];
@@ -228,14 +232,29 @@
         [meetingParse addUniqueObjectsFromArray:fbIdArray forKey:@"invites"];
         
         
-        [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        
+        
+        // give admin location
+        [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+            
             if (!error) {
-                [meeting_object setValue:meetingParse.objectId forKey:@"parse_object_id"];
-                [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
+                if (self.comeToMeSwitch.isOn) {
+                    meetingParse[@"final_meeting_location"] = geoPoint;
+                }else{
+                    [meetingParse addUniqueObject:geoPoint forKey:@"meeter_locations"];
+                }
             }
+            
+            // save
+            [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (!error) {
+                    [meeting_object setValue:meetingParse.objectId forKey:@"parse_object_id"];
+                    [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
+                }
+            }];
+            
         }];
         
-        // TODO: send invites
         
         
         // unwind segue to home
@@ -291,12 +310,15 @@
     }
     
     // delete on Parse
-    PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
-    [query getObjectInBackgroundWithId:[_meetingObject valueForKey:@"parse_object_id"] block:^(PFObject *object, NSError *error) {
-        if (!error) {
-            [object deleteInBackground];
-        }
-    }];
+    NSString *parseObjectId = [_meetingObject valueForKey:@"parse_object_id"];
+    if (parseObjectId) {
+        PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
+        [query getObjectInBackgroundWithId:parseObjectId block:^(PFObject *object, NSError *error) {
+            if (!error) {
+                [object deleteInBackground];
+            }
+        }];
+    }
     
     
     // delete local relations
