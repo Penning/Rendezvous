@@ -104,7 +104,7 @@ Parse.Cloud.beforeSave("Meeting", function (request, response) {
     else if (meeting.get("status") == "open") {
         meeting.set("num_responded", meeting.get("num_responded") + 1);
 
-        if (meeting.get("num_responded") == meeting.get("meeters").length) {
+        if (meeting.get("num_responded") == meeting.get("invites").length) {
             // everyone has responded to the invite -- push notification back to creator
             if (meeting.get("isComeToMe") == true) {
                 // creators location is common location by default
