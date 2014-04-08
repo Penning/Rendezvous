@@ -191,9 +191,10 @@
                                            insertNewObjectForEntityForName:@"Meeting"
                                            inManagedObjectContext:context];
         [meeting_object setValue:self.meetingName forKey:@"meeting_name"];
-        [meeting_object setValue:@"" forKeyPath:@"meeting_description"];
-        
-        [meeting_object setValue:@NO forKeyPath:@"is_ComeToMe"];
+        //if (![self.detailsTextView.text isEqualToString:@""] && ![self.detailsTextView.text isEqualToString:@"optional"]) {
+            [meeting_object setValue:@"" forKeyPath:@"meeting_description"];
+        //}
+        [meeting_object setValue:[NSNumber numberWithBool:NO] forKeyPath:@"is_ComeToMe"];
         [meeting_object setValue:[NSDate date] forKeyPath:@"created_date"];
         [meeting_object setValue:@NO forKey:@"is_old"];
         
@@ -255,6 +256,10 @@
         meetingParse[@"comeToMe"] = @NO;
         meetingParse[@"meeting_description"] = @"";
         
+        
+        
+        
+        
         NSMutableArray *fbIdArray = [[NSMutableArray alloc] init];
         for (Friend *f in meeters) {
             [fbIdArray addObject:f.facebookID];
@@ -262,15 +267,30 @@
         [meetingParse addUniqueObjectsFromArray:fbIdArray forKey:@"invites"];
         
         
-        [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        
+        
+        // give admin location
+        [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+            
             if (!error) {
-                [meeting_object setValue:meetingParse.objectId forKey:@"parse_object_id"];
-                [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
+                /*
+                if (self.comeToMeSwitch.isOn) {
+                    meetingParse[@"final_meeting_location"] = geoPoint;
+                }else{
+                 */
+                    [meetingParse addUniqueObject:geoPoint forKey:@"meeter_locations"];
+                // }
             }
+            
+            // save
+            [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (!error) {
+                    [meeting_object setValue:meetingParse.objectId forKey:@"parse_object_id"];
+                    [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
+                }
+            }];
+            
         }];
-        
-        // TODO: send invites
-        
         
         // unwind segue to home
         [self.navigationController popToViewController:appDelegate.home animated:YES];
