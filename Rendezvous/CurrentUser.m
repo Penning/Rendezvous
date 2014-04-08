@@ -46,6 +46,10 @@
 }
 
 - (void) getMyInformation {
+    [self performSelectorInBackground:@selector(backgroundInformation) withObject:nil];
+}
+
+- (void) backgroundInformation {
     // Create request for user's Facebook data
     FBRequest *request = [FBRequest requestForMe];
 

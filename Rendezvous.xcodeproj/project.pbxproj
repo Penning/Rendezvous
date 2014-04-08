@@ -58,6 +58,9 @@
 		4F2E136318EB407200716C2F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2E136218EB407200716C2F /* Parse.framework */; };
 		4F6985DC18F3841A005EC437 /* main.js in Sources */ = {isa = PBXBuildFile; fileRef = 4F6985DB18F3841A005EC437 /* main.js */; };
 		4F6985E018F387C8005EC437 /* AcceptDeclineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6985DF18F387C8005EC437 /* AcceptDeclineController.m */; };
+		4F6985E418F47514005EC437 /* MeetingObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6985E318F47514005EC437 /* MeetingObject.m */; };
+		4F6985E718F4777D005EC437 /* PersonObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6985E618F4777D005EC437 /* PersonObject.m */; };
+		4F6985EA18F47B45005EC437 /* ReasonObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6985E918F47B45005EC437 /* ReasonObject.m */; };
 		4FBA5D3718ECCD6800532689 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBA5D3618ECCD6800532689 /* HistoryViewController.m */; };
 		4FF9ACEE18DDEBA5008C9CC3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACED18DDEBA5008C9CC3 /* Foundation.framework */; };
 		4FF9ACF018DDEBA5008C9CC3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACEF18DDEBA5008C9CC3 /* CoreGraphics.framework */; };
@@ -190,6 +193,12 @@
 		4F6985DB18F3841A005EC437 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.js; sourceTree = "<group>"; };
 		4F6985DE18F387C8005EC437 /* AcceptDeclineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AcceptDeclineController.h; sourceTree = "<group>"; };
 		4F6985DF18F387C8005EC437 /* AcceptDeclineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AcceptDeclineController.m; sourceTree = "<group>"; };
+		4F6985E218F47514005EC437 /* MeetingObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingObject.h; sourceTree = "<group>"; };
+		4F6985E318F47514005EC437 /* MeetingObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetingObject.m; sourceTree = "<group>"; };
+		4F6985E518F4777D005EC437 /* PersonObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonObject.h; sourceTree = "<group>"; };
+		4F6985E618F4777D005EC437 /* PersonObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonObject.m; sourceTree = "<group>"; };
+		4F6985E818F47B45005EC437 /* ReasonObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReasonObject.h; sourceTree = "<group>"; };
+		4F6985E918F47B45005EC437 /* ReasonObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReasonObject.m; sourceTree = "<group>"; };
 		4FBA5D3518ECCD6800532689 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
 		4FBA5D3618ECCD6800532689 /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
 		4FF9ACEA18DDEBA5008C9CC3 /* Rendezvous.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rendezvous.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -440,6 +449,19 @@
 			name = AcceptDeclineView;
 			sourceTree = "<group>";
 		};
+		4F6985E118F474E8005EC437 /* New CoreData Model (not implemented) */ = {
+			isa = PBXGroup;
+			children = (
+				4F6985E218F47514005EC437 /* MeetingObject.h */,
+				4F6985E318F47514005EC437 /* MeetingObject.m */,
+				4F6985E518F4777D005EC437 /* PersonObject.h */,
+				4F6985E618F4777D005EC437 /* PersonObject.m */,
+				4F6985E818F47B45005EC437 /* ReasonObject.h */,
+				4F6985E918F47B45005EC437 /* ReasonObject.m */,
+			);
+			name = "New CoreData Model (not implemented)";
+			sourceTree = "<group>";
+		};
 		4FF9ACE118DDEBA5008C9CC3 = {
 			isa = PBXGroup;
 			children = (
@@ -535,6 +557,7 @@
 				4FF9ACFF18DDEBA5008C9CC3 /* AppDelegate.m */,
 				492FEB6D18F1DA5F008BABD1 /* User Models */,
 				492FEB6E18F1DA65008BABD1 /* Meeting Models */,
+				4F6985E118F474E8005EC437 /* New CoreData Model (not implemented) */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -727,6 +750,7 @@
 				49967A0918ECB8FD009CC8E8 /* UIImage+MultiFormat.m in Sources */,
 				49967A0A18ECB8FD009CC8E8 /* UIImage+WebP.m in Sources */,
 				4F6985E018F387C8005EC437 /* AcceptDeclineController.m in Sources */,
+				4F6985E718F4777D005EC437 /* PersonObject.m in Sources */,
 				492FEB6A18F1D935008BABD1 /* OAServiceTicket.m in Sources */,
 				492FEB6418F1D935008BABD1 /* OADataFetcher.m in Sources */,
 				492FEB6618F1D935008BABD1 /* OAMutableURLRequest.m in Sources */,
@@ -742,6 +766,7 @@
 				4FF9AD2918DE0ADD008C9CC3 /* LoginViewController.m in Sources */,
 				492FEB6118F1D935008BABD1 /* sha1.c in Sources */,
 				49967A0318ECB8FD009CC8E8 /* SDWebImageDownloader.m in Sources */,
+				4F6985E418F47514005EC437 /* MeetingObject.m in Sources */,
 				4FF9AD3C18DF0A71008C9CC3 /* HomeCell.m in Sources */,
 				4FF9AD4218DF27EC008C9CC3 /* LocationViewController.m in Sources */,
 				492FEB6218F1D935008BABD1 /* OACall.m in Sources */,
@@ -754,6 +779,7 @@
 				492FEB6318F1D935008BABD1 /* OAConsumer.m in Sources */,
 				499679FF18ECB8FD009CC8E8 /* NSData+ImageContentType.m in Sources */,
 				49967A0818ECB8FD009CC8E8 /* UIImage+GIF.m in Sources */,
+				4F6985EA18F47B45005EC437 /* ReasonObject.m in Sources */,
 				49967A2718EE0FD9009CC8E8 /* MeetingLocation.m in Sources */,
 				49967A2418EDCBF0009CC8E8 /* LocationSuggestionsLookup.m in Sources */,
 				49967A0718ECB8FD009CC8E8 /* UIButton+WebCache.m in Sources */,

@@ -8,7 +8,7 @@
         <attribute name="meeting_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="parse_object_id" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="admin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="administors" inverseEntity="Person" syncable="YES"/>
-        <relationship name="invites" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="meetings" inverseEntity="Person" syncable="YES"/>
+        <relationship name="invites" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="meeting" inverseEntity="Person" syncable="YES"/>
         <relationship name="reasons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Meeting_reason" inverseName="meeting" inverseEntity="Meeting_reason" syncable="YES"/>
     </entity>
     <entity name="Meeting_reason" syncable="YES">
@@ -21,11 +21,11 @@
         <attribute name="last_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="administors" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meeting" inverseName="admin" inverseEntity="Meeting" syncable="YES"/>
-        <relationship name="meetings" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meeting" inverseName="invites" inverseEntity="Meeting" syncable="YES"/>
+        <relationship name="meeting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meeting" inverseName="invites" inverseEntity="Meeting" syncable="YES"/>
     </entity>
     <elements>
         <element name="Meeting" positionX="-108" positionY="-63" width="128" height="178"/>
         <element name="Meeting_reason" positionX="34" positionY="237" width="128" height="73"/>
-        <element name="Person" positionX="180" positionY="42" width="128" height="133"/>
+        <element name="Person" positionX="180" positionY="42" width="128" height="135"/>
     </elements>
 </model>

@@ -48,6 +48,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
+    
     if ([meeters count] > 0) {
         NSString *tempMeetingName = @"w/: ";
         for (Friend *f in meeters) {
@@ -75,7 +76,7 @@
     PFQuery *query = [PFUser query];
     NSArray *users = [query findObjects];
     [query cancel];
-
+    
     for(Friend *friend in friends) {
         NSArray *matches = [users filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name contains %@", friend.name]];
         if(matches.count > 0) {
@@ -88,6 +89,7 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
+
 
 - (void) viewWillDisappear:(BOOL)animated{
     [self.navigationController setToolbarHidden:YES animated:animated];
