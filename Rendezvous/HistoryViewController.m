@@ -55,7 +55,7 @@
                                  initWithFetchRequest:fetchRequest
                                  managedObjectContext:context
                                  sectionNameKeyPath:nil
-                                 cacheName:@"history_cache"];
+                                 cacheName:nil];
     [_fetchedResultsController setDelegate:self];
     
     
