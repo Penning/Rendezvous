@@ -232,23 +232,27 @@
         [meetingParse addUniqueObjectsFromArray:fbIdArray forKey:@"invites"];
         
         
-        [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (!error) {
-                [meeting_object setValue:meetingParse.objectId forKey:@"parse_object_id"];
-                [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
-            }
-        }];
+        
         
         // give admin location
         [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+            
             if (!error) {
                 if (self.comeToMeSwitch.isOn) {
                     meetingParse[@"final_meeting_location"] = geoPoint;
                 }else{
                     [meetingParse addUniqueObject:geoPoint forKey:@"meeter_locations"];
                 }
-                [meetingParse saveInBackground];
             }
+            
+            // save
+            [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (!error) {
+                    [meeting_object setValue:meetingParse.objectId forKey:@"parse_object_id"];
+                    [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
+                }
+            }];
+            
         }];
         
         
