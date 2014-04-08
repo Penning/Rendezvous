@@ -73,7 +73,9 @@ Parse.Cloud.beforeSave("Meeting", function (request, response) {
     // check if object is new
     if (meeting.get("status") == "initial") {
 
-        invites = request.object.get("invites");
+        invites = meeting.get("invites");
+        meeting.set("num_responded", 0);
+        
 
         for (var i = 0; i < invites.length; ++i) {
 
