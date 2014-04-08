@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Rendezvous": {
+            "applicationId": "aZPN4SiTApTkjRRj6heYGQ6Qkig6rVslPAD8hvyf", 
+            "masterKey": "tYdxZQh1ONHkhTlk6waNEHXAEgmQ26fBYLMT0scY"
+        }, 
+        "_default": {
+            "link": "Rendezvous"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.18"
+    }
+}

@@ -175,7 +175,7 @@
 }
 
 - (IBAction)back:(id)sender {
-    //[self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)okToolbarBtnHit:(id)sender {
@@ -254,6 +254,12 @@
         [meetingParse addUniqueObjectsFromArray:reasons forKey:@"reasons"];
         meetingParse[@"comeToMe"] = @NO;
         meetingParse[@"meeting_description"] = @"";
+        
+        NSMutableArray *fbIdArray = [[NSMutableArray alloc] init];
+        for (Friend *f in meeters) {
+            [fbIdArray addObject:f.facebookID];
+        }
+        [meetingParse addUniqueObjectsFromArray:fbIdArray forKey:@"invites"];
         
         
         [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {

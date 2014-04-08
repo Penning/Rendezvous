@@ -129,7 +129,6 @@
                     // update
                     localMeeting = [array objectAtIndex:0];
                     
-                    
                 }else{
                     // create meeting
                     localMeeting = [[NSManagedObject alloc]
@@ -137,7 +136,6 @@
                                                     entityForName:@"Meeting"
                                                     inManagedObjectContext:_managedObjectContext]
                                     insertIntoManagedObjectContext:_managedObjectContext];
-                    
                     
                     // create reasons
                     NSMutableSet *reasonsSet = [[NSMutableSet alloc] init];
@@ -153,6 +151,7 @@
                     [localMeeting setValue:reasonsSet forKeyPath:@"reasons"];
                     
                     // TODO: create meeters
+                    
                 }
                 
                 [localMeeting setValue:[foreignMeeting valueForKey:@"createdAt"] forKey:@"created_date"];

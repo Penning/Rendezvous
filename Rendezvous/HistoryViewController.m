@@ -55,7 +55,7 @@
                                  initWithFetchRequest:fetchRequest
                                  managedObjectContext:context
                                  sectionNameKeyPath:nil
-                                 cacheName:@"history_cache"];
+                                 cacheName:nil];
     [_fetchedResultsController setDelegate:self];
     
     
@@ -96,6 +96,8 @@
             NSLog(@"Error saving: %@", error);
         }
     }
+    
+    
 }
 
 #pragma mark - Table view data source
@@ -121,7 +123,7 @@
     NSFetchedResultsController *theFetchedResultsController =
     [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                         managedObjectContext:_managedObjectContext sectionNameKeyPath:nil
-                                                   cacheName:@"history_cache"];
+                                                   cacheName:nil];
     self.fetchedResultsController = theFetchedResultsController;
     _fetchedResultsController.delegate = self;
     
