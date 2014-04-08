@@ -668,7 +668,7 @@
 				ORGANIZATIONNAME = Penning;
 				TargetAttributes = {
 					4FF9ACE918DDEBA5008C9CC3 = {
-						DevelopmentTeam = 87F6T9B9ZQ;
+						DevelopmentTeam = 69ZDK4Y6QX;
 						SystemCapabilities = {
 							com.apple.iOS = {
 								enabled = 1;
