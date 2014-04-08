@@ -138,7 +138,7 @@
     NSFetchedResultsController *theFetchedResultsController =
     [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                         managedObjectContext:_managedObjectContext sectionNameKeyPath:nil
-                                                   cacheName:@"meeting_cache"];
+                                                   cacheName:nil];
     self.fetchedResultsController = theFetchedResultsController;
     _fetchedResultsController.delegate = self;
     
