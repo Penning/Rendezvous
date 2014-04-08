@@ -21,4 +21,6 @@
 - (void) deleteMeetingOnServerWithId:(NSString *)parseObjectId;
 - (void) deleteMeetingLocally:(MeetingObject *)meetingObject;
 
+- (void) deleteMeetingSoft:(MeetingObject *)meetingObject;
+
 @end

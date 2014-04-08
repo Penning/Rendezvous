@@ -26,7 +26,9 @@
     return self;
 }
 
+// creating
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 - (void) createMeeting:(Meeting *)meeting withInvites:(NSArray *)invites withReasons:(NSArray *)reasons{
     
     [self createMeetingLocally:meeting withInvites:invites withReasons:reasons];
@@ -163,6 +165,8 @@
     tempMeeting = nil;
 }
 
+
+// updating
 /////////////////////////////////////////////////////////////////////////
 
 - (void) updateMeetingObject:(MeetingObject *)meetingObject withForeignMeeting:(PFObject *)foreignMeeting{
@@ -241,7 +245,9 @@
     
 }
 
+// deleting
 /////////////////////////////////////////////////////////////////////////
+
 - (void) deleteMeetingWithId:(NSString *)parseObjectId{
     
     [self deleteMeetingLocallyWithId:parseObjectId];
@@ -292,6 +298,36 @@
 - (void) deleteMeetingLocally:(MeetingObject *)meetingObject{
     
     [appDelegate.managedObjectContext deleteObject:meetingObject];
+    [appDelegate saveContext];
+    
+}
+
+- (void) deleteMeetingSoft:(MeetingObject *)meetingObject{
+    
+    // delete on parse
+    [self deleteMeetingOnServerWithId:meetingObject.parse_object_id];
+    
+    
+    // delete local relations
+    //
+    //  invites
+    NSMutableSet *ppl = [meetingObject mutableSetValueForKey:@"invites"];
+    for (NSManagedObject *p in ppl) {
+        if ([p valueForKey:@"administors"] == nil) {
+            [appDelegate.managedObjectContext deleteObject:p];
+        }
+    }
+    [meetingObject setValue:nil forKey:@"invites"];
+    //  reasons
+    NSMutableSet *rsns = [meetingObject mutableSetValueForKey:@"reasons"];
+    for (NSManagedObject *r in rsns) {
+        [appDelegate.managedObjectContext deleteObject:r];
+    }
+    [meetingObject setValue:nil forKey:@"reasons"];
+    
+    // mark as old
+    [meetingObject setValue:@YES forKey:@"is_old"];
+    
     [appDelegate saveContext];
     
 }
