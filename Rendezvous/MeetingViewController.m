@@ -221,6 +221,10 @@
         meetingParse[@"comeToMe"] = [NSNumber numberWithBool:self.comeToMeSwitch.isOn];
         meetingParse[@"meeting_description"] = self.detailsTextView.text;
         
+        
+
+        
+        
         NSMutableArray *fbIdArray = [[NSMutableArray alloc] init];
         for (Friend *f in _meeters) {
             [fbIdArray addObject:f.facebookID];
@@ -235,7 +239,18 @@
             }
         }];
         
-        // TODO: send invites
+        // give admin location
+        [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+            if (!error) {
+                if (self.comeToMeSwitch.isOn) {
+                    meetingParse[@"final_meeting_location"] = geoPoint;
+                }else{
+                    [meetingParse addUniqueObject:geoPoint forKey:@"meeter_locations"];
+                }
+                [meetingParse saveInBackground];
+            }
+        }];
+        
         
         
         // unwind segue to home
@@ -291,12 +306,15 @@
     }
     
     // delete on Parse
-    PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
-    [query getObjectInBackgroundWithId:[_meetingObject valueForKey:@"parse_object_id"] block:^(PFObject *object, NSError *error) {
-        if (!error) {
-            [object deleteInBackground];
-        }
-    }];
+    NSString *parseObjectId = [_meetingObject valueForKey:@"parse_object_id"];
+    if (parseObjectId) {
+        PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
+        [query getObjectInBackgroundWithId:parseObjectId block:^(PFObject *object, NSError *error) {
+            if (!error) {
+                [object deleteInBackground];
+            }
+        }];
+    }
     
     
     // delete local relations

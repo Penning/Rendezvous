@@ -63,13 +63,6 @@
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="1" height="1"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ff0-us-Pzq">
-                                <rect key="frame" x="20" y="348" width="280" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -81,7 +74,6 @@
                         <outlet property="loginButton" destination="2eI-D3-zZk" id="Iih-AE-ayh"/>
                         <outlet property="logo" destination="eLS-sI-TFA" id="e1h-1R-D4o"/>
                         <outlet property="logoutButton" destination="3vK-pD-hTd" id="AaH-XH-a1W"/>
-                        <outlet property="nameLabel" destination="Ff0-us-Pzq" id="wrY-k9-e2g"/>
                         <outlet property="profile_picture" destination="Nqe-6T-2Gu" id="KKY-8l-i09"/>
                         <segue destination="44V-bZ-Ujm" kind="push" identifier="login_segue" id="YEy-8s-FyR"/>
                     </connections>
@@ -497,6 +489,7 @@
                         <outlet property="tableView" destination="YVj-AO-F1X" id="GA4-Xd-445"/>
                         <segue destination="CMH-LF-aW1" kind="push" identifier="home_details_segue" id="4aF-VO-qgM"/>
                         <segue destination="sMU-rU-8vu" kind="push" identifier="close_meeting_segue" id="eFx-Qn-ie5"/>
+                        <segue destination="NzK-fp-0gT" kind="push" identifier="home_accept_decline_segue" id="vTA-DH-X3Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h3v-NF-wVQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -758,6 +751,77 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ipU-va-9HL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2721" y="135"/>
+        </scene>
+        <!--Accept Decline Controller - Accept/Decline Screen-->
+        <scene sceneID="Ugl-AG-KfI">
+            <objects>
+                <viewController id="NzK-fp-0gT" customClass="AcceptDeclineController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="O7W-hZ-lNk"/>
+                        <viewControllerLayoutGuide type="bottom" id="KYK-Gh-aEw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dki-nU-587">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y8b-yx-FwS">
+                                <rect key="frame" x="20" y="362" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Accept with current location">
+                                    <color key="titleColor" red="0.088267906320353751" green="0.85391898777173914" blue="0.054272195539307823" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="acceptCurrentLocationBtnHit:" destination="NzK-fp-0gT" eventType="touchUpInside" id="cIE-d1-mIB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HqT-NU-CYd">
+                                <rect key="frame" x="20" y="424" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Accept with no location">
+                                    <color key="titleColor" red="0.088267906320353751" green="0.85391898777173914" blue="0.054272195539307823" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="acceptNoLocationBtnHit:" destination="NzK-fp-0gT" eventType="touchUpInside" id="z1Q-no-d6D"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2yz-Ai-EfG">
+                                <rect key="frame" x="20" y="518" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Decline">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.011788656139999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="declineBtnHit:" destination="NzK-fp-0gT" eventType="touchUpInside" id="FdM-Ww-yf3"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="meetingTitleLabel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wSI-en-YSx">
+                                <rect key="frame" x="20" y="101" width="280" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="meetingDescriptionLabel" translatesAutoresizingMaskIntoConstraints="NO" id="apG-Px-SN9">
+                                <rect key="frame" x="20" y="130" width="280" height="103"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Accept/Decline Screen" id="1GC-zm-XeU"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xl0-Fj-4jY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="920" y="804"/>
         </scene>
         <!--Location View Controller - Location-->
         <scene sceneID="8Ev-bO-a8e">
@@ -1080,6 +1144,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ZE6-Iq-goc"/>
+        <segue reference="4aF-VO-qgM"/>
     </inferredMetricsTieBreakers>
 </document>
