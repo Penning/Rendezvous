@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import <Parse/Parse.h>
 
 @interface LocationViewController : UIViewController
+
+- (LocationViewController *) initWithMeeting:(PFObject *)meeting;
 
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
