@@ -5,6 +5,7 @@
 // input is object type User
 //////////////////////////////////////////////////////////////////////////
 Parse.Cloud.define("notifyInit", function(request, response){
+	alert("about to notify...");
 
 	// Find user
 	var userQuery = new Parse.Query(Parse.User);
@@ -24,6 +25,7 @@ Parse.Cloud.define("notifyInit", function(request, response){
 		}, {
 		  	success: function() {
 		    	// Push was successful
+		    	alert("Push sent to " + request.object.get("name"));
 		  	},
 		  	error: function(error) {
 		    	// Handle error
@@ -50,7 +52,7 @@ Parse.Cloud.beforeSave("Meeting", function(request, response) {
 
         // Find user
         var userQuery = new Parse.Query(Parse.User);
-        userQuery.equalTo("facebook_id", invites[i]); // not working
+        userQuery.equalTo("facebook_id", invites[i]); 
         userQuery.find({
             success: function(results) {
                 // send invites to users
@@ -89,6 +91,7 @@ Parse.Cloud.define("addLocationToMeeting", function(request, response){
 		    // add location
 		    result[0].add("locations", location);
 		    result[0].save();
+		    alert("saved new location");
 	  	},
 		error: function(error) {
 			// error
