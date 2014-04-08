@@ -18,7 +18,7 @@
 @property (strong, nonatomic) NSString *meeting_name;
 @property (strong, nonatomic) NSString *parse_object_id;
 
-@property (strong, nonatomic) PersonObject *admin;
+@property (strong, nonatomic) NSObject* admin;
 @property (strong, nonatomic) NSSet *invites; // set of PersonObject's
 @property (strong, nonatomic) NSSet *reasons; // set of ReasonObject's
 

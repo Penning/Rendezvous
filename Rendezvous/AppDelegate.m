@@ -182,11 +182,16 @@
 - (void)getMeetingUpdates{
     
     // get meeting updates
-    NSString *shouldbethisquery = [NSString stringWithFormat:@"admin_fb_id = '%@'", _user.facebookID];
-    NSPredicate *qPredicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"admin_fb_id = '%@'", _user.facebookID]];
-    PFQuery *adminQuery = [PFQuery queryWithClassName:@"Meeting" predicate:qPredicate];
     
-    [adminQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    PFQuery *adminQuery = [PFQuery queryWithClassName:@"Meeting"];
+    [adminQuery whereKey:@"admin_fb_id" equalTo:_user.facebookID];
+    
+    PFQuery *invitedQuery = [PFQuery queryWithClassName:@"Meeting"];
+    [invitedQuery whereKey:@"invites" equalTo:_user.facebookID];
+    
+    PFQuery *compoundQuery = [PFQuery orQueryWithSubqueries:@[adminQuery, invitedQuery]];
+    
+    [compoundQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             NSLog(@"Found %lu meetings on server.", (unsigned long)objects.count);
             

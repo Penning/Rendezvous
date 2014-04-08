@@ -46,17 +46,13 @@
 }
 
 - (void) getMyInformation {
-    [self performSelectorInBackground:@selector(backgroundInformation) withObject:nil];
-}
-
-- (void) backgroundInformation {
     // Create request for user's Facebook data
     FBRequest *request = [FBRequest requestForMe];
-
+    
     // Send request to Facebook
     [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         if (!error) {
-         
+            
             // result is a dictionary with the user's Facebook data
             NSDictionary *userData = (NSDictionary *)result;
             [self initFromRequest:userData];
@@ -64,6 +60,7 @@
         }
     }];
 }
+
 
 - (NSURL *) getPictureURL {
     return _pictureURL;

@@ -61,6 +61,7 @@
 		4F6985E418F47514005EC437 /* MeetingObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6985E318F47514005EC437 /* MeetingObject.m */; };
 		4F6985E718F4777D005EC437 /* PersonObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6985E618F4777D005EC437 /* PersonObject.m */; };
 		4F6985EA18F47B45005EC437 /* ReasonObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6985E918F47B45005EC437 /* ReasonObject.m */; };
+		4F6985EE18F47D0B005EC437 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6985ED18F47D0B005EC437 /* DataManager.m */; };
 		4FBA5D3718ECCD6800532689 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBA5D3618ECCD6800532689 /* HistoryViewController.m */; };
 		4FF9ACEE18DDEBA5008C9CC3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACED18DDEBA5008C9CC3 /* Foundation.framework */; };
 		4FF9ACF018DDEBA5008C9CC3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACEF18DDEBA5008C9CC3 /* CoreGraphics.framework */; };
@@ -199,6 +200,8 @@
 		4F6985E618F4777D005EC437 /* PersonObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonObject.m; sourceTree = "<group>"; };
 		4F6985E818F47B45005EC437 /* ReasonObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReasonObject.h; sourceTree = "<group>"; };
 		4F6985E918F47B45005EC437 /* ReasonObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReasonObject.m; sourceTree = "<group>"; };
+		4F6985EC18F47D0B005EC437 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		4F6985ED18F47D0B005EC437 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		4FBA5D3518ECCD6800532689 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
 		4FBA5D3618ECCD6800532689 /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
 		4FF9ACEA18DDEBA5008C9CC3 /* Rendezvous.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rendezvous.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -452,6 +455,16 @@
 		4F6985E118F474E8005EC437 /* New CoreData Model (not implemented) */ = {
 			isa = PBXGroup;
 			children = (
+				4F6985EC18F47D0B005EC437 /* DataManager.h */,
+				4F6985ED18F47D0B005EC437 /* DataManager.m */,
+				4F6985EB18F47CE5005EC437 /* Managed Objects */,
+			);
+			name = "New CoreData Model (not implemented)";
+			sourceTree = "<group>";
+		};
+		4F6985EB18F47CE5005EC437 /* Managed Objects */ = {
+			isa = PBXGroup;
+			children = (
 				4F6985E218F47514005EC437 /* MeetingObject.h */,
 				4F6985E318F47514005EC437 /* MeetingObject.m */,
 				4F6985E518F4777D005EC437 /* PersonObject.h */,
@@ -459,7 +472,7 @@
 				4F6985E818F47B45005EC437 /* ReasonObject.h */,
 				4F6985E918F47B45005EC437 /* ReasonObject.m */,
 			);
-			name = "New CoreData Model (not implemented)";
+			name = "Managed Objects";
 			sourceTree = "<group>";
 		};
 		4FF9ACE118DDEBA5008C9CC3 = {
@@ -778,6 +791,7 @@
 				492FEB6018F1D935008BABD1 /* hmac.c in Sources */,
 				492FEB6318F1D935008BABD1 /* OAConsumer.m in Sources */,
 				499679FF18ECB8FD009CC8E8 /* NSData+ImageContentType.m in Sources */,
+				4F6985EE18F47D0B005EC437 /* DataManager.m in Sources */,
 				49967A0818ECB8FD009CC8E8 /* UIImage+GIF.m in Sources */,
 				4F6985EA18F47B45005EC437 /* ReasonObject.m in Sources */,
 				49967A2718EE0FD9009CC8E8 /* MeetingLocation.m in Sources */,
