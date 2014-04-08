@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Meeting.h"
+#import "MeetingObject.h"
 
 @interface DataManager : NSObject
 
@@ -15,8 +16,9 @@
 
 - (void) fetchMeetingUpdates;
 
-- (void) deleteMeeting:(NSString *)parseObjectId;
-- (void) deleteMeetingLocally:(NSString *)parseObjectId;
-- (void) deleteMeetingOnServer:(NSString *)parseObjectId;
+- (void) deleteMeetingWithId:(NSString *)parseObjectId;
+- (void) deleteMeetingLocallyWithId:(NSString *)parseObjectId;
+- (void) deleteMeetingOnServerWithId:(NSString *)parseObjectId;
+- (void) deleteMeetingLocally:(MeetingObject *)meetingObject;
 
 @end

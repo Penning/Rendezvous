@@ -9,7 +9,6 @@
 #import "DataManager.h"
 #import "AppDelegate.h"
 #import "Friend.h"
-#import "MeetingObject.h"
 
 @implementation DataManager{
     AppDelegate *appDelegate;
@@ -35,10 +34,6 @@
 }
 
 - (MeetingObject *) createMeetingLocally:(Meeting *)meeting withInvites:(NSArray *)invites withReasons:(NSArray *)reasons{
-    //                          //
-    // ~~~~~~~~Core Data~~~~~~~~//
-    //                          //
-    
     
     // -------Meeting--------
     //
@@ -123,10 +118,6 @@
 
 
 - (void) createMeetingOnServer:(Meeting *)meeting withInvites:(NSArray *)invites withReasons:(NSArray *)reasons{
-    //                      //
-    // ~~~~~~~~Parse~~~~~~~~//
-    //                      //
-    
     
     // -------Save to Parse--------
     //
@@ -181,6 +172,8 @@
     [meetingObject setReasons:[foreignMeeting mutableSetValueForKey:@"reasons"]];
     [meetingObject setParse_object_id:foreignMeeting.objectId];
     [meetingObject setInvites:[foreignMeeting mutableSetValueForKey:@"invites"]];
+    
+    [appDelegate saveContext];
     
 }
 
@@ -249,15 +242,57 @@
 }
 
 /////////////////////////////////////////////////////////////////////////
-- (void) deleteMeeting:(NSString *)parseObjectId{
+- (void) deleteMeetingWithId:(NSString *)parseObjectId{
+    
+    [self deleteMeetingLocallyWithId:parseObjectId];
+    [self deleteMeetingOnServerWithId:parseObjectId];
     
 }
 
-- (void) deleteMeetingLocally:(NSString *)parseObjectId{
+- (void) deleteMeetingLocallyWithId:(NSString *)parseObjectId{
+    
+    // query meeting
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity =
+    [NSEntityDescription entityForName:@"Meeting"
+                inManagedObjectContext:appDelegate.managedObjectContext];
+    [request setEntity:entity];
+    
+    NSPredicate *predicate =
+    [NSPredicate predicateWithFormat:@"parse_object_id == %@", parseObjectId];
+    [request setPredicate:predicate];
+    
+    NSError *error;
+    NSArray *array = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
+    
+    // delete it
+    if (!error && array && array.count > 0) {
+        MeetingObject *o = [array objectAtIndex:0];
+        [self deleteMeetingLocally:o];
+    }else{
+        NSLog(@"Error: %@", error);
+    }
     
 }
 
-- (void) deleteMeetingOnServer:(NSString *)parseObjectId{
+- (void) deleteMeetingOnServerWithId:(NSString *)parseObjectId{
+    
+    // delete on Parse
+    PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
+    [query getObjectInBackgroundWithId:parseObjectId block:^(PFObject *object, NSError *error) {
+        if (!error) {
+            [object deleteInBackground];
+        }else{
+            NSLog(@"Error: %@", error);
+        }
+    }];
+
+}
+
+- (void) deleteMeetingLocally:(MeetingObject *)meetingObject{
+    
+    [appDelegate.managedObjectContext deleteObject:meetingObject];
+    [appDelegate saveContext];
     
 }
 
