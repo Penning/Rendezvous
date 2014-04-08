@@ -130,16 +130,23 @@ Parse.Cloud.beforeSave("Meeting", function (request, response) {
             // not everyone has responded yet. 
         }
 
-        response.success;
+        response.success();
     }
 
     else if (meeting.get("status") == "closed") {
         // saving final location -- need to notify all accepters of official meeting place 
+        response.success();
     }
 
     else if (meeting.get("status") == "final") {
         // saving historically? deleting?
+        response.success();
     }
+    else {
+        response.error();
+    }
+
+    //response.success();
 
 
 });
