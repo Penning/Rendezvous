@@ -187,13 +187,19 @@
             [self.navigationController setToolbarHidden:NO animated:YES];
 
             NSString *tempMeetingName = @"w/: ";
+            int count = 0;
             for (Friend *f in meeters) {
                 if (tempMeetingName.length > 20) {
                     tempMeetingName = [tempMeetingName stringByAppendingString:@"& more"];
                     break;
                 }else{
-                    tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@"%@, ", f.first_name]];
+                    if(count == 0) {
+                        tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@" %@", f.first_name]];
+                    } else {
+                        tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@", %@", f.first_name]];
+                    }
                 }
+                count++;
             }
             meetingName = tempMeetingName;
 
