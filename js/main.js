@@ -74,7 +74,7 @@ Parse.Cloud.beforeSave("Meeting", function (request, response) {
     if (meeting.get("status") == "initial") {
 
         invites = meeting.get("invites");
-        meeting.set("num_responded", 0);
+        meeting.set("num_responded", 1);
         
 
         for (var i = 0; i < invites.length; ++i) {
@@ -102,7 +102,7 @@ Parse.Cloud.beforeSave("Meeting", function (request, response) {
     }
 
     else if (meeting.get("status") == "open") {
-        meeting.get("num_responded").increment;
+        meeting.set("num_responded", meeting.get("num_responded") + 1);
 
         if (meeting.get("num_responded") == meeting.get("meeters").length) {
             // everyone has responded to the invite -- push notification back to creator
