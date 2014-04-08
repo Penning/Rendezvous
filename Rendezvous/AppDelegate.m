@@ -139,7 +139,6 @@
     
     // get meeting updates
     NSString *shouldbethisquery = [NSString stringWithFormat:@"admin_fb_id = '%@'", _user.facebookID];
-    NSLog(shouldbethisquery);
     NSPredicate *qPredicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"admin_fb_id = '%@'", _user.facebookID]];
     PFQuery *adminQuery = [PFQuery queryWithClassName:@"Meeting" predicate:qPredicate];
     
@@ -189,6 +188,20 @@
                     }
                     [localMeeting setValue:reasonsSet forKeyPath:@"reasons"];
                     
+                    // create Person object for self
+                    NSManagedObject *meAdmin = [NSEntityDescription
+                                                insertNewObjectForEntityForName:@"Person"
+                                                inManagedObjectContext:_managedObjectContext];
+                    [meAdmin setValue:self.user.facebookID forKeyPath:@"facebook_id"];
+                    [meAdmin setValue:self.user.name forKeyPath:@"name"];
+                    [meAdmin setValue:self.user.first_name forKeyPath:@"first_name"];
+                    [meAdmin setValue:self.user.last_name forKeyPath:@"last_name"];
+                    
+                    // set self as admin
+                    [meAdmin setValue:localMeeting forKeyPath:@"administors"];
+                    [localMeeting setValue:meAdmin forKeyPath:@"admin"];
+
+                    
                     // TODO: create meeters
                     
                 }
@@ -198,7 +211,10 @@
                 [localMeeting setValue:[foreignMeeting valueForKey:@"meeting_description"] forKey:@"meeting_description"];
                 [localMeeting setValue:[foreignMeeting valueForKey:@"comeToMe"] forKey:@"is_ComeToMe"];
                 [localMeeting setValue:foreignMeeting.objectId forKey:@"parse_object_id"];
+                [localMeeting setValue:[foreignMeeting valueForKey:@"admin_fb_id"] forKeyPath:@"admin.facebook_id"];
                 [localMeeting setValue:@NO forKey:@"is_old"];
+                
+                
                 
                 // save
                 [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
