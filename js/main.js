@@ -36,63 +36,40 @@ Parse.Cloud.define("notifyInit", function(request, response){
 //////////////////////////////////////////////////////////////////////////
 // runs after Meeting object saved
 //////////////////////////////////////////////////////////////////////////
-Parse.Cloud.afterSave("Meeting", function(request) {
+Parse.Cloud.beforeSave("Meeting", function(request, response) {
 
 	
 	// check if object is new
 	if (request.object.get("status") != "initial") {
 		return;
 	};
-	
 
-	request.object.fetch({
-		success: function(meeting){
-			meeting.fetch({
-				success:function(m2){
+    invites = request.object.get("invites");
 
-					invites = m2.object.get("invites");
+    for (var i = 0; i < invites.length; ++i) {
 
-					for (var i = 0; i < invites.length; ++i) {
+        // Find user
+        var userQuery = new Parse.Query(Parse.User);
+        userQuery.equalTo("facebook_id", invites[i]); // not working
+        userQuery.find({
+            success: function(results) {
+                // send invites to users
+                for (var i = 0; i < results.length; i++) { 
+                    Parse.Cloud.run('notifyInit', result[i]);
+                }
+            },
+            error: function(error) {
+                // error
+                alert("Error: " + error.code + " " + error.message);
+            }
+        });
 
-						// Find user
-						var userQuery = new Parse.Query(Parse.User);
-						userQuery.equalTo("facebook_id", invites[i]); // not working
-						userQuery.find({
-							success: function(results) {
-							    // send invites to users
-							    for (var i = 0; i < results.length; i++) { 
-							    	Parse.Cloud.run('notifyInit', result[i]);
-							    }
-						  	},
-							error: function(error) {
-								// error
-						    	alert("Error: " + error.code + " " + error.message);
-							}
-						});
-
-					};
+    };
 
 
-					// set state to open once invites are out
-					m2.object.set("status", "open");
-					m2.object.save();
-
-				},
-				error: function(error) {
-					// error
-			    	alert("Error: " + error.code + " " + error.message);
-				}
-			});
-		},
-		error: function(error) {
-			// error
-	    	alert("Error: " + error.code + " " + error.message);
-		}
-	});
-
-	
-	
-
+    // set state to open once invites are out
+    request.object.set("status", "open");
+    response.success();
 });
 
 //////////////////////////////////////////////////////////////////////////
