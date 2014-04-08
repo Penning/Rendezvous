@@ -58,6 +58,9 @@
                 tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@"%@, ", f.first_name]];
             }
         }
+        if ([tempMeetingName characterAtIndex:tempMeetingName.length-2] == ',') {
+            tempMeetingName = [tempMeetingName stringByReplacingCharactersInRange:NSMakeRange(tempMeetingName.length-2, 2) withString:@""];
+        }
         meetingName = tempMeetingName;
         [self.meetingNameBarBtn setTitle:meetingName];
         [self.navigationController setToolbarHidden:NO animated:animated];
@@ -194,6 +197,9 @@
                 }else{
                     tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@"%@, ", f.first_name]];
                 }
+            }
+            if ([tempMeetingName characterAtIndex:tempMeetingName.length-2] == ',') {
+                tempMeetingName = [tempMeetingName stringByReplacingCharactersInRange:NSMakeRange(tempMeetingName.length-2, 2) withString:@""];
             }
             meetingName = tempMeetingName;
 
