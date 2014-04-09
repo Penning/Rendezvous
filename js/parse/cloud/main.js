@@ -1,38 +1,49 @@
-// Adam Oxner
+// Adam Oxner & Tim Wood
 
 //////////////////////////////////////////////////////////////////////////
 // notify a user of meeting
-// input is object type User
+// input is facebook_id of user
 //////////////////////////////////////////////////////////////////////////
 Parse.Cloud.define("notifyInit", function (request, response) {
     alert("about to notify...");
-
     // Find user
     var userQuery = new Parse.Query(Parse.User);
-    userQuery.equalTo("objectId", request.object.objectId);
+    userQuery.startsWith("facebook_id", request.params.facebook_id);
 
-    // Find devices associated user
-    var pushQuery = new Parse.Query(Parse.Installation);
-    pushQuery.matchesQuery('user', userQuery);
+    userQuery.first({
+        success: function (object) {
+            alert("found user to notify: " + object.get("facebook_id"));
+            // Find devices associated user
+            var pushQuery = new Parse.Query(Parse.Installation);
+            pushQuery.startsWith("deviceToken", object.get("device_token"));
 
-    // Send push notification to query
-    Parse.Push.send({
-        where: pushQuery,
-        data: {
-            alert: request.object.get("name") + " wants to meet!",
-            badge: "Increment",
-        }
-    }, {
-        success: function () {
-            // Push was successful
-            alert("Push sent to " + request.object.get("name"));
+
+            // Send push notification to query
+            Parse.Push.send({
+                where: pushQuery,
+                data: {
+                    alert: "Rendezvous with " + Parse.User.current().get("name") + "!",
+                    badge: "Increment",
+                }
+            }, {
+                success: function () {
+                    // Push was successful
+                    alert("Push sent to someone!");
+                    response.success();
+                },
+                error: function (error) {
+                    // Handle error
+                    alert("Error: " + error.code + " " + error.message);
+                    response.error(error);
+                }
+            });
+
         },
         error: function (error) {
-            // Handle error
             alert("Error: " + error.code + " " + error.message);
+            response.error(error);
         }
     });
-
 });
 
 Parse.Cloud.define("notifyAllResponded", function (request, response) {
@@ -128,30 +139,38 @@ Parse.Cloud.beforeSave("Meeting", function (request, response) {
 
         invites = meeting.get("invites");
         meeting.set("num_responded", 1);
+        alert(invites[0]);
         
 
         for (var i = 0; i < invites.length; ++i) {
-
             // Find user
-            var userQuery = new Parse.Query(Parse.User);
-            userQuery.equalTo("facebook_id", invites[i]);
-            userQuery.find({
-                success: function (results) {
-                    // send invites to users
-                    for (var i = 0; i < results.length; i++) {
-                        Parse.Cloud.run('notifyInit', result[i]);
-                    }
+            var query = new Parse.Query(Parse.User);
+            query.startsWith("facebook_id", invites[i].toString());
+            query.first({
+                success: function (object) {
+                    alert("about to call notifyInit: " + object.get("facebook_id"));
+
+                    Parse.Cloud.run('notifyInit', { facebook_id: object.get("facebook_id") }, {
+                        success: function (result) {
+                            alert("notifyInit returned successfully");
+                            response.success();
+                        },
+                        error: function (error) {
+                            response.error();
+                        }
+                    });
+                    
                 },
                 error: function (error) {
-                    // error
                     alert("Error: " + error.code + " " + error.message);
+                    response.error(error);
                 }
             });
 
         };
         // set state to open once invites are out
         meeting.set("status", "open");
-        response.success();
+        alert("success! -- meeting is " + meeting.get("status"));
     }
 
     else if (meeting.get("status") == "open") {
