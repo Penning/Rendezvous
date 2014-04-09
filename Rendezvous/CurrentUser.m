@@ -48,18 +48,21 @@
 - (void) getMyInformation {
     // Create request for user's Facebook data
     FBRequest *request = [FBRequest requestForMe];
-
+    
     // Send request to Facebook
     [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         if (!error) {
-         
+            
             // result is a dictionary with the user's Facebook data
             NSDictionary *userData = (NSDictionary *)result;
             [self initFromRequest:userData];
             [((AppDelegate *)[[UIApplication sharedApplication] delegate]) getMeetingUpdates];
+        }else{
+            NSLog(@"Error: %@", error);
         }
     }];
 }
+
 
 - (NSURL *) getPictureURL {
     return _pictureURL;

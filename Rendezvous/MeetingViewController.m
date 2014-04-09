@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "Friend.h"
 #import "ContactsViewController.h"
+#import "DataManager.h"
 
 @interface MeetingViewController (){
     BOOL home;
@@ -309,40 +310,8 @@
         return;
     }
     
-    // delete on Parse
-    NSString *parseObjectId = [_meetingObject valueForKey:@"parse_object_id"];
-    if (parseObjectId) {
-        PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
-        [query getObjectInBackgroundWithId:parseObjectId block:^(PFObject *object, NSError *error) {
-            if (!error) {
-                [object deleteInBackground];
-            }
-        }];
-    }
-    
-    
-    // delete local relations
-    //
-    //  invites
-    NSMutableSet *ppl = [_meetingObject mutableSetValueForKey:@"invites"];
-    for (NSManagedObject *p in ppl) {
-        if ([p valueForKey:@"administors"] == nil) {
-            [((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext deleteObject:p];
-        }
-    }
-    [_meetingObject setValue:nil forKey:@"invites"];
-    //  reasons
-    NSMutableSet *rsns = [_meetingObject mutableSetValueForKey:@"reasons"];
-    for (NSManagedObject *r in rsns) {
-        [((AppDelegate *)[[UIApplication sharedApplication] delegate]).managedObjectContext deleteObject:r];
-    }
-    [_meetingObject setValue:nil forKey:@"reasons"];
-    
-    // mark as old
-    [_meetingObject setValue:@YES forKey:@"is_old"];
-    
-    [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
-    
+    DataManager *dm = [[DataManager alloc] init];
+    [dm deleteMeetingSoft:_meetingObject];
     
 }
 
