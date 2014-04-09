@@ -43,7 +43,11 @@
     // Your Facebook application id is configured in Info.plist.
     // ****************************************************************************
     [PFFacebookUtils initializeFacebook];
-    
+
+//    if (!FBSession.activeSession.isOpen) {
+//        [FBSession openActiveSessionWithAllowLoginUI: YES];
+//    }
+
     // Register for push notifications
     [application registerForRemoteNotificationTypes:
      UIRemoteNotificationTypeBadge |
@@ -87,9 +91,6 @@
         }
         
     }
-    
-
-
 
     return YES;
 }

@@ -35,7 +35,7 @@
 - (void)initCellDisplay:(MeetingLocation *) meeting {
     _name.text = meeting.name;
     _distance.text = [NSString stringWithFormat:@"%@", meeting.distanceFromLoc];
-    _address.text = meeting.address;
+    _address.text = meeting.streetAddress;
 //    if(meeting.imageURL) {
         [_image setImageWithURL:[NSURL URLWithString:meeting.imageURL] placeholderImage:[UIImage imageNamed:@"111-user.png"]];
 //    }

@@ -19,6 +19,8 @@
 
 @implementation LocationViewController {
     LocationSuggestionsLookup *locationSuggestionsLookup;
+    MKMapRect zoomRect;
+    UIActivityIndicatorView *activityIndicator;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -41,15 +43,90 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+//    [self.tableView reloadData];
 //    NSLog(@"Suggestions: %@", suggestions);
 }
 
+-(void) delayedReloadData {
+    [self.tableView reloadData];
+}
+
+-(void) stopActivityIndicator {
+    [activityIndicator stopAnimating];
+}
+
+-(void) annotateMap {
+    zoomRect = MKMapRectNull;
+
+    //Add locations to map
+    for(MeetingLocation *location in _suggestions) {
+        NSLog(@"Geocoding %@", location.streetAddress);
+
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+        NSString *address = [NSString stringWithFormat:@"%@, %@", location.streetAddress, location.city];
+        [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
+            if(!error) {
+                if (placemarks && placemarks.count > 0) {
+                    NSLog(@"Placemark: %@", [placemarks objectAtIndex:0]);
+
+                    MKPlacemark *placemark = [[MKPlacemark alloc] initWithPlacemark:[placemarks objectAtIndex:0]];
+                    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+                    annotation.coordinate = placemark.coordinate;
+                    annotation.title = location.name;
+                    [_mapView addAnnotation:annotation];
+
+                    //Add to zoom
+                    [self zoomToFitMapAnnotations];
+                }
+            }
+            else {
+                NSLog(@"Error: %@", error);
+            }
+        }];
+    }
+}
+
+- (void)zoomToFitMapAnnotations {
+
+    if ([self.mapView.annotations count] == 0) return;
+
+    int i = 0;
+    MKMapPoint points[[self.mapView.annotations count]];
+
+    //build array of annotation points
+    for (id<MKAnnotation> annotation in [self.mapView annotations])
+        points[i++] = MKMapPointForCoordinate(annotation.coordinate);
+
+    MKPolygon *poly = [MKPolygon polygonWithPoints:points count:i];
+
+    // zoom out 20%
+    MKCoordinateRegion region = MKCoordinateRegionForMapRect([poly boundingMapRect]);
+    MKCoordinateSpan span;
+    span.latitudeDelta= region.span.latitudeDelta *1.2;
+    span.longitudeDelta= region.span.longitudeDelta *1.2;
+    region.span=span;
+
+    [self.mapView setRegion:region animated:YES];
+}
+
 - (void) viewWillAppear:(BOOL)animated {
-    locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];
-    locationSuggestionsLookup.locationViewController = self;
-    Meeting *meeting = [[Meeting alloc] init];
-    [locationSuggestionsLookup getSuggestions:meeting];
-    _suggestions = [[NSMutableArray alloc] initWithArray:[locationSuggestionsLookup getSuggestionResults]];
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicator.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
+    [self.view addSubview: activityIndicator];
+
+    [activityIndicator startAnimating];
+    [self performSelector:@selector(delayedReloadData) withObject:nil afterDelay:0.5];
+    [self performSelector:@selector(stopActivityIndicator) withObject:nil afterDelay:0.5];
+    [self performSelector:@selector(annotateMap) withObject:nil afterDelay:0.6];
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    // Add an annotation
+    MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
+    point.coordinate = userLocation.coordinate;
+
+    [self.mapView addAnnotation:point];
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,7 +147,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    NSLog(@"NUMROWS: %ld", (long)[_suggestions count]);
     return [_suggestions count];
 }
 

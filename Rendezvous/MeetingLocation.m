@@ -23,7 +23,7 @@
     NSDictionary *location = [data objectForKey:@"location"];
     _snippetText = [location objectForKey:@"snippet_text"];
 
-    _streetAddress = [location objectForKey:@"address"];
+    _streetAddress = [[location objectForKey:@"address"] firstObject];
     _city = [location objectForKey:@"city"];
     _state = [location objectForKey:@"state_code"];
     _address = [[location objectForKey:@"display_address"] objectAtIndex:1];
