@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "AcceptDeclineController.h"
 #import "LocationViewController.h"
+#import "DataManager.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -93,9 +94,7 @@
     return YES;
 }
 
--(int)getId{
-    return ++lastId;
-}
+
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
     // Store the deviceToken in the current installation and save it to Parse.
@@ -181,95 +180,8 @@
 
 - (void)getMeetingUpdates{
     
-    // get meeting updates
-    
-    PFQuery *adminQuery = [PFQuery queryWithClassName:@"Meeting"];
-    [adminQuery whereKey:@"admin_fb_id" equalTo:_user.facebookID];
-    
-    PFQuery *invitedQuery = [PFQuery queryWithClassName:@"Meeting"];
-    [invitedQuery whereKey:@"invites" equalTo:_user.facebookID];
-    
-    PFQuery *compoundQuery = [PFQuery orQueryWithSubqueries:@[adminQuery, invitedQuery]];
-    
-    [compoundQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            NSLog(@"Found %lu meetings on server.", (unsigned long)objects.count);
-            
-            // load objects into core data
-            for (PFObject *foreignMeeting in objects) {
-                
-                // query for
-                NSFetchRequest *request = [[NSFetchRequest alloc] init];
-                NSEntityDescription *entity =
-                [NSEntityDescription entityForName:@"Meeting"
-                            inManagedObjectContext:_managedObjectContext];
-                [request setEntity:entity];
-                
-                NSPredicate *predicate =
-                [NSPredicate predicateWithFormat:@"parse_object_id == %@", foreignMeeting.objectId];
-                [request setPredicate:predicate];
-                
-                NSError *error;
-                NSArray *array = [_managedObjectContext executeFetchRequest:request error:&error];
-                NSManagedObject *localMeeting = nil;
-                if (array != nil && array.count > 0) {
-                    // update
-                    localMeeting = [array objectAtIndex:0];
-                    
-                }else{
-                    // create meeting
-                    localMeeting = [[NSManagedObject alloc]
-                                    initWithEntity:[NSEntityDescription
-                                                    entityForName:@"Meeting"
-                                                    inManagedObjectContext:_managedObjectContext]
-                                    insertIntoManagedObjectContext:_managedObjectContext];
-                    
-                    // create reasons
-                    NSMutableSet *reasonsSet = [[NSMutableSet alloc] init];
-                    for (NSString *foreignReason in [foreignMeeting mutableArrayValueForKey:@"reasons"]) {
-                        NSManagedObject *localReason = [[NSManagedObject alloc]
-                                                        initWithEntity:[NSEntityDescription
-                                                                        entityForName:@"Meeting_reason"
-                                                                        inManagedObjectContext:_managedObjectContext]
-                                                        insertIntoManagedObjectContext:_managedObjectContext];
-                        [localReason setValue:foreignReason forKey:@"reason"];
-                        [reasonsSet addObject:localReason];
-                    }
-                    [localMeeting setValue:reasonsSet forKeyPath:@"reasons"];
-                    
-                    // create Person object for self
-                    NSManagedObject *meAdmin = [NSEntityDescription
-                                                insertNewObjectForEntityForName:@"Person"
-                                                inManagedObjectContext:_managedObjectContext];
-                    [meAdmin setValue:self.user.facebookID forKeyPath:@"facebook_id"];
-                    [meAdmin setValue:self.user.name forKeyPath:@"name"];
-                    [meAdmin setValue:self.user.first_name forKeyPath:@"first_name"];
-                    [meAdmin setValue:self.user.last_name forKeyPath:@"last_name"];
-                    
-                    // set self as admin
-                    [meAdmin setValue:localMeeting forKeyPath:@"administors"];
-                    [localMeeting setValue:meAdmin forKeyPath:@"admin"];
-
-                    
-                    // TODO: create meeters
-                    
-                }
-                
-                [localMeeting setValue:[foreignMeeting valueForKey:@"createdAt"] forKey:@"created_date"];
-                [localMeeting setValue:[foreignMeeting valueForKey:@"name"] forKey:@"meeting_name"];
-                [localMeeting setValue:[foreignMeeting valueForKey:@"meeting_description"] forKey:@"meeting_description"];
-                [localMeeting setValue:[foreignMeeting valueForKey:@"comeToMe"] forKey:@"is_ComeToMe"];
-                [localMeeting setValue:foreignMeeting.objectId forKey:@"parse_object_id"];
-                [localMeeting setValue:[foreignMeeting valueForKey:@"admin_fb_id"] forKeyPath:@"admin.facebook_id"];
-                [localMeeting setValue:@NO forKey:@"is_old"];
-                
-                
-                
-                // save
-                [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
-            }
-        }
-    }];
+    DataManager *dm = [[DataManager alloc] init];
+    [dm fetchMeetingUpdates];
 
 }
 

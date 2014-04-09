@@ -12,7 +12,7 @@
 
 @implementation DataManager{
     AppDelegate *appDelegate;
-    MeetingObject *tempMeeting;
+    NSManagedObject *tempMeeting;
 }
 
 
@@ -31,16 +31,23 @@
 
 - (void) createMeeting:(Meeting *)meeting withInvites:(NSArray *)invites withReasons:(NSArray *)reasons{
     
+    if (!invites)
+        invites = @[];
+    if (!reasons)
+        reasons = @[];
+    
+    
     [self createMeetingLocally:meeting withInvites:invites withReasons:reasons];
+    [self createMeetingOnServer:meeting withInvites:invites withReasons:reasons];
     
 }
 
-- (MeetingObject *) createMeetingLocally:(Meeting *)meeting withInvites:(NSArray *)invites withReasons:(NSArray *)reasons{
+- (NSManagedObject *) createMeetingLocally:(Meeting *)meeting withInvites:(NSArray *)invites withReasons:(NSArray *)reasons{
     
     // -------Meeting--------
     //
     NSManagedObjectContext *context = [appDelegate managedObjectContext];
-    MeetingObject *meeting_object = [NSEntityDescription
+    NSManagedObject *meeting_object = [NSEntityDescription
                                      insertNewObjectForEntityForName:@"Meeting"
                                      inManagedObjectContext:context];
     [meeting_object setValue:meeting.name forKey:@"meeting_name"];
@@ -121,6 +128,8 @@
 
 - (void) createMeetingOnServer:(Meeting *)meeting withInvites:(NSArray *)invites withReasons:(NSArray *)reasons{
     
+    
+    
     // -------Save to Parse--------
     //
     PFObject *meetingParse = [PFObject objectWithClassName:@"Meeting"];
@@ -169,13 +178,13 @@
 // updating
 /////////////////////////////////////////////////////////////////////////
 
-- (void) updateMeetingObject:(MeetingObject *)meetingObject withForeignMeeting:(PFObject *)foreignMeeting{
+- (void) updateMeetingObject:(NSManagedObject *)meetingObject withForeignMeeting:(PFObject *)foreignMeeting{
     
-    [meetingObject setMeeting_name:[foreignMeeting objectForKey:@"name"]];
-    [meetingObject setMeeting_description:[foreignMeeting objectForKey:@"description"]];
-    [meetingObject setReasons:[foreignMeeting mutableSetValueForKey:@"reasons"]];
-    [meetingObject setParse_object_id:foreignMeeting.objectId];
-    [meetingObject setInvites:[foreignMeeting mutableSetValueForKey:@"invites"]];
+    [meetingObject setValue:[foreignMeeting objectForKey:@"name"] forKey:@"meeting_name"];
+    [meetingObject setValue:[foreignMeeting objectForKey:@"description"] forKey:@"meeting_description"];
+    [meetingObject setValue:[foreignMeeting mutableSetValueForKey:@"reasons"] forKey:@"reasons"];
+    [meetingObject setValue:foreignMeeting.objectId forKey:@"parse_object_id"];
+    [meetingObject setValue:[foreignMeeting mutableSetValueForKey:@"invites"] forKey:@"invites"];
     
     [appDelegate saveContext];
     
@@ -212,7 +221,7 @@
                 NSError *error;
                 NSArray *array = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
                 
-                MeetingObject *localMeeting = nil;
+                NSManagedObject *localMeeting = nil;
                 if (array != nil && array.count > 0) {
                     // update existing meeting
                     
@@ -273,7 +282,7 @@
     
     // delete it
     if (!error && array && array.count > 0) {
-        MeetingObject *o = [array objectAtIndex:0];
+        NSManagedObject *o = [array objectAtIndex:0];
         [self deleteMeetingLocally:o];
     }else{
         NSLog(@"Error: %@", error);
@@ -295,17 +304,17 @@
 
 }
 
-- (void) deleteMeetingLocally:(MeetingObject *)meetingObject{
+- (void) deleteMeetingLocally:(NSManagedObject *)meetingObject{
     
     [appDelegate.managedObjectContext deleteObject:meetingObject];
     [appDelegate saveContext];
     
 }
 
-- (void) deleteMeetingSoft:(MeetingObject *)meetingObject{
+- (void) deleteMeetingSoft:(NSManagedObject *)meetingObject{
     
     // delete on parse
-    [self deleteMeetingOnServerWithId:meetingObject.parse_object_id];
+    [self deleteMeetingOnServerWithId:[meetingObject valueForKey:@"parse_object_id"]];
     
     
     // delete local relations

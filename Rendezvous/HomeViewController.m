@@ -166,16 +166,19 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
+    NSLog(@"sections");
     return [[_fetchedResultsController sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSLog(@"rows");
     id <NSFetchedResultsSectionInfo> sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
     return [sectionInfo numberOfObjects];
 }
 
 
 - (void)configureCell:(UITableViewCell *)cell1 atIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"configure");
     NSManagedObject *meeting_object = [_fetchedResultsController objectAtIndexPath:indexPath];
     
     HomeCell *cell = (HomeCell *)cell1;
@@ -198,6 +201,7 @@
 
  - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
  {
+     NSLog(@"cellforrow");
      HomeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"home_cell"];
      if (cell == nil) {
          cell = [[HomeCell alloc] init];

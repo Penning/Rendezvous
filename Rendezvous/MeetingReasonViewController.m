@@ -10,6 +10,7 @@
 #import "MeetingViewController.h"
 #import "AppDelegate.h"
 #import "Friend.h"
+#import "DataManager.h"
 
 #import <Parse/Parse.h>
 
@@ -170,9 +171,6 @@
     }
 }
 
-- (IBAction)sendMeeting:(id)sender {
-    //Send meeting to Parse
-}
 
 - (IBAction)back:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -181,118 +179,17 @@
 - (IBAction)okToolbarBtnHit:(id)sender {
     if (okShouldBeSend) {
         
+        Meeting *newMeeting = [[Meeting alloc] init];
+        newMeeting.name = self.meetingName;
+        newMeeting.description = @"";
+        [newMeeting setComeToMe:NO];
         
-        // __Core Data stuff ahead__
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        DataManager *dm = [[DataManager alloc] init];
+        [dm createMeeting:newMeeting withInvites:meeters withReasons:reasons];
         
-        // create meeting
-        NSManagedObjectContext *context = [appDelegate managedObjectContext];
-        NSManagedObject *meeting_object = [NSEntityDescription
-                                           insertNewObjectForEntityForName:@"Meeting"
-                                           inManagedObjectContext:context];
-        [meeting_object setValue:self.meetingName forKey:@"meeting_name"];
-        //if (![self.detailsTextView.text isEqualToString:@""] && ![self.detailsTextView.text isEqualToString:@"optional"]) {
-            [meeting_object setValue:@"" forKeyPath:@"meeting_description"];
-        //}
-        [meeting_object setValue:[NSNumber numberWithBool:NO] forKeyPath:@"is_ComeToMe"];
-        [meeting_object setValue:[NSDate date] forKeyPath:@"created_date"];
-        [meeting_object setValue:@NO forKey:@"is_old"];
-        
-        // create friends
-        NSMutableSet *friendsSet = [[NSMutableSet alloc] init];
-        for (Friend *f in self.meeters) {
-            NSManagedObject *newInvitee = [NSEntityDescription
-                                           insertNewObjectForEntityForName:@"Person"
-                                           inManagedObjectContext:context];
-            [newInvitee setValue:f.name forKeyPath:@"name"];
-            [newInvitee setValue:f.first_name forKeyPath:@"first_name"];
-            [newInvitee setValue:f.last_name forKeyPath:@"last_name"];
-            [newInvitee setValue:f.facebookID forKeyPath:@"facebook_id"];
-            [friendsSet addObject:newInvitee];
-        }
-        
-        // add invitees to meeting
-        [meeting_object setValue:friendsSet forKey:@"invites"];
-        
-        // create Person object for self
-        NSManagedObject *meAdmin = [NSEntityDescription
-                                    insertNewObjectForEntityForName:@"Person"
-                                    inManagedObjectContext:context];
-        [meAdmin setValue:appDelegate.user.facebookID forKeyPath:@"facebook_id"];
-        [meAdmin setValue:appDelegate.user.name forKeyPath:@"name"];
-        [meAdmin setValue:appDelegate.user.first_name forKeyPath:@"first_name"];
-        [meAdmin setValue:appDelegate.user.last_name forKeyPath:@"last_name"];
-        
-        // set self as admin
-        [meAdmin setValue:meeting_object forKeyPath:@"administors"];
-        [meeting_object setValue:meAdmin forKeyPath:@"admin"];
-        
-        // add reasons
-        NSMutableSet *reasonsSet = [[NSMutableSet alloc] init];
-        for (NSString *r in reasons) {
-            NSManagedObject *newReason = [NSEntityDescription
-                                          insertNewObjectForEntityForName:@"Meeting_reason"
-                                          inManagedObjectContext:context];
-            [newReason setValue:r forKey:@"reason"];
-            [reasonsSet addObject:newReason];
-        }
-        [meeting_object setValue:reasonsSet forKeyPath:@"reasons"];
-        
-        // save it!
-        NSError *error;
-        if (![context save:&error]) {
-            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-        }
-        
-        [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
-        
-        
-        // save to Parse
-        PFObject *meetingParse = [PFObject objectWithClassName:@"Meeting"];
-        meetingParse[@"name"] = self.meetingName;
-        meetingParse[@"admin_fb_id"] = [appDelegate user].facebookID;
-        meetingParse[@"status"] = @"initial";
-        [meetingParse addUniqueObjectsFromArray:reasons forKey:@"reasons"];
-        meetingParse[@"comeToMe"] = @NO;
-        meetingParse[@"meeting_description"] = @"";
-        
-        
-        
-        
-        
-        NSMutableArray *fbIdArray = [[NSMutableArray alloc] init];
-        for (Friend *f in meeters) {
-            [fbIdArray addObject:f.facebookID];
-        }
-        [meetingParse addUniqueObjectsFromArray:fbIdArray forKey:@"invites"];
-        
-        
-        
-        
-        // give admin location
-        [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-            
-            if (!error) {
-                /*
-                if (self.comeToMeSwitch.isOn) {
-                    meetingParse[@"final_meeting_location"] = geoPoint;
-                }else{
-                 */
-                    [meetingParse addUniqueObject:geoPoint forKey:@"meeter_locations"];
-                // }
-            }
-            
-            // save
-            [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (!error) {
-                    [meeting_object setValue:meetingParse.objectId forKey:@"parse_object_id"];
-                    [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
-                }
-            }];
-            
-        }];
         
         // unwind segue to home
+        AppDelegate *appDelegate = ((AppDelegate *)[[UIApplication sharedApplication] delegate]);
         [self.navigationController popToViewController:appDelegate.home animated:YES];
         
     }else{
