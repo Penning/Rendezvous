@@ -14,6 +14,8 @@
     NSMutableArray *locations;
 }
 
+@synthesize locationViewController = _locationViewController;
+
 //yelp url: http://api.yelp.com/v2/search?term=food&ll=37.788022,-122.399797
 
 - (void) getSuggestions:(Meeting *) meeting {
@@ -69,7 +71,9 @@
 //                    NSLog(@"Suggestion #%i: %@", i++, location);
                     MeetingLocation *meetingLocation = [[MeetingLocation alloc] initFromYelp:location];
                     [meetingLocation printInfoToLog];
-                    [locations addObject:meetingLocation];
+                    [_locationViewController.suggestions addObject:meetingLocation];
+                    [_locationViewController.tableView reloadData];
+                    NSLog(@"#suggestions = %lu", (unsigned long)[_locationViewController.suggestions count]);
                 }
                 
             } else {
