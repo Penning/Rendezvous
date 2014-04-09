@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
 #import "AcceptDeclineController.h"
+#import "LocationViewController.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -60,11 +61,25 @@
         
         // Fetch meeting object
         [targetMeeting fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            // Show accept/decline view controller
+            
             if (!error && [PFUser currentUser]) {
-                AcceptDeclineController *viewController = [[AcceptDeclineController alloc] initWithMeeting:object];
-                [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
+                if ([_user.facebookID isEqualToString:[object valueForKey:@"admin_fb_id"]]) {
+                    // user is admin. segue to close meeting screen
+                    
+                    LocationViewController *viewController = [[LocationViewController alloc] initWithMeeting:object];
+                    [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
+                }else{
+                    // user is not admin. segue to accept/decline screen
+                    
+                    AcceptDeclineController *viewController = [[AcceptDeclineController alloc] initWithMeeting:object];
+                    [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
+                }
+            }else if (error){
+                NSLog(@"Error: %@", error);
+            }else{
+                NSLog(@"Error: no user logged in.");
             }
+            
         }];
     }
     
@@ -88,19 +103,31 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [PFPush handlePush:userInfo];
     
-    // Create empty photo object
+    // Create empty meeting object
     NSString *meetingId = [userInfo objectForKey:@"meetingID"];
     PFObject *targetMeeting = [PFObject objectWithoutDataWithClassName:@"Meeting"
                                                             objectId:meetingId];
     
-    // Fetch photo object
+    // Fetch meeting object
     [targetMeeting fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         // Show photo view controller
         if (error) {
-            NSLog(@"Error: ", error);
+            NSLog(@"Error: %@", error);
         } else if ([PFUser currentUser]) {
-            AcceptDeclineController *viewController = [[AcceptDeclineController alloc] initWithMeeting:object];
-            [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
+            
+            if ([_user.facebookID isEqualToString:[object valueForKey:@"admin_fb_id"]]) {
+                // user is admin. segue to close meeting screen
+                
+                LocationViewController *viewController = [[LocationViewController alloc] initWithMeeting:object];
+                [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
+            }else{
+                // user is not admin. segue to accept/decline screen
+                
+                AcceptDeclineController *viewController = [[AcceptDeclineController alloc] initWithMeeting:object];
+                [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
+            }
+            
+            
         } else {
             NSLog(@"Error: no user logged in.");
         }
@@ -139,7 +166,6 @@
     
     // get meeting updates
     NSString *shouldbethisquery = [NSString stringWithFormat:@"admin_fb_id = '%@'", _user.facebookID];
-    NSLog(shouldbethisquery);
     NSPredicate *qPredicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"admin_fb_id = '%@'", _user.facebookID]];
     PFQuery *adminQuery = [PFQuery queryWithClassName:@"Meeting" predicate:qPredicate];
     
@@ -189,6 +215,20 @@
                     }
                     [localMeeting setValue:reasonsSet forKeyPath:@"reasons"];
                     
+                    // create Person object for self
+                    NSManagedObject *meAdmin = [NSEntityDescription
+                                                insertNewObjectForEntityForName:@"Person"
+                                                inManagedObjectContext:_managedObjectContext];
+                    [meAdmin setValue:self.user.facebookID forKeyPath:@"facebook_id"];
+                    [meAdmin setValue:self.user.name forKeyPath:@"name"];
+                    [meAdmin setValue:self.user.first_name forKeyPath:@"first_name"];
+                    [meAdmin setValue:self.user.last_name forKeyPath:@"last_name"];
+                    
+                    // set self as admin
+                    [meAdmin setValue:localMeeting forKeyPath:@"administors"];
+                    [localMeeting setValue:meAdmin forKeyPath:@"admin"];
+
+                    
                     // TODO: create meeters
                     
                 }
@@ -198,7 +238,10 @@
                 [localMeeting setValue:[foreignMeeting valueForKey:@"meeting_description"] forKey:@"meeting_description"];
                 [localMeeting setValue:[foreignMeeting valueForKey:@"comeToMe"] forKey:@"is_ComeToMe"];
                 [localMeeting setValue:foreignMeeting.objectId forKey:@"parse_object_id"];
+                [localMeeting setValue:[foreignMeeting valueForKey:@"admin_fb_id"] forKeyPath:@"admin.facebook_id"];
                 [localMeeting setValue:@NO forKey:@"is_old"];
+                
+                
                 
                 // save
                 [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];

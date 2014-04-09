@@ -31,6 +31,14 @@
     return self;
 }
 
+- (LocationViewController *) initWithMeeting:(PFObject *)meeting{
+    self = [super init];
+    
+    // do stuff
+    
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

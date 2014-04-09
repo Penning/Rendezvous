@@ -115,6 +115,10 @@
     [self.navigationController.visibleViewController viewDidLoad];
 }
 
+- (void)reloadMeetings{
+    [self.tableView reloadData];
+}
+
 #pragma mark - Table view data source
 
 - (NSFetchedResultsController *)fetchedResultsController {
@@ -184,8 +188,9 @@
     [cell.meetingName setText:[meeting_object valueForKey:@"meeting_name"]];
     [cell.meetingAdmin setText:[meeting_object valueForKeyPath:@"admin.name"]];
     
-    if (![[meeting_object valueForKeyPath:@"admin.facebook_id"] isEqualToString:appDelegate.user.facebookID]) {
+    if (![cell.adminFbId isEqualToString:appDelegate.user.facebookID]) {
         [cell.doubleTapLabel setHidden:YES];
+        NSLog(@"%@ | %@", cell.adminFbId, appDelegate.user.facebookID);
     }else{
         [cell.doubleTapLabel setHidden:NO];
     }
@@ -207,6 +212,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
 }
 
 

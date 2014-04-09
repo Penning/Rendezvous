@@ -19,4 +19,6 @@
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
+- (void)reloadMeetings;
+
 @end
