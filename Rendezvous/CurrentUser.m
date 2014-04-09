@@ -57,6 +57,8 @@
             NSDictionary *userData = (NSDictionary *)result;
             [self initFromRequest:userData];
             [((AppDelegate *)[[UIApplication sharedApplication] delegate]) getMeetingUpdates];
+        }else{
+            NSLog(@"Error: %@", error);
         }
     }];
 }
