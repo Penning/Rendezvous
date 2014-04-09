@@ -55,19 +55,72 @@ Parse.Cloud.define("notifyAllResponded", function (request, response) {
     }, {
         success: function () {
             // Push was successful
-            alert("Push sent to " + request.object.get("name"));
+            alert("notifyAllResponded -- notification sent to " + request.object.get("name"));
         },
         error: function (error) {
             // Handle error
-            alert("Error: " + error.code + " " + error.message);
+            alert("notifyAllResponded pushError: " + error.code + " " + error.message);
         }
     });
 });
+
+// input is relevant meeting objectId
+Parse.Cloud.define("forceCloseMeeting", function (request, response) {
+    alert("forceCloseMeeting called");
+    var meeting;
+    var meetingQuery = new Parse.Query(Parse.User);
+    meetingQuery.equalTo("objectId", request.params.objectId);
+    meetingQuery.get(request.params.objectId, {
+        success: function(object) {
+            meeting = object;
+            // object is an instance of Parse.Object.
+        },
+
+        error: function(object, error) {
+            // error is an instance of Parse.Error.
+            return;
+        },
+    });
+    if (!meeting.get("status", "open")) {
+        return;
+    }
+
+    // closing meeting -- push notification back to creator
+        if (meeting.get("isComeToMe") == true) {
+            // creators location is common location by default
+        }
+        else {
+            // get accepters locations and calculate the common lat long
+            var latitude_sum = 0;
+            var longitude_sum = 0;
+            for (var i = 0; i < meeting.get("meeter_locations").length; ++i) {
+                latitude_sum += meeting.get("meeter_locations")[i].latitude;
+                longitude_sum += meeting.get("meeter_locations")[i].longitude;
+            }
+            var commonGeoPoint =
+                new Parse.Geopoint(latitude_sum / meeting.get("meeter_locations").length, longitude_sum / meeting.get("meeter_locations").length);
+            meeting.set("final_meeting_location", commonGeoPoint);
+
+        }
+        meeting.set("status", "closed");
+
+        // dont notify since meeting is closing manually
+        //Parse.Cloud.run('notifyAllResponded', meeting.get("admin_fb_id"));
+ 
+
+});
+
+Parse.Cloud.define("notifyFinalLocation", function (request, response) {
+
+});
+
+
 
 //////////////////////////////////////////////////////////////////////////
 // runs after Meeting object saved
 //////////////////////////////////////////////////////////////////////////
 Parse.Cloud.beforeSave("Meeting", function (request, response) {
+    alert("beforeSave called -- meeting object");
     var meeting = request.object;
 
     // check if object is new
