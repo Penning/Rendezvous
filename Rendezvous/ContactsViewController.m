@@ -173,14 +173,14 @@
             // add to meeting
 
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-            [meeters addObject:[friendsWithApp objectAtIndex:indexPath.row]];
+            [meeters addObject:((Friend *)[friendsWithApp objectAtIndex:indexPath.row])];
 
         }else{
             // remove from meeting
 
             [cell setAccessoryType:UITableViewCellAccessoryNone];
             for (Friend *f in meeters) {
-                if (f.facebookID == ((Friend*)[friendsWithApp objectAtIndex:indexPath.row]).facebookID) {
+                if ([f.facebookID isEqualToString:((Friend*)[friendsWithApp objectAtIndex:indexPath.row]).facebookID]) {
                     [meeters removeObject:f];
                     break;
                 }

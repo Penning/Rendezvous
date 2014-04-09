@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5063" systemVersion="13C64" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Meeting" representedClassName="" syncable="YES">
+    <entity name="Meeting" representedClassName="MeetingObject" syncable="YES">
         <attribute name="created_date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="is_ComeToMe" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="is_old" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -24,7 +24,7 @@
         <relationship name="meeting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meeting" inverseName="invites" inverseEntity="Meeting" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Meeting" positionX="-108" positionY="-63" width="128" height="178"/>
+        <element name="Meeting" positionX="-108" positionY="-63" width="128" height="180"/>
         <element name="Meeting_reason" positionX="34" positionY="237" width="128" height="73"/>
         <element name="Person" positionX="180" positionY="42" width="128" height="135"/>
     </elements>

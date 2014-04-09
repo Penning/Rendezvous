@@ -13,6 +13,7 @@
 #import "CurrentUser.h"
 #import "LocationViewController.h"
 #import "LocationSuggestionsLookup.h"
+#import "DataManager.h"
 
 @interface HomeViewController ()
 
@@ -85,6 +86,11 @@
 - (void)viewWillAppear:(BOOL)animated{
     [self.tableView reloadData];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    //DataManager *dm = [[DataManager alloc] init];
+    //[dm fetchMeetingUpdates];
 }
 
 - (void)didReceiveMemoryWarning
@@ -192,7 +198,6 @@
     
     if (![cell.adminFbId isEqualToString:appDelegate.user.facebookID]) {
         [cell.doubleTapLabel setHidden:YES];
-        NSLog(@"%@ | %@", cell.adminFbId, appDelegate.user.facebookID);
     }else{
         [cell.doubleTapLabel setHidden:NO];
     }
@@ -268,6 +273,7 @@
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     
+    
     UITableView *tableView = self.tableView;
     
     switch(type) {
@@ -295,6 +301,7 @@
 
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id )sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    
     
     switch(type) {
             
