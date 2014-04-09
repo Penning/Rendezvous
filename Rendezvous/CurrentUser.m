@@ -28,6 +28,7 @@
     _pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", _facebookID]];
     
     [[PFUser currentUser] setObject:_facebookID forKey:@"facebook_id"];
+    [[PFUser currentUser] setObject:[PFInstallation currentInstallation].deviceToken forKey:@"device_token"];
     [[PFUser currentUser] saveInBackground];
 
 //    NSLog(@"%@", userData);

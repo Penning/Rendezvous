@@ -20,6 +20,8 @@
 @property (strong, nonatomic) NSNumber *latitude;
 @property (strong, nonatomic) NSNumber *longitude;
 
+@property (strong, nonatomic) NSArray *locationSuggestions;
+
 @property (readonly) NSArray *acceptedMeeters;
 
 - (void)setComeToMe:(BOOL)option;
