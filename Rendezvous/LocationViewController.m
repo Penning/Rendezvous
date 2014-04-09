@@ -19,6 +19,8 @@
 
 @implementation LocationViewController {
     LocationSuggestionsLookup *locationSuggestionsLookup;
+    MKMapRect zoomRect;
+    UIActivityIndicatorView *activityIndicator;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -45,20 +47,66 @@
 //    NSLog(@"Suggestions: %@", suggestions);
 }
 
--(void)delayedReloadData{
+-(void) delayedReloadData {
     [self.tableView reloadData];
 }
 
+-(void) stopActivityIndicator {
+    [activityIndicator stopAnimating];
+}
+
+-(void) annotateMap {
+    zoomRect = MKMapRectNull;
+
+    //Add locations to map
+    for(MeetingLocation *location in _suggestions) {
+        NSLog(@"Geocoding %@", location.streetAddress);
+
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+        NSString *address = [NSString stringWithFormat:@"%@, %@", location.streetAddress, location.city];
+        [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
+            if(!error) {
+                if (placemarks && placemarks.count > 0) {
+                    NSLog(@"Placemark: %@", [placemarks objectAtIndex:0]);
+                    
+                    MKPlacemark *placemark = [[MKPlacemark alloc] initWithPlacemark:[placemarks objectAtIndex:0]];
+                    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+                    annotation.coordinate = placemark.coordinate;
+                    annotation.title = location.name;
+                    [_mapView addAnnotation:annotation];
+
+                    //Add to zoom
+                    MKMapPoint annotationPoint = MKMapPointForCoordinate(annotation.coordinate);
+                    MKMapRect pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0, 0);
+                    zoomRect = MKMapRectUnion(zoomRect, pointRect);
+                }
+            }
+            else {
+                NSLog(@"Error: %@", error);
+            }
+        }];
+    }
+    [_mapView setVisibleMapRect:zoomRect animated:YES];
+}
+
 - (void) viewWillAppear:(BOOL)animated {
-//    while([_suggestions count] == 0) {
-//        [self.tableView reloadData];
-//    }
-//    [self performSelector:@selector(delayedReloadData) withObject:nil afterDelay:0.2];
-//    locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];
-//    locationSuggestionsLookup.locationViewController = self;
-//    Meeting *meeting = [[Meeting alloc] init]; 
-//    [locationSuggestionsLookup getSuggestions:meeting];
-//    _suggestions = [[NSMutableArray alloc] initWithArray:[locationSuggestionsLookup getSuggestionResults]];
+    activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicator.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
+    [self.view addSubview: activityIndicator];
+
+    [activityIndicator startAnimating];
+    [self performSelector:@selector(delayedReloadData) withObject:nil afterDelay:0.5];
+    [self performSelector:@selector(stopActivityIndicator) withObject:nil afterDelay:0.5];
+    [self performSelector:@selector(annotateMap) withObject:nil afterDelay:0.6];
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    // Add an annotation
+    MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
+    point.coordinate = userLocation.coordinate;
+
+    [self.mapView addAnnotation:point];
 }
 
 - (void)didReceiveMemoryWarning
@@ -79,7 +127,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    NSLog(@"NUMROWS: %ld", (long)[_suggestions count]);
     return [_suggestions count];
 }
 

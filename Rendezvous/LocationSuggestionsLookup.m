@@ -72,9 +72,10 @@
 //                    NSLog(@"Suggestion #%i: %@", i++, location);
                     MeetingLocation *meetingLocation = [[MeetingLocation alloc] initFromYelp:location];
                     if(![_locationViewController.suggestions containsObject:meetingLocation]) {
-                        [meetingLocation printInfoToLog];
+//                        [meetingLocation printInfoToLog];
                         [_locationViewController.suggestions addObject:meetingLocation];
-                        NSLog(@"#suggestions = %lu", (unsigned long)[_locationViewController.suggestions count]);
+                        [_locationViewController.tableView reloadData];
+//                        NSLog(@"#suggestions = %lu", (unsigned long)[_locationViewController.suggestions count]);
                     }
                 }
             } else {
