@@ -26,7 +26,7 @@
     _streetAddress = [location objectForKey:@"address"];
     _city = [location objectForKey:@"city"];
     _state = [location objectForKey:@"state_code"];
-    _address = [location objectForKey:@"display_address"];
+    _address = [[location objectForKey:@"display_address"] objectAtIndex:1];
 
     return self;
 }

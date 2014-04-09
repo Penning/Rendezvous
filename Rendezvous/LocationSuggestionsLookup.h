@@ -8,8 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "Meeting.h"
+#import "LocationViewController.h"
 
 @interface LocationSuggestionsLookup : NSObject
+
+@property (strong, nonatomic) LocationViewController *locationViewController;
 
 - (void) getSuggestions:(Meeting *) meeting;
 - (NSArray *) getSuggestionResults;
