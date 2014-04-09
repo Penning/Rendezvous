@@ -67,7 +67,7 @@
         [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
             if(!error) {
                 if (placemarks && placemarks.count > 0) {
-                    NSLog(@"Placemark: %@", [placemarks objectAtIndex:0]);
+//                    NSLog(@"Placemark: %@", [placemarks objectAtIndex:0]);
 
                     MKPlacemark *placemark = [[MKPlacemark alloc] initWithPlacemark:[placemarks objectAtIndex:0]];
                     MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
@@ -117,16 +117,11 @@
     [activityIndicator startAnimating];
     [self performSelector:@selector(delayedReloadData) withObject:nil afterDelay:0.5];
     [self performSelector:@selector(stopActivityIndicator) withObject:nil afterDelay:0.5];
+
+    //Map related
+    self.mapView.delegate =  self;
+    self.mapView.showsUserLocation = YES;
     [self performSelector:@selector(annotateMap) withObject:nil afterDelay:0.6];
-}
-
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
-{
-    // Add an annotation
-    MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
-    point.coordinate = userLocation.coordinate;
-
-    [self.mapView addAnnotation:point];
 }
 
 - (void)didReceiveMemoryWarning
