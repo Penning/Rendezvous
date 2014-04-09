@@ -24,6 +24,7 @@
 @property (strong, nonatomic) NSArray *reasons;
 @property (strong, nonatomic) Meeting *meeting;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBtn;
 @property (strong, nonatomic) NSManagedObject *meetingObject;
 
 - (void)initFromHome;

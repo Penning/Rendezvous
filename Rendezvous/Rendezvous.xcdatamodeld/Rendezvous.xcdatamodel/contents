@@ -6,8 +6,11 @@
         <attribute name="is_old" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="meeting_description" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="meeting_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="num_responded" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="parse_object_id" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="accepted" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="accepted_meeting" inverseEntity="Person" syncable="YES"/>
         <relationship name="admin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="administors" inverseEntity="Person" syncable="YES"/>
+        <relationship name="declined" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="declined_meeting" inverseEntity="Person" syncable="YES"/>
         <relationship name="invites" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="meeting" inverseEntity="Person" syncable="YES"/>
         <relationship name="reasons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Meeting_reason" inverseName="meeting" inverseEntity="Meeting_reason" syncable="YES"/>
     </entity>
@@ -20,12 +23,14 @@
         <attribute name="first_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="last_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="accepted_meeting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meeting" inverseName="accepted" inverseEntity="Meeting" syncable="YES"/>
         <relationship name="administors" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meeting" inverseName="admin" inverseEntity="Meeting" syncable="YES"/>
+        <relationship name="declined_meeting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meeting" inverseName="declined" inverseEntity="Meeting" syncable="YES"/>
         <relationship name="meeting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meeting" inverseName="invites" inverseEntity="Meeting" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Meeting" positionX="-108" positionY="-63" width="128" height="180"/>
+        <element name="Meeting" positionX="-108" positionY="-63" width="128" height="223"/>
         <element name="Meeting_reason" positionX="34" positionY="237" width="128" height="73"/>
-        <element name="Person" positionX="180" positionY="42" width="128" height="135"/>
+        <element name="Person" positionX="180" positionY="42" width="128" height="163"/>
     </elements>
 </model>

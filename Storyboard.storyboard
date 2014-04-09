@@ -691,6 +691,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="comeToMeSwitch" destination="yl3-S1-VDm" id="o7S-XB-Adb"/>
+                        <outlet property="deleteBtn" destination="7SY-7J-jme" id="B8t-3p-D1O"/>
                         <outlet property="detailsTextView" destination="PsJ-Fj-tXR" id="ioV-S4-kIR"/>
                         <outlet property="nameLabel" destination="HaL-TV-jCd" id="Q32-uu-fg9"/>
                         <outlet property="nameTextField" destination="MiB-Rf-4dY" id="gBf-Vs-bpG"/>

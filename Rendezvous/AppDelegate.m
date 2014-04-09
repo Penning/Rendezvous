@@ -106,6 +106,8 @@
     [[PFUser currentUser] saveInBackground];
 }
 
+
+
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [PFPush handlePush:userInfo];
     

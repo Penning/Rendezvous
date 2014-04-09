@@ -48,11 +48,15 @@
         if ([((AppDelegate *)[[UIApplication sharedApplication] delegate]).user.facebookID
              isEqualToString:[_meetingObject valueForKeyPath:@"admin.facebook_id"]]) {
             // is admin
+            [self.deleteBtn setEnabled:YES];
+            NSLog(@"admin ids: %@ | %@", ((AppDelegate *)[[UIApplication sharedApplication] delegate]).user.facebookID, [_meetingObject valueForKeyPath:@"admin.facebook_id"]);
             
         }else{
             // not admin
+            
             [self.detailsTextView setUserInteractionEnabled:NO];
             [self.sendContactsButton setHidden:YES];
+            [self.deleteBtn setEnabled:NO];
         }
         
         [self.nameLabel setText:[_meetingObject valueForKey:@"meeting_name"]];

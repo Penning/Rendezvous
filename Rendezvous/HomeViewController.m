@@ -182,6 +182,7 @@
     return [sectionInfo numberOfObjects];
 }
 
+#pragma mark - cells
 
 - (void)configureCell:(UITableViewCell *)cell1 atIndexPath:(NSIndexPath *)indexPath{
     NSManagedObject *meeting_object = [_fetchedResultsController objectAtIndexPath:indexPath];
