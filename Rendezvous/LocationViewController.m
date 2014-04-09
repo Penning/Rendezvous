@@ -41,15 +41,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+//    [self.tableView reloadData];
 //    NSLog(@"Suggestions: %@", suggestions);
 }
 
+-(void)delayedReloadData{
+    [self.tableView reloadData];
+}
+
 - (void) viewWillAppear:(BOOL)animated {
-    locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];
-    locationSuggestionsLookup.locationViewController = self;
-    Meeting *meeting = [[Meeting alloc] init];
-    [locationSuggestionsLookup getSuggestions:meeting];
-    _suggestions = [[NSMutableArray alloc] initWithArray:[locationSuggestionsLookup getSuggestionResults]];
+//    while([_suggestions count] == 0) {
+//        [self.tableView reloadData];
+//    }
+//    [self performSelector:@selector(delayedReloadData) withObject:nil afterDelay:0.2];
+//    locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];
+//    locationSuggestionsLookup.locationViewController = self;
+//    Meeting *meeting = [[Meeting alloc] init]; 
+//    [locationSuggestionsLookup getSuggestions:meeting];
+//    _suggestions = [[NSMutableArray alloc] initWithArray:[locationSuggestionsLookup getSuggestionResults]];
 }
 
 - (void)didReceiveMemoryWarning

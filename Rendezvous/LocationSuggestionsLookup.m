@@ -27,6 +27,7 @@
     [meeting.reasons addObject:@"coffee"];
 
     locations = [[NSMutableArray alloc] init];
+    _locationViewController.suggestions = [[NSMutableArray alloc] init];
 
     //Get suggestions for each category
     for(NSString *category in meeting.reasons) {
@@ -70,17 +71,17 @@
                 for (NSDictionary *location in results) {
 //                    NSLog(@"Suggestion #%i: %@", i++, location);
                     MeetingLocation *meetingLocation = [[MeetingLocation alloc] initFromYelp:location];
-                    [meetingLocation printInfoToLog];
-                    [_locationViewController.suggestions addObject:meetingLocation];
-                    [_locationViewController.tableView reloadData];
-                    NSLog(@"#suggestions = %lu", (unsigned long)[_locationViewController.suggestions count]);
+                    if(![_locationViewController.suggestions containsObject:meetingLocation]) {
+                        [meetingLocation printInfoToLog];
+                        [_locationViewController.suggestions addObject:meetingLocation];
+                        NSLog(@"#suggestions = %lu", (unsigned long)[_locationViewController.suggestions count]);
+                    }
                 }
-                
             } else {
                 NSLog(@"ERROR: %@", error);
             }
         }];
-        NSLog(@"COUNT: %ld", (long)[self suggestionCount]);
+//        NSLog(@"COUNT: %ld", (long)[self suggestionCount]);
     }
 }
 
