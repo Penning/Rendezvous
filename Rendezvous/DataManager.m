@@ -40,9 +40,20 @@
         NSLog(@"Error: Please pass in an array of types NSString.");
         return NO;
     }
-
+    
+    
+    while (tempMeeting) {
+        // do nothing :(
+    }
     [self createMeetingLocally:meeting withInvites:invites withReasons:reasons];
+    
+    while (!tempMeeting) {
+        // do nothing :(
+    }
     [self createMeetingOnServer:meeting withInvites:invites withReasons:reasons];
+    
+    
+    
     
     return YES;
 }
@@ -60,14 +71,16 @@
     [meeting_object setValue:meeting.description forKeyPath:@"meeting_description"];
     [meeting_object setValue:[NSNumber numberWithBool:meeting.isComeToMe] forKeyPath:@"is_ComeToMe"];
     [meeting_object setValue:[NSDate date] forKeyPath:@"created_date"];
+    [meeting_object setValue:@1 forKey:@"num_responded"];
     [meeting_object setValue:@NO forKey:@"is_old"];
     
     
     
     // -------Invites--------
     //
+    NSMutableSet *friendsSet = [[NSMutableSet alloc] init];
     if (invites != nil && invites.count > 0) {
-        NSMutableSet *friendsSet = [[NSMutableSet alloc] init];
+        
         for (Friend *f in invites) {
             NSManagedObject *newInvitee = [NSEntityDescription
                                            insertNewObjectForEntityForName:@"Person"
@@ -79,9 +92,9 @@
             [friendsSet addObject:newInvitee];
         }
         
-        // add invitees to meeting
-        [meeting_object setValue:friendsSet forKey:@"invites"];
     }
+    // add invitees to meeting
+    [meeting_object setValue:friendsSet forKey:@"invites"];
     
     
     
@@ -130,8 +143,10 @@
     }
     
     [appDelegate saveContext];
+    
     tempMeeting = meeting_object;
     
+    NSLog(@"saved locally");
     return meeting_object;
 }
 
@@ -149,6 +164,7 @@
     [meetingParse addUniqueObjectsFromArray:reasons forKey:@"reasons"];
     meetingParse[@"comeToMe"] = [NSNumber numberWithBool:meeting.isComeToMe];
     meetingParse[@"meeting_description"] = meeting.description;
+    
     
     NSMutableArray *fbIdArray = [[NSMutableArray alloc] init];
     for (Friend *f in invites) {
@@ -172,16 +188,15 @@
             NSLog(@"Location error: %@", error);
         }
         
-        // save
-        [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (!error) {
-                if (tempMeeting) {
-                    [tempMeeting setValue:meetingParse.objectId forKey:@"parse_object_id"];
-                }
-                [appDelegate saveContext];
-            }
-        }];
-        
+    }];
+    
+    
+    
+    [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded && !error) {
+            [tempMeeting setValue:meetingParse.objectId forKeyPath:@"parse_object_id"];
+            [appDelegate saveContext];
+        }
     }];
     
 }
@@ -221,6 +236,8 @@
     }
     
     for (NSString *f in [foreignMeeting mutableSetValueForKey:@"invites"]) {
+        
+        NSLog(@"adding invite: %@", f);
         
         // query if person exists
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -390,7 +407,7 @@
     // update some meeting info
     [meetingObject setValue:@NO forKey:@"is_old"];
     [meetingObject setValue:[foreignMeeting valueForKey:@"num_responded"] forKey:@"num_responded"];
-    
+    NSLog(@"num_responded after update: %@", [foreignMeeting valueForKey:@"num_responded"]);
     
     [appDelegate saveContext];
     
@@ -407,39 +424,37 @@
     PFQuery *compoundQuery = [PFQuery orQueryWithSubqueries:@[adminQuery, invitedQuery]];
     
     [compoundQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        
         if (!error) {
             NSLog(@"Found %lu meetings on server.", (unsigned long)objects.count);
             
-            // if there's no meetings on the server, push all locals to history
-            if (objects.count == 0) {
-                
-                // query local
-                NSFetchRequest *request = [[NSFetchRequest alloc] init];
-                NSEntityDescription *entity = [NSEntityDescription
-                                               entityForName:@"Meeting"
-                                               inManagedObjectContext:appDelegate.managedObjectContext];
-                [request setEntity:entity];
-                
-                NSPredicate *predicate =
-                [NSPredicate predicateWithFormat:@"is_old == %@", @NO];
-                [request setPredicate:predicate];
-                
-                NSError *error;
-                NSArray *resultsArray = [appDelegate.managedObjectContext
-                                         executeFetchRequest:request error:&error];
-                if (resultsArray != nil && resultsArray.count > 0) {
-                    // delete
-                    for (NSManagedObject *o in resultsArray) {
-                        [o setValue:@YES forKey:@"is_old"];
-                    }
-                    
-                    NSError *error = nil;
-                    [appDelegate.managedObjectContext save:&error];
-                    if (error) {
-                        NSLog(@"Error saving: %@", error);
-                    }
+            // mark everything as old
+            // query local
+            NSFetchRequest *request = [[NSFetchRequest alloc] init];
+            NSEntityDescription *entity = [NSEntityDescription
+                                           entityForName:@"Meeting"
+                                           inManagedObjectContext:appDelegate.managedObjectContext];
+            [request setEntity:entity];
+            
+            /*
+             NSPredicate *predicate =
+             [NSPredicate predicateWithFormat:@"is_old == %@", @NO];
+             [request setPredicate:predicate];
+             */
+            
+            NSError *error;
+            NSArray *resultsArray = [appDelegate.managedObjectContext
+                                     executeFetchRequest:request error:&error];
+            if (resultsArray != nil && resultsArray.count > 0) {
+                // delete
+                for (NSManagedObject *o in resultsArray) {
+                    [o setValue:@YES forKey:@"is_old"];
                 }
+                
+                [appDelegate saveContext];
             }
+            
+            
             
             // load objects into core data
             for (PFObject *foreignMeeting in objects) {
@@ -491,9 +506,13 @@
                 // update
                 [self updateMeetingObject:localMeeting withForeignMeeting:foreignMeeting];
             }
+            
+        }else{
+            NSLog(@"Error pulling updates: %@", error);
         }
     }];
-
+    
+    
     
 }
 
@@ -556,9 +575,12 @@
 
 - (void) deleteMeetingSoft:(NSManagedObject *)meetingObject{
     
+    NSLog(@"meeting to delete: %@", [meetingObject valueForKey:@"parse_object_id"]);
+    
     // delete on parse
     [self deleteMeetingOnServerWithId:[meetingObject valueForKey:@"parse_object_id"]];
     
+    NSLog(@"deleted on Parse");
     
     // delete local relations
     //
@@ -581,6 +603,7 @@
     [meetingObject setValue:@YES forKey:@"is_old"];
     
     [appDelegate saveContext];
+    NSLog(@"deleted locally");
     
 }
 

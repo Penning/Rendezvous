@@ -13,7 +13,6 @@
 #import "CurrentUser.h"
 #import "LocationViewController.h"
 #import "LocationSuggestionsLookup.h"
-#import "DataManager.h"
 
 @interface HomeViewController ()
 
@@ -196,6 +195,11 @@
     
     [cell.meetingName setText:[meeting_object valueForKey:@"meeting_name"]];
     [cell.meetingAdmin setText:[meeting_object valueForKeyPath:@"admin.name"]];
+    
+    [cell.acceptedLabel setText:[NSString
+                                 stringWithFormat:@"%lu/%lu",
+                                 [meeting_object mutableSetValueForKey:@"accepted"].count + [meeting_object mutableSetValueForKey:@"declined"].count,
+                                 [meeting_object mutableSetValueForKey:@"invites"].count]];
     
     if (![cell.adminFbId isEqualToString:appDelegate.user.facebookID]) {
         [cell.doubleTapLabel setHidden:YES];

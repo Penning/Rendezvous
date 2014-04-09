@@ -14,7 +14,6 @@
 @implementation CurrentUser
 
 - (void) initFromRequest:(NSDictionary *) userData {
-    NSLog(@"initFromRequest");
     
     _name = userData[@"name"];
     _first_name = userData[@"first_name"];
@@ -48,12 +47,10 @@
     [[PFUser currentUser] setObject:_facebookID forKey:@"facebook_id"];
     [[PFUser currentUser] saveEventually];
     
-    NSLog(@"ok");
     
 }
 
 - (void) getMyInformation {
-    NSLog(@"getMyInformation");
     
     // Create request for user's Facebook data
     FBRequest *request = [FBRequest requestForMe];
