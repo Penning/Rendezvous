@@ -30,19 +30,14 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void) createMeeting:(Meeting *)meeting withInvites:(NSArray *)invites withReasons:(NSArray *)reasons{
-    
-    if (!invites)
-        invites = @[];
-    if (!reasons)
-        reasons = @[];
-    
-    
+
     [self createMeetingLocally:meeting withInvites:invites withReasons:reasons];
     [self createMeetingOnServer:meeting withInvites:invites withReasons:reasons];
     
 }
 
 - (NSManagedObject *) createMeetingLocally:(Meeting *)meeting withInvites:(NSArray *)invites withReasons:(NSArray *)reasons{
+    
     
     // -------Meeting--------
     //
@@ -60,20 +55,22 @@
     
     // -------Invites--------
     //
-    NSMutableSet *friendsSet = [[NSMutableSet alloc] init];
-    for (Friend *f in invites) {
-        NSManagedObject *newInvitee = [NSEntityDescription
-                                       insertNewObjectForEntityForName:@"Person"
-                                       inManagedObjectContext:context];
-        [newInvitee setValue:f.name forKeyPath:@"name"];
-        [newInvitee setValue:f.first_name forKeyPath:@"first_name"];
-        [newInvitee setValue:f.last_name forKeyPath:@"last_name"];
-        [newInvitee setValue:f.facebookID forKeyPath:@"facebook_id"];
-        [friendsSet addObject:newInvitee];
+    if (invites != nil && invites.count > 0) {
+        NSMutableSet *friendsSet = [[NSMutableSet alloc] init];
+        for (Friend *f in invites) {
+            NSManagedObject *newInvitee = [NSEntityDescription
+                                           insertNewObjectForEntityForName:@"Person"
+                                           inManagedObjectContext:context];
+            [newInvitee setValue:f.name forKeyPath:@"name"];
+            [newInvitee setValue:f.first_name forKeyPath:@"first_name"];
+            [newInvitee setValue:f.last_name forKeyPath:@"last_name"];
+            [newInvitee setValue:f.facebookID forKeyPath:@"facebook_id"];
+            [friendsSet addObject:newInvitee];
+        }
+        
+        // add invitees to meeting
+        [meeting_object setValue:friendsSet forKey:@"invites"];
     }
-    
-    // add invitees to meeting
-    [meeting_object setValue:friendsSet forKey:@"invites"];
     
     
     
@@ -98,15 +95,18 @@
     
     // -------Reasons--------
     //
-    NSMutableSet *reasonsSet = [[NSMutableSet alloc] init];
-    for (NSString *r in reasons) {
-        NSManagedObject *newReason = [NSEntityDescription
-                                      insertNewObjectForEntityForName:@"Meeting_reason"
-                                      inManagedObjectContext:context];
-        [newReason setValue:r forKey:@"reason"];
-        [reasonsSet addObject:newReason];
+    if (reasons != nil && reasons.count > 0) {
+        NSMutableSet *reasonsSet = [[NSMutableSet alloc] init];
+        for (NSString *r in reasons) {
+            NSManagedObject *newReason = [NSEntityDescription
+                                          insertNewObjectForEntityForName:@"Meeting_reason"
+                                          inManagedObjectContext:context];
+            [newReason setValue:r forKey:@"reason"];
+            [reasonsSet addObject:newReason];
+        }
+        [meeting_object setValue:reasonsSet forKeyPath:@"reasons"];
     }
-    [meeting_object setValue:reasonsSet forKeyPath:@"reasons"];
+    
     
     
     
