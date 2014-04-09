@@ -13,6 +13,7 @@
 #import "CurrentUser.h"
 #import "LocationViewController.h"
 #import "LocationSuggestionsLookup.h"
+#import "DataManager.h"
 
 @interface HomeViewController ()
 
@@ -85,6 +86,11 @@
 - (void)viewWillAppear:(BOOL)animated{
     [self.tableView reloadData];
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    //DataManager *dm = [[DataManager alloc] init];
+    //[dm fetchMeetingUpdates];
 }
 
 - (void)didReceiveMemoryWarning

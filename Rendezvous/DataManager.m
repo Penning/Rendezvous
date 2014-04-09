@@ -168,6 +168,8 @@
                 [meetingParse addUniqueObject:geoPoint forKey:@"meeter_locations"];
             }
             [meetingParse saveInBackground];
+        }else{
+            NSLog(@"Location error: %@", error);
         }
         
         // save
@@ -215,12 +217,13 @@
         //[newInvitee setValue:f.name forKeyPath:@"name"];
         //[newInvitee setValue:f.first_name forKeyPath:@"first_name"];
         //[newInvitee setValue:f.last_name forKeyPath:@"last_name"];
-        [newInvitee setValue:f forKeyPath:@"facebook_id"];
+        //[newInvitee setValue:f forKeyPath:@"facebook_id"];
         [friendsSet addObject:newInvitee];
     }
     
     // add invitees to meeting
     [meetingObject setValue:friendsSet forKey:@"invites"];
+    [meetingObject setValue:@NO forKey:@"is_old"];
     [appDelegate saveContext];
     
 }

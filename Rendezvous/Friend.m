@@ -13,18 +13,24 @@
 }
 
 - (Friend *) initWithObject:(NSDictionary<FBGraphUser>*) friend {
+    self = [super init];
+    
     _name = friend.name;
     
+    
     _first_name = [[friend.name componentsSeparatedByString:@" "] objectAtIndex:0];
-    _last_name = [[friend.name componentsSeparatedByString:@" "] objectAtIndex:1];
+    if ([friend.name componentsSeparatedByString:@" "].count > 1) {
+        _last_name = [[friend.name componentsSeparatedByString:@" "] objectAtIndex:1];
+    }
+    
 
     _facebookID = friend.id;
 
     _email = [friend objectForKey:@"email"];
 
     _pictureURL = [[[friend objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
-    // NSLog(@"PICTURE URL: %@", _pictureURL);
-
+    
+    
     return self;
 }
 

@@ -30,7 +30,7 @@
     lastId = 0;
     
     _user = [[CurrentUser alloc] init];
-    [_user getMyInformation];
+    // [_user getMyInformation];
 
     //Parse setup
     [Parse setApplicationId:@"aZPN4SiTApTkjRRj6heYGQ6Qkig6rVslPAD8hvyf"
@@ -101,6 +101,9 @@
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:newDeviceToken];
     [currentInstallation saveInBackground];
+    
+    [[PFUser currentUser] setObject:[[PFInstallation currentInstallation] deviceToken] forKey:@"device_token"];
+    [[PFUser currentUser] saveInBackground];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
@@ -179,6 +182,7 @@
 }
 
 - (void)getMeetingUpdates{
+    NSLog(@"fetching updates");
     
     DataManager *dm = [[DataManager alloc] init];
     [dm fetchMeetingUpdates];
