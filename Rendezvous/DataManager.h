@@ -11,7 +11,7 @@
 
 @interface DataManager : NSObject
 
-- (void) createMeeting:(Meeting *)meeting withInvites:(NSArray *)invites withReasons:(NSArray *)reasons;
+- (BOOL) createMeeting:(Meeting *)meeting withInvites:(NSArray *)invites withReasons:(NSArray *)reasons;
 
 - (void) fetchMeetingUpdates;
 

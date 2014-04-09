@@ -29,11 +29,22 @@
 // creating
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void) createMeeting:(Meeting *)meeting withInvites:(NSArray *)invites withReasons:(NSArray *)reasons{
+- (BOOL) createMeeting:(Meeting *)meeting withInvites:(NSArray *)invites withReasons:(NSArray *)reasons{
+    
+    if (invites && invites.count > 0 && ![[invites objectAtIndex:0] isKindOfClass:[Friend class]]) {
+        NSLog(@"Error: Please pass in an array of types Friend.");
+        return NO;
+    }
+    
+    if (reasons && reasons.count > 0 && ![[reasons objectAtIndex:0] isKindOfClass:[NSString class]]) {
+        NSLog(@"Error: Please pass in an array of types NSString.");
+        return NO;
+    }
 
     [self createMeetingLocally:meeting withInvites:invites withReasons:reasons];
     [self createMeetingOnServer:meeting withInvites:invites withReasons:reasons];
     
+    return YES;
 }
 
 - (NSManagedObject *) createMeetingLocally:(Meeting *)meeting withInvites:(NSArray *)invites withReasons:(NSArray *)reasons{
@@ -129,7 +140,6 @@
 - (void) createMeetingOnServer:(Meeting *)meeting withInvites:(NSArray *)invites withReasons:(NSArray *)reasons{
     
     
-    
     // -------Save to Parse--------
     //
     PFObject *meetingParse = [PFObject objectWithClassName:@"Meeting"];
@@ -157,6 +167,7 @@
             }else{
                 [meetingParse addUniqueObject:geoPoint forKey:@"meeter_locations"];
             }
+            [meetingParse saveInBackground];
         }
         
         // save
@@ -171,7 +182,6 @@
         
     }];
     
-    tempMeeting = nil;
 }
 
 
@@ -182,10 +192,35 @@
     
     [meetingObject setValue:[foreignMeeting objectForKey:@"name"] forKey:@"meeting_name"];
     [meetingObject setValue:[foreignMeeting objectForKey:@"description"] forKey:@"meeting_description"];
-    [meetingObject setValue:[foreignMeeting mutableSetValueForKey:@"reasons"] forKey:@"reasons"];
     [meetingObject setValue:foreignMeeting.objectId forKey:@"parse_object_id"];
-    [meetingObject setValue:[foreignMeeting mutableSetValueForKey:@"invites"] forKey:@"invites"];
     
+    // reasons
+    NSMutableSet *reasonsSet = [[NSMutableSet alloc] init];
+    for (NSString *r in [foreignMeeting mutableSetValueForKey:@"reasons"]) {
+        NSManagedObject *newReason = [NSEntityDescription
+                                      insertNewObjectForEntityForName:@"Meeting_reason"
+                                      inManagedObjectContext:appDelegate.managedObjectContext];
+        [newReason setValue:r forKey:@"reason"];
+        [reasonsSet addObject:newReason];
+    }
+    [meetingObject setValue:reasonsSet forKeyPath:@"reasons"];
+    
+    
+    // friends
+    NSMutableSet *friendsSet = [[NSMutableSet alloc] init];
+    for (NSString *f in [foreignMeeting mutableSetValueForKey:@"invites"]) {
+        NSManagedObject *newInvitee = [NSEntityDescription
+                                       insertNewObjectForEntityForName:@"Person"
+                                       inManagedObjectContext:appDelegate.managedObjectContext];
+        //[newInvitee setValue:f.name forKeyPath:@"name"];
+        //[newInvitee setValue:f.first_name forKeyPath:@"first_name"];
+        //[newInvitee setValue:f.last_name forKeyPath:@"last_name"];
+        [newInvitee setValue:f forKeyPath:@"facebook_id"];
+        [friendsSet addObject:newInvitee];
+    }
+    
+    // add invitees to meeting
+    [meetingObject setValue:friendsSet forKey:@"invites"];
     [appDelegate saveContext];
     
 }
@@ -203,6 +238,37 @@
     [compoundQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             NSLog(@"Found %lu meetings on server.", (unsigned long)objects.count);
+            
+            // if there's no meetings on the server, push all locals to history
+            if (objects.count == 0) {
+                
+                // query local
+                NSFetchRequest *request = [[NSFetchRequest alloc] init];
+                NSEntityDescription *entity = [NSEntityDescription
+                                               entityForName:@"Meeting"
+                                               inManagedObjectContext:appDelegate.managedObjectContext];
+                [request setEntity:entity];
+                
+                NSPredicate *predicate =
+                [NSPredicate predicateWithFormat:@"is_old == %@", @NO];
+                [request setPredicate:predicate];
+                
+                NSError *error;
+                NSArray *resultsArray = [appDelegate.managedObjectContext
+                                         executeFetchRequest:request error:&error];
+                if (resultsArray != nil && resultsArray.count > 0) {
+                    // delete
+                    for (NSManagedObject *o in resultsArray) {
+                        [o setValue:@YES forKey:@"is_old"];
+                    }
+                    
+                    NSError *error = nil;
+                    [appDelegate.managedObjectContext save:&error];
+                    if (error) {
+                        NSLog(@"Error saving: %@", error);
+                    }
+                }
+            }
             
             // load objects into core data
             for (PFObject *foreignMeeting in objects) {
@@ -236,13 +302,19 @@
                     newMeeting.description = [foreignMeeting valueForKey:@"description"];
                     
                     // get reasons
-                    NSArray *reasonsArray = [foreignMeeting mutableArrayValueForKey:@"reasons"];
+                    NSArray *reasonsArray = [[foreignMeeting mutableArrayValueForKey:@"reasons"] copy];;
                     
                     // get invites
-                    NSArray *invitesArray = [foreignMeeting mutableArrayValueForKey:@"invites"];
+                    NSArray *invitesArray = [[foreignMeeting mutableArrayValueForKey:@"invites"] copy];
+                    NSMutableArray *friendsArray = [[NSMutableArray alloc] init];
+                    for (NSString *invite in invitesArray) {
+                        Friend *f = [[Friend alloc] init];
+                        f.facebookID = invite;
+                        [friendsArray addObject:f];
+                    }
                     
                     // create
-                    localMeeting = [self createMeetingLocally:newMeeting withInvites:invitesArray withReasons:reasonsArray];
+                    localMeeting = [self createMeetingLocally:newMeeting withInvites:friendsArray withReasons:reasonsArray];
                 }
                 
                 // update

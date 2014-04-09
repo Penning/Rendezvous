@@ -166,19 +166,16 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    NSLog(@"sections");
     return [[_fetchedResultsController sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"rows");
     id <NSFetchedResultsSectionInfo> sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
     return [sectionInfo numberOfObjects];
 }
 
 
 - (void)configureCell:(UITableViewCell *)cell1 atIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"configure");
     NSManagedObject *meeting_object = [_fetchedResultsController objectAtIndexPath:indexPath];
     
     HomeCell *cell = (HomeCell *)cell1;
@@ -193,7 +190,6 @@
     
     if (![cell.adminFbId isEqualToString:appDelegate.user.facebookID]) {
         [cell.doubleTapLabel setHidden:YES];
-        NSLog(@"%@ | %@", cell.adminFbId, appDelegate.user.facebookID);
     }else{
         [cell.doubleTapLabel setHidden:NO];
     }
@@ -201,7 +197,6 @@
 
  - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
  {
-     NSLog(@"cellforrow");
      HomeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"home_cell"];
      if (cell == nil) {
          cell = [[HomeCell alloc] init];
@@ -256,6 +251,7 @@
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
     
+    
     UITableView *tableView = self.tableView;
     
     switch(type) {
@@ -283,6 +279,7 @@
 
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id )sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    
     
     switch(type) {
             
