@@ -68,7 +68,7 @@
             if(!error) {
                 if (placemarks && placemarks.count > 0) {
                     NSLog(@"Placemark: %@", [placemarks objectAtIndex:0]);
-                    
+
                     MKPlacemark *placemark = [[MKPlacemark alloc] initWithPlacemark:[placemarks objectAtIndex:0]];
                     MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
                     annotation.coordinate = placemark.coordinate;
@@ -76,9 +76,7 @@
                     [_mapView addAnnotation:annotation];
 
                     //Add to zoom
-                    MKMapPoint annotationPoint = MKMapPointForCoordinate(annotation.coordinate);
-                    MKMapRect pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0, 0);
-                    zoomRect = MKMapRectUnion(zoomRect, pointRect);
+                    [self zoomToFitMapAnnotations];
                 }
             }
             else {
@@ -86,7 +84,29 @@
             }
         }];
     }
-    [_mapView setVisibleMapRect:zoomRect animated:YES];
+}
+
+- (void)zoomToFitMapAnnotations {
+
+    if ([self.mapView.annotations count] == 0) return;
+
+    int i = 0;
+    MKMapPoint points[[self.mapView.annotations count]];
+
+    //build array of annotation points
+    for (id<MKAnnotation> annotation in [self.mapView annotations])
+        points[i++] = MKMapPointForCoordinate(annotation.coordinate);
+
+    MKPolygon *poly = [MKPolygon polygonWithPoints:points count:i];
+
+    // zoom out 20%
+    MKCoordinateRegion region = MKCoordinateRegionForMapRect([poly boundingMapRect]);
+    MKCoordinateSpan span;
+    span.latitudeDelta= region.span.latitudeDelta *1.2;
+    span.longitudeDelta= region.span.longitudeDelta *1.2;
+    region.span=span;
+
+    [self.mapView setRegion:region animated:YES];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
