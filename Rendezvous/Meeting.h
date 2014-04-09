@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSArray *meeters;
 @property (strong, nonatomic) NSMutableArray *reasons;
 
+
 //Central location between meeters
 @property (strong, nonatomic) NSNumber *latitude;
 @property (strong, nonatomic) NSNumber *longitude;

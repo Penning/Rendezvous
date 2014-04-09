@@ -28,6 +28,7 @@
     _pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", _facebookID]];
     
     [[PFUser currentUser] setObject:_facebookID forKey:@"facebook_id"];
+    [[PFUser currentUser] setObject:[PFInstallation currentInstallation].deviceToken forKey:@"device_token"];
     [[PFUser currentUser] saveInBackground];
 
 //    NSLog(@"%@", userData);
@@ -48,18 +49,21 @@
 - (void) getMyInformation {
     // Create request for user's Facebook data
     FBRequest *request = [FBRequest requestForMe];
-
+    
     // Send request to Facebook
     [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         if (!error) {
-         
+            
             // result is a dictionary with the user's Facebook data
             NSDictionary *userData = (NSDictionary *)result;
             [self initFromRequest:userData];
             [((AppDelegate *)[[UIApplication sharedApplication] delegate]) getMeetingUpdates];
+        }else{
+            NSLog(@"Error: %@", error);
         }
     }];
 }
+
 
 - (NSURL *) getPictureURL {
     return _pictureURL;

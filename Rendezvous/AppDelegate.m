@@ -56,31 +56,35 @@
     if (notificationPayload != nil && notificationPayload.count > 0) {
         // Create a pointer to the Photo object
         NSString *meetingId = [notificationPayload objectForKey:@"meetinID"];
-        PFObject *targetMeeting = [PFObject objectWithoutDataWithClassName:@"Meeting"
-                                                                objectId:meetingId];
         
-        // Fetch meeting object
-        [targetMeeting fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        if (meetingId) {
+            PFObject *targetMeeting = [PFObject objectWithoutDataWithClassName:@"Meeting"
+                                                                      objectId:meetingId];
             
-            if (!error && [PFUser currentUser]) {
-                if ([_user.facebookID isEqualToString:[object valueForKey:@"admin_fb_id"]]) {
-                    // user is admin. segue to close meeting screen
-                    
-                    LocationViewController *viewController = [[LocationViewController alloc] initWithMeeting:object];
-                    [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
+            // Fetch meeting object
+            [targetMeeting fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+                
+                if (!error && [PFUser currentUser]) {
+                    if ([_user.facebookID isEqualToString:[object valueForKey:@"admin_fb_id"]]) {
+                        // user is admin. segue to close meeting screen
+                        
+                        LocationViewController *viewController = [[LocationViewController alloc] initWithMeeting:object];
+                        [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
+                    }else{
+                        // user is not admin. segue to accept/decline screen
+                        
+                        AcceptDeclineController *viewController = [[AcceptDeclineController alloc] initWithMeeting:object];
+                        [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
+                    }
+                }else if (error){
+                    NSLog(@"Error: %@", error);
                 }else{
-                    // user is not admin. segue to accept/decline screen
-                    
-                    AcceptDeclineController *viewController = [[AcceptDeclineController alloc] initWithMeeting:object];
-                    [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
+                    NSLog(@"Error: no user logged in.");
                 }
-            }else if (error){
-                NSLog(@"Error: %@", error);
-            }else{
-                NSLog(@"Error: no user logged in.");
-            }
-            
-        }];
+                
+            }];
+        }
+        
     }
     
 
@@ -105,34 +109,39 @@
     
     // Create empty meeting object
     NSString *meetingId = [userInfo objectForKey:@"meetingID"];
-    PFObject *targetMeeting = [PFObject objectWithoutDataWithClassName:@"Meeting"
-                                                            objectId:meetingId];
     
-    // Fetch meeting object
-    [targetMeeting fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        // Show photo view controller
-        if (error) {
-            NSLog(@"Error: %@", error);
-        } else if ([PFUser currentUser]) {
-            
-            if ([_user.facebookID isEqualToString:[object valueForKey:@"admin_fb_id"]]) {
-                // user is admin. segue to close meeting screen
+    if (meetingId) {
+        PFObject *targetMeeting = [PFObject objectWithoutDataWithClassName:@"Meeting"
+                                                                  objectId:meetingId];
+        
+        // Fetch meeting object
+        [targetMeeting fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            // Show photo view controller
+            if (error) {
+                NSLog(@"Error: %@", error);
+            } else if ([PFUser currentUser]) {
                 
-                LocationViewController *viewController = [[LocationViewController alloc] initWithMeeting:object];
-                [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
-            }else{
-                // user is not admin. segue to accept/decline screen
+                if ([_user.facebookID isEqualToString:[object valueForKey:@"admin_fb_id"]]) {
+                    // user is admin. segue to close meeting screen
+                    
+                    LocationViewController *viewController = [[LocationViewController alloc] initWithMeeting:object];
+                    [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
+                }else{
+                    // user is not admin. segue to accept/decline screen
+                    
+                    AcceptDeclineController *viewController = [[AcceptDeclineController alloc] initWithMeeting:object];
+                    [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
+                }
                 
-                AcceptDeclineController *viewController = [[AcceptDeclineController alloc] initWithMeeting:object];
-                [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
+                
+            } else {
+                NSLog(@"Error: no user logged in.");
             }
-            
-            
-        } else {
-            NSLog(@"Error: no user logged in.");
-        }
-    }];
+        }];
+    }
+    
 }
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -160,16 +169,29 @@
     // Facebook SDK
     [FBAppCall handleDidBecomeActiveWithSession:[PFFacebookUtils session]];
     
+    
+    // reset badge count
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    if (currentInstallation.badge != 0) {
+        currentInstallation.badge = 0;
+        [currentInstallation saveEventually];
+    }
+    
 }
 
 - (void)getMeetingUpdates{
     
     // get meeting updates
-    NSString *shouldbethisquery = [NSString stringWithFormat:@"admin_fb_id = '%@'", _user.facebookID];
-    NSPredicate *qPredicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"admin_fb_id = '%@'", _user.facebookID]];
-    PFQuery *adminQuery = [PFQuery queryWithClassName:@"Meeting" predicate:qPredicate];
     
-    [adminQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    PFQuery *adminQuery = [PFQuery queryWithClassName:@"Meeting"];
+    [adminQuery whereKey:@"admin_fb_id" equalTo:_user.facebookID];
+    
+    PFQuery *invitedQuery = [PFQuery queryWithClassName:@"Meeting"];
+    [invitedQuery whereKey:@"invites" equalTo:_user.facebookID];
+    
+    PFQuery *compoundQuery = [PFQuery orQueryWithSubqueries:@[adminQuery, invitedQuery]];
+    
+    [compoundQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             NSLog(@"Found %lu meetings on server.", (unsigned long)objects.count);
             
