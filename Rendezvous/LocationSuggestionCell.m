@@ -36,7 +36,9 @@
     _name.text = meeting.name;
     _distance.text = [NSString stringWithFormat:@"%@", meeting.distanceFromLoc];
     _address.text = meeting.address;
-    [_image setImageWithURL:[NSURL URLWithString:meeting.imageURL] placeholderImage:[UIImage imageNamed:@"111-user.png"]];
+//    if(meeting.imageURL) {
+        [_image setImageWithURL:[NSURL URLWithString:meeting.imageURL] placeholderImage:[UIImage imageNamed:@"111-user.png"]];
+//    }
 }
 
 @end

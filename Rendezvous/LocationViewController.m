@@ -19,7 +19,6 @@
 
 @implementation LocationViewController {
     LocationSuggestionsLookup *locationSuggestionsLookup;
-    NSMutableArray *suggestions;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -42,73 +41,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];
-    Meeting *meeting = [[Meeting alloc] init];
-//    [locationSuggestionsLookup getSuggestions:meeting];
-    suggestions = [[NSMutableArray alloc] initWithArray:[locationSuggestionsLookup getSuggestionResults]];
-    [self getSuggestions:meeting];
-    NSLog(@"Suggestions: %@", suggestions);
-    // Do any additional setup after loading the view.
+//    NSLog(@"Suggestions: %@", suggestions);
 }
 
-- (void) getSuggestions:(Meeting *) meeting {
-    NSLog(@"GETTING SUGGESTIONS...");
-    meeting.reasons = [[NSMutableArray alloc] init];
-    //Using default reasons for testing
-    [meeting.reasons addObject:@"restaurants"];
-    [meeting.reasons addObject:@"bars"];
-    [meeting.reasons addObject:@"coffee"];
-
-    //Get suggestions for each category
-    for(NSString *category in meeting.reasons) {
-        NSLog(@"Searching for %@", category);
-
-        //Using default UMICH lat/lng for testing
-        meeting.latitude = [NSNumber numberWithDouble:42.27806];
-        meeting.longitude = [NSNumber numberWithDouble:-83.73823];
-
-        OAConsumer *consumer = [[OAConsumer alloc] initWithKey:@"5G6EbBnwRp9R-Dm_6324QA" secret:@"BNU1YuTSMRnz9OP-Lr7KKWjkCvM"];
-        OAToken *token = [[OAToken alloc] initWithKey:@"FDPzfW0-aA83L40RNgV5TrJC1tvzfDv-" secret:@"ji6etDgelybVQzWO-Ell8KeB49w"];
-
-        id<OASignatureProviding, NSObject> provider = [[OAHMAC_SHA1SignatureProvider alloc] init];
-        NSString *realm = nil;
-
-
-        //MAX radius is 40,000 meters = 25 miles
-        //Searching w/in 0.5 mile distance from central location (800m)
-        //Limit 5 items/category
-        NSString *url = [NSString stringWithFormat:@"http://api.yelp.com/v2/search?category_filter=%@&radius_filter=800&limit=3&ll=%@,%@", category, meeting.latitude, meeting.longitude];
-
-        NSURL *yelpURL = [NSURL URLWithString:url];
-
-        OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:yelpURL
-                                                                       consumer:consumer
-                                                                          token:token
-                                                                          realm:realm
-                                                              signatureProvider:provider];
-        [request prepare];
-
-        [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-
-            if (!error) {
-                NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-                NSArray *results = [json objectForKey:@"businesses"];
-                //                NSLog(@"Results: %@", results);
-
-                //                int i = 1;
-                for (NSDictionary *location in results) {
-                    //                    NSLog(@"Suggestion #%i: %@", i++, location);
-                    MeetingLocation *meetingLocation = [[MeetingLocation alloc] initFromYelp:location];
-                    [meetingLocation printInfoToLog];
-                    [suggestions addObject:meetingLocation];
-                }
-
-            } else {
-                NSLog(@"ERROR: %@", error);
-            }
-        }];
-        NSLog(@"COUNT: %ld", (long)[suggestions count]);
-    }
+- (void) viewWillAppear:(BOOL)animated {
+    locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];
+    locationSuggestionsLookup.locationViewController = self;
+    Meeting *meeting = [[Meeting alloc] init];
+    [locationSuggestionsLookup getSuggestions:meeting];
+    _suggestions = [[NSMutableArray alloc] initWithArray:[locationSuggestionsLookup getSuggestionResults]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -129,7 +70,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [locationSuggestionsLookup suggestionCount];
+    NSLog(@"NUMROWS: %ld", (long)[_suggestions count]);
+    return [_suggestions count];
 }
 
 
@@ -141,8 +83,10 @@
      }
  
      // Configure the cell...
-     [cell initCellDisplay: [suggestions objectAtIndex:indexPath.row]];
- 
+//     cell.name.text = [[_suggestions objectAtIndex:indexPath.row] name];
+     [cell initCellDisplay: [_suggestions objectAtIndex:indexPath.row]];
+     [cell.image setClipsToBounds:YES];
+
      return cell;
  }
 
