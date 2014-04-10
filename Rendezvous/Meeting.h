@@ -26,6 +26,6 @@
 
 - (void)setComeToMe:(BOOL)option;
 - (BOOL)isComeToMe;
-- (void)getMeetingFromCoreData:(NSManagedObject *) meeting_object;
+- (Meeting *)toCoreData:(NSManagedObject *) meeting_object;
 
 @end

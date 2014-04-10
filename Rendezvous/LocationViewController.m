@@ -57,6 +57,7 @@
 
 -(void) annotateMap {
     zoomRect = MKMapRectNull;
+    NSLog(@"Geocoding locations");
 
     //Add locations to map
     for(MeetingLocation *location in _suggestions) {

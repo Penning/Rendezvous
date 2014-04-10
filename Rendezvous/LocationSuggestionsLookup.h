@@ -14,7 +14,9 @@
 
 @property (strong, nonatomic) LocationViewController *locationViewController;
 
+- (void) getSuggestionsWithCoreData:(NSManagedObject *) meetingObject;
 - (void) getSuggestions:(Meeting *) meeting;
+
 - (NSArray *) getSuggestionResults;
 - (NSInteger) suggestionCount;
 
