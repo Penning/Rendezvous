@@ -63,7 +63,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
     [self.navigationController setToolbarHidden:YES animated:animated];
 }
 
@@ -90,16 +90,22 @@
         
     }];
     
+    
+    
 }
 - (IBAction)acceptNoLocationBtnHit:(id)sender {
     [_parseMeeting addUniqueObject:appDelegate.user.facebookID forKey:@"fb_ids_accepted_users"];
     [_parseMeeting incrementKey:@"num_responded"];
     [_parseMeeting saveInBackground];
+    
+    [self.navigationController popToViewController:appDelegate.home animated:YES];
 }
 - (IBAction)declineBtnHit:(id)sender {
     [_parseMeeting addUniqueObject:appDelegate.user.facebookID forKey:@"fb_ids_declined_users"];
     [_parseMeeting incrementKey:@"num_responded"];
     [_parseMeeting saveInBackground];
+    
+    [self.navigationController popToViewController:appDelegate.home animated:YES];
 }
 
 

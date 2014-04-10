@@ -237,7 +237,7 @@
     
     for (NSString *f in [foreignMeeting mutableSetValueForKey:@"invites"]) {
         
-        NSLog(@"adding invite: %@", f);
+        
         
         // query if person exists
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -256,10 +256,14 @@
         if (array != nil && array.count > 0) {
             // update existing person
             
+            NSLog(@"updating invite: %@", f);
+            
             localPerson = [array objectAtIndex:0];
             
         }else{
             // create new person
+            
+            NSLog(@"adding invite: %@", f);
             
             localPerson = [NSEntityDescription
                                            insertNewObjectForEntityForName:@"Person"
@@ -425,7 +429,6 @@
     // update some meeting info
     [meetingObject setValue:@NO forKey:@"is_old"];
     [meetingObject setValue:[foreignMeeting valueForKey:@"num_responded"] forKey:@"num_responded"];
-    NSLog(@"num_responded after update: %@", [foreignMeeting valueForKey:@"num_responded"]);
     
     [appDelegate saveContext];
     

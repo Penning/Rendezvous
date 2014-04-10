@@ -101,10 +101,10 @@
             </objects>
             <point key="canvasLocation" x="-62" y="135"/>
         </scene>
-        <!--Table View Controller - Settings-->
+        <!--Settings Root Controller - Settings-->
         <scene sceneID="pDX-wo-uZz">
             <objects>
-                <tableViewController id="QSG-9e-V5t" sceneMemberID="viewController">
+                <tableViewController id="QSG-9e-V5t" customClass="SettingsRootController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="fjY-er-d1b">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -283,10 +283,10 @@
             </objects>
             <point key="canvasLocation" x="1440" y="-1427"/>
         </scene>
-        <!--View Controller - Social media settings-->
+        <!--Social Media Controller - Social media settings-->
         <scene sceneID="tlD-gE-n0N">
             <objects>
-                <viewController id="58e-fk-dLM" sceneMemberID="viewController">
+                <viewController id="58e-fk-dLM" customClass="SocialMediaController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rJg-IC-Yu9"/>
                         <viewControllerLayoutGuide type="bottom" id="uX4-Pv-ghO"/>
@@ -294,6 +294,19 @@
                     <view key="view" contentMode="scaleToFill" id="weh-ql-Vxt">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RcM-s8-7OH">
+                                <rect key="frame" x="89" y="269" width="142" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <state key="normal" title="Logout ">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="logoutBtnHit:" destination="58e-fk-dLM" eventType="touchUpInside" id="iVO-cT-L9Y"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Social media settings" id="S3u-HI-VNa"/>
@@ -314,7 +327,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Rendezvous was developed by Adam Oxner, Sumedha Pramod, and Tim Wood at the University of Michigan." translatesAutoresizingMaskIntoConstraints="NO" id="3gg-4Y-adu">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="    Rendezvous was developed by Adam Oxner, Sumedha Pramod, and Tim Wood at the University of Michigan." translatesAutoresizingMaskIntoConstraints="NO" id="3gg-4Y-adu">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -346,7 +359,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <string key="text">Rendezvous will never disclose your location information with anyone nor use it to do anything but find an optimal meeting location. Meetings are only stored on our servers until the administrator deletes them on their phone. On top of this, location information is stored anonymously. </string>
+                                <string key="text">    Rendezvous will never disclose your location information with anyone nor use it to do anything but find an optimal meeting location. Meetings are only stored on our servers until the administrator deletes them on their phone. On top of this, location information is stored anonymously. </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -387,7 +400,7 @@
             </objects>
             <point key="canvasLocation" x="2225" y="-641"/>
         </scene>
-        <!--Home View Controller - Home-->
+        <!--Home View Controller-->
         <scene sceneID="Wia-Pw-0Pm">
             <objects>
                 <viewController id="44V-bZ-Ujm" customClass="HomeViewController" sceneMemberID="viewController">
@@ -487,27 +500,26 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WnJ-2n-4eU">
+                                <rect key="frame" x="287" y="27" width="26" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="settings_gear">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="settingsBtnHit:" destination="44V-bZ-Ujm" eventType="touchUpInside" id="asb-6f-NK5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Home" id="Qr8-Uw-Jr1">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="pXb-5s-yy4">
-                            <connections>
-                                <action selector="logoutBtnHit:" destination="44V-bZ-Ujm" id="UC5-mm-XA2"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="action" id="4q2-Yy-6Lc">
-                            <connections>
-                                <segue destination="QSG-9e-V5t" kind="push" id="Ozs-Vk-CXd"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="Qr8-Uw-Jr1"/>
                     <connections>
-                        <outlet property="logoutBtn" destination="pXb-5s-yy4" id="h30-PQ-E7q"/>
                         <outlet property="tableView" destination="YVj-AO-F1X" id="GA4-Xd-445"/>
                         <segue destination="CMH-LF-aW1" kind="push" identifier="home_details_segue" id="4aF-VO-qgM"/>
                         <segue destination="sMU-rU-8vu" kind="push" identifier="close_meeting_segue" id="eFx-Qn-ie5"/>
                         <segue destination="NzK-fp-0gT" kind="push" identifier="home_accept_decline_segue" id="vTA-DH-X3Z"/>
+                        <segue destination="QSG-9e-V5t" kind="push" identifier="home_settings_segue" id="nPl-gd-HdR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h3v-NF-wVQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1153,6 +1165,7 @@
         <image name="poi_bg2" width="640" height="1136"/>
         <image name="rendezvous_btn" width="1235" height="571"/>
         <image name="rendezvous_logo" width="1235" height="571"/>
+        <image name="settings_gear" width="256" height="256"/>
         <image name="shopping" width="26" height="19"/>
         <image name="studying" width="18" height="26"/>
     </resources>

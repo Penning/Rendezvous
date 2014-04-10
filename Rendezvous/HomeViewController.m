@@ -85,7 +85,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [self.tableView reloadData];
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -128,9 +128,7 @@
 - (IBAction)logoutBtnHit:(id)sender {
     // logout btn hit
     
-    [PFUser logOut];
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    [self.navigationController.visibleViewController viewDidLoad];
+    
 }
 
 - (void)reloadMeetings{
@@ -192,7 +190,7 @@
     return [sectionInfo numberOfObjects];
 }
 
-#pragma mark - cells
+#pragma mark - Cell handling
 
 - (void)configureCell:(UITableViewCell *)cell1 atIndexPath:(NSIndexPath *)indexPath{
     NSManagedObject *meeting_object = [_fetchedResultsController objectAtIndexPath:indexPath];
@@ -207,8 +205,8 @@
     
     
     [cell.acceptedLabel setText:[NSString
-                                 stringWithFormat:@"%lu/%lu",
-                                 [meeting_object mutableSetValueForKey:@"accepted"].count + [meeting_object mutableSetValueForKey:@"declined"].count,
+                                 stringWithFormat:@"%@/%lu",
+                                 [meeting_object valueForKey:@"num_responded"],
                                  [meeting_object mutableSetValueForKey:@"invites"].count]];
     
     if (![cell.adminFbId isEqualToString:appDelegate.user.facebookID]) {
@@ -245,6 +243,10 @@
 
 
 #pragma mark - Navigation
+
+- (IBAction)settingsBtnHit:(id)sender {
+    [self performSegueWithIdentifier:@"home_settings_segue" sender:self];
+}
  
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
  {
@@ -275,20 +277,16 @@
          locationSuggestionsLookup.locationViewController = vc;
          [locationSuggestionsLookup getSuggestions:[[Meeting alloc] init]];
 
-//         NSManagedObject *meeting_object = [_fetchedResultsController objectAtIndexPath:lastSelected];
-//         Meeting *meeting = [[Meeting alloc] init];
-//         [meeting getMeetingFromCoreData:meeting_object];
-//         NSLog(@"Meeting reasons: %@", meeting.reasons);
 
-//         while([locationSuggestionsLookup.locationViewController.suggestions count] < ([meeting.reasons count]*3)) {
-//             [locationSuggestionsLookup.locationViewController.tableView reloadData];
-//         }
-//         [vc.tableView reloadData];
      } else if ([[segue identifier] isEqualToString:@"home_accept_decline_segue"]){
          
          AcceptDeclineController *vc = (AcceptDeclineController *)[segue destinationViewController];
-         NSManagedObject *meeting_object = [_fetchedResultsController objectAtIndexPath:lastSelected];
-         [vc setLocalMeeting:meeting_object];
+         [vc setLocalMeeting:[_fetchedResultsController objectAtIndexPath:lastSelected]];
+         
+         
+     } else if ([[segue identifier] isEqualToString:@"home_settings_segue"]){
+         
+         // to settings
          
      }
  }
