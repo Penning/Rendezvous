@@ -277,7 +277,7 @@
          LocationViewController *vc = (LocationViewController *)[segue destinationViewController];
          LocationSuggestionsLookup *locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];
          locationSuggestionsLookup.locationViewController = vc;
-         [locationSuggestionsLookup getSuggestions:[[Meeting alloc] init]];
+         [locationSuggestionsLookup getSuggestionsWithCoreData:[_fetchedResultsController objectAtIndexPath:lastSelected]];
 
 
      } else if ([[segue identifier] isEqualToString:@"home_accept_decline_segue"]){

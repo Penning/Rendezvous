@@ -99,14 +99,10 @@
             NSManagedObject *localPerson = nil;
             if (array != nil && array.count > 0 && [[array objectAtIndex:0] valueForKey:@"meeting"] != nil) {
                 // update existing person
-                NSLog(@"UPDATE invite");
-                
                 localPerson = [array objectAtIndex:0];
                 
             }else{
                 // create new person
-                NSLog(@"CREATE invite");
-                
                 localPerson = [NSEntityDescription
                                insertNewObjectForEntityForName:@"Person"
                                inManagedObjectContext:appDelegate.managedObjectContext];
@@ -121,16 +117,6 @@
             [localPerson setValue:f.name
                            forKey:@"name"];
             
-            /*
-            NSManagedObject *newInvitee = [NSEntityDescription
-                                           insertNewObjectForEntityForName:@"Person"
-                                           inManagedObjectContext:context];
-            [newInvitee setValue:f.name forKeyPath:@"name"];
-            [newInvitee setValue:f.first_name forKeyPath:@"first_name"];
-            [newInvitee setValue:f.last_name forKeyPath:@"last_name"];
-            [newInvitee setValue:f.facebookID forKeyPath:@"facebook_id"];
-            [friendsSet addObject:newInvitee];
-             */
         }
         
     }
