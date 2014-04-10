@@ -57,10 +57,11 @@
 
 -(void) annotateMap {
     zoomRect = MKMapRectNull;
+    NSLog(@"Geocoding locations");
 
     //Add locations to map
     for(MeetingLocation *location in _suggestions) {
-        NSLog(@"Geocoding %@", location.streetAddress);
+//        NSLog(@"Geocoding %@", location.streetAddress);
 
         CLGeocoder *geocoder = [[CLGeocoder alloc] init];
         NSString *address = [NSString stringWithFormat:@"%@, %@", location.streetAddress, location.city];

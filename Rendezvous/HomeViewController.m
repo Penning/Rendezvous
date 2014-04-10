@@ -249,17 +249,7 @@
          LocationViewController *vc = (LocationViewController *)[segue destinationViewController];
          LocationSuggestionsLookup *locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];
          locationSuggestionsLookup.locationViewController = vc;
-         [locationSuggestionsLookup getSuggestions:[[Meeting alloc] init]];
-
-//         NSManagedObject *meeting_object = [_fetchedResultsController objectAtIndexPath:lastSelected];
-//         Meeting *meeting = [[Meeting alloc] init];
-//         [meeting getMeetingFromCoreData:meeting_object];
-//         NSLog(@"Meeting reasons: %@", meeting.reasons);
-
-//         while([locationSuggestionsLookup.locationViewController.suggestions count] < ([meeting.reasons count]*3)) {
-//             [locationSuggestionsLookup.locationViewController.tableView reloadData];
-//         }
-//         [vc.tableView reloadData];
+         [locationSuggestionsLookup getSuggestionsWithCoreData:[_fetchedResultsController objectAtIndexPath:lastSelected]];
      }
  }
 
