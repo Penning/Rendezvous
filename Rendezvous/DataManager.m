@@ -384,7 +384,7 @@
     NSArray *array = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
     
     NSManagedObject *localAdmin = nil;
-    if (array && array.count > 0) {
+    if (array && array.count > 0 && [[array objectAtIndex:0] valueForKey:@"administors"] != nil) {
         // update existing person
         
         localAdmin = [array objectAtIndex:0];
@@ -395,10 +395,28 @@
         localAdmin = [NSEntityDescription
                        insertNewObjectForEntityForName:@"Person"
                        inManagedObjectContext:appDelegate.managedObjectContext];
-        [meetingObject setValue:localAdmin forKey:@"admin"];
+        
     }
     
+    
+    PFQuery *query = [PFUser query];
+    [query whereKey:@"facebook_id" equalTo:[foreignMeeting valueForKey:@"admin_fb_id"]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            // Do something with the found objects
+            for (PFObject *object in objects) {
+                [localAdmin setValue:[object valueForKey:@"name"] forKey:@"name"];
+                [appDelegate saveContext];
+                [((HomeViewController *)appDelegate.home) reloadMeetings];
+            }
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
+    
     // update person info
+    [meetingObject setValue:localAdmin forKey:@"admin"];
     [localAdmin setValue:[foreignMeeting valueForKey:@"admin_fb_id"] forKey:@"facebook_id"];
     [localAdmin setValue:meetingObject forKey:@"administors"];
 
