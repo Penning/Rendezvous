@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
+#import "Meeting.h"
 
 @interface AcceptDeclineController : UIViewController
 
-- (AcceptDeclineController *)initWithMeeting:(PFObject *)meeting;
+@property (weak, nonatomic) IBOutlet UILabel *meetingTitleLabel;
+@property (weak, nonatomic) IBOutlet UITextView *meetingDescriptionTextView;
+
+
+@property (strong, nonatomic) NSManagedObject *localMeeting;
+@property (strong, nonatomic) PFObject *parseMeeting;
 
 @end

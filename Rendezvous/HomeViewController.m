@@ -13,6 +13,7 @@
 #import "CurrentUser.h"
 #import "LocationViewController.h"
 #import "LocationSuggestionsLookup.h"
+#import "AcceptDeclineController.h"
 
 @interface HomeViewController ()
 
@@ -100,8 +101,18 @@
 
 - (void)cellSingleTapped:(HomeCell *)sender{
     // a cell was single tapped
-    lastSelected = sender.indexPath;
-    [self performSegueWithIdentifier:@"home_details_segue" sender:self];
+    
+    if (![appDelegate.user.facebookID isEqualToString:sender.adminFbId]){
+        // admin
+        lastSelected = sender.indexPath;
+        [self performSegueWithIdentifier:@"home_accept_decline_segue" sender:self];
+    }else{
+        // not admin
+        lastSelected = sender.indexPath;
+        [self performSegueWithIdentifier:@"home_details_segue" sender:self];
+    }
+    
+    
 }
 
 - (void)cellDoubleTapped:(HomeCell *)sender{
@@ -193,8 +204,7 @@
     [cell setParentController:self];
     [cell setAdminFbId:[meeting_object valueForKeyPath:@"admin.facebook_id"]];
     
-    [cell.meetingName setText:[meeting_object valueForKey:@"meeting_name"]];
-    [cell.meetingAdmin setText:[meeting_object valueForKeyPath:@"admin.name"]];
+    
     
     [cell.acceptedLabel setText:[NSString
                                  stringWithFormat:@"%lu/%lu",
@@ -202,9 +212,15 @@
                                  [meeting_object mutableSetValueForKey:@"invites"].count]];
     
     if (![cell.adminFbId isEqualToString:appDelegate.user.facebookID]) {
-        [cell.doubleTapLabel setHidden:YES];
+        // not admin
+        [cell.doubleTapLabel setText:@"Tap to RSVP"];
+        [cell.meetingAdmin setText:[meeting_object valueForKey:@"meeting_name"]];
+        [cell.meetingName setText:[NSString stringWithFormat:@"From: %@",[meeting_object valueForKeyPath:@"admin.name"]]];
     }else{
-        [cell.doubleTapLabel setHidden:NO];
+        // admin
+        [cell.doubleTapLabel setText:@"Double tap to close invites"];
+        [cell.meetingName setText:[meeting_object valueForKey:@"meeting_name"]];
+        [cell.meetingAdmin setText:@""];
     }
 }
 
@@ -233,11 +249,13 @@
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
  {
      if ([[segue identifier] isEqualToString:@"home_details_segue"]) {
+         
          MeetingViewController *vc = (MeetingViewController *)[segue destinationViewController];
          [vc setMeetingObject:[_fetchedResultsController objectAtIndexPath:lastSelected]];
          [vc initFromHome];
          
      } else if([[segue identifier] isEqualToString:@"new_meeting_segue"]) {
+         
          appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
          current_user = appDelegate.user;
 
@@ -251,6 +269,7 @@
          NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
          vc.friends = [current_user.friends sortedArrayUsingDescriptors:sortDescriptors];
      } else if([[segue identifier] isEqualToString:@"close_meeting_segue"]) {
+         
          LocationViewController *vc = (LocationViewController *)[segue destinationViewController];
          LocationSuggestionsLookup *locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];
          locationSuggestionsLookup.locationViewController = vc;
@@ -265,6 +284,12 @@
 //             [locationSuggestionsLookup.locationViewController.tableView reloadData];
 //         }
 //         [vc.tableView reloadData];
+     } else if ([[segue identifier] isEqualToString:@"home_accept_decline_segue"]){
+         
+         AcceptDeclineController *vc = (AcceptDeclineController *)[segue destinationViewController];
+         NSManagedObject *meeting_object = [_fetchedResultsController objectAtIndexPath:lastSelected];
+         [vc setLocalMeeting:meeting_object];
+         
      }
  }
 
