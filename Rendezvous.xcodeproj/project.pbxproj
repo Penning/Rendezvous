@@ -55,7 +55,7 @@
 		49BD483B18E27BE600EAD526 /* ContactsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BD483A18E27BE600EAD526 /* ContactsCell.m */; };
 		49FE6EE718E25B2400626238 /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 49FE6EE618E25B2400626238 /* CurrentUser.m */; };
 		49FE6EEA18E2721D00626238 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 49FE6EE918E2721D00626238 /* Friend.m */; };
-		4F265DA118F71D930052AD46 /* SocialMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F265DA018F71D930052AD46 /* SocialMediaController.m */; };
+		4F265DA118F71D930052AD46 /* socialMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F265DA018F71D930052AD46 /* socialMediaController.m */; };
 		4F265DA418F71E7E0052AD46 /* SettingsRootController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F265DA318F71E7E0052AD46 /* SettingsRootController.m */; };
 		4F2E136318EB407200716C2F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2E136218EB407200716C2F /* Parse.framework */; };
 		4F6985DC18F3841A005EC437 /* main.js in Sources */ = {isa = PBXBuildFile; fileRef = 4F6985DB18F3841A005EC437 /* main.js */; };
@@ -192,8 +192,8 @@
 		49FE6EE618E25B2400626238 /* CurrentUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentUser.m; sourceTree = "<group>"; };
 		49FE6EE818E2721D00626238 /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Friend.h; sourceTree = "<group>"; };
 		49FE6EE918E2721D00626238 /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Friend.m; sourceTree = "<group>"; };
-		4F265D9F18F71D930052AD46 /* SocialMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialMediaController.h; sourceTree = "<group>"; };
-		4F265DA018F71D930052AD46 /* SocialMediaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialMediaController.m; sourceTree = "<group>"; };
+		4F265D9F18F71D930052AD46 /* socialMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = socialMediaController.h; sourceTree = "<group>"; };
+		4F265DA018F71D930052AD46 /* socialMediaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = socialMediaController.m; sourceTree = "<group>"; };
 		4F265DA218F71E7E0052AD46 /* SettingsRootController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsRootController.h; sourceTree = "<group>"; };
 		4F265DA318F71E7E0052AD46 /* SettingsRootController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsRootController.m; sourceTree = "<group>"; };
 		4F2E136218EB407200716C2F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
@@ -649,8 +649,8 @@
 			children = (
 				4FBA5D3518ECCD6800532689 /* HistoryViewController.h */,
 				4FBA5D3618ECCD6800532689 /* HistoryViewController.m */,
-				4F265D9F18F71D930052AD46 /* SocialMediaController.h */,
-				4F265DA018F71D930052AD46 /* SocialMediaController.m */,
+				4F265D9F18F71D930052AD46 /* socialMediaController.h */,
+				4F265DA018F71D930052AD46 /* socialMediaController.m */,
 				4F265DA218F71E7E0052AD46 /* SettingsRootController.h */,
 				4F265DA318F71E7E0052AD46 /* SettingsRootController.m */,
 			);
@@ -812,7 +812,7 @@
 				492FEB6B18F1D935008BABD1 /* OAToken.m in Sources */,
 				49445DAF18EF04F300525E66 /* LocationSuggestionCell.m in Sources */,
 				49967A0B18ECB8FD009CC8E8 /* UIImageView+WebCache.m in Sources */,
-				4F265DA118F71D930052AD46 /* SocialMediaController.m in Sources */,
+				4F265DA118F71D930052AD46 /* socialMediaController.m in Sources */,
 				49967A0618ECB8FD009CC8E8 /* SDWebImagePrefetcher.m in Sources */,
 				49967A0218ECB8FD009CC8E8 /* SDWebImageDecoder.m in Sources */,
 				492FEB6818F1D935008BABD1 /* OAProblem.m in Sources */,
