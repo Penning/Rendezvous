@@ -209,6 +209,8 @@
                                  [meeting_object valueForKey:@"num_responded"],
                                  [meeting_object mutableSetValueForKey:@"invites"].count]];
     
+
+    
     if (![cell.adminFbId isEqualToString:appDelegate.user.facebookID]) {
         // not admin
         [cell.doubleTapLabel setText:@"Tap to RSVP"];

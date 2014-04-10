@@ -82,6 +82,46 @@
     if (invites != nil && invites.count > 0) {
         
         for (Friend *f in invites) {
+            
+            // query if person exists
+            NSFetchRequest *request = [[NSFetchRequest alloc] init];
+            NSEntityDescription *entity =
+            [NSEntityDescription entityForName:@"Person"
+                        inManagedObjectContext:appDelegate.managedObjectContext];
+            [request setEntity:entity];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"facebook_id == %@", f.facebookID];
+            [request setPredicate:predicate];
+            
+            NSError *error;
+            NSArray *array = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
+            
+            NSManagedObject *localPerson = nil;
+            if (array != nil && array.count > 0 && [[array objectAtIndex:0] valueForKey:@"meeting"] != nil) {
+                // update existing person
+                NSLog(@"UPDATE invite");
+                
+                localPerson = [array objectAtIndex:0];
+                
+            }else{
+                // create new person
+                NSLog(@"CREATE invite");
+                
+                localPerson = [NSEntityDescription
+                               insertNewObjectForEntityForName:@"Person"
+                               inManagedObjectContext:appDelegate.managedObjectContext];
+                [friendsSet addObject:localPerson];
+            }
+            
+            // update person info
+            [localPerson setValue:f.facebookID
+                           forKey:@"facebook_id"];
+            [localPerson setValue:meeting_object
+                           forKey:@"meeting"];
+            [localPerson setValue:f.name
+                           forKey:@"name"];
+            
+            /*
             NSManagedObject *newInvitee = [NSEntityDescription
                                            insertNewObjectForEntityForName:@"Person"
                                            inManagedObjectContext:context];
@@ -90,9 +130,11 @@
             [newInvitee setValue:f.last_name forKeyPath:@"last_name"];
             [newInvitee setValue:f.facebookID forKeyPath:@"facebook_id"];
             [friendsSet addObject:newInvitee];
+             */
         }
         
     }
+    
     // add invitees to meeting
     [meeting_object setValue:friendsSet forKey:@"invites"];
     

@@ -91,7 +91,8 @@
     }];
     
     
-    
+    [self.navigationController popToViewController:appDelegate.home animated:YES];
+
 }
 - (IBAction)acceptNoLocationBtnHit:(id)sender {
     [_parseMeeting addUniqueObject:appDelegate.user.facebookID forKey:@"fb_ids_accepted_users"];
