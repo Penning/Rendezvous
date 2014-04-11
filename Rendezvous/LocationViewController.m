@@ -111,6 +111,27 @@
     [self.mapView setRegion:region animated:YES];
 }
 
+//- (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation
+//{   static NSString *identifier = @"myPin";
+//    MKPinAnnotationView *pinView = nil;
+//    pinView = (MKPinAnnotationView *)[_mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+//    if (pinView == nil) {
+//        pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+//        pinView.canShowCallout = YES;
+//        pinView.animatesDrop = YES;
+//    }
+//    if([pinView isEqualToString:@"Red"]) {
+//        [pinView setPinColor:MKPinAnnotationColorRed];
+//    }
+//    else if([m_pinColor isEqualToString:@"Green"]){
+//        [pinView setPinColor:MKPinAnnotationColorGreen];
+//    }
+//    else if([m_pinColor isEqualToString:@"Purple"]){
+//        [pinView setPinColor:MKPinAnnotationColorPurple];
+//    }
+//    return pinView;
+//}
+
 - (void) sortData {
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"distanceFromLoc" ascending:YES];
     NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
@@ -150,8 +171,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//#warning Potentially incomplete method implementation.
-    // Return the number of sections.
     return 1;
 }
 
@@ -170,7 +189,6 @@
      }
  
      // Configure the cell...
-//     cell.name.text = [[_suggestions objectAtIndex:indexPath.row] name];
      [cell initCellDisplay: [_suggestions objectAtIndex:indexPath.row] :[[_suggestions objectAtIndex:indexPath.row] category]];
      [cell.image setClipsToBounds:YES];
 
