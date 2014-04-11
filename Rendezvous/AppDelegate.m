@@ -57,45 +57,70 @@
     
     // Extract the notification data
     NSDictionary *notificationPayload = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
-    
-    if (notificationPayload != nil && notificationPayload.count > 0) {
-        // Create a pointer to the Photo object
-        NSString *meetingId = [notificationPayload objectForKey:@"meetingId"];
-        
-        if (meetingId) {
-            PFObject *targetMeeting = [PFObject objectWithoutDataWithClassName:@"Meeting"
-                                                                      objectId:meetingId];
-            
-            // Fetch meeting object
-            [targetMeeting fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                
-                if (!error && [PFUser currentUser]) {
-                    if ([_user.facebookID isEqualToString:[object valueForKey:@"admin_fb_id"]]) {
-                        // user is admin. segue to close meeting screen
-                        
-                        LocationViewController *viewController = [[LocationViewController alloc] initWithMeeting:object];
-                        [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
-                    }else{
-                        // user is not admin. segue to accept/decline screen
-                        
-                        AcceptDeclineController *viewController = [[AcceptDeclineController alloc] init];
-                        NSLog(@"you aren't passing the meeting dude");
-                        [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
-                    }
-                }else if (error){
-                    NSLog(@"Error: %@", error);
-                }else{
-                    NSLog(@"Error: no user logged in.");
-                }
-                
-            }];
-        }
-        
+    if (notificationPayload && notificationPayload.count > 0) {
+        [self handleNotification:notificationPayload];
     }
-
+    
     return YES;
 }
 
+
+- (void)handleNotification:(NSDictionary *)payload {
+    
+    [[[UIAlertView alloc] initWithTitle:@"blah"
+                               message:[NSString stringWithFormat:@"%@", payload]
+                              delegate:self
+                     cancelButtonTitle:@"ok"
+                     otherButtonTitles: nil] show];
+    
+    [PFPush handlePush:payload];
+    
+    // Create empty meeting object
+    NSString *meetingId = [payload objectForKey:@"meetingId"];
+    
+    
+    if (meetingId) {
+        PFObject *targetMeeting = [PFObject objectWithoutDataWithClassName:@"Meeting"
+                                                                  objectId:meetingId];
+        
+        // Fetch meeting object
+        [targetMeeting fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            
+            
+            if (error) {
+                NSLog(@"Error: %@", error);
+                
+            } else if ([PFUser currentUser]) {
+                // Show view controller
+                
+                if ([_user.facebookID isEqualToString:[object valueForKey:@"admin_fb_id"]]) {
+                    // user is admin. segue to close meeting screen
+                    
+                    LocationViewController *viewController = [[LocationViewController alloc] initWithMeeting:object];
+                    // TODO: set meeting object
+                    
+                    [((UINavigationController *)self.window.rootViewController)
+                     pushViewController:viewController
+                     animated:YES];
+                }else{
+                    // user is not admin. segue to accept/decline screen
+                    
+                    AcceptDeclineController *viewController = [[AcceptDeclineController alloc] init];
+                    // TODO: set meeting object
+                    
+                    [((UINavigationController *)self.window.rootViewController)
+                     pushViewController:viewController
+                     animated:YES];
+                }
+                
+                
+            } else {
+                NSLog(@"Error: no user logged in.");
+            }
+        }];
+    }
+    
+}
 
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
@@ -112,48 +137,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
     
-    //[PFPush handlePush:userInfo];
-    
-    
-    
-    [((HomeViewController *)_home).tableView reloadData];
-    
-    // Create empty meeting object
-    NSString *meetingId = [userInfo objectForKey:@"meetingId"];
-    
-    
-    
-    if (meetingId) {
-        PFObject *targetMeeting = [PFObject objectWithoutDataWithClassName:@"Meeting"
-                                                                  objectId:meetingId];
-        
-        // Fetch meeting object
-        [targetMeeting fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            
-            // Show photo view controller
-            if (error) {
-                NSLog(@"Error: %@", error);
-            } else if ([PFUser currentUser]) {
-                
-                if ([_user.facebookID isEqualToString:[object valueForKey:@"admin_fb_id"]]) {
-                    // user is admin. segue to close meeting screen
-                    
-                    LocationViewController *viewController = [[LocationViewController alloc] initWithMeeting:object];
-                    [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
-                }else{
-                    // user is not admin. segue to accept/decline screen
-                    
-                    AcceptDeclineController *viewController = [[AcceptDeclineController alloc] init];
-                    NSLog(@"you aren't passing the meeting object dude");
-                    [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
-                }
-                
-                
-            } else {
-                NSLog(@"Error: no user logged in.");
-            }
-        }];
-    }
+    [self handleNotification:userInfo];
     
 }
 
