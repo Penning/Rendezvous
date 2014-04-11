@@ -110,14 +110,18 @@
 
 
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
     
     //[PFPush handlePush:userInfo];
+    
+    
     
     [((HomeViewController *)_home).tableView reloadData];
     
     // Create empty meeting object
     NSString *meetingId = [userInfo objectForKey:@"meetingId"];
+    
+    
     
     if (meetingId) {
         PFObject *targetMeeting = [PFObject objectWithoutDataWithClassName:@"Meeting"
@@ -125,6 +129,7 @@
         
         // Fetch meeting object
         [targetMeeting fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            
             // Show photo view controller
             if (error) {
                 NSLog(@"Error: %@", error);
