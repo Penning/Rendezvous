@@ -89,7 +89,9 @@
             NSArray *results = [json objectForKey:@"businesses"];
             for (NSDictionary *location in results) {
                 MeetingLocation *meetingLocation = [[MeetingLocation alloc] initFromYelp:location :category];
-                if(![_locationViewController.suggestions containsObject:meetingLocation]) {
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", meetingLocation.name];
+                NSArray *filteredArray = [_locationViewController.suggestions filteredArrayUsingPredicate:predicate];
+                if([filteredArray count] == 0) {
                     [_locationViewController.suggestions addObject:meetingLocation];
                     [_locationViewController.tableView reloadData];
                 }
