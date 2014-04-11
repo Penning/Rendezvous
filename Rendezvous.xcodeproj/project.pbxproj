@@ -452,14 +452,14 @@
 			name = AcceptDeclineView;
 			sourceTree = "<group>";
 		};
-		4F6985E118F474E8005EC437 /* New CoreData Model (not implemented) */ = {
+		4F6985E118F474E8005EC437 /* New CoreData Model */ = {
 			isa = PBXGroup;
 			children = (
 				4F6985EC18F47D0B005EC437 /* DataManager.h */,
 				4F6985ED18F47D0B005EC437 /* DataManager.m */,
 				4F6985EB18F47CE5005EC437 /* Managed Objects */,
 			);
-			name = "New CoreData Model (not implemented)";
+			name = "New CoreData Model";
 			sourceTree = "<group>";
 		};
 		4F6985EB18F47CE5005EC437 /* Managed Objects */ = {
@@ -527,7 +527,6 @@
 				4FF9AD2318DDEBB6008C9CC3 /* View */,
 				4FF9AD2418DDEBBF008C9CC3 /* Controller */,
 				4FF9AD0418DDEBA5008C9CC3 /* Images.xcassets */,
-				4FF9AD0118DDEBA5008C9CC3 /* Rendezvous.xcdatamodeld */,
 				4FF9ACF618DDEBA5008C9CC3 /* Supporting Files */,
 				49CE21FB18F331790026EB40 /* Libraries */,
 			);
@@ -566,11 +565,12 @@
 		4FF9AD2218DDEBB0008C9CC3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4FF9AD0118DDEBA5008C9CC3 /* Rendezvous.xcdatamodeld */,
 				4FF9ACFE18DDEBA5008C9CC3 /* AppDelegate.h */,
 				4FF9ACFF18DDEBA5008C9CC3 /* AppDelegate.m */,
 				492FEB6D18F1DA5F008BABD1 /* User Models */,
 				492FEB6E18F1DA65008BABD1 /* Meeting Models */,
-				4F6985E118F474E8005EC437 /* New CoreData Model (not implemented) */,
+				4F6985E118F474E8005EC437 /* New CoreData Model */,
 			);
 			name = Model;
 			sourceTree = "<group>";
