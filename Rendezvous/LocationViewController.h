@@ -20,5 +20,6 @@
 @property (strong, nonatomic) NSMutableArray *suggestions;
 
 @property (strong, nonatomic) Meeting *meeting;
+@property (strong, nonatomic) PFObject *parseMeeting;
 
 @end

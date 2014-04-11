@@ -25,8 +25,6 @@
 // home view controller
 @property (strong, nonatomic) UIViewController *home;
 
-- (int)getId;
-
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
