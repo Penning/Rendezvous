@@ -111,7 +111,8 @@
 
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    [PFPush handlePush:userInfo];
+    
+    //[PFPush handlePush:userInfo];
     
     [((HomeViewController *)_home).tableView reloadData];
     
