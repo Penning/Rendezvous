@@ -12,6 +12,9 @@
 
 @implementation LocationSuggestionsLookup {
     NSMutableArray *locations;
+    CLLocationManager *locationManager;
+    NSNumber *longitude;
+    NSNumber *latitude;
 }
 
 @synthesize locationViewController = _locationViewController;
@@ -21,8 +24,6 @@
 - (void) getSuggestionsWithCoreData:(NSManagedObject *) meetingObject {
     
     Meeting *meeting = [[[Meeting alloc] init] toCoreData:meetingObject];
-    
-    
     
     PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
     
@@ -40,8 +41,35 @@
         }
         
     }];
+
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+
+    [locationManager startUpdatingLocation];
     
     _locationViewController.meeting = meeting;
+}
+
+
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"didFailWithError: %@", error);
+    UIAlertView *errorAlert = [[UIAlertView alloc]
+                               initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [errorAlert show];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    NSLog(@"didUpdateToLocation: %@", newLocation);
+    CLLocation *currentLocation = newLocation;
+
+    if (currentLocation != nil) {
+        latitude = [NSNumber numberWithDouble:currentLocation.coordinate.latitude];
+        longitude = [NSNumber numberWithDouble:currentLocation.coordinate.longitude];
+    }
 }
 
 - (void) getSuggestions:(Meeting *) meeting {
@@ -51,8 +79,13 @@
     _locationViewController.suggestions = [[NSMutableArray alloc] init];
 
     //Using default UMICH lat/lng for testing
-    // meeting.latitude = [NSNumber numberWithDouble:42.27806];
-    // meeting.longitude = [NSNumber numberWithDouble:-83.73823];
+    meeting.latitude = [NSNumber numberWithDouble:42.27806];
+    meeting.longitude = [NSNumber numberWithDouble:-83.73823];
+//    if(meeting.latitude == 0 || meeting.longitude == 0) {
+//        meeting.latitude = latitude;
+//        meeting.longitude = longitude;
+//    }
+    NSLog(@"Updated to admin location: %@, %@", meeting.latitude, meeting.longitude);
 
     //Get suggestions for each category
     if(meeting.reasons.count > 0) {

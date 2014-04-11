@@ -10,7 +10,7 @@
 #import "Meeting.h"
 #import "LocationViewController.h"
 
-@interface LocationSuggestionsLookup : NSObject
+@interface LocationSuggestionsLookup : NSObject <CLLocationManagerDelegate>
 
 @property (strong, nonatomic) LocationViewController *locationViewController;
 

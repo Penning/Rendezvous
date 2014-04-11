@@ -44,12 +44,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
-    
-
 }
-
 
 -(void) delayedReloadData {
     [self.tableView reloadData];
@@ -92,7 +87,7 @@
 }
 
 - (void)zoomToFitMapAnnotations {
-
+    [self.tableView reloadData];
     if ([self.mapView.annotations count] == 0) return;
 
     int i = 0;
@@ -113,27 +108,6 @@
 
     [self.mapView setRegion:region animated:YES];
 }
-
-//- (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation
-//{   static NSString *identifier = @"myPin";
-//    MKPinAnnotationView *pinView = nil;
-//    pinView = (MKPinAnnotationView *)[_mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-//    if (pinView == nil) {
-//        pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
-//        pinView.canShowCallout = YES;
-//        pinView.animatesDrop = YES;
-//    }
-//    if([pinView isEqualToString:@"Red"]) {
-//        [pinView setPinColor:MKPinAnnotationColorRed];
-//    }
-//    else if([m_pinColor isEqualToString:@"Green"]){
-//        [pinView setPinColor:MKPinAnnotationColorGreen];
-//    }
-//    else if([m_pinColor isEqualToString:@"Purple"]){
-//        [pinView setPinColor:MKPinAnnotationColorPurple];
-//    }
-//    return pinView;
-//}
 
 - (void) sortData {
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"distanceFromLoc" ascending:YES];
@@ -157,11 +131,22 @@
     //Map related
     self.mapView.delegate =  self;
     self.mapView.showsUserLocation = YES;
-    [self performSelector:@selector(annotateMap) withObject:nil afterDelay:0.6];
+    [self performSelector:@selector(annotateMap) withObject:nil afterDelay:1];
     
     // show navbar
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     
+}
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView beginUpdates];
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView endUpdates];
+    [self performSelector:@selector(annotateMap)];
 }
 
 - (void)didReceiveMemoryWarning
