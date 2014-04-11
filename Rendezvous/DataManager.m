@@ -82,17 +82,45 @@
     if (invites != nil && invites.count > 0) {
         
         for (Friend *f in invites) {
-            NSManagedObject *newInvitee = [NSEntityDescription
-                                           insertNewObjectForEntityForName:@"Person"
-                                           inManagedObjectContext:context];
-            [newInvitee setValue:f.name forKeyPath:@"name"];
-            [newInvitee setValue:f.first_name forKeyPath:@"first_name"];
-            [newInvitee setValue:f.last_name forKeyPath:@"last_name"];
-            [newInvitee setValue:f.facebookID forKeyPath:@"facebook_id"];
-            [friendsSet addObject:newInvitee];
+            
+            // query if person exists
+            NSFetchRequest *request = [[NSFetchRequest alloc] init];
+            NSEntityDescription *entity =
+            [NSEntityDescription entityForName:@"Person"
+                        inManagedObjectContext:appDelegate.managedObjectContext];
+            [request setEntity:entity];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"facebook_id == %@", f.facebookID];
+            [request setPredicate:predicate];
+            
+            NSError *error;
+            NSArray *array = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
+            
+            NSManagedObject *localPerson = nil;
+            if (array != nil && array.count > 0 && [[array objectAtIndex:0] valueForKey:@"meeting"] != nil) {
+                // update existing person
+                localPerson = [array objectAtIndex:0];
+                
+            }else{
+                // create new person
+                localPerson = [NSEntityDescription
+                               insertNewObjectForEntityForName:@"Person"
+                               inManagedObjectContext:appDelegate.managedObjectContext];
+                [friendsSet addObject:localPerson];
+            }
+            
+            // update person info
+            [localPerson setValue:f.facebookID
+                           forKey:@"facebook_id"];
+            [localPerson setValue:meeting_object
+                           forKey:@"meeting"];
+            [localPerson setValue:f.name
+                           forKey:@"name"];
+            
         }
         
     }
+    
     // add invitees to meeting
     [meeting_object setValue:friendsSet forKey:@"invites"];
     
@@ -183,7 +211,14 @@
             }else{
                 [meetingParse addUniqueObject:geoPoint forKey:@"meeter_locations"];
             }
-            [meetingParse saveInBackground];
+            
+            [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded && !error) {
+                    [tempMeeting setValue:meetingParse.objectId forKeyPath:@"parse_object_id"];
+                    [appDelegate saveContext];
+                }
+            }];
+            
         }else{
             NSLog(@"Location error: %@", error);
         }
@@ -192,12 +227,7 @@
     
     
     
-    [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded && !error) {
-            [tempMeeting setValue:meetingParse.objectId forKeyPath:@"parse_object_id"];
-            [appDelegate saveContext];
-        }
-    }];
+    
     
 }
 
@@ -237,7 +267,7 @@
     
     for (NSString *f in [foreignMeeting mutableSetValueForKey:@"invites"]) {
         
-        NSLog(@"adding invite: %@", f);
+        
         
         // query if person exists
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -256,10 +286,14 @@
         if (array != nil && array.count > 0) {
             // update existing person
             
+            NSLog(@"updating invite: %@", f);
+            
             localPerson = [array objectAtIndex:0];
             
         }else{
             // create new person
+            
+            NSLog(@"adding invite: %@", f);
             
             localPerson = [NSEntityDescription
                                            insertNewObjectForEntityForName:@"Person"
@@ -384,7 +418,7 @@
     NSArray *array = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
     
     NSManagedObject *localAdmin = nil;
-    if (array && array.count > 0) {
+    if (array && array.count > 0 && [[array objectAtIndex:0] valueForKey:@"administors"] != nil) {
         // update existing person
         
         localAdmin = [array objectAtIndex:0];
@@ -395,10 +429,28 @@
         localAdmin = [NSEntityDescription
                        insertNewObjectForEntityForName:@"Person"
                        inManagedObjectContext:appDelegate.managedObjectContext];
-        [meetingObject setValue:localAdmin forKey:@"admin"];
+        
     }
     
+    
+    PFQuery *query = [PFUser query];
+    [query whereKey:@"facebook_id" equalTo:[foreignMeeting valueForKey:@"admin_fb_id"]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            // Do something with the found objects
+            for (PFObject *object in objects) {
+                [localAdmin setValue:[object valueForKey:@"name"] forKey:@"name"];
+                [appDelegate saveContext];
+                [((HomeViewController *)appDelegate.home) reloadMeetings];
+            }
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
+    
     // update person info
+    [meetingObject setValue:localAdmin forKey:@"admin"];
     [localAdmin setValue:[foreignMeeting valueForKey:@"admin_fb_id"] forKey:@"facebook_id"];
     [localAdmin setValue:meetingObject forKey:@"administors"];
 
@@ -407,7 +459,6 @@
     // update some meeting info
     [meetingObject setValue:@NO forKey:@"is_old"];
     [meetingObject setValue:[foreignMeeting valueForKey:@"num_responded"] forKey:@"num_responded"];
-    NSLog(@"num_responded after update: %@", [foreignMeeting valueForKey:@"num_responded"]);
     
     [appDelegate saveContext];
     

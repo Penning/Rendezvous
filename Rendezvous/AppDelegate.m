@@ -78,7 +78,8 @@
                     }else{
                         // user is not admin. segue to accept/decline screen
                         
-                        AcceptDeclineController *viewController = [[AcceptDeclineController alloc] initWithMeeting:object];
+                        AcceptDeclineController *viewController = [[AcceptDeclineController alloc] init];
+                        NSLog(@"you aren't passing the meeting dude");
                         [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
                     }
                 }else if (error){
@@ -134,7 +135,8 @@
                 }else{
                     // user is not admin. segue to accept/decline screen
                     
-                    AcceptDeclineController *viewController = [[AcceptDeclineController alloc] initWithMeeting:object];
+                    AcceptDeclineController *viewController = [[AcceptDeclineController alloc] init];
+                    NSLog(@"you aren't passing the meeting object dude");
                     [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
                 }
                 

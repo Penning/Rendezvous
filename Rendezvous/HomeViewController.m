@@ -13,6 +13,7 @@
 #import "CurrentUser.h"
 #import "LocationViewController.h"
 #import "LocationSuggestionsLookup.h"
+#import "AcceptDeclineController.h"
 
 @interface HomeViewController ()
 
@@ -84,7 +85,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [self.tableView reloadData];
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -100,8 +101,18 @@
 
 - (void)cellSingleTapped:(HomeCell *)sender{
     // a cell was single tapped
-    lastSelected = sender.indexPath;
-    [self performSegueWithIdentifier:@"home_details_segue" sender:self];
+    
+    if (![appDelegate.user.facebookID isEqualToString:sender.adminFbId]){
+        // admin
+        lastSelected = sender.indexPath;
+        [self performSegueWithIdentifier:@"home_accept_decline_segue" sender:self];
+    }else{
+        // not admin
+        lastSelected = sender.indexPath;
+        [self performSegueWithIdentifier:@"home_details_segue" sender:self];
+    }
+    
+    
 }
 
 - (void)cellDoubleTapped:(HomeCell *)sender{
@@ -117,9 +128,7 @@
 - (IBAction)logoutBtnHit:(id)sender {
     // logout btn hit
     
-    [PFUser logOut];
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    [self.navigationController.visibleViewController viewDidLoad];
+    
 }
 
 - (void)reloadMeetings{
@@ -181,7 +190,7 @@
     return [sectionInfo numberOfObjects];
 }
 
-#pragma mark - cells
+#pragma mark - Cell handling
 
 - (void)configureCell:(UITableViewCell *)cell1 atIndexPath:(NSIndexPath *)indexPath{
     NSManagedObject *meeting_object = [_fetchedResultsController objectAtIndexPath:indexPath];
@@ -193,18 +202,25 @@
     [cell setParentController:self];
     [cell setAdminFbId:[meeting_object valueForKeyPath:@"admin.facebook_id"]];
     
-    [cell.meetingName setText:[meeting_object valueForKey:@"meeting_name"]];
-    [cell.meetingAdmin setText:[meeting_object valueForKeyPath:@"admin.name"]];
+    
     
     [cell.acceptedLabel setText:[NSString
-                                 stringWithFormat:@"%lu/%lu",
-                                 [meeting_object mutableSetValueForKey:@"accepted"].count + [meeting_object mutableSetValueForKey:@"declined"].count,
+                                 stringWithFormat:@"%@/%lu",
+                                 [meeting_object valueForKey:@"num_responded"],
                                  [meeting_object mutableSetValueForKey:@"invites"].count]];
     
+
+    
     if (![cell.adminFbId isEqualToString:appDelegate.user.facebookID]) {
-        [cell.doubleTapLabel setHidden:YES];
+        // not admin
+        [cell.doubleTapLabel setText:@"Tap to RSVP"];
+        [cell.meetingAdmin setText:[meeting_object valueForKey:@"meeting_name"]];
+        [cell.meetingName setText:[NSString stringWithFormat:@"From: %@",[meeting_object valueForKeyPath:@"admin.name"]]];
     }else{
-        [cell.doubleTapLabel setHidden:NO];
+        // admin
+        [cell.doubleTapLabel setText:@"Double tap to close invites"];
+        [cell.meetingName setText:[meeting_object valueForKey:@"meeting_name"]];
+        [cell.meetingAdmin setText:@""];
     }
 }
 
@@ -229,15 +245,21 @@
 
 
 #pragma mark - Navigation
+
+- (IBAction)settingsBtnHit:(id)sender {
+    [self performSegueWithIdentifier:@"home_settings_segue" sender:self];
+}
  
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
  {
      if ([[segue identifier] isEqualToString:@"home_details_segue"]) {
+         
          MeetingViewController *vc = (MeetingViewController *)[segue destinationViewController];
          [vc setMeetingObject:[_fetchedResultsController objectAtIndexPath:lastSelected]];
          [vc initFromHome];
          
      } else if([[segue identifier] isEqualToString:@"new_meeting_segue"]) {
+         
          appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
          current_user = appDelegate.user;
 
@@ -251,10 +273,23 @@
          NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
          vc.friends = [current_user.friends sortedArrayUsingDescriptors:sortDescriptors];
      } else if([[segue identifier] isEqualToString:@"close_meeting_segue"]) {
+         
          LocationViewController *vc = (LocationViewController *)[segue destinationViewController];
          LocationSuggestionsLookup *locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];
          locationSuggestionsLookup.locationViewController = vc;
          [locationSuggestionsLookup getSuggestionsWithCoreData:[_fetchedResultsController objectAtIndexPath:lastSelected]];
+
+
+     } else if ([[segue identifier] isEqualToString:@"home_accept_decline_segue"]){
+         
+         AcceptDeclineController *vc = (AcceptDeclineController *)[segue destinationViewController];
+         [vc setLocalMeeting:[_fetchedResultsController objectAtIndexPath:lastSelected]];
+         
+         
+     } else if ([[segue identifier] isEqualToString:@"home_settings_segue"]){
+         
+         // to settings
+         
      }
  }
 
