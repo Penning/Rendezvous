@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4923A72718F77E79008A43FF /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 4923A72618F77E79008A43FF /* placeholder.png */; };
 		492FEB5C18F1D935008BABD1 /* NSMutableURLRequest+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 492FEB3818F1D935008BABD1 /* NSMutableURLRequest+Parameters.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		492FEB5D18F1D935008BABD1 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 492FEB3A18F1D935008BABD1 /* NSString+URLEncoding.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		492FEB5E18F1D935008BABD1 /* NSURL+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 492FEB3C18F1D935008BABD1 /* NSURL+Base.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -53,7 +54,6 @@
 		49967A2418EDCBF0009CC8E8 /* LocationSuggestionsLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 49967A2318EDCBF0009CC8E8 /* LocationSuggestionsLookup.m */; };
 		49967A2718EE0FD9009CC8E8 /* MeetingLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 49967A2618EE0FD9009CC8E8 /* MeetingLocation.m */; };
 		49BD483B18E27BE600EAD526 /* ContactsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49BD483A18E27BE600EAD526 /* ContactsCell.m */; };
-		49CCB7CB18F77C5D00863A8A /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 49CCB7CA18F77C5D00863A8A /* placeholder.png */; };
 		49FE6EE718E25B2400626238 /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 49FE6EE618E25B2400626238 /* CurrentUser.m */; };
 		49FE6EEA18E2721D00626238 /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 49FE6EE918E2721D00626238 /* Friend.m */; };
 		4F265DA118F71D930052AD46 /* socialMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F265DA018F71D930052AD46 /* socialMediaController.m */; };
@@ -104,6 +104,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4923A72618F77E79008A43FF /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
 		492FEB3718F1D935008BABD1 /* NSMutableURLRequest+Parameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+Parameters.h"; sourceTree = "<group>"; };
 		492FEB3818F1D935008BABD1 /* NSMutableURLRequest+Parameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+Parameters.m"; sourceTree = "<group>"; };
 		492FEB3918F1D935008BABD1 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
@@ -189,7 +190,6 @@
 		49967A2618EE0FD9009CC8E8 /* MeetingLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetingLocation.m; sourceTree = "<group>"; };
 		49BD483918E27BE600EAD526 /* ContactsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsCell.h; sourceTree = "<group>"; };
 		49BD483A18E27BE600EAD526 /* ContactsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsCell.m; sourceTree = "<group>"; };
-		49CCB7CA18F77C5D00863A8A /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
 		49FE6EE518E25B2400626238 /* CurrentUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentUser.h; sourceTree = "<group>"; };
 		49FE6EE618E25B2400626238 /* CurrentUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentUser.m; sourceTree = "<group>"; };
 		49FE6EE818E2721D00626238 /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Friend.h; sourceTree = "<group>"; };
@@ -544,7 +544,7 @@
 		4FF9ACF618DDEBA5008C9CC3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				49CCB7CA18F77C5D00863A8A /* placeholder.png */,
+				4923A72618F77E79008A43FF /* placeholder.png */,
 				4FF9ACF718DDEBA5008C9CC3 /* Rendezvous-Info.plist */,
 				4FF9ACF818DDEBA5008C9CC3 /* InfoPlist.strings */,
 				4FF9ACFB18DDEBA5008C9CC3 /* main.m */,
@@ -717,7 +717,7 @@
 				ORGANIZATIONNAME = Penning;
 				TargetAttributes = {
 					4FF9ACE918DDEBA5008C9CC3 = {
-						DevelopmentTeam = 87F6T9B9ZQ;
+						DevelopmentTeam = 69ZDK4Y6QX;
 						SystemCapabilities = {
 							com.apple.iOS = {
 								enabled = 1;
@@ -753,8 +753,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FF9ACFA18DDEBA5008C9CC3 /* InfoPlist.strings in Resources */,
-				49CCB7CB18F77C5D00863A8A /* placeholder.png in Resources */,
 				4FF9AD0518DDEBA5008C9CC3 /* Images.xcassets in Resources */,
+				4923A72718F77E79008A43FF /* placeholder.png in Resources */,
 				4FF9AD2618DDEBE5008C9CC3 /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
