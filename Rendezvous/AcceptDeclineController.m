@@ -90,21 +90,31 @@
         
     }];
     
+    [_localMeeting setValue:@YES forKey:@"user_responded"];
+    [appDelegate saveContext];
     
     [self.navigationController popToViewController:appDelegate.home animated:YES];
 
 }
 - (IBAction)acceptNoLocationBtnHit:(id)sender {
+    
     [_parseMeeting addUniqueObject:appDelegate.user.facebookID forKey:@"fb_ids_accepted_users"];
     [_parseMeeting incrementKey:@"num_responded"];
     [_parseMeeting saveInBackground];
     
+    [_localMeeting setValue:@YES forKey:@"user_responded"];
+    [appDelegate saveContext];
+    
     [self.navigationController popToViewController:appDelegate.home animated:YES];
 }
 - (IBAction)declineBtnHit:(id)sender {
+    
     [_parseMeeting addUniqueObject:appDelegate.user.facebookID forKey:@"fb_ids_declined_users"];
     [_parseMeeting incrementKey:@"num_responded"];
     [_parseMeeting saveInBackground];
+    
+    [_localMeeting setValue:@YES forKey:@"user_responded"];
+    [appDelegate saveContext];
     
     [self.navigationController popToViewController:appDelegate.home animated:YES];
 }

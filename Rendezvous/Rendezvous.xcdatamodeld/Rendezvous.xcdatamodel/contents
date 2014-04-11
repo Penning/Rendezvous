@@ -8,6 +8,8 @@
         <attribute name="meeting_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="num_responded" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="parse_object_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_responded" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="accepted" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="accepted_meeting" inverseEntity="Person" syncable="YES"/>
         <relationship name="admin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Person" inverseName="administors" inverseEntity="Person" syncable="YES"/>
         <relationship name="declined" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Person" inverseName="declined_meeting" inverseEntity="Person" syncable="YES"/>
@@ -29,7 +31,7 @@
         <relationship name="meeting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Meeting" inverseName="invites" inverseEntity="Meeting" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Meeting" positionX="-108" positionY="-63" width="128" height="223"/>
+        <element name="Meeting" positionX="-108" positionY="-63" width="128" height="255"/>
         <element name="Meeting_reason" positionX="34" positionY="237" width="128" height="73"/>
         <element name="Person" positionX="180" positionY="42" width="128" height="163"/>
     </elements>

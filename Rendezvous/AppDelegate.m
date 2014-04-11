@@ -60,7 +60,7 @@
     
     if (notificationPayload != nil && notificationPayload.count > 0) {
         // Create a pointer to the Photo object
-        NSString *meetingId = [notificationPayload objectForKey:@"meetinID"];
+        NSString *meetingId = [notificationPayload objectForKey:@"meetingId"];
         
         if (meetingId) {
             PFObject *targetMeeting = [PFObject objectWithoutDataWithClassName:@"Meeting"
@@ -116,7 +116,7 @@
     [((HomeViewController *)_home).tableView reloadData];
     
     // Create empty meeting object
-    NSString *meetingId = [userInfo objectForKey:@"meetingID"];
+    NSString *meetingId = [userInfo objectForKey:@"meetingId"];
     
     if (meetingId) {
         PFObject *targetMeeting = [PFObject objectWithoutDataWithClassName:@"Meeting"
