@@ -12,9 +12,9 @@
 
 @property (strong, nonatomic) NSNumber *id;
 @property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSNumber *distanceFromLoc;
-
 @property (strong, nonatomic) NSString *category;
+
+@property (strong, nonatomic) NSNumber *distanceFromLoc;
 
 @property (strong, nonatomic) NSString *imageURL;
 @property (strong, nonatomic) NSString *url;
