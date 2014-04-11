@@ -135,7 +135,6 @@
     
     // show navbar
     [self.navigationController setNavigationBarHidden:NO animated:animated];
-    
 }
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
@@ -182,6 +181,12 @@
 
      return cell;
  }
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    LocationSuggestionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"suggestion_cell"];
+    [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+}
 
 /*
  #pragma mark - Navigation

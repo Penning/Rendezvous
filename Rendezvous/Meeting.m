@@ -38,7 +38,19 @@
 }
 
 - (Meeting *)toCoreData:(NSManagedObject *) meeting_object {
-//    NSLog(@"Meeting: %@", meeting_object);
+//    NSLog(@"Meeting: %@ ", meeting_object);
+    _name = [meeting_object valueForKey:@"meeting_name"];
+    NSSet *rez = [meeting_object mutableSetValueForKeyPath:@"reasons"];
+    _reasons = [[NSMutableArray alloc] init];
+    for (NSString *r in rez) {
+        [_reasons addObject: [r valueForKey:@"reason"]];
+        NSLog(@"Reason: %@", [r valueForKey:@"reason"]);
+    }
+    return self;
+}
+
+- (Meeting *)fromPFObject:(PFObject *) meeting_object {
+    //    NSLog(@"Meeting: %@", meeting_object);
     _name = [meeting_object valueForKey:@"meeting_name"];
     NSSet *rez = [meeting_object mutableSetValueForKeyPath:@"reasons"];
     _reasons = [[NSMutableArray alloc] init];

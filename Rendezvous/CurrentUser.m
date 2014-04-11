@@ -14,7 +14,6 @@
 @implementation CurrentUser
 
 - (void) initFromRequest:(NSDictionary *) userData {
-    
     _name = userData[@"name"];
     _first_name = userData[@"first_name"];
     _last_name = userData[@"last_name"];
@@ -27,8 +26,6 @@
 
     _facebookID = userData[@"id"];
     _pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", _facebookID]];
-    
-    
 
     FBRequest *friendRequest = [FBRequest requestForGraphPath:@"me/friends?fields=name,picture"];
     [friendRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
@@ -43,15 +40,23 @@
         
     }];
     
-    
     [[PFUser currentUser] setObject:_facebookID forKey:@"facebook_id"];
-    [[PFUser currentUser] saveEventually];
-    
-    
+    [[PFUser currentUser] saveInBackground];
+
+    //Query all Parse users
+    PFQuery *query = [PFUser query];
+    NSArray *users = [query findObjects];
+    [query cancel];
+
+    for(Friend *friend in _friends) {
+        NSArray *matches = [users filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name contains %@", friend.name]];
+        if(matches.count > 0) {
+            [_friendsWithApp addObject:friend];
+        }
+    }
 }
 
 - (void) getMyInformation {
-    
     // Create request for user's Facebook data
     FBRequest *request = [FBRequest requestForMe];
     
