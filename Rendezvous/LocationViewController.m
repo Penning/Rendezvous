@@ -21,6 +21,7 @@
     LocationSuggestionsLookup *locationSuggestionsLookup;
     MKMapRect zoomRect;
     UIActivityIndicatorView *activityIndicator;
+    PFGeoPoint *geoPoint;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -43,8 +44,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    [self.tableView reloadData];
-//    NSLog(@"Suggestions: %@", suggestions);
+    
+    
+    
+
 }
 
 
