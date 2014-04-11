@@ -28,7 +28,7 @@
 @property (strong, nonatomic) NSString *state;
 @property (strong, nonatomic) NSString *address;
 
--(MeetingLocation *) initFromYelp:(NSDictionary *) data;
+-(MeetingLocation *) initFromYelp:(NSDictionary *) data :(NSString *) category;
 -(void) printInfoToLog;
 
 @end

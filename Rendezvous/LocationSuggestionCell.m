@@ -32,13 +32,16 @@
     // Configure the view for the selected state
 }
 
-- (void)initCellDisplay:(MeetingLocation *) meeting {
+- (void)initCellDisplay:(MeetingLocation *) meeting :(NSString *) reason {
     _name.text = meeting.name;
-    _distance.text = [NSString stringWithFormat:@"%@", meeting.distanceFromLoc];
+    _distance.text = [NSString stringWithFormat:@"%.2f mi", [meeting.distanceFromLoc doubleValue] * 0.000621371];
     _address.text = meeting.streetAddress;
-//    if(meeting.imageURL) {
-        [_image setImageWithURL:[NSURL URLWithString:meeting.imageURL] placeholderImage:[UIImage imageNamed:@"111-user.png"]];
-//    }
+    [_image setImageWithURL:[NSURL URLWithString:meeting.imageURL] placeholderImage:[UIImage imageNamed:@"111-user.png"]];
+
+    if(![reason isEqualToString:@"None"]) {
+        _categoryImage.bounds = CGRectMake(0, 0, 15, 15);
+        [_categoryImage setImage:[UIImage imageNamed:reason]];
+    }
 }
 
 @end

@@ -10,10 +10,12 @@
 
 @implementation MeetingLocation
 
--(MeetingLocation *) initFromYelp:(NSDictionary *) data {
+-(MeetingLocation *) initFromYelp:(NSDictionary *) data :(NSString *) category {
     _id = [data objectForKey:@"id"];
     _name = [data objectForKey:@"name"];
     _distanceFromLoc = [data objectForKey:@"distance"];
+
+    _category = category;
 
     _imageURL = [data objectForKey:@"image_url"];
     _url = [data objectForKey:@"url"];
