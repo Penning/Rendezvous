@@ -24,6 +24,8 @@
     PFGeoPoint *geoPoint;
 }
 
+@synthesize parseMeeting = _parseMeeting;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

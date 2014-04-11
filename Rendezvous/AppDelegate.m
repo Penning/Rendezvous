@@ -16,6 +16,7 @@
 
 @implementation AppDelegate{
     int lastId;
+    PFObject *notificationMeeting;
 }
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -57,45 +58,121 @@
     
     // Extract the notification data
     NSDictionary *notificationPayload = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
-    
-    if (notificationPayload != nil && notificationPayload.count > 0) {
-        // Create a pointer to the Photo object
-        NSString *meetingId = [notificationPayload objectForKey:@"meetingId"];
-        
-        if (meetingId) {
-            PFObject *targetMeeting = [PFObject objectWithoutDataWithClassName:@"Meeting"
-                                                                      objectId:meetingId];
-            
-            // Fetch meeting object
-            [targetMeeting fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                
-                if (!error && [PFUser currentUser]) {
-                    if ([_user.facebookID isEqualToString:[object valueForKey:@"admin_fb_id"]]) {
-                        // user is admin. segue to close meeting screen
-                        
-                        LocationViewController *viewController = [[LocationViewController alloc] initWithMeeting:object];
-                        [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
-                    }else{
-                        // user is not admin. segue to accept/decline screen
-                        
-                        AcceptDeclineController *viewController = [[AcceptDeclineController alloc] init];
-                        NSLog(@"you aren't passing the meeting dude");
-                        [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
-                    }
-                }else if (error){
-                    NSLog(@"Error: %@", error);
-                }else{
-                    NSLog(@"Error: no user logged in.");
-                }
-                
-            }];
-        }
-        
+    if (notificationPayload && notificationPayload.count > 0) {
+        // [self handleNotification:notificationPayload];
     }
-
+    
+    
     return YES;
 }
 
+- (void)debugAlert:(NSObject *)message{
+    
+    [[[UIAlertView alloc] initWithTitle:@"Debug"
+                                message:[NSString stringWithFormat:@"%@", message]
+                               delegate:self
+                      cancelButtonTitle:@"OK"
+                      otherButtonTitles: nil] show];
+}
+
+
+- (void)handleNotification:(NSDictionary *)payload {
+    
+    // [PFPush handlePush:payload];
+    // [self debugAlert:payload];
+    
+    
+    // Create empty meeting object
+    NSString *meetingId = [payload objectForKey:@"meetingId"];
+    
+    if (meetingId) {
+        
+        PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
+        [query getObjectInBackgroundWithId:meetingId block:^(PFObject *object, NSError *error) {
+            
+            if (!error && [PFUser currentUser]) {
+                
+                // set meeting object
+                notificationMeeting = object;
+                
+                // alert
+                if ([[payload objectForKey:@"type"] isEqualToString:@"invite"]) {
+                    // invite
+                    
+                    [[[UIAlertView alloc] initWithTitle:@"Rendezvous recieved!"
+                                                message:[payload valueForKeyPath:@"aps.alert"]
+                                               delegate:self
+                                      cancelButtonTitle:@"Later"
+                                      otherButtonTitles:@"RSVP", nil] show];
+                    
+                }else if ([[payload objectForKey:@"type"] isEqualToString:@"choose_location"]){
+                    // choose location
+                    
+                    [[[UIAlertView alloc] initWithTitle:@"Meeting closed!"
+                                                message:[payload valueForKeyPath:@"aps.alert"]
+                                               delegate:self
+                                      cancelButtonTitle:@"Later"
+                                      otherButtonTitles:@"Choose Location", nil] show];
+                    
+                }else if ([[payload objectForKey:@"type"] isEqualToString:@"final"]){
+                    // final
+                    
+                    [[[UIAlertView alloc] initWithTitle:@"Rendezvous!"
+                                                message:[payload valueForKeyPath:@"aps.alert"]
+                                               delegate:self
+                                      cancelButtonTitle:@"Cancel"
+                                      otherButtonTitles:@"View Location", nil] show];
+                    
+                }
+                
+            }else{
+                NSLog(@"Error: %@", error);
+            }
+            
+
+        }];
+
+        
+        
+    }
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        // later; ignore
+    }else if (buttonIndex == 1){
+        // act
+        
+        if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"RSVP"]) {
+            // accept/decline
+            
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle: nil];
+            AcceptDeclineController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"accept_decline"];
+            
+            [viewController setParseMeeting:notificationMeeting];
+            
+            [((UINavigationController *)self.window.rootViewController)
+             pushViewController:viewController
+             animated:YES];
+        }else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Choose Location"]){
+            // choose location
+            
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle: nil];
+            AcceptDeclineController *viewController = [[storyboard instantiateViewControllerWithIdentifier:@"accept_decline"] initWithMeeting:notificationMeeting];
+            
+            [viewController setParseMeeting:notificationMeeting];
+            
+            [((UINavigationController *)self.window.rootViewController)
+             pushViewController:viewController
+             animated:YES];
+        }else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"View Location"]){
+            // view location
+            
+        }
+        
+    }
+}
 
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken {
@@ -110,44 +187,9 @@
 
 
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    [PFPush handlePush:userInfo];
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
     
-    [((HomeViewController *)_home).tableView reloadData];
-    
-    // Create empty meeting object
-    NSString *meetingId = [userInfo objectForKey:@"meetingId"];
-    
-    if (meetingId) {
-        PFObject *targetMeeting = [PFObject objectWithoutDataWithClassName:@"Meeting"
-                                                                  objectId:meetingId];
-        
-        // Fetch meeting object
-        [targetMeeting fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            // Show photo view controller
-            if (error) {
-                NSLog(@"Error: %@", error);
-            } else if ([PFUser currentUser]) {
-                
-                if ([_user.facebookID isEqualToString:[object valueForKey:@"admin_fb_id"]]) {
-                    // user is admin. segue to close meeting screen
-                    
-                    LocationViewController *viewController = [[LocationViewController alloc] initWithMeeting:object];
-                    [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
-                }else{
-                    // user is not admin. segue to accept/decline screen
-                    
-                    AcceptDeclineController *viewController = [[AcceptDeclineController alloc] init];
-                    NSLog(@"you aren't passing the meeting object dude");
-                    [((UINavigationController *)self.window.rootViewController) pushViewController:viewController animated:YES];
-                }
-                
-                
-            } else {
-                NSLog(@"Error: no user logged in.");
-            }
-        }];
-    }
+    [self handleNotification:userInfo];
     
 }
 

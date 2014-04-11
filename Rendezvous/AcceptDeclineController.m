@@ -40,17 +40,16 @@
     if (!_parseMeeting) {
         _parseMeeting = [PFObject objectWithoutDataWithClassName:@"Meeting"
                                                                   objectId:[_localMeeting valueForKey:@"parse_object_id"]];
-        
-        // Fetch meeting object
-        [_parseMeeting fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            
-            if (!error) {
-                [self.meetingTitleLabel setText:[_parseMeeting valueForKey:@"name"]];
-            }
-            
-        }];
     }
     
+    // Fetch meeting object
+    [_parseMeeting fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        
+        if (!error) {
+            [self.meetingTitleLabel setText:[_parseMeeting valueForKey:@"name"]];
+        }
+        
+    }];
     
     
     if (_localMeeting) {
@@ -80,7 +79,7 @@
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         
         if (!error) {
-            _parseMeeting[@"final_meeting_location"] = geoPoint;
+            [_parseMeeting addUniqueObject:geoPoint forKey:@"meeter_locations"];
             [_parseMeeting addUniqueObject:appDelegate.user.facebookID forKey:@"fb_ids_accepted_users"];
             [_parseMeeting incrementKey:@"num_responded"];
             [_parseMeeting saveInBackground];
