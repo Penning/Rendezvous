@@ -51,8 +51,6 @@
     _locationViewController.meeting = meeting;
 }
 
-
-
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     NSLog(@"didFailWithError: %@", error);
@@ -63,12 +61,13 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    NSLog(@"didUpdateToLocation: %@", newLocation);
+//    NSLog(@"didUpdateToLocation: %@", newLocation);
     CLLocation *currentLocation = newLocation;
 
     if (currentLocation != nil) {
-        latitude = [NSNumber numberWithDouble:currentLocation.coordinate.latitude];
-        longitude = [NSNumber numberWithDouble:currentLocation.coordinate.longitude];
+        latitude = [NSNumber numberWithFloat:currentLocation.coordinate.latitude];
+        longitude = [NSNumber numberWithFloat:currentLocation.coordinate.longitude];
+        NSLog(@"Admin is @ (%@, %@)", latitude, longitude);
     }
 }
 
@@ -78,14 +77,12 @@
     locations = [[NSMutableArray alloc] init];
     _locationViewController.suggestions = [[NSMutableArray alloc] init];
 
-    //Using default UMICH lat/lng for testing
-    meeting.latitude = [NSNumber numberWithDouble:42.27806];
-    meeting.longitude = [NSNumber numberWithDouble:-83.73823];
-//    if(meeting.latitude == 0 || meeting.longitude == 0) {
-//        meeting.latitude = latitude;
-//        meeting.longitude = longitude;
-//    }
-    NSLog(@"Updated to admin location: %@, %@", meeting.latitude, meeting.longitude);
+    //Using default admin lat/lng when finalized location hasn't been set!
+    if(([meeting.latitude isEqual:[NSNumber numberWithInt:0]] && [meeting.longitude isEqual:[NSNumber numberWithInt:0]]) || meeting.isComeToMe) {
+        meeting.latitude = latitude;
+        meeting.longitude = longitude;
+        NSLog(@"Updated to admin location: %@, %@", meeting.latitude, meeting.longitude);
+    }
 
     //Get suggestions for each category
     if(meeting.reasons.count > 0) {
