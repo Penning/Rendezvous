@@ -168,8 +168,11 @@
     ContactsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"friendCell"];
 
     if(indexPath.section == 0) {
-        if ([cell accessoryType] == UITableViewCellAccessoryNone ||
-            [meeters containsObject:[friendsWithApp objectAtIndex:indexPath.row]]) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"facebookID = %@", [[friendsWithApp objectAtIndex:indexPath.row] facebookID]];
+        NSArray *filteredArray = [meeters filteredArrayUsingPredicate:predicate];
+        NSLog(@"FilteredArray: %@", filteredArray);
+        
+        if ([cell accessoryType] == UITableViewCellAccessoryNone && [filteredArray count] == 0) {
             // add to meeting
 
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
