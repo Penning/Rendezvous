@@ -110,6 +110,15 @@
     [self.mapView setRegion:region animated:YES];
 }
 
+- (void) sortData {
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"distanceFromLoc" ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    NSArray *temp = [_suggestions sortedArrayUsingDescriptors:sortDescriptors];
+    [_suggestions removeAllObjects];
+    [_suggestions addObjectsFromArray:temp];
+    [self.tableView reloadData];
+}
+
 - (void) viewWillAppear:(BOOL)animated {
     activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
@@ -117,6 +126,7 @@
 
     [activityIndicator startAnimating];
     [self performSelector:@selector(delayedReloadData) withObject:nil afterDelay:0.5];
+    [self performSelector:@selector(sortData) withObject:nil afterDelay:0.5];
     [self performSelector:@selector(stopActivityIndicator) withObject:nil afterDelay:0.5];
 
     //Map related
@@ -156,7 +166,7 @@
  
      // Configure the cell...
 //     cell.name.text = [[_suggestions objectAtIndex:indexPath.row] name];
-     [cell initCellDisplay: [_suggestions objectAtIndex:indexPath.row]];
+     [cell initCellDisplay: [_suggestions objectAtIndex:indexPath.row] :[[_suggestions objectAtIndex:indexPath.row] category]];
      [cell.image setClipsToBounds:YES];
 
      return cell;
