@@ -61,31 +61,39 @@
         [self handleNotification:notificationPayload];
     }
     
+    // debug
+    [self handleNotification:[NSDictionary dictionaryWithObject:@"b6GBSNSAY8" forKey:@"meetingId"]];
+    
     return YES;
+}
+
+- (void)debugAlert:(NSObject *)message{
+    
+    [[[UIAlertView alloc] initWithTitle:@"Debug"
+                                message:[NSString stringWithFormat:@"%@", message]
+                               delegate:self
+                      cancelButtonTitle:@"OK"
+                      otherButtonTitles: nil] show];
 }
 
 
 - (void)handleNotification:(NSDictionary *)payload {
     
-    [[[UIAlertView alloc] initWithTitle:@"blah"
-                               message:[NSString stringWithFormat:@"%@", payload]
-                              delegate:self
-                     cancelButtonTitle:@"ok"
-                     otherButtonTitles: nil] show];
-    
-    [PFPush handlePush:payload];
+    // [PFPush handlePush:payload];
     
     // Create empty meeting object
     NSString *meetingId = [payload objectForKey:@"meetingId"];
     
     
     if (meetingId) {
-        PFObject *targetMeeting = [PFObject objectWithoutDataWithClassName:@"Meeting"
-                                                                  objectId:meetingId];
         
-        // Fetch meeting object
-        [targetMeeting fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            
+        // [self debugAlert:meetingId];
+        
+        PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
+        [query getObjectInBackgroundWithId:meetingId block:^(PFObject *object, NSError *error) {
+            // Do something with the returned PFObject in the gameScore variable.
+                
+            // [self debugAlert:[object valueForKey:@"admin_fb_id"]];
             
             if (error) {
                 NSLog(@"Error: %@", error);
@@ -97,7 +105,7 @@
                     // user is admin. segue to close meeting screen
                     
                     LocationViewController *viewController = [[LocationViewController alloc] initWithMeeting:object];
-                    // TODO: set meeting object
+                    [viewController setParseMeeting:object];
                     
                     [((UINavigationController *)self.window.rootViewController)
                      pushViewController:viewController
@@ -106,7 +114,7 @@
                     // user is not admin. segue to accept/decline screen
                     
                     AcceptDeclineController *viewController = [[AcceptDeclineController alloc] init];
-                    // TODO: set meeting object
+                    [viewController setParseMeeting:object];
                     
                     [((UINavigationController *)self.window.rootViewController)
                      pushViewController:viewController
@@ -118,8 +126,10 @@
                 NSLog(@"Error: no user logged in.");
             }
         }];
+
+        
+        
     }
-    
 }
 
 
