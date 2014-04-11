@@ -16,6 +16,7 @@
 
 @implementation AppDelegate{
     int lastId;
+    PFObject *notificationMeeting;
 }
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -58,11 +59,9 @@
     // Extract the notification data
     NSDictionary *notificationPayload = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
     if (notificationPayload && notificationPayload.count > 0) {
-        [self handleNotification:notificationPayload];
+        // [self handleNotification:notificationPayload];
     }
     
-    // debug
-    [self handleNotification:[NSDictionary dictionaryWithObject:@"b6GBSNSAY8" forKey:@"meetingId"]];
     
     return YES;
 }
@@ -80,54 +79,97 @@
 - (void)handleNotification:(NSDictionary *)payload {
     
     // [PFPush handlePush:payload];
+    // [self debugAlert:payload];
+    
     
     // Create empty meeting object
     NSString *meetingId = [payload objectForKey:@"meetingId"];
     
-    
     if (meetingId) {
-        
-        // [self debugAlert:meetingId];
         
         PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
         [query getObjectInBackgroundWithId:meetingId block:^(PFObject *object, NSError *error) {
-            // Do something with the returned PFObject in the gameScore variable.
-                
-            // [self debugAlert:[object valueForKey:@"admin_fb_id"]];
             
-            if (error) {
-                NSLog(@"Error: %@", error);
+            if (!error && [PFUser currentUser]) {
                 
-            } else if ([PFUser currentUser]) {
-                // Show view controller
+                // set meeting object
+                notificationMeeting = object;
                 
-                if ([_user.facebookID isEqualToString:[object valueForKey:@"admin_fb_id"]]) {
-                    // user is admin. segue to close meeting screen
+                // alert
+                if ([[payload objectForKey:@"type"] isEqualToString:@"invite"]) {
+                    // invite
                     
-                    LocationViewController *viewController = [[LocationViewController alloc] initWithMeeting:object];
-                    [viewController setParseMeeting:object];
+                    [[[UIAlertView alloc] initWithTitle:@"Rendezvous recieved!"
+                                                message:[payload valueForKeyPath:@"aps.alert"]
+                                               delegate:self
+                                      cancelButtonTitle:@"Later"
+                                      otherButtonTitles:@"RSVP", nil] show];
                     
-                    [((UINavigationController *)self.window.rootViewController)
-                     pushViewController:viewController
-                     animated:YES];
-                }else{
-                    // user is not admin. segue to accept/decline screen
+                }else if ([[payload objectForKey:@"type"] isEqualToString:@"choose_location"]){
+                    // choose location
                     
-                    AcceptDeclineController *viewController = [[AcceptDeclineController alloc] init];
-                    [viewController setParseMeeting:object];
+                    [[[UIAlertView alloc] initWithTitle:@"Meeting closed!"
+                                                message:[payload valueForKeyPath:@"aps.alert"]
+                                               delegate:self
+                                      cancelButtonTitle:@"Later"
+                                      otherButtonTitles:@"Choose Location", nil] show];
                     
-                    [((UINavigationController *)self.window.rootViewController)
-                     pushViewController:viewController
-                     animated:YES];
+                }else if ([[payload objectForKey:@"type"] isEqualToString:@"final"]){
+                    // final
+                    
+                    [[[UIAlertView alloc] initWithTitle:@"Rendezvous!"
+                                                message:[payload valueForKeyPath:@"aps.alert"]
+                                               delegate:self
+                                      cancelButtonTitle:@"Cancel"
+                                      otherButtonTitles:@"View Location", nil] show];
+                    
                 }
                 
-                
-            } else {
-                NSLog(@"Error: no user logged in.");
+            }else{
+                NSLog(@"Error: %@", error);
             }
+            
+
         }];
 
         
+        
+    }
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        // later; ignore
+    }else if (buttonIndex == 1){
+        // act
+        
+        if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"RSVP"]) {
+            // accept/decline
+            
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle: nil];
+            AcceptDeclineController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"accept_decline"];
+            
+            [viewController setParseMeeting:notificationMeeting];
+            
+            [((UINavigationController *)self.window.rootViewController)
+             pushViewController:viewController
+             animated:YES];
+        }else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Choose Location"]){
+            // choose location
+            
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle: nil];
+            AcceptDeclineController *viewController = [[storyboard instantiateViewControllerWithIdentifier:@"accept_decline"] initWithMeeting:notificationMeeting];
+            
+            [viewController setParseMeeting:notificationMeeting];
+            
+            [((UINavigationController *)self.window.rootViewController)
+             pushViewController:viewController
+             animated:YES];
+        }else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"View Location"]){
+            // view location
+            
+        }
         
     }
 }

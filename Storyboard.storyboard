@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Sek-Td-CUG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Sek-Td-CUG">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -384,11 +384,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Feel free to email us at Rendezvous.penning441@umich.edu 
-
-Or on Twitter: 
-@adoxner 
-@pramodsum" translatesAutoresizingMaskIntoConstraints="NO" id="5sF-U7-QOV">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Feel free to email us at Rendezvous.penning441@umich.edu   Or on Twitter:  @adoxner  @pramodsum" translatesAutoresizingMaskIntoConstraints="NO" id="5sF-U7-QOV">
                                 <rect key="frame" x="0.0" y="5" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -790,7 +786,7 @@ Or on Twitter:
         <!--Accept Decline Controller - Accept/Decline Screen-->
         <scene sceneID="Ugl-AG-KfI">
             <objects>
-                <viewController id="NzK-fp-0gT" customClass="AcceptDeclineController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="accept_decline" id="NzK-fp-0gT" customClass="AcceptDeclineController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="O7W-hZ-lNk"/>
                         <viewControllerLayoutGuide type="bottom" id="KYK-Gh-aEw"/>
