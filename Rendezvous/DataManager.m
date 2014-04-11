@@ -211,7 +211,14 @@
             }else{
                 [meetingParse addUniqueObject:geoPoint forKey:@"meeter_locations"];
             }
-            [meetingParse saveInBackground];
+            
+            [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded && !error) {
+                    [tempMeeting setValue:meetingParse.objectId forKeyPath:@"parse_object_id"];
+                    [appDelegate saveContext];
+                }
+            }];
+            
         }else{
             NSLog(@"Location error: %@", error);
         }
@@ -220,12 +227,7 @@
     
     
     
-    [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded && !error) {
-            [tempMeeting setValue:meetingParse.objectId forKeyPath:@"parse_object_id"];
-            [appDelegate saveContext];
-        }
-    }];
+    
     
 }
 
