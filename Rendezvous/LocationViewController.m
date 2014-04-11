@@ -47,6 +47,7 @@
 //    NSLog(@"Suggestions: %@", suggestions);
 }
 
+
 -(void) delayedReloadData {
     [self.tableView reloadData];
 }
@@ -133,6 +134,10 @@
     self.mapView.delegate =  self;
     self.mapView.showsUserLocation = YES;
     [self performSelector:@selector(annotateMap) withObject:nil afterDelay:0.6];
+    
+    // show navbar
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    
 }
 
 - (void)didReceiveMemoryWarning
