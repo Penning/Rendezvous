@@ -19,8 +19,28 @@
 //yelp url: http://api.yelp.com/v2/search?term=food&ll=37.788022,-122.399797
 
 - (void) getSuggestionsWithCoreData:(NSManagedObject *) meetingObject {
+    
     Meeting *meeting = [[[Meeting alloc] init] toCoreData:meetingObject];
-    [self getSuggestions:meeting];
+    
+    
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
+    
+    // Retrieve the object by id
+    [query getObjectInBackgroundWithId:[meetingObject valueForKey:@"parse_object_id"] block:^(PFObject *foreignMeeting, NSError *error) {
+        
+        if (!error) {
+            [meeting setLatitude:[NSNumber numberWithDouble:((PFGeoPoint *)[foreignMeeting valueForKey:@"final_meeting_location"]).latitude]];
+            [meeting setLongitude:[NSNumber numberWithDouble:((PFGeoPoint *)[foreignMeeting valueForKey:@"final_meeting_location"]).longitude]];
+            
+            NSLog(@"Got final location: %@, %@", meeting.latitude, meeting.longitude);
+            [self getSuggestions:meeting];
+        }else{
+            NSLog(@"Error getting final location: %@", error);
+        }
+        
+    }];
+    
     _locationViewController.meeting = meeting;
 }
 
@@ -31,8 +51,8 @@
     _locationViewController.suggestions = [[NSMutableArray alloc] init];
 
     //Using default UMICH lat/lng for testing
-    meeting.latitude = [NSNumber numberWithDouble:42.27806];
-    meeting.longitude = [NSNumber numberWithDouble:-83.73823];
+    // meeting.latitude = [NSNumber numberWithDouble:42.27806];
+    // meeting.longitude = [NSNumber numberWithDouble:-83.73823];
 
     //Get suggestions for each category
     if(meeting.reasons.count > 0) {

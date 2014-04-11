@@ -73,6 +73,7 @@
     [meeting_object setValue:[NSDate date] forKeyPath:@"created_date"];
     [meeting_object setValue:@1 forKey:@"num_responded"];
     [meeting_object setValue:@NO forKey:@"is_old"];
+    [meeting_object setValue:@NO forKey:@"user_responded"];
     
     
     
@@ -440,6 +441,7 @@
             // Do something with the found objects
             for (PFObject *object in objects) {
                 [localAdmin setValue:[object valueForKey:@"name"] forKey:@"name"];
+                NSLog(@"admin name: %@", [object valueForKey:@"name"]);
                 [appDelegate saveContext];
                 [((HomeViewController *)appDelegate.home) reloadMeetings];
             }
@@ -459,6 +461,10 @@
     // update some meeting info
     [meetingObject setValue:@NO forKey:@"is_old"];
     [meetingObject setValue:[foreignMeeting valueForKey:@"num_responded"] forKey:@"num_responded"];
+    [meetingObject setValue:[foreignMeeting valueForKey:@"status"] forKey:@"status"];
+    
+    NSLog(@"set status: %@", [foreignMeeting valueForKey:@"status"]);
+    [((HomeViewController *)appDelegate.home) reloadMeetings];
     
     [appDelegate saveContext];
     

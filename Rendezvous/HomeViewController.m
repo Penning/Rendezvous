@@ -54,7 +54,7 @@
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
     [fetchRequest setEntity:fetchEntity];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"is_old == %@", @NO];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"is_old == %@ AND status != 'final'", @NO];
     [fetchRequest setPredicate:predicate];
     
     _fetchedResultsController = [[NSFetchedResultsController alloc]
@@ -103,13 +103,22 @@
     // a cell was single tapped
     
     if (![appDelegate.user.facebookID isEqualToString:sender.adminFbId]){
-        // admin
-        lastSelected = sender.indexPath;
-        [self performSegueWithIdentifier:@"home_accept_decline_segue" sender:self];
-    }else{
         // not admin
         lastSelected = sender.indexPath;
+        
+        if (((NSNumber *)[[_fetchedResultsController objectAtIndexPath:lastSelected] valueForKey:@"user_responded"]).boolValue) {
+            return;
+        }else {
+            [self performSegueWithIdentifier:@"home_accept_decline_segue" sender:self];
+        }
+        
+        
+    }else{
+        // admin
+        lastSelected = sender.indexPath;
+        
         [self performSegueWithIdentifier:@"home_details_segue" sender:self];
+        
     }
     
     
@@ -213,7 +222,13 @@
     
     if (![cell.adminFbId isEqualToString:appDelegate.user.facebookID]) {
         // not admin
-        [cell.doubleTapLabel setText:@"Tap to RSVP"];
+        
+        if ([[_fetchedResultsController objectAtIndexPath:lastSelected] valueForKey:@"user_responded"]) {
+            [cell.doubleTapLabel setText:@""];
+        }else {
+            [cell.doubleTapLabel setText:@"Tap to RSVP"];
+        }
+        
         [cell.meetingAdmin setText:[meeting_object valueForKey:@"meeting_name"]];
         [cell.meetingName setText:[NSString stringWithFormat:@"From: %@",[meeting_object valueForKeyPath:@"admin.name"]]];
     }else{
