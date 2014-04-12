@@ -316,7 +316,7 @@
         [meetingObject setValue:acceptedSet forKey:@"accepted"];
     }
     
-    for (NSString *f in [foreignMeeting mutableSetValueForKey:@"accepted"]) {
+    for (NSString *f in [foreignMeeting mutableSetValueForKey:@"fb_ids_accepted_users"]) {
         
         if ([f isEqualToString:appDelegate.user.facebookID]) {
             [meetingObject setValue:@YES forKey:@"user_responded"];
@@ -352,7 +352,7 @@
         
         // update person info
         [localPerson setValue:f forKey:@"facebook_id"];
-        [localPerson setValue:meetingObject forKey:@"accepted"];
+        [localPerson setValue:meetingObject forKey:@"accepted_meeting"];
         
     }
 
@@ -367,7 +367,7 @@
         [meetingObject setValue:declinedSet forKey:@"declined"];
     }
     
-    for (NSString *f in [foreignMeeting mutableSetValueForKey:@"declined"]) {
+    for (NSString *f in [foreignMeeting mutableSetValueForKey:@"fb_ids_accepted_users"]) {
         
         if ([f isEqualToString:appDelegate.user.facebookID]) {
             [meetingObject setValue:@YES forKey:@"user_responded"];
@@ -403,7 +403,7 @@
         
         // update person info
         [localPerson setValue:f forKey:@"facebook_id"];
-        [localPerson setValue:meetingObject forKey:@"declined"];
+        [localPerson setValue:meetingObject forKey:@"declined_meeting"];
         
     }
     
