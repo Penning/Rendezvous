@@ -269,9 +269,6 @@
     
     for (NSString *f in [foreignMeeting mutableSetValueForKey:@"invites"]) {
         
-        if ([f isEqualToString:appDelegate.user.facebookID]) {
-            [meetingObject setValue:@YES forKey:@"user_responded"];
-        }
         
         // query if person exists
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
