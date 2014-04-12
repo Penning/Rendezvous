@@ -135,11 +135,7 @@
     [self performSegueWithIdentifier:@"close_meeting_segue" sender:self];
 }
 
-- (IBAction)logoutBtnHit:(id)sender {
-    // logout btn hit
-    
-    
-}
+
 
 - (void)reloadMeetings{
     [self.tableView reloadData];

@@ -10,6 +10,8 @@
 #import "MeetingReasonViewController.h"
 #import "CurrentUser.h"
 #import "ContactsCell.h"
+#import "Meeting.h"
+#import "DataManager.h"
 
 @interface ContactsViewController ()
 
@@ -229,7 +231,19 @@
 
 - (IBAction)okBtnHit:(id)sender {
     useShortcut = YES;
-    [self performSegueWithIdentifier:@"reason_segue" sender:self];
+    
+    Meeting *newMeeting = [[Meeting alloc] init];
+    newMeeting.name = meetingName;
+    newMeeting.description = @"";
+    [newMeeting setComeToMe:NO];
+    
+    DataManager *dm = [[DataManager alloc] init];
+    [dm createMeeting:newMeeting withInvites:meeters withReasons:@[]];
+    
+    
+    // unwind segue to home
+    AppDelegate *appDelegate = ((AppDelegate *)[[UIApplication sharedApplication] delegate]);
+    [self.navigationController popToViewController:appDelegate.home animated:YES];
 }
 
 - (IBAction)editBtnHit:(id)sender {

@@ -21,6 +21,7 @@
 @end
 
 @implementation MeetingReasonViewController {
+    UIAlertView *alert;
     NSMutableArray *reasons;
     BOOL okShouldBeSend;
 }
@@ -43,18 +44,33 @@
     
     reasons = [[NSMutableArray alloc] init];
     
-    if (okShouldBeSend) {
-        [self.okToolbarBtn setTitle:@"Send"];
-    }else{
-        [self.okToolbarBtn setTitle:@"OK"];
-    }
-    
     [self.meetingNameBarButtonItem setTitle:_meetingName];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    [[self navigationController] setNavigationBarHidden:YES animated:animated];
-//    [self.navigationController setToolbarHidden:NO animated:animated];
+    
+    // clear navbar
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.view.backgroundColor = [UIColor clearColor];
+    
+    
+    // back button color
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], NSForegroundColorAttributeName,nil]
+                                                                                            forState:UIControlStateNormal];
+    
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    [self.navigationController.navigationBar setBackgroundImage:nil
+                                                  forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setTranslucent:NO];
+    [self.navigationController.navigationBar setTintColor:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -172,29 +188,55 @@
 }
 
 
-- (IBAction)back:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+- (IBAction)nameBtnHit:(id)sender {
+    
+    alert = [[UIAlertView alloc] initWithTitle:@"Edit Name"
+                                       message:@"Enter the new meeting name"
+                                      delegate:self
+                             cancelButtonTitle:@"Cancel"
+                             otherButtonTitles:@"OK", nil];
+    [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    [[alert textFieldAtIndex:0] setReturnKeyType:UIReturnKeyDone];
+    [[alert textFieldAtIndex:0] setDelegate:self];
+    [alert show];
+    
 }
 
-- (IBAction)okToolbarBtnHit:(id)sender {
-    if (okShouldBeSend) {
+- (BOOL)textFieldShouldReturn:(UITextField *)alertTextField {
         
-        Meeting *newMeeting = [[Meeting alloc] init];
-        newMeeting.name = self.meetingName;
-        newMeeting.description = @"";
-        [newMeeting setComeToMe:NO];
-        
-        DataManager *dm = [[DataManager alloc] init];
-        [dm createMeeting:newMeeting withInvites:meeters withReasons:reasons];
-        
-        
-        // unwind segue to home
-        AppDelegate *appDelegate = ((AppDelegate *)[[UIApplication sharedApplication] delegate]);
-        [self.navigationController popToViewController:appDelegate.home animated:YES];
-        
-    }else{
-        [self performSegueWithIdentifier:@"contacts_details_segue" sender:self];
+    [alert dismissWithClickedButtonIndex:1 animated:YES];
+    
+    return YES;
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    
+    if (buttonIndex == 0) {
+        // cancel
+    }else if(buttonIndex == 1){
+        // change name
+        self.meetingName = [alert textFieldAtIndex:0].text;
+        [self.meetingNameBarButtonItem setTitle:self.meetingName];
     }
+}
+
+
+- (IBAction)okToolbarBtnHit:(id)sender {
+    
+    Meeting *newMeeting = [[Meeting alloc] init];
+    newMeeting.name = self.meetingName;
+    newMeeting.description = @"";
+    [newMeeting setComeToMe:self.myLocationSwitch.isOn];
+    
+    DataManager *dm = [[DataManager alloc] init];
+    [dm createMeeting:newMeeting withInvites:meeters withReasons:reasons];
+    
+    
+    // unwind segue to home
+    AppDelegate *appDelegate = ((AppDelegate *)[[UIApplication sharedApplication] delegate]);
+    [self.navigationController popToViewController:appDelegate.home animated:YES];
+        
+
 }
 
 @end

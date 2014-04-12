@@ -36,9 +36,7 @@
 
 - (void)initForSend;
 
-//Back to contacts
-- (IBAction)back:(id)sender;
-
+@property (weak, nonatomic) IBOutlet UISwitch *myLocationSwitch;
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *okToolbarBtn;
 

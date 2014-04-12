@@ -594,14 +594,14 @@
                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="DhL-bW-hpg"/>
-                        <barButtonItem title="OK" style="done" id="zbE-6F-wuo">
+                        <barButtonItem title="Send" style="done" id="zbE-6F-wuo">
                             <connections>
                                 <action selector="okBtnHit:" destination="5vL-M4-hZj" id="4eF-f3-BZZ"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Add Contacts" id="dTj-S3-0bj">
-                        <barButtonItem key="backBarButtonItem" title="Contacts" id="CU2-Mh-fbB"/>
+                        <barButtonItem key="backBarButtonItem" title="Back" id="CU2-Mh-fbB"/>
                     </navigationItem>
                     <connections>
                         <outlet property="meetingNameBarBtn" destination="J8U-ik-oN0" id="WbT-gO-YKX"/>
@@ -1013,16 +1013,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Let's meet for..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cgy-x9-IHu">
-                                <rect key="frame" x="69" y="48" width="182" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0dO-Jl-H6d">
-                                <rect key="frame" x="58" y="109" width="75" height="75"/>
+                                <rect key="frame" x="58" y="77" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="restaurants">
@@ -1038,7 +1030,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F4W-h8-xUz">
-                                <rect key="frame" x="187" y="109" width="75" height="75"/>
+                                <rect key="frame" x="187" y="77" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="bars">
@@ -1054,7 +1046,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HlD-og-sWp">
-                                <rect key="frame" x="58" y="207" width="75" height="75"/>
+                                <rect key="frame" x="58" y="175" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="coffee">
@@ -1070,7 +1062,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hU1-R8-Tdf">
-                                <rect key="frame" x="187" y="207" width="75" height="75"/>
+                                <rect key="frame" x="187" y="175" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="movietheaters">
@@ -1086,7 +1078,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LqP-xF-fPs">
-                                <rect key="frame" x="58" y="305" width="75" height="75"/>
+                                <rect key="frame" x="58" y="273" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="shopping">
@@ -1102,7 +1094,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WaR-Jg-u1y">
-                                <rect key="frame" x="187" y="305" width="75" height="75"/>
+                                <rect key="frame" x="187" y="273" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="arts">
@@ -1118,7 +1110,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="naX-NA-Si3">
-                                <rect key="frame" x="58" y="404" width="75" height="75"/>
+                                <rect key="frame" x="58" y="372" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="libraries">
@@ -1134,7 +1126,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rla-zP-zSV">
-                                <rect key="frame" x="187" y="404" width="75" height="75"/>
+                                <rect key="frame" x="187" y="372" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="musicvenues">
@@ -1154,9 +1146,9 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                 <items>
-                                    <barButtonItem title="Back" id="vU2-5v-tUb">
+                                    <barButtonItem title="Name" id="vU2-5v-tUb">
                                         <connections>
-                                            <action selector="back:" destination="A0z-Vv-c9D" id="ypF-bj-pg0"/>
+                                            <action selector="nameBtnHit:" destination="A0z-Vv-c9D" id="JnF-lc-WXF"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Lk3-8v-Ftd"/>
@@ -1164,7 +1156,7 @@
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Yg4-Rc-wx8"/>
-                                    <barButtonItem title="OK" style="done" id="nC7-je-pum">
+                                    <barButtonItem title="Send" style="done" id="nC7-je-pum">
                                         <connections>
                                             <action selector="okToolbarBtnHit:" destination="A0z-Vv-c9D" id="SRS-g4-r7y"/>
                                         </connections>
@@ -1172,6 +1164,25 @@
                                 </items>
                                 <color key="barTintColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                             </toolbar>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Let's meet for..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cgy-x9-IHu">
+                                <rect key="frame" x="69" y="8" width="182" height="66"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="dj5-Mt-aeB">
+                                <rect key="frame" x="213" y="471" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Use my location:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MHq-s1-T0X">
+                                <rect key="frame" x="58" y="471" width="147" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -1185,6 +1196,7 @@
                         <outlet property="food" destination="0dO-Jl-H6d" id="FEl-i7-JM7"/>
                         <outlet property="meetingNameBarButtonItem" destination="3ns-uo-xL2" id="ZTC-hT-9MO"/>
                         <outlet property="music" destination="rla-zP-zSV" id="slA-mF-P2L"/>
+                        <outlet property="myLocationSwitch" destination="dj5-Mt-aeB" id="3DL-Xf-Fuj"/>
                         <outlet property="okToolbarBtn" destination="nC7-je-pum" id="3ky-9N-knb"/>
                         <outlet property="shopping" destination="LqP-xF-fPs" id="Qxh-dY-QYj"/>
                         <outlet property="studying" destination="naX-NA-Si3" id="N5D-wE-0gO"/>
