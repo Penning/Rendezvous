@@ -24,7 +24,6 @@
     UIActivityIndicatorView *activityIndicator;
     PFGeoPoint *geoPoint;
     NSIndexPath *selectedIndex;
-    CLGeocoder *geocoder;
 }
 
 @synthesize parseMeeting = _parseMeeting;
@@ -49,6 +48,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.refreshControl = [[UIRefreshControl alloc]
+                                        init];
+    self.refreshControl.tintColor = [UIColor blueColor];
+    [self.refreshControl addTarget:self action:@selector(updateLocationView) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)updateLocationView
+{
+    [self.tableView reloadData];
+    [self sortData];
+    [self annotateMap];
+    [self.refreshControl endRefreshing];
 }
 
 -(void) delayedReloadData {
@@ -63,11 +74,10 @@
     zoomRect = MKMapRectNull;
     NSLog(@"Geocoding locations");
 
-    geocoder = [[CLGeocoder alloc] init];
-
     //Add locations to map
     for(MeetingLocation *location in _suggestions) {
         NSString *address = [NSString stringWithFormat:@"%@, %@", location.streetAddress, location.city];
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init];;
         [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
             if(!error) {
                 if (placemarks && placemarks.count > 0) {
@@ -232,30 +242,35 @@
 
                 locationParse[@"name"] = location.name;
 
-                if(!location.pflocation) {
-                    NSString *address = [NSString stringWithFormat:@"%@, %@", location.streetAddress, location.city];
-                    [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
-                        if(!error) {
-                            if (placemarks && placemarks.count > 0) {
-                                MKPlacemark *placemark = [[MKPlacemark alloc] initWithPlacemark:[placemarks objectAtIndex:0]];
-                                MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-                                annotation.coordinate = placemark.coordinate;
+                NSLog(@"%f, %f", location.pflocation.latitude, location.pflocation.longitude);
 
-                                location.pflocation = [[PFGeoPoint alloc] init];
-                                location.pflocation.latitude = annotation.coordinate.latitude;
-                                location.pflocation.longitude = annotation.coordinate.longitude;
-
-                                annotation.title = location.name;
-                                [_mapView addAnnotation:annotation];
-
-                                //Add to zoom
-                                [self zoomToFitMapAnnotations];
-                            }
-                        }
-                        else {
-                            NSLog(@"Error: %@", error);
-                        }
-                    }];
+                if(!location.pflocation || (location.pflocation.latitude == 0.000000 || location.pflocation.longitude == 0.000000)) {
+//                    NSString *address = [NSString stringWithFormat:@"%@, %@", location.streetAddress, location.city];
+//                    [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
+//                        if(!error) {
+//                            if (placemarks && placemarks.count > 0) {
+//                                MKPlacemark *placemark = [[MKPlacemark alloc] initWithPlacemark:[placemarks objectAtIndex:0]];
+//                                MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+//                                annotation.coordinate = placemark.coordinate ;
+//
+//                                location.pflocation = [[PFGeoPoint alloc] init];
+//                                location.pflocation.latitude = annotation.coordinate.latitude;
+//                                location.pflocation.longitude = annotation.coordinate.longitude;
+//
+//                                NSLog(@"%f, %f", location.pflocation.latitude, location.pflocation.longitude);
+//
+//                                annotation.title = location.name;
+//                                [_mapView addAnnotation:annotation];
+//
+//                                //Add to zoom
+//                                [self zoomToFitMapAnnotations];
+//                            }
+//                        }
+//                        else {
+//                            NSLog(@"Error: %@", error);
+//                        }
+//                    }];
+                    [self annotateMap];
                 }
 
                 locationParse[@"meeting_geopoint"] = location.pflocation;

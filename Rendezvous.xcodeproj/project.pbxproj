@@ -27,6 +27,7 @@
 		492FEB6C18F1D935008BABD1 /* OATokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 492FEB5A18F1D935008BABD1 /* OATokenManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		49445DAF18EF04F300525E66 /* LocationSuggestionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 49445DAE18EF04F300525E66 /* LocationSuggestionCell.m */; };
 		49445DEB18EF1D1200525E66 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 49445DEA18EF1D1200525E66 /* libxml2.dylib */; };
+		495269A718F992BF0065ED14 /* ObservableMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 495269A618F992BF0065ED14 /* ObservableMutableArray.m */; };
 		49661CDA18E0D8DA007E5CE6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49661CD918E0D8DA007E5CE6 /* AudioToolbox.framework */; };
 		49661CDC18E0D8DE007E5CE6 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49661CDB18E0D8DE007E5CE6 /* CFNetwork.framework */; };
 		49661CDE18E0D8E8007E5CE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49661CDD18E0D8E8007E5CE6 /* CoreLocation.framework */; };
@@ -145,6 +146,8 @@
 		49445DAD18EF04F300525E66 /* LocationSuggestionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationSuggestionCell.h; sourceTree = "<group>"; };
 		49445DAE18EF04F300525E66 /* LocationSuggestionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationSuggestionCell.m; sourceTree = "<group>"; };
 		49445DEA18EF1D1200525E66 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		495269A518F992BF0065ED14 /* ObservableMutableArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObservableMutableArray.h; sourceTree = "<group>"; };
+		495269A618F992BF0065ED14 /* ObservableMutableArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObservableMutableArray.m; sourceTree = "<group>"; };
 		49661CD918E0D8DA007E5CE6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		49661CDB18E0D8DE007E5CE6 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		49661CDD18E0D8E8007E5CE6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -370,6 +373,8 @@
 				49967A2318EDCBF0009CC8E8 /* LocationSuggestionsLookup.m */,
 				49967A2518EE0FD9009CC8E8 /* MeetingLocation.h */,
 				49967A2618EE0FD9009CC8E8 /* MeetingLocation.m */,
+				495269A518F992BF0065ED14 /* ObservableMutableArray.h */,
+				495269A618F992BF0065ED14 /* ObservableMutableArray.m */,
 			);
 			name = "Meeting Models";
 			sourceTree = "<group>";
@@ -787,6 +792,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				495269A718F992BF0065ED14 /* ObservableMutableArray.m in Sources */,
 				49967A0918ECB8FD009CC8E8 /* UIImage+MultiFormat.m in Sources */,
 				49967A0A18ECB8FD009CC8E8 /* UIImage+WebP.m in Sources */,
 				4F6985E018F387C8005EC437 /* AcceptDeclineController.m in Sources */,
@@ -980,7 +986,7 @@
 				INFOPLIST_FILE = "Rendezvous/Rendezvous-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "DD95B253-87A0-4902-86B1-58695D8FAABB";
+				PROVISIONING_PROFILE = "9EED7EAF-588F-4D42-B502-F8F7EE3E91DB";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1005,7 +1011,7 @@
 				INFOPLIST_FILE = "Rendezvous/Rendezvous-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "DD95B253-87A0-4902-86B1-58695D8FAABB";
+				PROVISIONING_PROFILE = "9EED7EAF-588F-4D42-B502-F8F7EE3E91DB";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

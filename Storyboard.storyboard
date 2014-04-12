@@ -447,7 +447,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Meeting_admin" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lyp-9S-aGR">
-                                                    <rect key="frame" x="20" y="24" width="168" height="21"/>
+                                                    <rect key="frame" x="41" y="24" width="147" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -473,18 +473,23 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Meeting_title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iEN-Hb-qA0">
-                                                    <rect key="frame" x="20" y="4" width="228" height="21"/>
+                                                    <rect key="frame" x="41" y="4" width="207" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="an4-1J-W3f">
+                                                    <rect key="frame" x="6" y="8" width="30" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outlet property="acceptedLabel" destination="yL7-cZ-s5u" id="Vtk-Rr-Vo8"/>
                                             <outlet property="doubleTapLabel" destination="6Pw-Ul-M4A" id="BMp-bb-ZXq"/>
+                                            <outlet property="inviteStatusImage" destination="an4-1J-W3f" id="m6Q-L7-B96"/>
                                             <outlet property="meetingAdmin" destination="lyp-9S-aGR" id="489-1o-9C2"/>
                                             <outlet property="meetingName" destination="iEN-Hb-qA0" id="ViC-Nb-a1l"/>
                                         </connections>
@@ -1220,6 +1225,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ZE6-Iq-goc"/>
+        <segue reference="4aF-VO-qgM"/>
     </inferredMetricsTieBreakers>
 </document>
