@@ -84,7 +84,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    [self.tableView reloadData];
+    // [self.tableView reloadData];
     [self.navigationController setToolbarHidden:YES animated:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
@@ -92,6 +92,7 @@
 - (void)viewDidAppear:(BOOL)animated{
     //DataManager *dm = [[DataManager alloc] init];
     //[dm fetchMeetingUpdates];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -220,7 +221,7 @@
     if (![cell.adminFbId isEqualToString:appDelegate.user.facebookID]) {
         // not admin
         
-        if ([[_fetchedResultsController objectAtIndexPath:lastSelected] valueForKey:@"user_responded"]) {
+        if ([meeting_object valueForKey:@"user_responded"]) {
             [cell.doubleTapLabel setText:@""];
         }else {
             [cell.doubleTapLabel setText:@"Tap to RSVP"];
