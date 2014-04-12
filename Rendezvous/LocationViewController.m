@@ -215,6 +215,10 @@
  */
 
 - (IBAction)finalizeLocation:(id)sender {
+    if(!selectedIndex) {
+        return;
+    }
+
     PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
     [query whereKey:@"objectId" equalTo: [_meeting parseObjectId]];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -222,12 +226,45 @@
             // Do something with the found objects
             for (PFObject *object in objects) {
                 PFObject *locationParse = [PFObject objectWithClassName:@"Location"];
+                NSLog(@"%@", locationParse);
                 MeetingLocation *location = [_suggestions objectAtIndex:selectedIndex.row];
+                NSLog(@"%@", location);
 
                 locationParse[@"name"] = location.name;
+
+                if(!location.pflocation) {
+                    NSString *address = [NSString stringWithFormat:@"%@, %@", location.streetAddress, location.city];
+                    [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
+                        if(!error) {
+                            if (placemarks && placemarks.count > 0) {
+                                MKPlacemark *placemark = [[MKPlacemark alloc] initWithPlacemark:[placemarks objectAtIndex:0]];
+                                MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+                                annotation.coordinate = placemark.coordinate;
+
+                                location.pflocation = [[PFGeoPoint alloc] init];
+                                location.pflocation.latitude = annotation.coordinate.latitude;
+                                location.pflocation.longitude = annotation.coordinate.longitude;
+
+                                annotation.title = location.name;
+                                [_mapView addAnnotation:annotation];
+
+                                //Add to zoom
+                                [self zoomToFitMapAnnotations];
+                            }
+                        }
+                        else {
+                            NSLog(@"Error: %@", error);
+                        }
+                    }];
+                }
+
                 locationParse[@"meeting_geopoint"] = location.pflocation;
-                object[@"finalized_location"] = locationParse;
-                [object saveInBackground];
+
+                [locationParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    object[@"finalized_location"] = locationParse;
+                    [object saveInBackground];
+                }];
+
             }
         } else {
             // Log details of the failure
