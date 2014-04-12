@@ -730,7 +730,7 @@
 				ORGANIZATIONNAME = Penning;
 				TargetAttributes = {
 					4FF9ACE918DDEBA5008C9CC3 = {
-						DevelopmentTeam = 69ZDK4Y6QX;
+						DevelopmentTeam = 87F6T9B9ZQ;
 						SystemCapabilities = {
 							com.apple.iOS = {
 								enabled = 1;
@@ -980,7 +980,7 @@
 				INFOPLIST_FILE = "Rendezvous/Rendezvous-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "DD95B253-87A0-4902-86B1-58695D8FAABB";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1005,7 +1005,7 @@
 				INFOPLIST_FILE = "Rendezvous/Rendezvous-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "DD95B253-87A0-4902-86B1-58695D8FAABB";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

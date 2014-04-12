@@ -58,11 +58,7 @@
      UIRemoteNotificationTypeSound];
     
     
-    // Extract the notification data
-    NSDictionary *notificationPayload = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
-    if (notificationPayload && notificationPayload.count > 0) {
-        // [self handleNotification:notificationPayload];
-    }
+    
     
     
     return YES;
@@ -241,6 +237,23 @@
         [currentInstallation saveEventually];
     }
     
+    
+    // debug
+    // [self debugNotifications];
+    
+}
+
+- (void)debugNotifications {
+    NSDictionary *inner = [[NSDictionary alloc]
+                           initWithObjects:@[@"debugging..."]
+                           forKeys:@[@"alert"]];
+    
+    NSDictionary *outer = [[NSDictionary alloc]
+                           initWithObjects:@[inner, @"choose_location", @"L4TzYHCSB0"]
+                           forKeys:@[@"aps", @"type", @"meetingId"]];
+    
+    
+    [self handleNotification:outer];
 }
 
 - (void)getMeetingUpdates{
