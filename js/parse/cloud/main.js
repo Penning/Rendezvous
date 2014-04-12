@@ -2,7 +2,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 // notify a user of meeting
-// input is facebook_id of user
+// input is facebook_id of user, object_id of meeting
 //////////////////////////////////////////////////////////////////////////
 Parse.Cloud.define("notifyInit", function (request, response) {
     alert("about to notify...");
@@ -24,11 +24,13 @@ Parse.Cloud.define("notifyInit", function (request, response) {
                 data: {
                     alert: "Rendezvous with " + Parse.User.current().get("name") + "!",
                     badge: "Increment",
+                    type: "invite",
+                    meetingId: request.params.meetingId,
                 }
             }, {
                 success: function () {
                     // Push was successful
-                    alert("Push sent to someone!");
+                    alert("Push sent to " + object.get("name") + "!");
                     response.success();
                 },
                 error: function (error) {
@@ -46,31 +48,43 @@ Parse.Cloud.define("notifyInit", function (request, response) {
     });
 });
 
+// input is admin_fb_id of meeting
 Parse.Cloud.define("notifyAllResponded", function (request, response) {
     alert("Notifying meeting creator of total response");
 
-    // Find the user who created meeting
     var userQuery = new Parse.Query(Parse.User);
-    userQuery.equalTo("admin_fb_id", request.object.admin_fb_id);
+    userQuery.startsWith("facebook_id", request.params.admin_fb_id);
 
-    // Find creators device
-    var pushQuery = new Parse.Query(Parse.Installation);
-    pushQuery.matchesQuery('user', userQuery);
+    userQuery.first({
+        success: function (object) {
+            alert("found user to notify: " + object.get("facebook_id"));
+            // Find devices associated user
+            var pushQuery = new Parse.Query(Parse.Installation);
+            pushQuery.startsWith("deviceToken", object.get("device_token"));
 
-    Parse.Push.send({
-        where: pushQuery,
-        data: {
-            alert: "Please choose a location!",
-            meetingID: request.object.objectId,
-        },
-    }, {
-        success: function () {
-            // Push was successful
-            alert("notifyAllResponded -- notification sent to " + request.object.get("name"));
+            Parse.Push.send({
+                where: pushQuery,
+                data: {
+                    alert: "Choose a location for your Rendezvous!",
+                    meetingId: request.params.meetingId,
+                    type: "choose_location",
+                },
+            }, {
+                success: function () {
+                    // Push was successful
+                    alert("notifyAllResponded -- notification sent to " + request.params.admin_fb_id);
+                    response.success();
+                },
+                error: function (error) {
+                    // Handle error
+                    alert("notifyAllResponded pushError: " + error.code + " " + error.message);
+                    response.error();
+                }
+            });
         },
         error: function (error) {
-            // Handle error
-            alert("notifyAllResponded pushError: " + error.code + " " + error.message);
+            alert("Error: " + error.code + " " + error.message);
+            response.error(error);
         }
     });
 });
@@ -82,12 +96,12 @@ Parse.Cloud.define("forceCloseMeeting", function (request, response) {
     var meetingQuery = new Parse.Query(Parse.User);
     meetingQuery.equalTo("objectId", request.params.objectId);
     meetingQuery.get(request.params.objectId, {
-        success: function(object) {
+        success: function (object) {
             meeting = object;
             // object is an instance of Parse.Object.
         },
 
-        error: function(object, error) {
+        error: function (object, error) {
             // error is an instance of Parse.Error.
             return;
         },
@@ -97,159 +111,226 @@ Parse.Cloud.define("forceCloseMeeting", function (request, response) {
     }
 
     // closing meeting -- push notification back to creator
-        if (meeting.get("isComeToMe") == true) {
-            // creators location is common location by default
+    if (meeting.get("isComeToMe") == true) {
+        // creators location is common location by default
+    }
+    else {
+        // get accepters locations and calculate the common lat long
+        var latitude_sum = 0;
+        var longitude_sum = 0;
+        for (var i = 0; i < meeting.get("meeter_locations").length; ++i) {
+            latitude_sum += meeting.get("meeter_locations")[i].latitude;
+            longitude_sum += meeting.get("meeter_locations")[i].longitude;
         }
-        else {
-            // get accepters locations and calculate the common lat long
-            var latitude_sum = 0;
-            var longitude_sum = 0;
-            for (var i = 0; i < meeting.get("meeter_locations").length; ++i) {
-                latitude_sum += meeting.get("meeter_locations")[i].latitude;
-                longitude_sum += meeting.get("meeter_locations")[i].longitude;
-            }
-            var commonGeoPoint =
-                new Parse.Geopoint(latitude_sum / meeting.get("meeter_locations").length, longitude_sum / meeting.get("meeter_locations").length);
-            meeting.set("final_meeting_location", commonGeoPoint);
+        var commonGeoPoint =
+            new Parse.Geopoint((latitude_sum / meeting.get("meeter_locations").length), (longitude_sum / meeting.get("meeter_locations").length));
+        meeting.set("final_meeting_location", commonGeoPoint);
 
-        }
-        meeting.set("status", "closed");
-
-        // dont notify since meeting is closing manually
-        //Parse.Cloud.run('notifyAllResponded', meeting.get("admin_fb_id"));
- 
-
+    }
+    meeting.set("status", "closed");
+    meeting.save();
 });
 
+// input is facebook_id of user, name of location, address of location
 Parse.Cloud.define("notifyFinalLocation", function (request, response) {
+    alert("notifying user of final location.");
+    // Find user
+    var userQuery = new Parse.Query(Parse.User);
+    userQuery.startsWith("facebook_id", request.params.facebook_id);
 
-});
+    userQuery.first({
+        success: function (object) {
+            alert("found user to notify -- final location: " + object.get("facebook_id"));
+            // Find devices associated user
+            var pushQuery = new Parse.Query(Parse.Installation);
+            pushQuery.startsWith("deviceToken", object.get("device_token"));
 
 
-
-//////////////////////////////////////////////////////////////////////////
-// runs after Meeting object saved
-//////////////////////////////////////////////////////////////////////////
-Parse.Cloud.beforeSave("Meeting", function (request, response) {
-    alert("beforeSave called -- meeting object");
-    var meeting = request.object;
-
-    // check if object is new
-    if (meeting.get("status") == "initial") {
-
-        invites = meeting.get("invites");
-        meeting.set("num_responded", 1);
-        alert(invites[0]);
-        
-
-        for (var i = 0; i < invites.length; ++i) {
-            // Find user
-            var query = new Parse.Query(Parse.User);
-            query.startsWith("facebook_id", invites[i].toString());
-            query.first({
-                success: function (object) {
-                    alert("about to call notifyInit: " + object.get("facebook_id"));
-
-                    Parse.Cloud.run('notifyInit', { facebook_id: object.get("facebook_id") }, {
-                        success: function (result) {
-                            alert("notifyInit returned successfully");
-                            response.success();
-                        },
-                        error: function (error) {
-                            response.error();
-                        }
-                    });
-                    
+            // Send push notification to query
+            Parse.Push.send({
+                where: pushQuery,
+                data: {
+                    alert: "Ready, Set, Go!",
+                    type: "final",
+                    meetingId: request.params.meetingId,
+                }
+            }, {
+                success: function () {
+                    // Push was successful
+                    alert("Final notification push -- successful!");
+                    response.success();
                 },
                 error: function (error) {
+                    // Handle error
                     alert("Error: " + error.code + " " + error.message);
                     response.error(error);
                 }
             });
 
-        };
-        // set state to open once invites are out
-        meeting.set("status", "open");
-        alert("success! -- meeting is " + meeting.get("status"));
+        },
+        error: function (error) {
+            alert("Error: " + error.code + " " + error.message);
+            response.error(error);
+        }
+    });
+});
+
+//////////////////////////////////////////////////////////////////////////
+// runs before Meeting object saved
+//////////////////////////////////////////////////////////////////////////
+Parse.Cloud.beforeSave("Meeting", function (request, response) {
+    var meeting = request.object;
+    var meetingQuery = new Parse.Query("Meeting");
+    // check if object is new
+    if (meeting.get("status") == "initial") {
+        alert("beforeSave: status == initial");
+        meeting.set("num_responded", 0);
+        meeting.set("status", "open")
+        meeting.set("just_opened", true);
+        response.success();
     }
 
     else if (meeting.get("status") == "open") {
-        meeting.set("num_responded", meeting.get("num_responded") + 1);
-
+        alert("beforeSave - meeting status == open");
+        meeting.set("just_opened", false);
         if (meeting.get("num_responded") == meeting.get("invites").length) {
+            alert("everyone has responded");
+            meeting.set("status", "closed");
             // everyone has responded to the invite -- push notification back to creator
             if (meeting.get("isComeToMe") == true) {
                 // creators location is common location by default
             }
             else {
+                alert("calculating common lat/long");
                 // get accepters locations and calculate the common lat long
                 var latitude_sum = 0;
                 var longitude_sum = 0;
-                for (var i = 0; i < meeting.get("meeter_locations").length; ++i) {
-                    latitude_sum += meeting.get("meeter_locations")[i].latitude;
-                    longitude_sum += meeting.get("meeter_locations")[i].longitude;
+                if (meeting.get("meeter_locations") != undefined) {
+                    //response.success;
+                    for (var i = 0; i < meeting.get("meeter_locations").length; ++i) {
+                        latitude_sum += meeting.get("meeter_locations")[i].latitude;
+                        longitude_sum += meeting.get("meeter_locations")[i].longitude;
+                    }
+                    alert("latitude sum = " + latitude_sum + " longitude sum = " + longitude_sum);
+                    var commonGeoPoint =
+                        new Parse.GeoPoint({ latitude: (latitude_sum / meeting.get("meeter_locations").length), longitude: (longitude_sum / meeting.get("meeter_locations").length) });
+                    meeting.set("final_meeting_location", commonGeoPoint);
                 }
-                var commonGeoPoint =
-                    new Parse.Geopoint(latitude_sum / meeting.get("meeter_locations").length, longitude_sum / meeting.get("meeter_locations").length);
-                meeting.set("final_meeting_location", commonGeoPoint);
-
             }
-            meeting.set("status", "closed");
-            Parse.Cloud.run('notifyAllResponded', meeting.get("admin_fb_id"));
+            response.success();
         }
 
         else {
             // not everyone has responded yet. 
+            response.success();
         }
-
-        response.success();
     }
 
     else if (meeting.get("status") == "closed") {
-        // saving final location -- need to notify all accepters of official meeting place 
+        // saving final location -- need to notify all accepters of official meeting place
+        if (Parse.User.current().get("facebook_id") != meeting.get("admin_fb_id")) {
+            alert("non-admin saving closed meeting -- id: " + Parse.User.current().get("facebook_id") + "adminid: " + meeting.get("admin_fb_id"));
+            response.success();
+            return;
+        };
+        alert("saving closed meeting -- setting status to final");
+        meeting.set("status", "final");
         response.success();
     }
 
     else if (meeting.get("status") == "final") {
         // saving historically? deleting?
+        meeting.set("status", "savingfinal");
         response.success();
     }
     else {
         response.error();
     }
-
-    //response.success();
-
-
 });
 
-/*
+
 //////////////////////////////////////////////////////////////////////////
-// notify a user of meeting
-// input is a location and a Meeting's objectId
+// runs after Meeting object saved
 //////////////////////////////////////////////////////////////////////////
-Parse.Cloud.define("addLocationToMeeting", function(request, response){
+Parse.Cloud.afterSave("Meeting", function (request) {
+    var meetingId = request.object.id;
+    alert("meetingid = " + request.object.id);
+    var meetingQuery = new Parse.Query("Meeting");
+    meetingQuery.equalTo("objectId", meetingId);
+    var meeting;
+    meetingQuery.first({
+        success: function (object) {
+            meeting = object;
+        },
+        error: function (error) {
+            alert("Error: " + error.code + " " + error.message);
+        }
+    }).then(function () {
+        if (meeting.get("status") == "initial") {
+            alert("error: afterSave -- status == initial");
+        }
+        else if (meeting.get("just_opened")) {
+            alert("meeting just created -- notifying invitees of meeting");
+            var invites = meeting.get("invites");
+            var query = new Parse.Query(Parse.User);
+            query.containedIn("facebook_id", invites);
+            query.find().then(function (results) {
+                alert("results found " + results.length);
+                // Create a trivial resolved promise as a base case.
 
-	location = request.params.location;
-	meetingId = request.params.meetingId;
+                var promise = Parse.Promise.as();
+                results.forEach(function (result) {
+                    // For each item
+                    promise = promise.then(function () {
+                        return Parse.Promise.when(Parse.Cloud.run('notifyInit',
+                            { facebook_id: result.get("facebook_id"), meetingId: meeting.id }));
+                    });
+                });
+            }, function (error) {
+            });
+        }
 
-	// find meeting
-	var userQuery = new Parse.Query("Meeting");
-	userQuery.equalTo("objectId", meetingId); // not working
-	query.find({
-		success: function(results) {
-		    // add location
-		    result[0].add("locations", location);
-		    result[0].save();
-		    alert("saved new location");
-	  	},
-		error: function(error) {
-			// error
-	    	alert("Error: " + error.code + " " + error.message);
-		}
-	});	
+        else if (meeting.get("status") == "closed") {
+            alert("afterSave -- meeting status == closed");
 
+            var promise = Parse.Promise.as();
+            promise.then(function () {
+                return Parse.Promise.when(Parse.Cloud.run('notifyAllResponded',
+                    { admin_fb_id: meeting.get("admin_fb_id"), meetingId: meeting.id, }));
+            }, function (error) {
 
+            });
+        }
+        else if (meeting.get("status") == "final") {
+            // saving final location -- need to notify all accepters of official meeting place
+            alert("saving final meeting, pushing location to attendees");
+
+            // get facebook ids of accepted meeters
+            var fb_ids_accepted_users = meeting.get("fb_ids_accepted_users");
+
+            var query = new Parse.Query(Parse.User);
+            query.containedIn("facebook_id", fb_ids_accepted_users);
+            query.find().then(function (results) {
+                alert("results found: " + results.length);
+                // Create a trivial resolved promise as a base case.
+
+                var promise = Parse.Promise.as();
+                results.forEach(function (result) {
+                    // For each accepted user -- notify of final locations
+                    promise = promise.then(function () {
+                        return Parse.Promise.when(Parse.Cloud.run('notifyFinalLocation',
+                            {
+                                facebook_id: result.get("facebook_id"),
+                                meetingId: meeting.id,
+                            }));
+                    });
+                });
+            }, function (error) {
+
+            });
+        }
+        else {
+            //response.error();
+        }
+    });
 });
-
-*/
