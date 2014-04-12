@@ -241,6 +241,7 @@
     [meetingObject setValue:[foreignMeeting objectForKey:@"name"] forKey:@"meeting_name"];
     [meetingObject setValue:[foreignMeeting objectForKey:@"description"] forKey:@"meeting_description"];
     [meetingObject setValue:foreignMeeting.objectId forKey:@"parse_object_id"];
+    [meetingObject setValue:@NO forKey:@"user_responded"];
     
     // reasons
     //
@@ -268,7 +269,9 @@
     
     for (NSString *f in [foreignMeeting mutableSetValueForKey:@"invites"]) {
         
-        
+        if ([f isEqualToString:appDelegate.user.facebookID]) {
+            [meetingObject setValue:@YES forKey:@"user_responded"];
+        }
         
         // query if person exists
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -462,6 +465,10 @@
     [meetingObject setValue:@NO forKey:@"is_old"];
     [meetingObject setValue:[foreignMeeting valueForKey:@"num_responded"] forKey:@"num_responded"];
     [meetingObject setValue:[foreignMeeting valueForKey:@"status"] forKey:@"status"];
+    
+    if ([appDelegate.user.facebookID isEqualToString:[foreignMeeting valueForKey:@"admin_fb_id"]]) {
+        
+    }
     
     NSLog(@"set status: %@", [foreignMeeting valueForKey:@"status"]);
     [((HomeViewController *)appDelegate.home) reloadMeetings];
