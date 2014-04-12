@@ -321,6 +321,10 @@
     
     for (NSString *f in [foreignMeeting mutableSetValueForKey:@"accepted"]) {
         
+        if ([f isEqualToString:appDelegate.user.facebookID]) {
+            [meetingObject setValue:@YES forKey:@"user_responded"];
+        }
+        
         // query if person exists
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         NSEntityDescription *entity =
@@ -367,6 +371,10 @@
     }
     
     for (NSString *f in [foreignMeeting mutableSetValueForKey:@"declined"]) {
+        
+        if ([f isEqualToString:appDelegate.user.facebookID]) {
+            [meetingObject setValue:@YES forKey:@"user_responded"];
+        }
         
         // query if person exists
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -434,6 +442,10 @@
                        insertNewObjectForEntityForName:@"Person"
                        inManagedObjectContext:appDelegate.managedObjectContext];
         
+    }
+    
+    if ([[foreignMeeting valueForKey:@"admin_fb_id"] isEqualToString:appDelegate.user.facebookID]) {
+        [meetingObject setValue:@YES forKey:@"user_responded"];
     }
     
     
