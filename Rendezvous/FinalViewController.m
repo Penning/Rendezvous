@@ -40,6 +40,8 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+    
     if (_parseMeeting) {
         PFObject *parseLocation = [_parseMeeting objectForKey:@"finalized_location"];
         
