@@ -522,6 +522,7 @@
                         <segue destination="sMU-rU-8vu" kind="push" identifier="close_meeting_segue" id="eFx-Qn-ie5"/>
                         <segue destination="NzK-fp-0gT" kind="push" identifier="home_accept_decline_segue" id="vTA-DH-X3Z"/>
                         <segue destination="QSG-9e-V5t" kind="push" identifier="home_settings_segue" id="nPl-gd-HdR"/>
+                        <segue destination="cG2-sg-o8G" kind="push" identifier="home_final_segue" id="YUv-ZP-qlj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h3v-NF-wVQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -858,10 +859,38 @@
             </objects>
             <point key="canvasLocation" x="920" y="804"/>
         </scene>
+        <!--Final View Controller-->
+        <scene sceneID="KKX-pZ-re0">
+            <objects>
+                <viewController storyboardIdentifier="final_view" id="cG2-sg-o8G" customClass="FinalViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4P1-AD-IIb"/>
+                        <viewControllerLayoutGuide type="bottom" id="M3X-K2-hZk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="j5e-ym-YJX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5we-qu-RG1">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="pWP-U0-fND"/>
+                    <connections>
+                        <outlet property="mapView" destination="5we-qu-RG1" id="hOr-WZ-fH7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qn4-yH-SJU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="920" y="1488"/>
+        </scene>
         <!--Location View Controller - Location-->
         <scene sceneID="8Ev-bO-a8e">
             <objects>
-                <viewController id="sMU-rU-8vu" customClass="LocationViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="location_view" id="sMU-rU-8vu" customClass="LocationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hkh-3b-yw2"/>
                         <viewControllerLayoutGuide type="bottom" id="IUS-KF-x6V"/>

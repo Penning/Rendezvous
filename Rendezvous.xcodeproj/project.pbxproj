@@ -66,6 +66,7 @@
 		4F6985EA18F47B45005EC437 /* ReasonObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6985E918F47B45005EC437 /* ReasonObject.m */; };
 		4F6985EE18F47D0B005EC437 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6985ED18F47D0B005EC437 /* DataManager.m */; };
 		4FBA5D3718ECCD6800532689 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBA5D3618ECCD6800532689 /* HistoryViewController.m */; };
+		4FD9A08818F8B0C600EB6574 /* FinalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9A08718F8B0C600EB6574 /* FinalViewController.m */; };
 		4FF9ACEE18DDEBA5008C9CC3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACED18DDEBA5008C9CC3 /* Foundation.framework */; };
 		4FF9ACF018DDEBA5008C9CC3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACEF18DDEBA5008C9CC3 /* CoreGraphics.framework */; };
 		4FF9ACF218DDEBA5008C9CC3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACF118DDEBA5008C9CC3 /* UIKit.framework */; };
@@ -212,6 +213,8 @@
 		4F6985ED18F47D0B005EC437 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		4FBA5D3518ECCD6800532689 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
 		4FBA5D3618ECCD6800532689 /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
+		4FD9A08618F8B0C600EB6574 /* FinalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalViewController.h; sourceTree = "<group>"; };
+		4FD9A08718F8B0C600EB6574 /* FinalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalViewController.m; sourceTree = "<group>"; };
 		4FF9ACEA18DDEBA5008C9CC3 /* Rendezvous.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rendezvous.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF9ACED18DDEBA5008C9CC3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4FF9ACEF18DDEBA5008C9CC3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -483,6 +486,15 @@
 			name = "Managed Objects";
 			sourceTree = "<group>";
 		};
+		4FD9A08518F8B07500EB6574 /* FinalView */ = {
+			isa = PBXGroup;
+			children = (
+				4FD9A08618F8B0C600EB6574 /* FinalViewController.h */,
+				4FD9A08718F8B0C600EB6574 /* FinalViewController.m */,
+			);
+			name = FinalView;
+			sourceTree = "<group>";
+		};
 		4FF9ACE118DDEBA5008C9CC3 = {
 			isa = PBXGroup;
 			children = (
@@ -605,6 +617,7 @@
 				4F6985DD18F3875D005EC437 /* AcceptDeclineView */,
 				4FF9AD4C18E70BDF008C9CC3 /* SettingsView */,
 				4FF9AD4D18E70BE6008C9CC3 /* LocationView */,
+				4FD9A08518F8B07500EB6574 /* FinalView */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -783,6 +796,7 @@
 				492FEB6618F1D935008BABD1 /* OAMutableURLRequest.m in Sources */,
 				4F265DA418F71E7E0052AD46 /* SettingsRootController.m in Sources */,
 				492FEB6518F1D935008BABD1 /* OAHMAC_SHA1SignatureProvider.m in Sources */,
+				4FD9A08818F8B0C600EB6574 /* FinalViewController.m in Sources */,
 				492FEB6718F1D935008BABD1 /* OAPlaintextSignatureProvider.m in Sources */,
 				492FEB5C18F1D935008BABD1 /* NSMutableURLRequest+Parameters.m in Sources */,
 				4FF9AD3218DE0B55008C9CC3 /* MeetingViewController.m in Sources */,
