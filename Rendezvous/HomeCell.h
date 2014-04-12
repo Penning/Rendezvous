@@ -10,13 +10,15 @@
 
 @interface HomeCell : UITableViewCell
 
-@property (strong, nonatomic) IBOutlet UILabel *meetingName;
-@property (strong, nonatomic) IBOutlet UILabel *meetingAdmin;
-@property (strong, nonatomic) IBOutlet UILabel *acceptedLabel;
-@property (strong, nonatomic) UIViewController *parentController;
-@property (strong, nonatomic) IBOutlet UILabel *doubleTapLabel;
-@property (strong, nonatomic) IBOutlet UIImageView *inviteStatusImage;
+// linked
+@property (weak, nonatomic) IBOutlet UIImageView *statusImageView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *leftLabel;
+@property (weak, nonatomic) IBOutlet UILabel *rightLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *adminImageView;
 
+// internal
+@property (strong, nonatomic) UIViewController *parentController;
 @property (strong, nonatomic) NSIndexPath *indexPath;
 @property (strong, nonatomic) NSString *adminFbId;
 

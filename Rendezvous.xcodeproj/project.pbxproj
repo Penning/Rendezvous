@@ -613,7 +613,6 @@
 		4FF9AD2418DDEBBF008C9CC3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				4FF9AD3D18DF0A84008C9CC3 /* Cells */,
 				49ECB00D18E11F7E003C960D /* LoginView */,
 				4FF9AD4B18E70BCD008C9CC3 /* HomeView */,
 				49BD483C18E2B1FE00EAD526 /* ContactsView */,
@@ -630,19 +629,12 @@
 		4FF9AD3918DF0A48008C9CC3 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				4FF9AD3A18DF0A71008C9CC3 /* HomeCell.h */,
+				4FF9AD3B18DF0A71008C9CC3 /* HomeCell.m */,
 				49BD483918E27BE600EAD526 /* ContactsCell.h */,
 				49BD483A18E27BE600EAD526 /* ContactsCell.m */,
 				49445DAD18EF04F300525E66 /* LocationSuggestionCell.h */,
 				49445DAE18EF04F300525E66 /* LocationSuggestionCell.m */,
-			);
-			name = Cells;
-			sourceTree = "<group>";
-		};
-		4FF9AD3D18DF0A84008C9CC3 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				4FF9AD3A18DF0A71008C9CC3 /* HomeCell.h */,
-				4FF9AD3B18DF0A71008C9CC3 /* HomeCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";

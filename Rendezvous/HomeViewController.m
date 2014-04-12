@@ -209,38 +209,48 @@
     [cell setParentController:self];
     [cell setAdminFbId:[meeting_object valueForKeyPath:@"admin.facebook_id"]];
     
-    
-    
-    [cell.acceptedLabel setText:[NSString
-                                 stringWithFormat:@"%@/%lu",
-                                 [meeting_object valueForKey:@"num_responded"],
-                                 [meeting_object mutableSetValueForKey:@"invites"].count]];
+    [cell.titleLabel setText:[meeting_object valueForKey:@"meeting_name"]];
     
 
-    
-    if([[meeting_object valueForKey:@"status"]  isEqual: @"closed"]) {
-        [[cell inviteStatusImage] setImage:[UIImage imageNamed:@"invites_closed"]];
-    } else {
-        [[cell inviteStatusImage] setImage:[UIImage imageNamed:@"invites_open"]];
-
-    }
-
-    if (![cell.adminFbId isEqualToString:appDelegate.user.facebookID]) {
-        // not admin
+    if ([cell.adminFbId isEqualToString:appDelegate.user.facebookID]) {
+        // admin
         
-        if ([meeting_object valueForKey:@"user_responded"]) {
-            [cell.doubleTapLabel setText:@""];
-        }else {
-            [cell.doubleTapLabel setText:@"Tap to RSVP"];
+        if ([[meeting_object valueForKey:@"status"]  isEqual: @"open"]) {
+            // TODO: set open circle
+            
+            [cell.leftLabel setText:@"Tap for guest list."];
+            [cell.rightLabel setText:@"Double tap to close."];
+        }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"closed"]){
+            // TODO: set closed circle
+            
+            [cell.leftLabel setText:@"Tap for guest list."];
+            [cell.rightLabel setText:@"Double tap to choose location."];
+        }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"fianl"]){
+            // TODO: set checkmark
+            
+            [cell.leftLabel setText:@"Tap for guest list."];
+            [cell.rightLabel setText:@"Swipe to delete."];
         }
         
-        [cell.meetingAdmin setText:[meeting_object valueForKey:@"meeting_name"]];
-        [cell.meetingName setText:[NSString stringWithFormat:@"From: %@",[meeting_object valueForKeyPath:@"admin.name"]]];
     }else{
-        // admin
-        [cell.doubleTapLabel setText:@"Double tap to close invites"];
-        [cell.meetingName setText:[meeting_object valueForKey:@"meeting_name"]];
-        [cell.meetingAdmin setText:@""];
+        // not admin
+        
+        if ([[meeting_object valueForKey:@"status"]  isEqual: @"open"]) {
+            // TODO: set open circle
+            
+            [cell.leftLabel setText:@"Tap for guest list."];
+            [cell.rightLabel setText:@"Double tap to RSVP"];
+        }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"closed"]){
+            // TODO: set closed circle
+            
+            [cell.leftLabel setText:@"Tap for guest list."];
+            [cell.rightLabel setText:@""];
+        }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"fianl"]){
+            // TODO: set checkmark
+            
+            [cell.leftLabel setText:@"Tap for guest list."];
+            [cell.rightLabel setText:@"Double tap to view location."];
+        }
     }
 }
 
