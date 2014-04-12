@@ -27,18 +27,20 @@
     _facebookID = userData[@"id"];
     _pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", _facebookID]];
 
-    FBRequest *friendRequest = [FBRequest requestForGraphPath:@"me/friends?fields=name,picture"];
-    [friendRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-        
-        NSArray *data = [result objectForKey:@"data"];
-        _friends = [[NSMutableArray alloc] init];
-        for (FBGraphObject<FBGraphUser> *friend in data) {
-            [_friends addObject:[[Friend alloc] initWithObject:friend]];
-            // NSLog(@"friend :%@", friend);
-        }
-        NSLog(@"Found %lu friends!", (unsigned long)_friends.count);
-        
-    }];
+    if(_friends.count == 0) {
+        FBRequest *friendRequest = [FBRequest requestForGraphPath:@"me/friends?fields=name,picture"];
+        [friendRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+
+            NSArray *data = [result objectForKey:@"data"];
+            _friends = [[NSMutableArray alloc] init];
+            for (FBGraphObject<FBGraphUser> *friend in data) {
+                [_friends addObject:[[Friend alloc] initWithObject:friend]];
+                // NSLog(@"friend :%@", friend);
+            }
+            NSLog(@"Found %lu friends!", (unsigned long)_friends.count);
+            
+        }];
+    }
     
     [[PFUser currentUser] setObject:_facebookID forKey:@"facebook_id"];
     [[PFUser currentUser] saveInBackground];

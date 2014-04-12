@@ -298,9 +298,8 @@
          LocationViewController *vc = (LocationViewController *)[segue destinationViewController];
          LocationSuggestionsLookup *locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];
          locationSuggestionsLookup.locationViewController = vc;
-         [vc.suggestions setDelegate:vc.suggestions.delegate];
+         vc.meeting = [vc.meeting toCoreData:[_fetchedResultsController objectAtIndexPath:lastSelected]];
          [locationSuggestionsLookup getSuggestionsWithCoreData:[_fetchedResultsController objectAtIndexPath:lastSelected]];
-
      } else if ([[segue identifier] isEqualToString:@"home_accept_decline_segue"]){
          
          AcceptDeclineController *vc = (AcceptDeclineController *)[segue destinationViewController];
@@ -308,9 +307,7 @@
          
          
      } else if ([[segue identifier] isEqualToString:@"home_settings_segue"]){
-         
          // to settings
-         
      }
  }
 

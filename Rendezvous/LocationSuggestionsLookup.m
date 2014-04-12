@@ -67,11 +67,20 @@
     if (currentLocation != nil) {
         latitude = [NSNumber numberWithFloat:currentLocation.coordinate.latitude];
         longitude = [NSNumber numberWithFloat:currentLocation.coordinate.longitude];
-        NSLog(@"Admin is @ (%@, %@)", latitude, longitude);
+//        NSLog(@"Admin is @ (%@, %@)", latitude, longitude);
+
+        if(_locationViewController.suggestions.count == 0) {
+            [self getSuggestions:_locationViewController.meeting];
+        }
     }
 }
 
 - (void) getSuggestions:(Meeting *) meeting {
+    if(latitude == NULL || longitude == NULL) {
+        NSLog(@"No location yet! (%@, %@)", latitude, longitude);
+        return;
+    }
+
     NSLog(@"GETTING LOCATION SUGGESTIONS!!!");
 
     locations = [[NSMutableArray alloc] init];

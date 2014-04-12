@@ -141,20 +141,33 @@
     [self.view addSubview: activityIndicator];
 
     [activityIndicator startAnimating];
-    [self performSelector:@selector(delayedReloadData) withObject:nil afterDelay:0.5];
-    [self performSelector:@selector(sortData) withObject:nil afterDelay:0.5];
-    [self performSelector:@selector(stopActivityIndicator) withObject:nil afterDelay:0.5];
+    [self performSelector:@selector(delayedReloadData) withObject:nil afterDelay:1];
+    [self performSelector:@selector(sortData) withObject:nil afterDelay:1];
+    [self performSelector:@selector(stopActivityIndicator) withObject:nil afterDelay:1];
 
     //Map related
     self.mapView.delegate = self;
     self.mapView.showsUserLocation = YES;
-    [self performSelector:@selector(annotateMap) withObject:nil afterDelay:1];
+    [self performSelector:@selector(annotateMap) withObject:nil afterDelay:2];
     
     // show navbar
     [self.navigationController setNavigationBarHidden:NO animated:animated];
 
     // hide toolbar
     [self.navigationController setToolbarHidden:YES animated:animated];
+
+    NSLog(@"Meeting status: %@", _meeting.status);
+    if([_meeting.status isEqual:@"open"]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"Looks like not everyone has responded to your invite! Choosing a location now won't allow any future RSVP's for this meeting." delegate:self cancelButtonTitle:@"I Understand" otherButtonTitles:nil];
+        [alert show];
+        if(_suggestions.count == 0) {
+            [locationSuggestionsLookup getSuggestions:_meeting];
+        } else {
+            NSLog(@"IDKMYBFFJILL");
+        }
+        NSLog(@"NUM SUGGESTIONS: %lu", (unsigned long)_suggestions.count);
+        [self updateLocationView];
+    }
 }
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller

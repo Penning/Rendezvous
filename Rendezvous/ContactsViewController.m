@@ -16,6 +16,7 @@
 @end
 
 @implementation ContactsViewController{
+    AppDelegate *appDelegate;
     BOOL useShortcut;
     NSString *meetingName;
 }
@@ -25,6 +26,7 @@
 @synthesize friendsWithoutApp;
 @synthesize meeters;
 @synthesize meetingObject = _meetingObject;
+@synthesize activityIndicator = _activityIndicator;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -42,12 +44,16 @@
     if (meeters == nil) {
         meeters = [[NSMutableArray alloc] init];
     }
-    
+
     meetingName = @"";
     [self.meetingNameBarBtn setTitle:meetingName];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
+    appDelegate = [[UIApplication sharedApplication] delegate];
+    [appDelegate setContacts:self];
+    friends = appDelegate.user.friends;
+    friendsWithApp = appDelegate.user.friendsWithApp;
     
     if ([meeters count] > 0) {
         NSString *tempMeetingName = @"w/: ";
@@ -72,22 +78,42 @@
     friendsWithApp = [[NSMutableArray alloc] init];
     friendsWithoutApp = [[NSMutableArray alloc] init];
 
-    //Query all Parse users
-    PFQuery *query = [PFUser query];
-    NSArray *users = [query findObjects];
-    [query cancel];
-    
-    for(Friend *friend in friends) {
-        NSArray *matches = [users filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name contains %@", friend.name]];
-        if(matches.count > 0) {
-            [friendsWithApp addObject:friend];
-        }
-        else {
-            [friendsWithoutApp addObject:friend];
+    [self.tableView reloadData];
+
+    if(appDelegate.user.friends.count == 0) {
+        _activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        _activityIndicator.color = [UIColor purpleColor];
+        _activityIndicator.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
+        [self.view addSubview: _activityIndicator];
+
+        [_activityIndicator startAnimating];
+        
+        [self.tableView reloadData];
+    } else {
+        //Query all Parse users
+        PFQuery *query = [PFUser query];
+        NSArray *users = [query findObjects];
+        [query cancel];
+
+        for(Friend *friend in appDelegate.user.friends) {
+            NSArray *matches = [users filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name contains %@", friend.name]];
+            if(matches.count > 0) {
+                [friendsWithApp addObject:friend];
+            }
+            else {
+                [friendsWithoutApp addObject:friend];
+            }
         }
     }
+
+    [self.tableView reloadData];
     
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
+
+-(void) delayedReloadData {
+    [self.tableView reloadData];
 }
 
 

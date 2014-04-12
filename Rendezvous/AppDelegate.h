@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CurrentUser.h"
 #import "HomeViewController.h"
+#import "ContactsViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -24,6 +25,9 @@
 
 // home view controller
 @property (strong, nonatomic) UIViewController *home;
+
+// contacts view controller
+@property (strong, nonatomic) UITableViewController *contacts;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
