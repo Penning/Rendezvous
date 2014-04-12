@@ -39,6 +39,7 @@
 
 - (Meeting *)toCoreData:(NSManagedObject *) meeting_object {
 //    NSLog(@"Meeting: %@ ", meeting_object);
+    _parseObjectId = [meeting_object valueForKey:@"parse_object_id"];
     _name = [meeting_object valueForKey:@"meeting_name"];
     NSSet *rez = [meeting_object mutableSetValueForKeyPath:@"reasons"];
     _reasons = [[NSMutableArray alloc] init];

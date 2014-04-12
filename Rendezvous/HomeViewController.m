@@ -85,6 +85,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [self.tableView reloadData];
+    [self.navigationController setToolbarHidden:YES animated:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
@@ -272,7 +273,7 @@
          MeetingViewController *vc = (MeetingViewController *)[segue destinationViewController];
          [vc setMeetingObject:[_fetchedResultsController objectAtIndexPath:lastSelected]];
          [vc initFromHome];
-         
+
      } else if([[segue identifier] isEqualToString:@"new_meeting_segue"]) {
          
          appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;

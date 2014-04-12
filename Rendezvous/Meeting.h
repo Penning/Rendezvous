@@ -11,6 +11,8 @@
 
 @interface Meeting : NSObject
 
+@property (strong, nonatomic) NSNumber *parseObjectId;
+
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *description;
 @property (strong, nonatomic) NSArray *meeters;
