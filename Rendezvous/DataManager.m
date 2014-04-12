@@ -207,11 +207,8 @@
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         
         if (!error) {
-            if (meeting.isComeToMe) {
-                meetingParse[@"final_meeting_location"] = geoPoint;
-            }else{
-                [meetingParse addUniqueObject:geoPoint forKey:@"meeter_locations"];
-            }
+            meetingParse[@"final_meeting_location"] = geoPoint;
+            [meetingParse addUniqueObject:geoPoint forKey:@"meeter_locations"];
             
             [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (succeeded && !error) {

@@ -13,6 +13,7 @@
 #import "DataManager.h"
 #import "FinalViewController.h"
 #import "LocationSuggestionsLookup.h"
+#import "Friend.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -26,6 +27,7 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize user = _user;
 @synthesize home = _home;
+@synthesize contacts = _contacts;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -236,8 +238,34 @@
         currentInstallation.badge = 0;
         [currentInstallation saveEventually];
     }
-    
-    
+
+    if(self.user.friends.count == 0) {
+        //Query all Parse users
+        PFQuery *query = [PFUser query];
+        NSArray *users = [query findObjects];
+        [query cancel];
+
+        FBRequest *friendRequest = [FBRequest requestForGraphPath:@"me/friends?fields=name,picture"];
+        [friendRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+
+            NSArray *data = [result objectForKey:@"data"];
+            self.user.friends = [[NSMutableArray alloc] init];
+            for (FBGraphObject<FBGraphUser> *friend in data) {
+                [self.user.friends addObject:[[Friend alloc] initWithObject:friend]];
+                NSArray *matches = [users filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name contains %@", friend.name]];
+                if(matches.count > 0) {
+                    [((ContactsViewController *)_contacts).friendsWithApp addObject:friend];
+                }
+                else {
+                    [((ContactsViewController *)_contacts).friendsWithoutApp addObject:friend];
+                }
+            }
+            NSLog(@"Found %lu friends!", (unsigned long)self.user.friends.count);
+            [((ContactsViewController *)_contacts).activityIndicator stopAnimating];
+            [_contacts.tableView reloadData];
+        }];
+    }
+
     // debug
     // [self debugNotifications];
     

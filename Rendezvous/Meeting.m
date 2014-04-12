@@ -41,6 +41,7 @@
     
     _parseObjectId = [meeting_object valueForKey:@"parse_object_id"];
     _name = [meeting_object valueForKey:@"meeting_name"];
+    _status = [meeting_object valueForKey:@"status"];
     NSSet *rez = [meeting_object mutableSetValueForKeyPath:@"reasons"];
     _reasons = [[NSMutableArray alloc] init];
     for (NSString *r in rez) {
@@ -54,6 +55,7 @@
     
     _parseObjectId = [NSString stringWithFormat:@"%@", meeting_object.objectId];
     _name = [meeting_object valueForKey:@"name"];
+    _status = [meeting_object valueForKey:@"status"];
     NSSet *rez = [meeting_object mutableSetValueForKeyPath:@"reasons"];
     _reasons = [[NSMutableArray alloc] init];
     for (NSString *r in rez) {

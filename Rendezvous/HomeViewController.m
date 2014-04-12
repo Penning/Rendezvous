@@ -216,8 +216,14 @@
                                  [meeting_object valueForKey:@"num_responded"],
                                  [meeting_object mutableSetValueForKey:@"invites"].count]];
     
+    NSLog(@"Meeting #%ld %@", (long)indexPath.row, [meeting_object valueForKey:@"status"]);
+    if([[meeting_object valueForKey:@"status"]  isEqual: @"closed"]) {
+        [[cell inviteStatusImage] setImage:[UIImage imageNamed:@"invites_closed"]];
+    } else {
+        [[cell inviteStatusImage] setImage:[UIImage imageNamed:@"invites_open"]];
 
-    
+    }
+
     if (![cell.adminFbId isEqualToString:appDelegate.user.facebookID]) {
         // not admin
         
@@ -286,13 +292,11 @@
          NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
          vc.friends = [current_user.friends sortedArrayUsingDescriptors:sortDescriptors];
      } else if([[segue identifier] isEqualToString:@"close_meeting_segue"]) {
-         
          LocationViewController *vc = (LocationViewController *)[segue destinationViewController];
          LocationSuggestionsLookup *locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];
          locationSuggestionsLookup.locationViewController = vc;
+         vc.meeting = [vc.meeting toCoreData:[_fetchedResultsController objectAtIndexPath:lastSelected]];
          [locationSuggestionsLookup getSuggestionsWithCoreData:[_fetchedResultsController objectAtIndexPath:lastSelected]];
-
-
      } else if ([[segue identifier] isEqualToString:@"home_accept_decline_segue"]){
          
          AcceptDeclineController *vc = (AcceptDeclineController *)[segue destinationViewController];
@@ -300,9 +304,7 @@
          
          
      } else if ([[segue identifier] isEqualToString:@"home_settings_segue"]){
-         
          // to settings
-         
      }
  }
 
