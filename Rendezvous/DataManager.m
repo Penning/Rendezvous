@@ -102,6 +102,10 @@
                 // update existing person
                 localPerson = [array objectAtIndex:0];
                 
+            }else if (array != nil && array.count > 0 && [[array objectAtIndex:0] valueForKey:@"meeting"] == nil){
+                localPerson = [array objectAtIndex:0];
+                [localPerson setValue:meeting_object forKey:@"meeting"];
+                
             }else{
                 // create new person
                 localPerson = [NSEntityDescription
@@ -273,11 +277,15 @@
                     inManagedObjectContext:appDelegate.managedObjectContext];
         [request setEntity:entity];
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"facebook_id == '%@' AND meeting.parse_object_id == '%@'", f, foreignMeeting.objectId];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"facebook_id == %@ AND meeting.parse_object_id == %@",
+                                  f,
+                                  foreignMeeting.objectId];
         [request setPredicate:predicate];
         
         NSError *error;
         NSArray *array = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
+        
+        NSLog(@"FOUND %lu INVITES", (unsigned long)array.count);
         
         NSManagedObject *localPerson = nil;
         if (array != nil && array.count > 0) {
@@ -295,11 +303,8 @@
             localPerson = [NSEntityDescription
                                            insertNewObjectForEntityForName:@"Person"
                                            inManagedObjectContext:appDelegate.managedObjectContext];
-            [invitesSet addObject:localPerson];
         }
-        
-        
-        
+        [invitesSet addObject:localPerson];
 
         // update person info
         [localPerson setValue:f forKey:@"facebook_id"];
@@ -328,7 +333,7 @@
                     inManagedObjectContext:appDelegate.managedObjectContext];
         [request setEntity:entity];
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"facebook_id == '%@' AND meeting.parse_object_id == '%@'", f, foreignMeeting.objectId];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"facebook_id == %@ AND accepted_meeting.parse_object_id == %@", f, foreignMeeting.objectId];
         [request setPredicate:predicate];
         
         NSError *error;
@@ -379,7 +384,7 @@
                     inManagedObjectContext:appDelegate.managedObjectContext];
         [request setEntity:entity];
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"facebook_id == '%@' AND meeting.parse_object_id == '%@'", f, foreignMeeting.objectId];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"facebook_id == %@ AND declined_meeting.parse_object_id == %@", f, foreignMeeting.objectId];
         [request setPredicate:predicate];
         
         NSError *error;
@@ -418,8 +423,10 @@
     [request setEntity:entity];
     
     NSPredicate *predicate = [NSPredicate
-                              predicateWithFormat:@"facebook_id == '%@' AND meeting.parse_object_id == '%@'", [foreignMeeting
-                                                                         valueForKey:@"admin_fb_id"], foreignMeeting.objectId];
+                              predicateWithFormat:@"facebook_id == %@ AND administors.parse_object_id == %@",
+                              [foreignMeeting valueForKey:@"admin_fb_id"],
+                              foreignMeeting.objectId];
+    
     [request setPredicate:predicate];
     
     NSError *error;

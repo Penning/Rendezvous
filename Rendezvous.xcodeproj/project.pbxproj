@@ -986,7 +986,7 @@
 				INFOPLIST_FILE = "Rendezvous/Rendezvous-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9EED7EAF-588F-4D42-B502-F8F7EE3E91DB";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1011,7 +1011,7 @@
 				INFOPLIST_FILE = "Rendezvous/Rendezvous-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9EED7EAF-588F-4D42-B502-F8F7EE3E91DB";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

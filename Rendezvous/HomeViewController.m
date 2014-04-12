@@ -216,7 +216,8 @@
                                  [meeting_object valueForKey:@"num_responded"],
                                  [meeting_object mutableSetValueForKey:@"invites"].count]];
     
-    NSLog(@"Meeting #%ld %@", (long)indexPath.row, [meeting_object valueForKey:@"status"]);
+
+    
     if([[meeting_object valueForKey:@"status"]  isEqual: @"closed"]) {
         [[cell inviteStatusImage] setImage:[UIImage imageNamed:@"invites_closed"]];
     } else {
