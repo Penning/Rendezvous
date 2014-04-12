@@ -52,7 +52,9 @@
 
 - (Meeting *)fromPFObject:(PFObject *) meeting_object {
     //    NSLog(@"Meeting: %@", meeting_object);
-    _name = [meeting_object valueForKey:@"meeting_name"];
+    
+    _parseObjectId = [NSString stringWithFormat:@"%@", meeting_object.objectId];
+    _name = [meeting_object valueForKey:@"name"];
     NSSet *rez = [meeting_object mutableSetValueForKeyPath:@"reasons"];
     _reasons = [[NSMutableArray alloc] init];
     for (NSString *r in rez) {

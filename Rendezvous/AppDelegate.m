@@ -12,6 +12,7 @@
 #import "LocationViewController.h"
 #import "DataManager.h"
 #import "FinalViewController.h"
+#import "LocationSuggestionsLookup.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -162,18 +163,19 @@
             // choose location
             
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle: nil];
-            AcceptDeclineController *viewController = [[storyboard instantiateViewControllerWithIdentifier:@"location_view"] initWithMeeting:notificationMeeting];
-            
-            [viewController setParseMeeting:notificationMeeting];
+            LocationViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"location_view"];
+            LocationSuggestionsLookup *locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];
+            locationSuggestionsLookup.locationViewController = vc;
+            [locationSuggestionsLookup getSuggestions:[[Meeting alloc] fromPFObject:notificationMeeting]];
             
             [((UINavigationController *)self.window.rootViewController)
-             pushViewController:viewController
+             pushViewController:vc
              animated:YES];
         }else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"View Location"]){
             // view location
             
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle: nil];
-            FinalViewController *viewController = [[storyboard instantiateViewControllerWithIdentifier:@"final_view"] initWithMeeting:notificationMeeting];
+            FinalViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"final_view"];
             
             [viewController setParseMeeting:notificationMeeting];
             
