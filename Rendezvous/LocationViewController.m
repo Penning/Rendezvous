@@ -12,6 +12,7 @@
 #import "OAConsumer.h"
 #import "OAToken.h"
 #import "OAMutableURLRequest.h"
+#import "AppDelegate.h"
 
 @interface LocationViewController ()
 
@@ -22,6 +23,8 @@
     MKMapRect zoomRect;
     UIActivityIndicatorView *activityIndicator;
     PFGeoPoint *geoPoint;
+    NSIndexPath *selectedIndex;
+    CLGeocoder *geocoder;
 }
 
 @synthesize parseMeeting = _parseMeeting;
@@ -60,20 +63,22 @@
     zoomRect = MKMapRectNull;
     NSLog(@"Geocoding locations");
 
+    geocoder = [[CLGeocoder alloc] init];
+
     //Add locations to map
     for(MeetingLocation *location in _suggestions) {
-//        NSLog(@"Geocoding %@", location.streetAddress);
-
-        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
         NSString *address = [NSString stringWithFormat:@"%@, %@", location.streetAddress, location.city];
         [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
             if(!error) {
                 if (placemarks && placemarks.count > 0) {
-//                    NSLog(@"Placemark: %@", [placemarks objectAtIndex:0]);
-
                     MKPlacemark *placemark = [[MKPlacemark alloc] initWithPlacemark:[placemarks objectAtIndex:0]];
                     MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
                     annotation.coordinate = placemark.coordinate;
+
+                    location.pflocation = [[PFGeoPoint alloc] init];
+                    location.pflocation.latitude = annotation.coordinate.latitude;
+                    location.pflocation.longitude = annotation.coordinate.longitude;
+
                     annotation.title = location.name;
                     [_mapView addAnnotation:annotation];
 
@@ -131,13 +136,15 @@
     [self performSelector:@selector(stopActivityIndicator) withObject:nil afterDelay:0.5];
 
     //Map related
-    self.mapView.delegate =  self;
+    self.mapView.delegate = self;
     self.mapView.showsUserLocation = YES;
     [self performSelector:@selector(annotateMap) withObject:nil afterDelay:1];
     
     // show navbar
     [self.navigationController setNavigationBarHidden:NO animated:animated];
-    
+
+    // hide toolbar
+    [self.navigationController setToolbarHidden:YES animated:animated];
 }
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
@@ -185,9 +192,20 @@
      return cell;
  }
 
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if([selectedIndex isEqual:indexPath]) {
+        selectedIndex = nil;
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    } else {
+        selectedIndex = indexPath;
+        [self.navigationController setToolbarHidden:NO animated:YES];
+    }
+}
+
 /*
  #pragma mark - Navigation
- 
+
  // In a storyboard-based application, you will often want to do a little preparation before navigation
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
  {
@@ -195,5 +213,31 @@
  // Pass the selected object to the new view controller.
  }
  */
+
+- (IBAction)finalizeLocation:(id)sender {
+    PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
+    [query whereKey:@"objectId" equalTo: [_meeting parseObjectId]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            // Do something with the found objects
+            for (PFObject *object in objects) {
+                PFObject *locationParse = [PFObject objectWithClassName:@"Location"];
+                MeetingLocation *location = [_suggestions objectAtIndex:selectedIndex.row];
+
+                locationParse[@"name"] = location.name;
+                locationParse[@"meeting_geopoint"] = location.pflocation;
+                object[@"finalized_location"] = locationParse;
+                [object saveInBackground];
+            }
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
+
+    // unwind segue to home
+    AppDelegate *appDelegate = ((AppDelegate *)[[UIApplication sharedApplication] delegate]);
+    [self.navigationController popToViewController:appDelegate.home animated:YES];
+}
 
 @end

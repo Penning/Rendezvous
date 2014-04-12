@@ -7,8 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Parse/Parse.h>
 
 @interface Meeting : NSObject
+
+@property (strong, nonatomic) NSNumber *parseObjectId;
 
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *description;
@@ -27,5 +30,6 @@
 - (void)setComeToMe:(BOOL)option;
 - (BOOL)isComeToMe;
 - (Meeting *)toCoreData:(NSManagedObject *) meeting_object;
+- (Meeting *)fromPFObject:(PFObject *) meeting_object;
 
 @end

@@ -71,7 +71,7 @@
 
             _nameLabel.text = current_user.name;
             [[PFUser currentUser] setValue:current_user.name forKey:@"name"];
-            [[PFUser currentUser] save];
+            [[PFUser currentUser] saveInBackground];
 
             // Download the user's facebook profile picture
             _imageData = [[NSMutableData alloc] init]; // the data will be loaded in here
@@ -152,8 +152,6 @@
                 }
                 return;
             } else if (user.isNew) {
-//                [[PFUser currentUser] setValue:current_user.name forKey:@"name"];
-//                [[PFUser currentUser] saveEventually];
                 NSLog(@"User with facebook signed up and logged in!");
                 [self performSegueWithIdentifier:@"login_segue" sender:self];
             } else {

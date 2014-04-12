@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Parse/Parse.h>
 
 @interface MeetingLocation : NSObject
 
@@ -27,6 +28,8 @@
 @property (strong, nonatomic) NSString *city;
 @property (strong, nonatomic) NSString *state;
 @property (strong, nonatomic) NSString *address;
+
+@property (strong, nonatomic) PFGeoPoint *pflocation;
 
 -(MeetingLocation *) initFromYelp:(NSDictionary *) data :(NSString *) category;
 -(void) printInfoToLog;

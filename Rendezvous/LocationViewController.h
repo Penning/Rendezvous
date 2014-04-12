@@ -15,11 +15,15 @@
 
 - (LocationViewController *) initWithMeeting:(PFObject *)meeting;
 
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *finalizeLocationBtn;
+
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *suggestions;
 
 @property (strong, nonatomic) Meeting *meeting;
 @property (strong, nonatomic) PFObject *parseMeeting;
+
+- (IBAction)finalizeLocation:(id)sender;
 
 @end
