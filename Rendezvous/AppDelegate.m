@@ -124,6 +124,8 @@
                                       cancelButtonTitle:@"Cancel"
                                       otherButtonTitles:@"View Location", nil] show];
                     
+                }else{
+                    [self debugAlert:payload];
                 }
                 
             }else{
