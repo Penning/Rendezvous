@@ -143,6 +143,7 @@
 
 //            [_localMeeting setValue:@YES forKey:@"user_responded"];
             [self saveContext];
+            [self getMeetingUpdates];
         } else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Accept w/o Location"]) {
             // accept/decline
             [notificationMeeting addUniqueObject:self.user.facebookID forKey:@"fb_ids_accepted_users"];
@@ -151,6 +152,7 @@
 
 //            [_localMeeting setValue:@YES forKey:@"user_responded"];
             [self saveContext];
+            [self getMeetingUpdates];
         } else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Decline"]) {
             // accept/decline
             [notificationMeeting addUniqueObject:self.user.facebookID forKey:@"fb_ids_declined_users"];
@@ -159,6 +161,7 @@
 
 //            [_localMeeting setValue:@YES forKey:@"user_responded"];
             [self saveContext];
+            [self getMeetingUpdates];
         } else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Choose Location"]){
             // choose location
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle: nil];

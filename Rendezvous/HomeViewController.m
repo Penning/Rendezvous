@@ -147,11 +147,11 @@
         if ([[relevantMeeting valueForKey:@"status"] isEqualToString:@"open"]) {
             // RSVP
 //            [self performSegueWithIdentifier:@"home_accept_decline_segue" sender:self];
-            [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Rendezvous with %@", [relevantMeeting valueForKeyPath:@"admin.name"]]
-                                        message:@"RSVP"
+            [[[UIAlertView alloc] initWithTitle:@"RSVP"
+                                        message:[NSString stringWithFormat:@"Rendezvous with %@", [relevantMeeting valueForKeyPath:@"admin.name"]]
                                        delegate:self
                               cancelButtonTitle:@"Later"
-                              otherButtonTitles:@"Accept w/ Current Location", @"Accept w/o Location", @"Decline", nil] show];
+                              otherButtonTitles:@"Accept", @"Accept w/o Location", @"Decline", nil] show];
         }else if ([[relevantMeeting valueForKey:@"status"] isEqualToString:@"closed"]) {
             // do nothing
             
@@ -229,6 +229,7 @@
             [relevantMeeting setValue:@YES forKey:@"user_responded"];
             [appDelegate saveContext];
         }
+        [appDelegate getMeetingUpdates];
         
     }
 }
