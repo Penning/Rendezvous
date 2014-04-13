@@ -179,6 +179,11 @@
     
     tempMeeting = meeting_object;
     
+    
+    if (appDelegate.home) {
+        [((HomeViewController *)appDelegate.home).tableView reloadData];
+    }
+    
     NSLog(@"saved locally");
     return meeting_object;
 }
@@ -226,9 +231,6 @@
         }
         
     }];
-    
-    
-    
     
     
 }
@@ -523,6 +525,9 @@
     [((HomeViewController *)appDelegate.home) reloadMeetings];
     
     [appDelegate saveContext];
+    if (appDelegate.home) {
+        [((HomeViewController *)appDelegate.home).tableView reloadData];
+    }
     
 }
 
@@ -626,13 +631,19 @@
                 [self updateMeetingObject:localMeeting withForeignMeeting:foreignMeeting];
             }
             
+            if (appDelegate.home) {
+                [((HomeViewController *)appDelegate.home).tableView reloadData];
+            }
+            
         }else{
             NSLog(@"Error pulling updates: %@", error);
         }
     }];
     
     
-    
+    if (appDelegate.home) {
+        [((HomeViewController *)appDelegate.home).tableView reloadData];
+    }
 }
 
 // deleting
