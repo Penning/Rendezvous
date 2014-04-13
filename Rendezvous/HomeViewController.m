@@ -84,14 +84,18 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    // [self.tableView reloadData];
-    if (appDelegate.user.facebookID) {
-        [appDelegate getMeetingUpdates];
-    }
-    
+    [self performSelectorInBackground:@selector(waitAndUpdate) withObject:nil];
     
     [self.navigationController setToolbarHidden:YES animated:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+- (void)waitAndUpdate{
+    while (!appDelegate.user.facebookID) {
+        // do nothing
+        sleep(0.5);
+    }
+    [appDelegate getMeetingUpdates];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
