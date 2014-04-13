@@ -238,27 +238,29 @@
     if(self.user.friends.count == 0) {
         //Query all Parse users
         PFQuery *query = [PFUser query];
-        NSArray *users = [query findObjects];
-        [query cancel];
 
-        FBRequest *friendRequest = [FBRequest requestForGraphPath:@"me/friends?fields=name,picture"];
-        [friendRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            FBRequest *friendRequest = [FBRequest requestForGraphPath:@"me/friends?fields=name,picture"];
 
-            NSArray *data = [result objectForKey:@"data"];
-            self.user.friends = [[NSMutableArray alloc] init];
-            for (FBGraphObject<FBGraphUser> *friend in data) {
-                [self.user.friends addObject:[[Friend alloc] initWithObject:friend]];
-                NSArray *matches = [users filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name contains %@", friend.name]];
-                if(matches.count > 0) {
-                    [((ContactsViewController *)_contacts).friendsWithApp addObject:friend];
+            [friendRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                NSArray *data = [result objectForKey:@"data"];
+                self.user.friends = [[NSMutableArray alloc] init];
+
+                for (FBGraphObject<FBGraphUser> *friend in data) {
+                    [self.user.friends addObject:[[Friend alloc] initWithObject:friend]];
+
+                    NSArray *matches = [objects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name is %@", friend.name]];
+                    NSLog(@"Found %lu users", (unsigned long)matches.count);
+
+                    if(matches.count > 0) {
+                        [self.user.friendsWithApp addObject:friend];
+                    }
                 }
-                else {
-                    [((ContactsViewController *)_contacts).friendsWithoutApp addObject:friend];
-                }
-            }
-            NSLog(@"Found %lu friends!", (unsigned long)self.user.friends.count);
-            [((ContactsViewController *)_contacts).activityIndicator stopAnimating];
-            [_contacts.tableView reloadData];
+
+                NSLog(@"Found %lu friends!", (unsigned long)self.user.friends.count);
+                [((ContactsViewController *)_contacts).activityIndicator stopAnimating];
+                [_contacts.tableView reloadData];
+            }];
         }];
     }
 

@@ -90,20 +90,11 @@
         
         [self.tableView reloadData];
     } else {
-        //Query all Parse users
-        PFQuery *query = [PFUser query];
-        NSArray *users = [query findObjects];
-        [query cancel];
-
-        for(Friend *friend in appDelegate.user.friends) {
-            NSArray *matches = [users filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name contains %@", friend.name]];
-            if(matches.count > 0) {
-                [friendsWithApp addObject:friend];
-            }
-            else {
-                [friendsWithoutApp addObject:friend];
-            }
-        }
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+        [friendsWithApp addObjectsFromArray:[appDelegate.user.friendsWithApp sortedArrayUsingDescriptors:sortDescriptors]];
+        [friendsWithoutApp addObjectsFromArray:[appDelegate.user.friends sortedArrayUsingDescriptors:sortDescriptors]];
+        [friendsWithoutApp removeObjectsInArray:friendsWithApp];
     }
 
     [self.tableView reloadData];

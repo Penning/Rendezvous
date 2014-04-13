@@ -290,10 +290,6 @@
          }
 
          ContactsViewController *vc = (ContactsViewController *)[segue destinationViewController];
-         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
-                                                      ascending:YES];
-         NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-         vc.friends = [current_user.friends sortedArrayUsingDescriptors:sortDescriptors];
      } else if([[segue identifier] isEqualToString:@"close_meeting_segue"]) {
          LocationViewController *vc = (LocationViewController *)[segue destinationViewController];
          LocationSuggestionsLookup *locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];

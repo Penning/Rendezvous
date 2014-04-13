@@ -44,18 +44,19 @@
     
     [[PFUser currentUser] setObject:_facebookID forKey:@"facebook_id"];
     [[PFUser currentUser] saveInBackground];
-
-    //Query all Parse users
-    PFQuery *query = [PFUser query];
-    NSArray *users = [query findObjects];
-    [query cancel];
-
-    for(Friend *friend in _friends) {
-        NSArray *matches = [users filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name contains %@", friend.name]];
-        if(matches.count > 0) {
-            [_friendsWithApp addObject:friend];
-        }
-    }
+    
+//
+//    //Query all Parse users
+//    PFQuery *query = [PFUser query];
+//    NSArray *users = [query findObjects];
+//    [query cancel];
+//
+//    for(Friend *friend in _friends) {
+//        NSArray *matches = [users filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name contains %@", friend.name]];
+//        if(matches.count > 0) {
+//            [_friendsWithApp addObject:friend];
+//        }
+//    }
 }
 
 - (void) getMyInformation {
