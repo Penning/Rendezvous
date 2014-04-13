@@ -87,7 +87,7 @@
                                         message:[payload valueForKeyPath:@"aps.alert"]
                                        delegate:self
                               cancelButtonTitle:@"Later"
-                              otherButtonTitles:@"Accept w/ Current Location", @"Accept w/o Location", @"Decline", nil] show];
+                              otherButtonTitles:@"Accept", @"Accept w/o Location", @"Decline", nil] show];
             
         }else if ([[payload objectForKey:@"type"] isEqualToString:@"choose_location"]){
             // choose location
