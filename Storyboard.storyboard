@@ -672,7 +672,7 @@
         <!--Guest List Controller-->
         <scene sceneID="408-QP-55T">
             <objects>
-                <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="HfM-mu-QZQ" customClass="GuestListController" sceneMemberID="viewController">
+                <tableViewController id="HfM-mu-QZQ" customClass="GuestListController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="DOV-aU-Tc2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="310"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -708,6 +708,7 @@
                             <outlet property="delegate" destination="HfM-mu-QZQ" id="MrB-nA-gDd"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7OR-HR-Dbm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
