@@ -15,6 +15,7 @@
 #import "LocationSuggestionsLookup.h"
 #import "AcceptDeclineController.h"
 #import "DataManager.h"
+#import "FinalViewController.h"
 
 @interface HomeViewController ()
 
@@ -263,13 +264,12 @@
     }
     
     [cell.dateLabel setText:dateString];
-    
+    [cell.titleLabel setText:[meeting_object valueForKey:@"meeting_name"]];
 
     [cell.adminImageView setImage:[UIImage imageNamed:@"admin_indicator"]];
 
     if ([cell.adminFbId isEqualToString:appDelegate.user.facebookID]) {
         // admin
-        [cell.titleLabel setText:[meeting_object valueForKey:@"meeting_name"]];
         
         if ([[meeting_object valueForKey:@"status"]  isEqual: @"open"]) {
             [cell.statusImageView setImage:[UIImage imageNamed:@"open_meeting"]];
@@ -279,13 +279,12 @@
             [cell.rightLabel setText:@"Double tap to choose location."];
         }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"final"]){
             [cell.statusImageView setImage:[UIImage imageNamed:@"finalized_meeting"]];
-            [cell.rightLabel setText:@"Swipe to delete."];
+            [cell.rightLabel setText:@"Double tap to view location."];
         }
 
         [cell.adminImageView setHidden:NO];
     }else{
         // not admin
-        [cell.titleLabel setText:[NSString stringWithFormat:@"From: %@", [meeting_object valueForKeyPath:@"admin.name"]]];
         
         if ([[meeting_object valueForKey:@"status"]  isEqual: @"open"]) {
             [cell.statusImageView setImage:[UIImage imageNamed:@"open_meeting"]];
@@ -384,7 +383,18 @@
          
      } else if ([[segue identifier] isEqualToString:@"home_settings_segue"]){
          // to settings
-     }
+         
+     } else if ([[segue identifier] isEqualToString:@"home_final_segue"]){
+         // to final location screen
+         
+         FinalViewController *vc = (FinalViewController *)[segue destinationViewController];
+         PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
+         NSError *error;
+         PFObject *parseMeeting = [query getObjectWithId:[[_fetchedResultsController objectAtIndexPath:lastSelected] valueForKey:@"parse_object_id"] error:&error];
+         if (!error) {
+             [vc setParseMeeting:parseMeeting];
+         }
+    }
  }
 
 #pragma mark - FetchedResultsController delegates

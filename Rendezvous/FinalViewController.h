@@ -15,5 +15,8 @@
 @property (strong, nonatomic) PFObject *parseMeeting;
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UILabel *meetingNameLabel;
+@property (weak, nonatomic) IBOutlet UITextView *meetingAddressTextView;
+@property (weak, nonatomic) IBOutlet UIView *underView;
 
 @end
