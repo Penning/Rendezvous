@@ -503,9 +503,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eh8-YI-pyy">
-                                <rect key="frame" x="256" y="420" width="53" height="30"/>
+                                <rect key="frame" x="282" y="421" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Refresh">
+                                <state key="normal" backgroundImage="refresh_btn">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1151,6 +1151,7 @@
         <image name="musicvenues" width="15" height="24"/>
         <image name="poi_bg2" width="640" height="1136"/>
         <image name="poi_bg4" width="151" height="43"/>
+        <image name="refresh_btn" width="144" height="144"/>
         <image name="rendezvous_btn" width="1235" height="571"/>
         <image name="rendezvous_logo" width="1235" height="571"/>
         <image name="restaurants" width="29" height="23"/>
