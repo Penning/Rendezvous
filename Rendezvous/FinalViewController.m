@@ -36,8 +36,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    mapInsets = UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height, 0.0f, self.underView.frame.size.height, 0.0f);
-    
     [_mapView setShowsUserLocation:YES];
     [_mapView setDelegate:self];
     
@@ -46,25 +44,27 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+    [self.navigationController setToolbarHidden:NO animated:YES];
+    [self.navigationController.navigationBar.topItem setTitle:[_parseMeeting valueForKey:@"name"]];
     
     if (_parseMeeting) {
         PFObject *parseLocation = [_parseMeeting objectForKey:@"finalized_location"];
         
-        [self.meetingNameLabel setText:[_parseMeeting objectForKey:@"name"]];
         
         // fetch location stuff
         [parseLocation fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
             
             geoPoint = [parseLocation objectForKey:@"meeting_geopoint"];
             placeName = [parseLocation objectForKey:@"name"];
+            placeAddress = [parseLocation objectForKey:@"address"];
             
             MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
             [annotation setCoordinate:CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude)];
             annotation.title = placeName;
+            annotation.subtitle = placeAddress;
+            
             [_mapView addAnnotation:annotation];
             mainAnnotation = annotation;
-            
-            [self.meetingAddressTextView setText:[parseLocation objectForKey:@"address"]];
             
             
             [self zoomToFitMapAnnotations];
@@ -72,6 +72,10 @@
     
     }
     
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [self.navigationController setToolbarHidden:YES animated:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -99,23 +103,15 @@
     span.longitudeDelta= region.span.longitudeDelta *1.3;
     region.span=span;
     
-    [self.mapView setVisibleMapRect:[self MKMapRectForCoordinateRegion:region] edgePadding:mapInsets animated:YES];
+    [self.mapView setRegion:region animated:YES];
 }
 
-- (MKMapRect) MKMapRectForCoordinateRegion:(MKCoordinateRegion) region
-{
-    
-    MKMapPoint a = MKMapPointForCoordinate(CLLocationCoordinate2DMake(
-                                                                      region.center.latitude + region.span.latitudeDelta / 2,
-                                                                      region.center.longitude - region.span.longitudeDelta / 2));
-    MKMapPoint b = MKMapPointForCoordinate(CLLocationCoordinate2DMake(
-                                                                      region.center.latitude - region.span.latitudeDelta / 2,
-                                                                      region.center.longitude + region.span.longitudeDelta / 2));
-    return MKMapRectMake(MIN(a.x,b.x), MIN(a.y,b.y), ABS(a.x-b.x), ABS(a.y-b.y));
-}
+
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
-    [_mapView selectAnnotation:mainAnnotation animated:YES];
+    if (mainAnnotation) {
+        [_mapView selectAnnotation:mainAnnotation animated:YES];
+    }
 }
 
 - (IBAction)openInMapsBtnHit:(id)sender {
