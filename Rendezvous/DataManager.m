@@ -74,6 +74,7 @@
     [meeting_object setValue:@1 forKey:@"num_responded"];
     [meeting_object setValue:@NO forKey:@"is_old"];
     [meeting_object setValue:@NO forKey:@"user_responded"];
+    [meeting_object setValue:@"open" forKey:@"status"];
     
     
     
