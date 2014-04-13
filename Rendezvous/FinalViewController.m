@@ -119,7 +119,15 @@
 }
 
 - (IBAction)openInMapsBtnHit:(id)sender {
+    // Create an MKMapItem to pass to the Maps app
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
+    MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:coordinate
+                                                   addressDictionary:nil];
+    MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+    [mapItem setName:placeName];
     
+    // Pass the map item to the Maps app
+    [mapItem openInMapsWithLaunchOptions:nil];
 }
 
 /*
