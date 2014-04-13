@@ -335,7 +335,7 @@
         
         if ([[meeting_object valueForKey:@"status"]  isEqual: @"open"]) {
             [cell.statusImageView setImage:[UIImage imageNamed:@"meeting_open"]];
-            [cell.rightLabel setText:@"Double tap to close."];
+            [cell.rightLabel setText:@"Double tap to choose location."];
         }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"closed"]){
             [cell.statusImageView setImage:[UIImage imageNamed:@"meeting_closed"]];
             [cell.rightLabel setText:@"Double tap to choose location."];
