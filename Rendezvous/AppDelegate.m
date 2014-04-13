@@ -90,7 +90,7 @@
                 
                 // set meeting object
                 notificationMeeting = object;
-                
+
                 // alert
                 if ([[payload objectForKey:@"type"] isEqualToString:@"invite"]) {
                     // invite
@@ -99,7 +99,7 @@
                                                 message:[payload valueForKeyPath:@"aps.alert"]
                                                delegate:self
                                       cancelButtonTitle:@"Later"
-                                      otherButtonTitles:@"RSVP", nil] show];
+                                      otherButtonTitles:@"Accept w/ Current Location", @"Accept w/o Location", @"Decline", nil] show];
                     
                 }else if ([[payload objectForKey:@"type"] isEqualToString:@"choose_location"]){
                     // choose location
@@ -139,21 +139,46 @@
 {
     if (buttonIndex == 0) {
         // later; ignore
-    }else if (buttonIndex == 1){
+    }else {
         // act
         
-        if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"RSVP"]) {
+        if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Accept w/ Current Location"]) {
             // accept/decline
-            
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle: nil];
-            AcceptDeclineController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"accept_decline"];
-            
-            [viewController setParseMeeting:notificationMeeting];
-            
-            [((UINavigationController *)self.window.rootViewController)
-             pushViewController:viewController
-             animated:YES];
-        }else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Choose Location"]){
+
+            // -------Parse location--------
+            //
+            [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+
+                if (!error) {
+                    [notificationMeeting addUniqueObject:geoPoint forKey:@"meeter_locations"];
+                    [notificationMeeting addUniqueObject:self.user.facebookID forKey:@"fb_ids_accepted_users"];
+                    [notificationMeeting incrementKey:@"num_responded"];
+                    [notificationMeeting saveInBackground];
+                }else{
+                    NSLog(@"Location error: %@", error);
+                }
+
+            }];
+
+//            [_localMeeting setValue:@YES forKey:@"user_responded"];
+            [self saveContext];
+        } else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Accept w/o Location"]) {
+            // accept/decline
+            [notificationMeeting addUniqueObject:self.user.facebookID forKey:@"fb_ids_accepted_users"];
+            [notificationMeeting incrementKey:@"num_responded"];
+            [notificationMeeting saveInBackground];
+
+//            [_localMeeting setValue:@YES forKey:@"user_responded"];
+            [self saveContext];
+        } else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Decline"]) {
+            // accept/decline
+            [notificationMeeting addUniqueObject:self.user.facebookID forKey:@"fb_ids_declined_users"];
+            [notificationMeeting incrementKey:@"num_responded"];
+            [notificationMeeting saveInBackground];
+
+//            [_localMeeting setValue:@YES forKey:@"user_responded"];
+            [self saveContext];
+        } else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Choose Location"]){
             // choose location
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle: nil];
             LocationViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"location_view"];

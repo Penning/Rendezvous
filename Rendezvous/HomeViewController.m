@@ -146,7 +146,12 @@
         
         if ([[relevantMeeting valueForKey:@"status"] isEqualToString:@"open"]) {
             // RSVP
-            [self performSegueWithIdentifier:@"home_accept_decline_segue" sender:self];
+//            [self performSegueWithIdentifier:@"home_accept_decline_segue" sender:self];
+            [[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Rendezvous with %@", [relevantMeeting valueForKeyPath:@"admin.name"]]
+                                        message:@"RSVP"
+                                       delegate:self
+                              cancelButtonTitle:@"Later"
+                              otherButtonTitles:@"Accept w/ Current Location", @"Accept w/o Location", @"Decline", nil] show];
         }else if ([[relevantMeeting valueForKey:@"status"] isEqualToString:@"closed"]) {
             // do nothing
             
@@ -161,7 +166,6 @@
     
 }
 
-
 - (IBAction)refreshBtnHit:(id)sender {
     if (appDelegate.user.facebookID) {
         [appDelegate getMeetingUpdates];
@@ -170,6 +174,63 @@
 
 - (void)reloadMeetings{
     [self.tableView reloadData];
+}
+
+#pragma mark - UIAlertView handling
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        // later; ignore
+    }else {
+        // act
+
+        NSManagedObject *relevantMeeting = [_fetchedResultsController objectAtIndexPath:lastSelected];
+        PFObject *parseMeeting = [PFObject objectWithoutDataWithClassName:@"Meeting"
+                                                                 objectId:[relevantMeeting valueForKey:@"parse_object_id"]];
+
+//        NSLog(@"Button title: %@", [alertView buttonTitleAtIndex:buttonIndex]);
+
+        if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Accept w/ Current Location"]) {
+            // accept
+
+            // -------Parse location--------
+            //
+            [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+
+                if (!error) {
+                    [parseMeeting addUniqueObject:geoPoint forKey:@"meeter_locations"];
+                    [parseMeeting addUniqueObject:appDelegate.user.facebookID forKey:@"fb_ids_accepted_users"];
+                    [parseMeeting incrementKey:@"num_responded"];
+                    [parseMeeting saveInBackground];
+                }else{
+                    NSLog(@"Location error: %@", error);
+                }
+
+            }];
+
+            [relevantMeeting setValue:@YES forKey:@"user_responded"];
+            [appDelegate saveContext];
+        } else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Accept w/o Location"]) {
+            // accept
+            [parseMeeting addUniqueObject:appDelegate.user.facebookID forKey:@"fb_ids_accepted_users"];
+            [parseMeeting incrementKey:@"num_responded"];
+            [parseMeeting saveInBackground];
+
+            [relevantMeeting setValue:@YES forKey:@"user_responded"];
+            [appDelegate saveContext];
+        } else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Decline"]) {
+            // decline
+//            NSLog(@"Alert: %@", [alertView buttonTitleAtIndex:buttonIndex]);
+            [parseMeeting addUniqueObject:appDelegate.user.facebookID forKey:@"fb_ids_declined_users"];
+            [parseMeeting incrementKey:@"num_responded"];
+            [parseMeeting saveInBackground];
+
+            [relevantMeeting setValue:@YES forKey:@"user_responded"];
+            [appDelegate saveContext];
+        }
+        
+    }
 }
 
 #pragma mark - Table view data source

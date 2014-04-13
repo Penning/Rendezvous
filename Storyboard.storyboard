@@ -721,7 +721,7 @@
             </objects>
             <point key="canvasLocation" x="1885" y="1488"/>
         </scene>
-        <!--Accept Decline Controller - Accept/Decline Screen-->
+        <!--Accept Decline Controller - RSVP-->
         <scene sceneID="Ugl-AG-KfI">
             <objects>
                 <viewController storyboardIdentifier="accept_decline" id="NzK-fp-0gT" customClass="AcceptDeclineController" sceneMemberID="viewController">
@@ -774,19 +774,11 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="meetingDescriptionTextView" translatesAutoresizingMaskIntoConstraints="NO" id="apG-Px-SN9">
-                                <rect key="frame" x="20" y="130" width="280" height="103"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Accept/Decline Screen" id="1GC-zm-XeU"/>
+                    <navigationItem key="navigationItem" title="RSVP" id="1GC-zm-XeU"/>
                     <connections>
-                        <outlet property="meetingDescriptionTextView" destination="apG-Px-SN9" id="3qi-ah-wOn"/>
                         <outlet property="meetingTitleLabel" destination="wSI-en-YSx" id="1fn-S4-I65"/>
                     </connections>
                 </viewController>
