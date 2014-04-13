@@ -35,6 +35,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+        UIEdgeInsets insets;
+        
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            insets = UIEdgeInsetsMake(-64, 0, -56, 0);
+        } else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+                insets = UIEdgeInsetsMake(-64, 0, -49, 0);
+            } else {
+                insets = UIEdgeInsetsMake(-52, 0, -49, 0);
+            }
+        }
+        
+        self.tableView.contentInset = insets;
+        self.tableView.scrollIndicatorInsets = insets;
+    }
         
     appDelegate = [[UIApplication sharedApplication] delegate];
 }
