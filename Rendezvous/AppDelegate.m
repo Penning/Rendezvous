@@ -72,19 +72,16 @@
 }
 
 
-- (void)handleNotification:(NSDictionary *)payload {
+- (void)handleNotification:(NSDictionary *)payload with:(PFObject *)object {
     
-    // [PFPush handlePush:payload];
-    // [self debugAlert:payload];
-    
-    
-    // Create empty meeting object
-    NSString *meetingId = [payload objectForKey:@"meetingId"];
-    
-    if (meetingId) {
+    if ([PFUser currentUser]) {
         
-        PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
-        [query getObjectInBackgroundWithId:meetingId block:^(PFObject *object, NSError *error) {
+        // set meeting object
+        notificationMeeting = object;
+
+        // alert
+        if ([[payload objectForKey:@"type"] isEqualToString:@"invite"]) {
+            // invite
             
             if (!error && [PFUser currentUser]) {
                 
@@ -127,12 +124,31 @@
                 NSLog(@"Error: %@", error);
             }
             
-
-        }];
-
-        
+        }else if ([[payload objectForKey:@"type"] isEqualToString:@"choose_location"]){
+            // choose location
+            
+            [[[UIAlertView alloc] initWithTitle:@"Meeting closed!"
+                                        message:[payload valueForKeyPath:@"aps.alert"]
+                                       delegate:self
+                              cancelButtonTitle:@"Later"
+                              otherButtonTitles:@"Choose Location", nil] show];
+            
+        }else if ([[payload objectForKey:@"type"] isEqualToString:@"final"]){
+            // final
+            
+            [[[UIAlertView alloc] initWithTitle:@"Rendezvous!"
+                                        message:[payload valueForKeyPath:@"aps.alert"]
+                                       delegate:self
+                              cancelButtonTitle:@"Cancel"
+                              otherButtonTitles:@"View Location", nil] show];
+            
+        }else{
+            [self debugAlert:payload];
+        }
         
     }
+
+    
 }
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -225,7 +241,22 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler {
     
-    [self handleNotification:userInfo];
+    // Create empty meeting object
+    NSString *meetingId = [userInfo objectForKey:@"meetingId"];
+    
+    if (meetingId) {
+        
+        PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
+        [query getObjectInBackgroundWithId:meetingId block:^(PFObject *object, NSError *error) {
+    
+            if (!error) {
+                [self handleNotification:userInfo with:object];
+            }else{
+                NSLog(@"Error: %@", error);
+            }
+            
+        }];
+    }
     
 }
 
@@ -340,7 +371,6 @@
                            forKeys:@[@"aps", @"type", @"meetingId"]];
     
     
-    [self handleNotification:outer];
 }
 
 - (void)getMeetingUpdates{

@@ -76,7 +76,7 @@
     
     // alert
     [[[UIAlertView alloc] initWithTitle:@"Are you sure?"
-                               message:@"Are you sure you want to delete you local history?"
+                               message:@"Are you sure you want to delete your local history?"
                               delegate:self cancelButtonTitle:@"Cancel"
                      otherButtonTitles:@"Delete", nil] show];
     
