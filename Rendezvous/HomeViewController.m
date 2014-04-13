@@ -85,6 +85,11 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     // [self.tableView reloadData];
+    if (appDelegate.user.facebookID) {
+        [appDelegate getMeetingUpdates];
+    }
+    
+    
     [self.navigationController setToolbarHidden:YES animated:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
@@ -151,6 +156,11 @@
 }
 
 
+- (IBAction)refreshBtnHit:(id)sender {
+    if (appDelegate.user.facebookID) {
+        [appDelegate getMeetingUpdates];
+    }
+}
 
 - (void)reloadMeetings{
     [self.tableView reloadData];
