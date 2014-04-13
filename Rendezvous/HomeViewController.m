@@ -14,6 +14,7 @@
 #import "LocationViewController.h"
 #import "LocationSuggestionsLookup.h"
 #import "AcceptDeclineController.h"
+#import "DataManager.h"
 
 @interface HomeViewController ()
 
@@ -300,6 +301,23 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return YES;
+}
+
+// when deleting...
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        if ([[_fetchedResultsController objectAtIndexPath:indexPath] valueForKey:@"admin_fb_id"] isEqualToString:<#(NSString *)#>) {
+            <#statements#>
+        }
+        DataManager *dm = [[DataManager alloc] init];
+        [dm deleteMeetingSoft:[_fetchedResultsController objectAtIndexPath:indexPath]];
+    }
 }
 
 

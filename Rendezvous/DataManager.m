@@ -515,7 +515,6 @@
         
     }
     
-    NSLog(@"set status: %@", [foreignMeeting valueForKey:@"status"]);
     [((HomeViewController *)appDelegate.home) reloadMeetings];
     
     [appDelegate saveContext];
