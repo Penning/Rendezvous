@@ -73,31 +73,47 @@
 }
 
 - (IBAction)deleteBtnHit:(id)sender {
-    // query for
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Meeting" inManagedObjectContext:_managedObjectContext];
-    [request setEntity:entity];
     
-    NSPredicate *predicate =
-    [NSPredicate predicateWithFormat:@"is_old == %@", @YES];
-    [request setPredicate:predicate];
+    // alert
+    [[[UIAlertView alloc] initWithTitle:@"Are you sure?"
+                               message:@"Are you sure you want to delete you local history?"
+                              delegate:self cancelButtonTitle:@"Cancel"
+                     otherButtonTitles:@"Delete", nil] show];
     
-    NSError *error;
-    NSArray *resultsArray = [_managedObjectContext executeFetchRequest:request error:&error];
-    if (resultsArray != nil && resultsArray.count > 0) {
+    
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        // cancel
+    }else if (buttonIndex == 1){
         // delete
-        for (NSManagedObject *o in resultsArray) {
-            [_managedObjectContext deleteObject:o];
-        }
         
-        NSError *error = nil;
-        [_managedObjectContext save:&error];
-        if (error) {
-            NSLog(@"Error saving: %@", error);
+        // query for
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Meeting" inManagedObjectContext:_managedObjectContext];
+        [request setEntity:entity];
+        
+        NSPredicate *predicate =
+        [NSPredicate predicateWithFormat:@"is_old == %@", @YES];
+        [request setPredicate:predicate];
+        
+        NSError *error;
+        NSArray *resultsArray = [_managedObjectContext executeFetchRequest:request error:&error];
+        if (resultsArray != nil && resultsArray.count > 0) {
+            // delete
+            for (NSManagedObject *o in resultsArray) {
+                [_managedObjectContext deleteObject:o];
+            }
+            
+            NSError *error = nil;
+            [_managedObjectContext save:&error];
+            if (error) {
+                NSLog(@"Error saving: %@", error);
+            }
         }
     }
-    
-    
 }
 
 #pragma mark - Table view data source
@@ -155,12 +171,22 @@
     return [sectionInfo numberOfObjects];
 }
 
+#pragma mark - Cell config
 
 - (void)configureCell:(UITableViewCell *)cell1 atIndexPath:(NSIndexPath *)indexPath{
     NSManagedObject *meeting_object = [_fetchedResultsController objectAtIndexPath:indexPath];
     
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    
     [cell1.textLabel setText:[meeting_object valueForKey:@"meeting_name"]];
     [cell1.detailTextLabel setText:[NSString stringWithFormat:@"From: %@", [meeting_object valueForKeyPath:@"admin.name"]]];
+    
+    UITextView *dateView = [[UITextView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 75.0, 40.0f)];
+    [dateView setText:[NSString stringWithFormat:@"%@",
+                       [dateFormatter stringFromDate:((NSDate *)[meeting_object valueForKey:@"created_date"])]]];
+    [cell1 setAccessoryView:dateView];
     
 }
 

@@ -14,6 +14,8 @@
 #import "LocationViewController.h"
 #import "LocationSuggestionsLookup.h"
 #import "AcceptDeclineController.h"
+#import "DataManager.h"
+#import "FinalViewController.h"
 
 @interface HomeViewController ()
 
@@ -243,15 +245,31 @@
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];
     [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
     
-    [cell.dateLabel setText:[NSString stringWithFormat:@"%@",
-                             [dateFormatter stringFromDate:(NSDate *)[meeting_object valueForKey:@"created_date"]]]];
+    NSDate *createdDate = [meeting_object valueForKey:@"created_date"];
     
+    NSDateComponents* components = [[NSCalendar currentCalendar] components:(NSHourCalendarUnit|
+                                                                             NSDayCalendarUnit|
+                                                                             NSMinuteCalendarUnit|
+                                                                             NSSecondCalendarUnit)
+                                                                   fromDate:createdDate
+                                                                     toDate:[NSDate date]
+                                                                    options:0];
+    NSString *dateString = @"problem getting date";
+    if (components.day < 1 && components.hour > 0) {
+        dateString = [NSString stringWithFormat:@"%ld hours ago", (long)components.hour];
+    }else if (components.hour < 1 && components.minute > 0){
+        dateString = [NSString stringWithFormat:@"%ld minutes ago", (long)components.minute];
+    }if (components.minute < 1){
+        dateString = [NSString stringWithFormat:@"%ld seconds ago", (long)components.second];
+    }
+    
+    [cell.dateLabel setText:dateString];
+    [cell.titleLabel setText:[meeting_object valueForKey:@"meeting_name"]];
 
     [cell.adminImageView setImage:[UIImage imageNamed:@"admin_indicator"]];
 
     if ([cell.adminFbId isEqualToString:appDelegate.user.facebookID]) {
         // admin
-        [cell.titleLabel setText:[meeting_object valueForKey:@"meeting_name"]];
         
         if ([[meeting_object valueForKey:@"status"]  isEqual: @"open"]) {
             [cell.statusImageView setImage:[UIImage imageNamed:@"open_meeting"]];
@@ -261,13 +279,12 @@
             [cell.rightLabel setText:@"Double tap to choose location."];
         }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"final"]){
             [cell.statusImageView setImage:[UIImage imageNamed:@"finalized_meeting"]];
-            [cell.rightLabel setText:@"Swipe to delete."];
+            [cell.rightLabel setText:@"Double tap to view location."];
         }
 
         [cell.adminImageView setHidden:NO];
     }else{
         // not admin
-        [cell.titleLabel setText:[NSString stringWithFormat:@"From: %@", [meeting_object valueForKeyPath:@"admin.name"]]];
         
         if ([[meeting_object valueForKey:@"status"]  isEqual: @"open"]) {
             [cell.statusImageView setImage:[UIImage imageNamed:@"open_meeting"]];
@@ -300,6 +317,29 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return YES;
+}
+
+// when deleting...
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        DataManager *dm = [[DataManager alloc] init];
+        if ([[[_fetchedResultsController objectAtIndexPath:indexPath] valueForKeyPath:@"admin.facebook_id"] isEqualToString:appDelegate.user.facebookID]) {
+            // if admin, delete on parse and mark local as old
+            
+            [dm deleteMeetingSoft:[_fetchedResultsController objectAtIndexPath:indexPath]];
+        }else{
+            // just mark local as old
+            
+            [dm putInHistory:[_fetchedResultsController objectAtIndexPath:indexPath]];
+        }
+        
+    }
 }
 
 
@@ -343,7 +383,18 @@
          
      } else if ([[segue identifier] isEqualToString:@"home_settings_segue"]){
          // to settings
-     }
+         
+     } else if ([[segue identifier] isEqualToString:@"home_final_segue"]){
+         // to final location screen
+         
+         FinalViewController *vc = (FinalViewController *)[segue destinationViewController];
+         PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
+         NSError *error;
+         PFObject *parseMeeting = [query getObjectWithId:[[_fetchedResultsController objectAtIndexPath:lastSelected] valueForKey:@"parse_object_id"] error:&error];
+         if (!error) {
+             [vc setParseMeeting:parseMeeting];
+         }
+    }
  }
 
 #pragma mark - FetchedResultsController delegates

@@ -44,7 +44,7 @@
         meeters = [[NSMutableArray alloc] init];
     }
 
-    meetingName = @"";
+    meetingName = [NSString stringWithFormat:@"Rendezvous%u", arc4random()%10000];
     [self.meetingNameBarBtn setTitle:meetingName];
 
     if(![_activityIndicator isAnimating]) {
@@ -57,20 +57,20 @@
     [appDelegate setContacts:self];
 
     if ([meeters count] > 0) {
-        NSString *tempMeetingName = @"w/: ";
-        for (Friend *f in meeters) {
-            if (tempMeetingName.length > 20) {
-                tempMeetingName = [tempMeetingName stringByAppendingString:@"& more"];
-                break;
-            }else{
-                tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@"%@, ", f.first_name]];
-            }
-        }
-        if ([tempMeetingName characterAtIndex:tempMeetingName.length-2] == ',') {
-            tempMeetingName = [tempMeetingName stringByReplacingCharactersInRange:NSMakeRange(tempMeetingName.length-2, 2) withString:@""];
-        }
-        meetingName = tempMeetingName;
-        [self.meetingNameBarBtn setTitle:meetingName];
+//        NSString *tempMeetingName = @"w/: ";
+//        for (Friend *f in meeters) {
+//            if (tempMeetingName.length > 20) {
+//                tempMeetingName = [tempMeetingName stringByAppendingString:@"& more"];
+//                break;
+//            }else{
+//                tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@"%@, ", f.first_name]];
+//            }
+//        }
+//        if ([tempMeetingName characterAtIndex:tempMeetingName.length-2] == ',') {
+//            tempMeetingName = [tempMeetingName stringByReplacingCharactersInRange:NSMakeRange(tempMeetingName.length-2, 2) withString:@""];
+//        }
+//        meetingName = tempMeetingName;
+//        [self.meetingNameBarBtn setTitle:meetingName];
         [self.navigationController setToolbarHidden:NO animated:animated];
     }else{
         [self.navigationController setToolbarHidden:YES animated:animated];
@@ -204,27 +204,27 @@
             // show toolbar
             [self.navigationController setToolbarHidden:NO animated:YES];
 
-            NSString *tempMeetingName = @"w/: ";
-            int count = 0;
-            for (Friend *f in meeters) {
-                if (tempMeetingName.length > 20) {
-                    tempMeetingName = [tempMeetingName stringByAppendingString:@"& more"];
-                    break;
-                }else{
-                    if(count == 0) {
-                        tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@" %@", f.first_name]];
-                    } else {
-                        tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@", %@", f.first_name]];
-                    }
-                }
-                count++;
-            }
-            if ([tempMeetingName characterAtIndex:tempMeetingName.length-2] == ',') {
-                tempMeetingName = [tempMeetingName stringByReplacingCharactersInRange:NSMakeRange(tempMeetingName.length-2, 2) withString:@""];
-            }
-            meetingName = tempMeetingName;
-
-            [self.meetingNameBarBtn setTitle:meetingName];
+//            NSString *tempMeetingName = @"w/: ";
+//            int count = 0;
+//            for (Friend *f in meeters) {
+//                if (tempMeetingName.length > 20) {
+//                    tempMeetingName = [tempMeetingName stringByAppendingString:@"& more"];
+//                    break;
+//                }else{
+//                    if(count == 0) {
+//                        tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@" %@", f.first_name]];
+//                    } else {
+//                        tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@", %@", f.first_name]];
+//                    }
+//                }
+//                count++;
+//            }
+//            if ([tempMeetingName characterAtIndex:tempMeetingName.length-2] == ',') {
+//                tempMeetingName = [tempMeetingName stringByReplacingCharactersInRange:NSMakeRange(tempMeetingName.length-2, 2) withString:@""];
+//            }
+//            meetingName = tempMeetingName;
+//
+//            [self.meetingNameBarBtn setTitle:meetingName];
         }else{
             // hide toolbar
             [self.navigationController setToolbarHidden:YES animated:YES];

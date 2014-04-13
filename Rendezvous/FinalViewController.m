@@ -16,6 +16,8 @@
 @implementation FinalViewController{
     PFGeoPoint *geoPoint;
     NSString *placeName, *placeAddress;
+    UIEdgeInsets mapInsets;
+    MKPointAnnotation *mainAnnotation;
 }
 
 @synthesize parseMeeting = _parseMeeting;
@@ -34,7 +36,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self.mapView setShowsUserLocation:YES];
+    mapInsets = UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height, 0.0f, self.underView.frame.size.height, 0.0f);
+    
+    [_mapView setShowsUserLocation:YES];
+    [_mapView setDelegate:self];
     
 }
 
@@ -45,7 +50,9 @@
     if (_parseMeeting) {
         PFObject *parseLocation = [_parseMeeting objectForKey:@"finalized_location"];
         
-        // fetch
+        [self.meetingNameLabel setText:[_parseMeeting objectForKey:@"name"]];
+        
+        // fetch location stuff
         [parseLocation fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
             
             geoPoint = [parseLocation objectForKey:@"meeting_geopoint"];
@@ -55,6 +62,10 @@
             [annotation setCoordinate:CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude)];
             annotation.title = placeName;
             [_mapView addAnnotation:annotation];
+            mainAnnotation = annotation;
+            
+            [self.meetingAddressTextView setText:[parseLocation objectForKey:@"address"]];
+            
             
             [self zoomToFitMapAnnotations];
         }];
@@ -81,14 +92,34 @@
     
     MKPolygon *poly = [MKPolygon polygonWithPoints:points count:i];
     
-    // zoom out 20%
+    // zoom out 30%
     MKCoordinateRegion region = MKCoordinateRegionForMapRect([poly boundingMapRect]);
     MKCoordinateSpan span;
-    span.latitudeDelta= region.span.latitudeDelta *1.2;
-    span.longitudeDelta= region.span.longitudeDelta *1.2;
+    span.latitudeDelta= region.span.latitudeDelta *1.3;
+    span.longitudeDelta= region.span.longitudeDelta *1.3;
     region.span=span;
     
-    [self.mapView setRegion:region animated:YES];
+    [self.mapView setVisibleMapRect:[self MKMapRectForCoordinateRegion:region] edgePadding:mapInsets animated:YES];
+}
+
+- (MKMapRect) MKMapRectForCoordinateRegion:(MKCoordinateRegion) region
+{
+    
+    MKMapPoint a = MKMapPointForCoordinate(CLLocationCoordinate2DMake(
+                                                                      region.center.latitude + region.span.latitudeDelta / 2,
+                                                                      region.center.longitude - region.span.longitudeDelta / 2));
+    MKMapPoint b = MKMapPointForCoordinate(CLLocationCoordinate2DMake(
+                                                                      region.center.latitude - region.span.latitudeDelta / 2,
+                                                                      region.center.longitude + region.span.longitudeDelta / 2));
+    return MKMapRectMake(MIN(a.x,b.x), MIN(a.y,b.y), ABS(a.x-b.x), ABS(a.y-b.y));
+}
+
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
+    [_mapView selectAnnotation:mainAnnotation animated:YES];
+}
+
+- (IBAction)openInMapsBtnHit:(id)sender {
+    
 }
 
 /*
