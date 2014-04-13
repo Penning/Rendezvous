@@ -70,7 +70,6 @@
             // result is a dictionary with the user's Facebook data
             NSDictionary *userData = (NSDictionary *)result;
             [self initFromRequest:userData];
-            [((AppDelegate *)[[UIApplication sharedApplication] delegate]) getMeetingUpdates];
             
         }else{
             NSLog(@"FB Error: %@", error);

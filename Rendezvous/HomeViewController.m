@@ -14,6 +14,7 @@
 #import "LocationViewController.h"
 #import "LocationSuggestionsLookup.h"
 #import "AcceptDeclineController.h"
+#import "DataManager.h"
 
 @interface HomeViewController ()
 
@@ -84,9 +85,18 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    // [self.tableView reloadData];
+    [self performSelectorInBackground:@selector(waitAndUpdate) withObject:nil];
+    
     [self.navigationController setToolbarHidden:YES animated:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+- (void)waitAndUpdate{
+    while (!appDelegate.user.facebookID) {
+        // do nothing
+        sleep(0.5);
+    }
+    [appDelegate getMeetingUpdates];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -151,6 +161,11 @@
 }
 
 
+- (IBAction)refreshBtnHit:(id)sender {
+    if (appDelegate.user.facebookID) {
+        [appDelegate getMeetingUpdates];
+    }
+}
 
 - (void)reloadMeetings{
     [self.tableView reloadData];
@@ -261,7 +276,7 @@
         }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"closed"]){
             [cell.statusImageView setImage:[UIImage imageNamed:@"closed_meeting"]];
             [cell.rightLabel setText:@""];
-        }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"fianl"]){
+        }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"final"]){
             [cell.statusImageView setImage:[UIImage imageNamed:@"finalized_meeting"]];
             [cell.rightLabel setText:@"Double tap to view location."];
         }
@@ -286,6 +301,23 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return YES;
+}
+
+// when deleting...
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        if ([[_fetchedResultsController objectAtIndexPath:indexPath] valueForKey:@"admin_fb_id"] isEqualToString:<#(NSString *)#>) {
+            <#statements#>
+        }
+        DataManager *dm = [[DataManager alloc] init];
+        [dm deleteMeetingSoft:[_fetchedResultsController objectAtIndexPath:indexPath]];
+    }
 }
 
 

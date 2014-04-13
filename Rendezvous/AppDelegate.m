@@ -155,13 +155,13 @@
              animated:YES];
         }else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Choose Location"]){
             // choose location
-            
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle: nil];
             LocationViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"location_view"];
             LocationSuggestionsLookup *locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];
             locationSuggestionsLookup.locationViewController = vc;
-            NSLog(@"Meeting Selected: %@", notificationMeeting);
-            [locationSuggestionsLookup getSuggestions:[[Meeting alloc] fromPFObject:notificationMeeting]];
+            //            NSLog(@"Meeting Selected: %@", notificationMeeting);
+            vc.meeting = [[Meeting alloc] fromPFObject:notificationMeeting];
+            [locationSuggestionsLookup getSuggestions:vc.meeting];
             
             [((UINavigationController *)self.window.rootViewController)
              pushViewController:vc

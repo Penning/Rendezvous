@@ -73,31 +73,47 @@
 }
 
 - (IBAction)deleteBtnHit:(id)sender {
-    // query for
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Meeting" inManagedObjectContext:_managedObjectContext];
-    [request setEntity:entity];
     
-    NSPredicate *predicate =
-    [NSPredicate predicateWithFormat:@"is_old == %@", @YES];
-    [request setPredicate:predicate];
+    // alert
+    [[[UIAlertView alloc] initWithTitle:@"Are you sure?"
+                               message:@"Are you sure you want to delete you local history?"
+                              delegate:self cancelButtonTitle:@"Cancel"
+                     otherButtonTitles:@"Delete", nil] show];
     
-    NSError *error;
-    NSArray *resultsArray = [_managedObjectContext executeFetchRequest:request error:&error];
-    if (resultsArray != nil && resultsArray.count > 0) {
+    
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        // cancel
+    }else if (buttonIndex == 1){
         // delete
-        for (NSManagedObject *o in resultsArray) {
-            [_managedObjectContext deleteObject:o];
-        }
         
-        NSError *error = nil;
-        [_managedObjectContext save:&error];
-        if (error) {
-            NSLog(@"Error saving: %@", error);
+        // query for
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Meeting" inManagedObjectContext:_managedObjectContext];
+        [request setEntity:entity];
+        
+        NSPredicate *predicate =
+        [NSPredicate predicateWithFormat:@"is_old == %@", @YES];
+        [request setPredicate:predicate];
+        
+        NSError *error;
+        NSArray *resultsArray = [_managedObjectContext executeFetchRequest:request error:&error];
+        if (resultsArray != nil && resultsArray.count > 0) {
+            // delete
+            for (NSManagedObject *o in resultsArray) {
+                [_managedObjectContext deleteObject:o];
+            }
+            
+            NSError *error = nil;
+            [_managedObjectContext save:&error];
+            if (error) {
+                NSLog(@"Error saving: %@", error);
+            }
         }
     }
-    
-    
 }
 
 #pragma mark - Table view data source

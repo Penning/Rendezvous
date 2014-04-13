@@ -330,7 +330,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="    Rendezvous was developed by Adam Oxner, Sumedha Pramod, and Tim Wood at the University of Michigan." translatesAutoresizingMaskIntoConstraints="NO" id="3gg-4Y-adu">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="20" y="0.0" width="280" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -358,7 +358,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jmj-os-gGd">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="20" y="0.0" width="280" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <string key="text">    Rendezvous will never disclose your location information with anyone nor use it to do anything but find an optimal meeting location. Meetings are only stored on our servers until the administrator deletes them on their phone. On top of this, location information is stored anonymously. </string>
@@ -387,7 +387,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Feel free to email us at Rendezvous.penning441@umich.edu   Or on Twitter:  @adoxner  @pramodsum" translatesAutoresizingMaskIntoConstraints="NO" id="5sF-U7-QOV">
-                                <rect key="frame" x="0.0" y="5" width="320" height="568"/>
+                                <rect key="frame" x="20" y="0.0" width="280" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -421,15 +421,10 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Tt-b4-6qe">
                                 <rect key="frame" x="20" y="197" width="280" height="138"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <size key="titleShadowOffset" width="1" height="1"/>
                                 <state key="normal" image="rendezvous_btn">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="20"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="5vL-M4-hZj" kind="push" identifier="new_meeting_segue" id="6Mr-ey-ldr"/>
                                 </connections>
@@ -492,13 +487,6 @@
                                     <outlet property="delegate" destination="44V-bZ-Ujm" id="bJ2-6K-49i"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pending meetings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q79-Rx-Jle">
-                                <rect key="frame" x="91" y="427" width="139" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WnJ-2n-4eU">
                                 <rect key="frame" x="287" y="27" width="26" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -507,6 +495,17 @@
                                 </state>
                                 <connections>
                                     <action selector="settingsBtnHit:" destination="44V-bZ-Ujm" eventType="touchUpInside" id="asb-6f-NK5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eh8-YI-pyy">
+                                <rect key="frame" x="282" y="421" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="refresh_btn">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="refreshBtnHit:" destination="44V-bZ-Ujm" eventType="touchUpInside" id="wvn-NA-REE"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1147,10 +1146,11 @@
         <image name="musicvenues" width="15" height="24"/>
         <image name="poi_bg2" width="640" height="1136"/>
         <image name="poi_bg4" width="151" height="43"/>
+        <image name="refresh_btn" width="144" height="144"/>
         <image name="rendezvous_btn" width="1235" height="571"/>
         <image name="rendezvous_logo" width="1235" height="571"/>
         <image name="restaurants" width="29" height="23"/>
-        <image name="settings_gear" width="256" height="256"/>
+        <image name="settings_gear" width="512" height="512"/>
         <image name="shopping" width="26" height="19"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

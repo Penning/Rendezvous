@@ -259,6 +259,7 @@
     if(!selectedIndex) {
         return;
     }
+    NSLog(@"Finalizing location");
 
     AppDelegate *appDelegate = ((AppDelegate *)[[UIApplication sharedApplication] delegate]);
 
@@ -276,10 +277,6 @@
                 locationParse[@"name"] = location.name;
 
                 NSLog(@"%f, %f", location.pflocation.latitude, location.pflocation.longitude);
-
-                if(!location.pflocation || (location.pflocation.latitude == 0.000000 || location.pflocation.longitude == 0.000000)) {
-                    [self annotateMap];
-                }
 
                 if(!location.pflocation || (location.pflocation.latitude == 0.000000 || location.pflocation.longitude == 0.000000)) {
                     NSString *address = [NSString stringWithFormat:@"%@, %@", location.streetAddress, location.city];
