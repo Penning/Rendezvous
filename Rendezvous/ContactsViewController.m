@@ -21,9 +21,9 @@
     NSString *meetingName;
 }
 
-@synthesize friends;
-@synthesize friendsWithApp;
-@synthesize friendsWithoutApp;
+//@synthesize friends;
+//@synthesize friendsWithApp;
+//@synthesize friendsWithoutApp;
 @synthesize meeters;
 @synthesize meetingObject = _meetingObject;
 @synthesize activityIndicator = _activityIndicator;
@@ -47,14 +47,18 @@
 
     meetingName = @"";
     [self.meetingNameBarBtn setTitle:meetingName];
+
+    if(![_activityIndicator isAnimating]) {
+        [self.tableView reloadData];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     appDelegate = [[UIApplication sharedApplication] delegate];
     [appDelegate setContacts:self];
-    friends = appDelegate.user.friends;
-    friendsWithApp = appDelegate.user.friendsWithApp;
-    
+//    friends = appDelegate.user.friends;
+//    friendsWithApp = appDelegate.user.friendsWithApp;
+
     if ([meeters count] > 0) {
         NSString *tempMeetingName = @"w/: ";
         for (Friend *f in meeters) {
@@ -75,8 +79,8 @@
         [self.navigationController setToolbarHidden:YES animated:animated];
     }
 
-    friendsWithApp = [[NSMutableArray alloc] init];
-    friendsWithoutApp = [[NSMutableArray alloc] init];
+//    friendsWithApp = [[NSMutableArray alloc] init];
+//    friendsWithoutApp = [[NSMutableArray alloc] init];
 
     [self.tableView reloadData];
 
@@ -90,11 +94,11 @@
         
         [self.tableView reloadData];
     } else {
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-        [friendsWithApp addObjectsFromArray:[appDelegate.user.friendsWithApp sortedArrayUsingDescriptors:sortDescriptors]];
-        [friendsWithoutApp addObjectsFromArray:[appDelegate.user.friends sortedArrayUsingDescriptors:sortDescriptors]];
-        [friendsWithoutApp removeObjectsInArray:friendsWithApp];
+//        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+//        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+//        [friendsWithApp addObjectsFromArray:[appDelegate.user.friendsWithApp sortedArrayUsingDescriptors:sortDescriptors]];
+//        [friendsWithoutApp addObjectsFromArray:[appDelegate.user.friends sortedArrayUsingDescriptors:sortDescriptors]];
+//        [friendsWithoutApp removeObjectsInArray:friendsWithApp];
     }
 
     [self.tableView reloadData];
@@ -128,11 +132,11 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(section == 0) {
-        NSLog(@"friendsWithApp: %lu", (unsigned long)friendsWithApp.count);
-        return [friendsWithApp count];
+        NSLog(@"friendsWithApp: %lu", (unsigned long)appDelegate.user.friendsWithApp.count);
+        return [appDelegate.user.friendsWithApp count];
     } else {
-        NSLog(@"friendsWithoutApp: %lu", (unsigned long)friendsWithoutApp.count);
-        return [friendsWithoutApp count];
+        NSLog(@"friendsWithoutApp: %lu", (unsigned long)appDelegate.user.friendsWithoutApp.count);
+        return [appDelegate.user.friendsWithoutApp count];
     }
 }
 
@@ -155,14 +159,14 @@
 
     // Configure the cell...
     if(indexPath.section == 0) {
-        [cell initCellDisplay:[friendsWithApp objectAtIndex:indexPath.row]];
+        [cell initCellDisplay:[appDelegate.user.friendsWithApp objectAtIndex:indexPath.row]];
         cell.appInstalled = [NSNumber numberWithInt:1];
         [cell.addUserBtn setHidden:YES];
 
         // show checkmark if meeter
         BOOL isMeeter = NO;
         for (Friend *f in meeters) {
-            if ([f.facebookID isEqualToString: ((Friend *)[friendsWithApp objectAtIndex:indexPath.row]).facebookID]) {
+            if ([f.facebookID isEqualToString: ((Friend *)[appDelegate.user.friendsWithApp objectAtIndex:indexPath.row]).facebookID]) {
                 isMeeter = YES;
                 break;
             }
@@ -173,7 +177,7 @@
             [cell setAccessoryType:UITableViewCellAccessoryNone];
         }
     } else {
-        [cell initCellDisplay:[friendsWithoutApp objectAtIndex:indexPath.row]];
+        [cell initCellDisplay:[appDelegate.user.friendsWithoutApp objectAtIndex:indexPath.row]];
     }
     
     return cell;
@@ -185,7 +189,7 @@
     ContactsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"friendCell"];
 
     if(indexPath.section == 0) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"facebookID = %@", [[friendsWithApp objectAtIndex:indexPath.row] facebookID]];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"facebookID = %@", [[appDelegate.user.friendsWithApp objectAtIndex:indexPath.row] facebookID]];
         NSArray *filteredArray = [meeters filteredArrayUsingPredicate:predicate];
         NSLog(@"FilteredArray: %@", filteredArray);
         
@@ -193,14 +197,14 @@
             // add to meeting
 
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-            [meeters addObject:((Friend *)[friendsWithApp objectAtIndex:indexPath.row])];
+            [meeters addObject:((Friend *)[appDelegate.user.friendsWithApp objectAtIndex:indexPath.row])];
 
         }else{
             // remove from meeting
 
             [cell setAccessoryType:UITableViewCellAccessoryNone];
             for (Friend *f in meeters) {
-                if ([f.facebookID isEqualToString:((Friend*)[friendsWithApp objectAtIndex:indexPath.row]).facebookID]) {
+                if ([f.facebookID isEqualToString:((Friend*)[appDelegate.user.friendsWithApp objectAtIndex:indexPath.row]).facebookID]) {
                     [meeters removeObject:f];
                     break;
                 }
@@ -293,7 +297,7 @@
     if ([[segue identifier] isEqualToString:@"reason_segue"]) {
         MeetingReasonViewController *vc = (MeetingReasonViewController *)[segue destinationViewController];
         [vc setMeeters:meeters];
-        [vc setFriends:friends];
+        [vc setFriends:appDelegate.user.friends];
         [vc setMeetingName:meetingName];
         if (useShortcut) {
             [vc initForSend];

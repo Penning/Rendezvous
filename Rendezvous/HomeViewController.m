@@ -285,17 +285,19 @@
          appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
          current_user = appDelegate.user;
 
-         if(current_user.friends.count == 0) {
-             [current_user getMyInformation];
-         }
+//         if(appDelegate.user.friends.count == 0) {
+//             [current_user getMyInformation];
+//         }
 
          ContactsViewController *vc = (ContactsViewController *)[segue destinationViewController];
      } else if([[segue identifier] isEqualToString:@"close_meeting_segue"]) {
+
          LocationViewController *vc = (LocationViewController *)[segue destinationViewController];
          LocationSuggestionsLookup *locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];
          locationSuggestionsLookup.locationViewController = vc;
          vc.meeting = [vc.meeting toCoreData:[_fetchedResultsController objectAtIndexPath:lastSelected]];
          [locationSuggestionsLookup getSuggestionsWithCoreData:[_fetchedResultsController objectAtIndexPath:lastSelected]];
+
      } else if ([[segue identifier] isEqualToString:@"home_accept_decline_segue"]){
          
          AcceptDeclineController *vc = (AcceptDeclineController *)[segue destinationViewController];

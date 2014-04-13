@@ -237,29 +237,49 @@
 
     if(self.user.friends.count == 0) {
         //Query all Parse users
-        PFQuery *query = [PFUser query];
+        self.user.friends = [[NSMutableArray alloc] init];
+        self.user.friendsWithApp = [[NSMutableArray alloc] init];
+        self.user.friendsWithoutApp = [[NSMutableArray alloc] init];
 
+        PFQuery *query = [PFUser query];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+
             FBRequest *friendRequest = [FBRequest requestForGraphPath:@"me/friends?fields=name,picture"];
 
             [friendRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                 NSArray *data = [result objectForKey:@"data"];
-                self.user.friends = [[NSMutableArray alloc] init];
 
                 for (FBGraphObject<FBGraphUser> *friend in data) {
                     [self.user.friends addObject:[[Friend alloc] initWithObject:friend]];
 
-                    NSArray *matches = [objects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name is %@", friend.name]];
-                    NSLog(@"Found %lu users", (unsigned long)matches.count);
-
-                    if(matches.count > 0) {
-                        [self.user.friendsWithApp addObject:friend];
+                    for(PFUser *user in objects) {
+                        if([[user valueForKey:@"name"] isEqualToString:friend.name]) {
+                            if(![self.user.friendsWithApp containsObject:friend]) {
+                                NSLog(@"Adding %@", friend.name);
+                                [self.user.friendsWithApp addObject:friend];
+                            }
+                        } else {
+                            if(![self.user.friendsWithoutApp containsObject:friend] && ![self.user.friendsWithApp containsObject:friend]) {
+                                [self.user.friendsWithoutApp addObject:friend];
+                            }
+                        }
                     }
                 }
 
+                NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+                NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+
+                NSArray *temp = [self.user.friendsWithApp sortedArrayUsingDescriptors:sortDescriptors];
+                [self.user.friendsWithApp removeAllObjects];
+                [self.user.friendsWithApp addObjectsFromArray:temp];
+
+                NSArray *temp2 = [self.user.friendsWithoutApp sortedArrayUsingDescriptors:sortDescriptors];
+                [self.user.friendsWithoutApp removeAllObjects];
+                [self.user.friendsWithoutApp addObjectsFromArray:temp2];
+
                 NSLog(@"Found %lu friends!", (unsigned long)self.user.friends.count);
                 [((ContactsViewController *)_contacts).activityIndicator stopAnimating];
-                [_contacts.tableView reloadData];
+                [((ContactsViewController *)_contacts).tableView reloadData];
             }];
         }];
     }
