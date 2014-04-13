@@ -285,20 +285,15 @@
         NSError *error;
         NSArray *array = [appDelegate.managedObjectContext executeFetchRequest:request error:&error];
         
-        NSLog(@"FOUND %lu INVITES", (unsigned long)array.count);
-        
+
         NSManagedObject *localPerson = nil;
         if (array != nil && array.count > 0) {
             // update existing person
-            
-            NSLog(@"updating invite: %@", f);
-            
+                        
             localPerson = [array objectAtIndex:0];
             
         }else{
             // create new person
-            
-            NSLog(@"adding invite: %@", f);
             
             localPerson = [NSEntityDescription
                                            insertNewObjectForEntityForName:@"Person"
@@ -309,6 +304,18 @@
         // update person info
         [localPerson setValue:f forKey:@"facebook_id"];
         [localPerson setValue:meetingObject forKey:@"meeting"];
+        
+        PFQuery *userQuery = [PFUser query];
+        [userQuery whereKey:@"facebook_id" equalTo:f];
+        [userQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error && objects && objects.count > 0) {
+                [objects objectAtIndex:0];
+                [localPerson setValue:[NSString stringWithFormat:@"%@", [[objects objectAtIndex:0] valueForKey:@"name"]] forKey:@"name"];
+                [appDelegate saveContext];
+            }else{
+                NSLog(@"Error: %@", error);
+            }
+        }];
         
     }
     
@@ -358,6 +365,18 @@
         [localPerson setValue:f forKey:@"facebook_id"];
         [localPerson setValue:meetingObject forKey:@"accepted_meeting"];
         
+        PFQuery *userQuery = [PFUser query];
+        [userQuery whereKey:@"facebook_id" equalTo:f];
+        [userQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error && objects && objects.count > 0) {
+                [objects objectAtIndex:0];
+                [localPerson setValue:[NSString stringWithFormat:@"%@", [[objects objectAtIndex:0] valueForKey:@"name"]] forKey:@"name"];
+                [appDelegate saveContext];
+            }else{
+                NSLog(@"Error: %@", error);
+            }
+        }];
+        
     }
 
     
@@ -371,8 +390,8 @@
         [meetingObject setValue:declinedSet forKey:@"declined"];
     }
     
-    for (NSString *f in [foreignMeeting mutableSetValueForKey:@"fb_ids_accepted_users"]) {
-        
+    for (NSString *f in [foreignMeeting mutableSetValueForKey:@"fb_ids_declined_users"]) {
+                
         if ([f isEqualToString:appDelegate.user.facebookID]) {
             [meetingObject setValue:@YES forKey:@"user_responded"];
         }
@@ -408,6 +427,18 @@
         // update person info
         [localPerson setValue:f forKey:@"facebook_id"];
         [localPerson setValue:meetingObject forKey:@"declined_meeting"];
+        
+        PFQuery *userQuery = [PFUser query];
+        [userQuery whereKey:@"facebook_id" equalTo:f];
+        [userQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error && objects && objects.count > 0) {
+                [objects objectAtIndex:0];
+                [localPerson setValue:[NSString stringWithFormat:@"%@", [[objects objectAtIndex:0] valueForKey:@"name"]] forKey:@"name"];
+                [appDelegate saveContext];
+            }else{
+                NSLog(@"Error: %@", error);
+            }
+        }];
         
     }
     
@@ -459,7 +490,6 @@
             // Do something with the found objects
             for (PFObject *object in objects) {
                 [localAdmin setValue:[object valueForKey:@"name"] forKey:@"name"];
-                NSLog(@"admin name: %@", [object valueForKey:@"name"]);
                 [appDelegate saveContext];
                 [((HomeViewController *)appDelegate.home) reloadMeetings];
             }
@@ -571,10 +601,16 @@
                     
                     // get invites
                     NSArray *invitesArray = [[foreignMeeting mutableArrayValueForKey:@"invites"] copy];
+                    
+                    PFQuery *query = [PFUser query];
+                    [query whereKey:@"facebook_id" containedIn:invitesArray];
+                    NSArray *invitesUsers = [query findObjects];
+                    
                     NSMutableArray *friendsArray = [[NSMutableArray alloc] init];
-                    for (NSString *invite in invitesArray) {
+                    for (PFObject *user in invitesUsers) {
                         Friend *f = [[Friend alloc] init];
-                        f.facebookID = invite;
+                        f.facebookID = [user valueForKey:@"facebook_id"];;
+                        f.name = [user valueForKey:@"name"];
                         [friendsArray addObject:f];
                     }
                     

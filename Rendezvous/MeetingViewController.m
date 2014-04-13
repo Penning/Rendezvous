@@ -11,6 +11,7 @@
 #import "Friend.h"
 #import "ContactsViewController.h"
 #import "DataManager.h"
+#import "GuestListController.h"
 
 @interface MeetingViewController (){
     BOOL home;
@@ -24,9 +25,7 @@
     NSString *tempName;
 }
 
-@synthesize meeters = _meeters;
 @synthesize meetingObject = _meetingObject;
-@synthesize reasons = _reasons;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,80 +40,23 @@
 {
     [super viewDidLoad];
     
-    // Do any additional setup after loading the view.
-    if (home) {
-        // if editing established event
-        
-        if ([((AppDelegate *)[[UIApplication sharedApplication] delegate]).user.facebookID
-             isEqualToString:[_meetingObject valueForKeyPath:@"admin.facebook_id"]]) {
-            // is admin
-            [self.deleteBtn setEnabled:YES];
-            NSLog(@"admin ids: %@ | %@", ((AppDelegate *)[[UIApplication sharedApplication] delegate]).user.facebookID, [_meetingObject valueForKeyPath:@"admin.facebook_id"]);
-            
-        }else{
-            // not admin
-            
-            [self.detailsTextView setUserInteractionEnabled:NO];
-            [self.sendContactsButton setHidden:YES];
-            [self.deleteBtn setEnabled:NO];
-        }
-        
-        [self.nameLabel setText:[_meetingObject valueForKey:@"meeting_name"]];
-        [self.nameLabel setHidden:NO];
-        [self.numMeetersLabel setText:[NSString
-                                       stringWithFormat:@"%lu invitees",
-                                       (unsigned long)[_meetingObject mutableSetValueForKey:@"invites"].count]];
-        [self.nameTextField setHidden:YES];
-        [self.sendContactsButton setTitle:@"Edit Invites" forState:UIControlStateNormal];
-        [self.detailsTextView setText:[_meetingObject valueForKey:@"meeting_description"]];
-        [self.nameTextField setText:tempName];
-        [self.comeToMeSwitch setEnabled:NO];
-        NSSet *rez = [_meetingObject mutableSetValueForKeyPath:@"reasons"];
-        for (NSString *r in rez) {
-            [self.reasonsLabel setText:[self.reasonsLabel.text stringByAppendingString:[NSString stringWithFormat:@" %@", [r valueForKey:@"reason"]]]];
-        }
-        
-        
-    }else{
-        // if making a new event
-        [self.nameLabel setHidden:YES];
-        [self.nameTextField setHidden:NO];
-        [self.nameTextField setDelegate:self];
-        [self.numMeetersLabel setText:[NSString stringWithFormat:@"%lu invitees", (unsigned long)_meeters.count]];
-        [self.sendContactsButton setTitle:@"Send Invites" forState:UIControlStateNormal];
-        [self.comeToMeSwitch setEnabled:YES];
-        for (NSString *r in _reasons) {
-            [self.reasonsLabel setText:[self.reasonsLabel.text stringByAppendingString:[NSString stringWithFormat:@" %@", r]]];
-        }
-        
-    }
-
     
-    [self.comeToMeSwitch setOn:((NSNumber *)[_meetingObject valueForKey:@"is_ComeToMe"]).boolValue];
-    self.detailsTextView.delegate = self;
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:NO animated:animated];
-}
-
-
-- (void) textViewDidBeginEditing:(UITextView *) textView {
-    [textView setText:@""];
-}
-
-- (BOOL) textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    // hides keyboard on return
     
-    if ([text isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];
-        [_meetingObject setValue:textView.text forKey:@"meeting_description"];
-        [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
-        return NO;
-    }
+    [self.meetingTitleLabel setText:[_meetingObject valueForKey:@"meeting_name"]];
     
-    return YES;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    [self.meetingCreatedLabel setText:[NSString stringWithFormat:@"Created: %@",[dateFormatter stringFromDate:[_meetingObject valueForKey:@"created_date"]]]] ;
 }
+
+
+
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
         [textField resignFirstResponder];
@@ -135,151 +77,6 @@
     home = false;
 }
 
-
-- (IBAction)sendContactsBtnHit:(id)sender {
-    
-    if (!home) {
-        // check for name
-        if ([self.nameTextField.text isEqualToString:@""]) {
-            UIAlertView * alert = [[UIAlertView alloc]
-                                   initWithTitle:@"No name"
-                                   message:@"Please enter a meeting title"
-                                   delegate:nil
-                                   cancelButtonTitle:@"No"
-                                   otherButtonTitles:nil];
-            alert.alertViewStyle = UIAlertViewStyleDefault;
-            [alert show];
-            return;
-        }
-        
-        // __Core Data stuff ahead__
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        
-        // create meeting
-        NSManagedObjectContext *context = [appDelegate managedObjectContext];
-        NSManagedObject *meeting_object = [NSEntityDescription
-                                           insertNewObjectForEntityForName:@"Meeting"
-                                           inManagedObjectContext:context];
-        [meeting_object setValue:self.nameTextField.text forKey:@"meeting_name"];
-        if (![self.detailsTextView.text isEqualToString:@""] && ![self.detailsTextView.text isEqualToString:@"optional"]) {
-            [meeting_object setValue:self.detailsTextView.text forKeyPath:@"meeting_description"];
-        }
-        [meeting_object setValue:[NSNumber numberWithBool:self.comeToMeSwitch.isOn] forKeyPath:@"is_ComeToMe"];
-        [meeting_object setValue:[NSDate date] forKeyPath:@"created_date"];
-        [meeting_object setValue:@NO forKey:@"is_old"];
-        
-        // create friends
-        NSMutableSet *friendsSet = [[NSMutableSet alloc] init];
-        for (Friend *f in self.meeters) {
-            NSManagedObject *newInvitee = [NSEntityDescription
-                                           insertNewObjectForEntityForName:@"Person"
-                                           inManagedObjectContext:context];
-            [newInvitee setValue:f.name forKeyPath:@"name"];
-            [newInvitee setValue:f.first_name forKeyPath:@"first_name"];
-            [newInvitee setValue:f.last_name forKeyPath:@"last_name"];
-            [newInvitee setValue:f.facebookID forKeyPath:@"facebook_id"];
-            [friendsSet addObject:newInvitee];
-        }
-        
-        // add invitees to meeting
-        [meeting_object setValue:friendsSet forKey:@"invites"];
-        
-        // create Person object for self
-        NSManagedObject *meAdmin = [NSEntityDescription
-                                    insertNewObjectForEntityForName:@"Person"
-                                    inManagedObjectContext:context];
-        [meAdmin setValue:appDelegate.user.facebookID forKeyPath:@"facebook_id"];
-        [meAdmin setValue:appDelegate.user.name forKeyPath:@"name"];
-        [meAdmin setValue:appDelegate.user.first_name forKeyPath:@"first_name"];
-        [meAdmin setValue:appDelegate.user.last_name forKeyPath:@"last_name"];
-        
-        // set self as admin
-        [meAdmin setValue:meeting_object forKeyPath:@"administors"];
-        [meeting_object setValue:meAdmin forKeyPath:@"admin"];
-        
-        // add reasons
-        NSMutableSet *reasonsSet = [[NSMutableSet alloc] init];
-        for (NSString *r in _reasons) {
-            NSManagedObject *newReason = [NSEntityDescription
-                                          insertNewObjectForEntityForName:@"Meeting_reason"
-                                          inManagedObjectContext:context];
-            [newReason setValue:r forKey:@"reason"];
-            [reasonsSet addObject:newReason];
-        }
-        [meeting_object setValue:reasonsSet forKeyPath:@"reasons"];
-        
-        // save it!
-        NSError *error;
-        if (![context save:&error]) {
-            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-        }
-        
-        [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
-        
-        
-        // save to Parse
-        PFObject *meetingParse = [PFObject objectWithClassName:@"Meeting"];
-        meetingParse[@"name"] = self.nameTextField.text;
-        meetingParse[@"admin_fb_id"] = [appDelegate user].facebookID;
-        meetingParse[@"status"] = @"initial";
-        [meetingParse addUniqueObjectsFromArray:_reasons forKey:@"reasons"];
-        meetingParse[@"comeToMe"] = [NSNumber numberWithBool:self.comeToMeSwitch.isOn];
-        meetingParse[@"meeting_description"] = self.detailsTextView.text;
-        
-        
-
-        
-        
-        NSMutableArray *fbIdArray = [[NSMutableArray alloc] init];
-        for (Friend *f in _meeters) {
-            [fbIdArray addObject:f.facebookID];
-        }
-        [meetingParse addUniqueObjectsFromArray:fbIdArray forKey:@"invites"];
-        
-        
-        
-        
-        // give admin location
-        [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-            
-            if (!error) {
-                if (self.comeToMeSwitch.isOn) {
-                    meetingParse[@"final_meeting_location"] = geoPoint;
-                }else{
-                    [meetingParse addUniqueObject:geoPoint forKey:@"meeter_locations"];
-                }
-            }
-            
-            // save
-            [meetingParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (!error) {
-                    [meeting_object setValue:meetingParse.objectId forKey:@"parse_object_id"];
-                    [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
-                }
-            }];
-            
-        }];
-        
-        
-        
-        // unwind segue to home
-        [self.navigationController popToViewController:appDelegate.home animated:YES];
-        
-    }else{
-        // TODO: go to contacts
-        
-        [self performSegueWithIdentifier:@"meeting_contacts_segue" sender:self];
-    }
-    
-    
-    [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
-}
-
-
-- (IBAction)comeToMeSwitched:(id)sender {
-    [_meetingObject setValue:[NSNumber numberWithBool:[self.comeToMeSwitch isOn]] forKey:@"is_ComeToMe"];
-    [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
-}
 
 - (IBAction)deleteBtnHit:(id)sender {
     UIAlertView * alert = [[UIAlertView alloc]
@@ -326,28 +123,13 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     
-    if([[segue identifier] isEqualToString:@"meeting_contacts_segue"]) {
+    if ([segue.identifier isEqualToString:@"meeting_guests_segue"]) {
         
-        if(((AppDelegate *)[[UIApplication sharedApplication] delegate]).user.friends.count == 0) {
-            [((AppDelegate *)[[UIApplication sharedApplication] delegate]).user getMyInformation];
-        }
-        
-        ContactsViewController *vc = (ContactsViewController *)[segue destinationViewController];
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name"
-                                                                       ascending:YES];
-        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-        vc.friends = [((AppDelegate *)[[UIApplication sharedApplication] delegate]).user.friends sortedArrayUsingDescriptors:sortDescriptors];
-        
-        NSMutableArray *tempMeeters = [[NSMutableArray alloc] init];
-        NSSet *ppl = [_meetingObject mutableSetValueForKey:@"invites"];
-        for (NSManagedObject *person in ppl) {
-            Friend *f = [[Friend alloc] initWithManagedObject:person];
-            [tempMeeters addObject:f];
-        }
-        vc.meeters = tempMeeters;
-        
+        GuestListController *vc = [segue destinationViewController];
         [vc setMeetingObject:_meetingObject];
+        
     }
+    
 }
 
 

@@ -14,7 +14,6 @@
 - (void)cellDoubleTapped:(HomeCell *)sender;
 - (void)cellSingleTapped:(HomeCell *)sender;
 
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *logoutBtn;
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;

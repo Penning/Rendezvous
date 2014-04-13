@@ -68,6 +68,8 @@
 		4F6985EE18F47D0B005EC437 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6985ED18F47D0B005EC437 /* DataManager.m */; };
 		4FBA5D3718ECCD6800532689 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBA5D3618ECCD6800532689 /* HistoryViewController.m */; };
 		4FD9A08818F8B0C600EB6574 /* FinalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9A08718F8B0C600EB6574 /* FinalViewController.m */; };
+		4FD9A08B18F9FD3800EB6574 /* GuestListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9A08A18F9FD3800EB6574 /* GuestListController.m */; };
+		4FD9A08E18FA0F8B00EB6574 /* GuestListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9A08D18FA0F8B00EB6574 /* GuestListCell.m */; };
 		4FF9ACEE18DDEBA5008C9CC3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACED18DDEBA5008C9CC3 /* Foundation.framework */; };
 		4FF9ACF018DDEBA5008C9CC3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACEF18DDEBA5008C9CC3 /* CoreGraphics.framework */; };
 		4FF9ACF218DDEBA5008C9CC3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF9ACF118DDEBA5008C9CC3 /* UIKit.framework */; };
@@ -218,6 +220,10 @@
 		4FBA5D3618ECCD6800532689 /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
 		4FD9A08618F8B0C600EB6574 /* FinalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinalViewController.h; sourceTree = "<group>"; };
 		4FD9A08718F8B0C600EB6574 /* FinalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinalViewController.m; sourceTree = "<group>"; };
+		4FD9A08918F9FD3800EB6574 /* GuestListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuestListController.h; sourceTree = "<group>"; };
+		4FD9A08A18F9FD3800EB6574 /* GuestListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuestListController.m; sourceTree = "<group>"; };
+		4FD9A08C18FA0F8B00EB6574 /* GuestListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuestListCell.h; sourceTree = "<group>"; };
+		4FD9A08D18FA0F8B00EB6574 /* GuestListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuestListCell.m; sourceTree = "<group>"; };
 		4FF9ACEA18DDEBA5008C9CC3 /* Rendezvous.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rendezvous.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF9ACED18DDEBA5008C9CC3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4FF9ACEF18DDEBA5008C9CC3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -635,6 +641,8 @@
 				49BD483A18E27BE600EAD526 /* ContactsCell.m */,
 				49445DAD18EF04F300525E66 /* LocationSuggestionCell.h */,
 				49445DAE18EF04F300525E66 /* LocationSuggestionCell.m */,
+				4FD9A08C18FA0F8B00EB6574 /* GuestListCell.h */,
+				4FD9A08D18FA0F8B00EB6574 /* GuestListCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -644,6 +652,8 @@
 			children = (
 				4FF9AD3018DE0B55008C9CC3 /* MeetingViewController.h */,
 				4FF9AD3118DE0B55008C9CC3 /* MeetingViewController.m */,
+				4FD9A08918F9FD3800EB6574 /* GuestListController.h */,
+				4FD9A08A18F9FD3800EB6574 /* GuestListController.m */,
 			);
 			name = MeetingView;
 			sourceTree = "<group>";
@@ -816,7 +826,9 @@
 				49FE6EE718E25B2400626238 /* CurrentUser.m in Sources */,
 				499679FE18ECB8FD009CC8E8 /* MKAnnotationView+WebCache.m in Sources */,
 				492FEB6018F1D935008BABD1 /* hmac.c in Sources */,
+				4FD9A08B18F9FD3800EB6574 /* GuestListController.m in Sources */,
 				492FEB6318F1D935008BABD1 /* OAConsumer.m in Sources */,
+				4FD9A08E18FA0F8B00EB6574 /* GuestListCell.m in Sources */,
 				499679FF18ECB8FD009CC8E8 /* NSData+ImageContentType.m in Sources */,
 				4F6985EE18F47D0B005EC437 /* DataManager.m in Sources */,
 				49967A0818ECB8FD009CC8E8 /* UIImage+GIF.m in Sources */,

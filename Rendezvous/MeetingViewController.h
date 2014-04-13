@@ -12,24 +12,14 @@
 
 @interface MeetingViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
-@property (strong, nonatomic) IBOutlet UITextField *nameTextField;
-@property (strong, nonatomic) IBOutlet UITextView *detailsTextView;
 
-@property (strong, nonatomic) IBOutlet UISwitch *comeToMeSwitch;
-@property (strong, nonatomic) IBOutlet UIButton *sendContactsButton;
-@property (strong, nonatomic) IBOutlet UILabel *numMeetersLabel;
-
-@property (strong, nonatomic) NSArray *meeters;
-@property (strong, nonatomic) NSArray *reasons;
-@property (strong, nonatomic) Meeting *meeting;
-
+@property (weak, nonatomic) IBOutlet UILabel *meetingTitleLabel;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBtn;
 @property (strong, nonatomic) NSManagedObject *meetingObject;
+@property (weak, nonatomic) IBOutlet UILabel *meetingCreatedLabel;
 
 - (void)initFromHome;
 - (void)initFromContacts;
 
-@property (strong, nonatomic) IBOutlet UILabel *reasonsLabel;
 
 @end

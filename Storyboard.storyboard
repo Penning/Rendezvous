@@ -435,7 +435,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="YVj-AO-F1X">
-                                <rect key="frame" x="0.0" y="468" width="320" height="100"/>
+                                <rect key="frame" x="0.0" y="456" width="320" height="112"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -454,24 +454,24 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="titleLabel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iEN-Hb-qA0">
-                                                    <rect key="frame" x="41" y="12" width="207" height="21"/>
+                                                    <rect key="frame" x="50" y="5" width="207" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="an4-1J-W3f">
-                                                    <rect key="frame" x="3" y="8" width="30" height="30"/>
+                                                    <rect key="frame" x="3" y="5" width="39" height="39"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N8D-Ld-XgT">
                                                     <rect key="frame" x="292" y="0.0" width="23" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LeftLabel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Jd-gC-uf1">
-                                                    <rect key="frame" x="3" y="33" width="132" height="15"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="dateLabel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xMz-fK-kr4">
+                                                    <rect key="frame" x="50" y="23" width="106" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -480,7 +480,7 @@
                                         <gestureRecognizers/>
                                         <connections>
                                             <outlet property="adminImageView" destination="N8D-Ld-XgT" id="MsI-kx-Tyg"/>
-                                            <outlet property="leftLabel" destination="4Jd-gC-uf1" id="dYD-Af-qlc"/>
+                                            <outlet property="dateLabel" destination="xMz-fK-kr4" id="Ta3-kb-d60"/>
                                             <outlet property="rightLabel" destination="6Pw-Ul-M4A" id="WhZ-ce-zvC"/>
                                             <outlet property="statusImageView" destination="an4-1J-W3f" id="1LD-YD-du1"/>
                                             <outlet property="titleLabel" destination="iEN-Hb-qA0" id="otE-P3-79u"/>
@@ -493,7 +493,7 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pending meetings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q79-Rx-Jle">
-                                <rect key="frame" x="91" y="439" width="139" height="21"/>
+                                <rect key="frame" x="91" y="427" width="139" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -609,7 +609,7 @@
             </objects>
             <point key="canvasLocation" x="1440" y="135"/>
         </scene>
-        <!--Meeting View Controller - Meeting details-->
+        <!--Meeting View Controller - Meeting Details-->
         <scene sceneID="XZE-Rf-S9F">
             <objects>
                 <viewController id="CMH-LF-aW1" customClass="MeetingViewController" sceneMemberID="viewController">
@@ -621,79 +621,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Meeting Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MiB-Rf-4dY">
-                                <rect key="frame" x="20" y="103" width="280" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                            </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Meeting" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q18-H7-4UQ">
-                                <rect key="frame" x="20" y="82" width="83" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="optional" translatesAutoresizingMaskIntoConstraints="NO" id="PsJ-Fj-tXR">
-                                <rect key="frame" x="20" y="180" width="280" height="127"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                            </textView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Details" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Xb-vd-3Nm">
-                                <rect key="frame" x="20" y="151" width="65" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="22r-ZD-fc0">
-                                <rect key="frame" x="80" y="496" width="161" height="39"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <state key="normal" title="Send/ Invites">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                            <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CZD-de-co3">
+                                <rect key="frame" x="0.0" y="258" width="320" height="310"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
-                                    <action selector="sendContactsBtnHit:" destination="CMH-LF-aW1" eventType="touchUpInside" id="qxT-Wj-bQl"/>
+                                    <segue destination="HfM-mu-QZQ" kind="embed" identifier="meeting_guests_segue" id="mgf-Ad-cdL"/>
                                 </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Come to me!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tja-oq-TsW">
-                                <rect key="frame" x="20" y="440" width="164" height="21"/>
+                            </containerView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="meetingTitleLabel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DKB-GW-fNU">
+                                <rect key="frame" x="20" y="80" width="280" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="yl3-S1-VDm">
-                                <rect key="frame" x="251" y="435" width="51" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="comeToMeSwitched:" destination="CMH-LF-aW1" eventType="valueChanged" id="6oZ-W6-nzf"/>
-                                </connections>
-                            </switch>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="[static label]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HaL-TV-jCd">
-                                <rect key="frame" x="20" y="107" width="280" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="numMeetersLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="moL-sP-TjI">
-                                <rect key="frame" x="80" y="385" width="161" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="meetingCreatedLabel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vjh-M8-3DG">
+                                <rect key="frame" x="20" y="112" width="280" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Let's meet for..." textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J5W-JZ-9wJ">
-                                <rect key="frame" x="20" y="315" width="280" height="62"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Meeting:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FDH-3x-dj5">
+                                <rect key="frame" x="20" y="68" width="67" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.7882353663444519" green="0.90196084976196289" blue="0.9490196704864502" alpha="1" colorSpace="deviceRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Meeting details" id="Pzb-vi-nbQ">
+                    <navigationItem key="navigationItem" title="Meeting Details" id="Pzb-vi-nbQ">
                         <barButtonItem key="backBarButtonItem" title=" " id="YR9-qA-AWH"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="stop" id="7SY-7J-jme">
                             <connections>
@@ -702,86 +660,58 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="comeToMeSwitch" destination="yl3-S1-VDm" id="o7S-XB-Adb"/>
                         <outlet property="deleteBtn" destination="7SY-7J-jme" id="B8t-3p-D1O"/>
-                        <outlet property="detailsTextView" destination="PsJ-Fj-tXR" id="ioV-S4-kIR"/>
-                        <outlet property="nameLabel" destination="HaL-TV-jCd" id="Q32-uu-fg9"/>
-                        <outlet property="nameTextField" destination="MiB-Rf-4dY" id="gBf-Vs-bpG"/>
-                        <outlet property="numMeetersLabel" destination="moL-sP-TjI" id="6YP-cx-paH"/>
-                        <outlet property="reasonsLabel" destination="J5W-JZ-9wJ" id="qu9-tF-8Kr"/>
-                        <outlet property="sendContactsButton" destination="22r-ZD-fc0" id="pyG-an-pel"/>
-                        <segue destination="fVJ-xK-Wvc" kind="push" identifier="meeting_contacts_segue" id="29n-BP-nHh"/>
+                        <outlet property="meetingCreatedLabel" destination="vjh-M8-3DG" id="4Of-01-hwZ"/>
+                        <outlet property="meetingTitleLabel" destination="DKB-GW-fNU" id="aJh-RD-sMI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aw4-VH-TBH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2321" y="135"/>
+            <point key="canvasLocation" x="1885" y="804"/>
         </scene>
-        <!--Contacts View Controller - Edit Invites-->
-        <scene sceneID="w1y-R8-KTh">
+        <!--Guest List Controller-->
+        <scene sceneID="408-QP-55T">
             <objects>
-                <tableViewController id="fVJ-xK-Wvc" customClass="ContactsViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="16g-N7-0Ie">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="HfM-mu-QZQ" customClass="GuestListController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="DOV-aU-Tc2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="310"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="friendCell" rowHeight="40" id="cau-GE-ucy" customClass="ContactsCell">
-                                <rect key="frame" x="0.0" y="86" width="320" height="40"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="guest_cell" id="bR9-SX-Sxd" customClass="GuestListCell">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cau-GE-ucy" id="2kJ-JI-q1H">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="39"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bR9-SX-Sxd" id="9rt-hj-cvg">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tdr-A2-Ja3">
-                                            <rect key="frame" x="59" y="11" width="280" height="21"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="czV-Fn-WTm">
+                                            <rect key="frame" x="10" y="2" width="39" height="39"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="nameLabel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M0G-gc-CkT">
+                                            <rect key="frame" x="57" y="11" width="243" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="49g-3d-yC5">
-                                            <rect key="frame" x="11" y="5" width="30" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                    <integer key="value" value="15"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
-                                            </userDefinedRuntimeAttributes>
-                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="contactName" destination="tdr-A2-Ja3" id="dRY-qZ-53f"/>
-                                    <outlet property="profilePicture" destination="49g-3d-yC5" id="7jD-lW-ejq"/>
+                                    <outlet property="imageView" destination="czV-Fn-WTm" id="BdJ-Nd-sgr"/>
+                                    <outlet property="nameLabel" destination="M0G-gc-CkT" id="SHr-gL-TkW"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="fVJ-xK-Wvc" id="cjd-cP-fxn"/>
-                            <outlet property="delegate" destination="fVJ-xK-Wvc" id="1z4-1X-B0y"/>
+                            <outlet property="dataSource" destination="HfM-mu-QZQ" id="LLu-ug-2N7"/>
+                            <outlet property="delegate" destination="HfM-mu-QZQ" id="MrB-nA-gDd"/>
                         </connections>
                     </tableView>
-                    <toolbarItems>
-                        <barButtonItem title="ppl..." id="BdE-8M-1k5">
-                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="elS-u4-619"/>
-                        <barButtonItem title="Save" style="done" id="AnK-h7-UKz">
-                            <connections>
-                                <action selector="saveEditsBtnHit:" destination="fVJ-xK-Wvc" id="zeF-2A-NXE"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
-                    <navigationItem key="navigationItem" title="Edit Invites" id="BtJ-Ye-TCG"/>
-                    <connections>
-                        <outlet property="meetingNameBarBtn" destination="BdE-8M-1k5" id="IZz-dz-0TM"/>
-                    </connections>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ipU-va-9HL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7OR-HR-Dbm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2721" y="135"/>
+            <point key="canvasLocation" x="1885" y="1488"/>
         </scene>
         <!--Accept Decline Controller - Accept/Decline Screen-->
         <scene sceneID="Ugl-AG-KfI">
@@ -1197,7 +1127,6 @@
                         <outlet property="okToolbarBtn" destination="nC7-je-pum" id="3ky-9N-knb"/>
                         <outlet property="shopping" destination="LqP-xF-fPs" id="Qxh-dY-QYj"/>
                         <outlet property="studying" destination="naX-NA-Si3" id="N5D-wE-0gO"/>
-                        <segue destination="CMH-LF-aW1" kind="push" identifier="contacts_details_segue" id="ZE6-Iq-goc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PJa-DX-yrL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1228,7 +1157,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="4aF-VO-qgM"/>
-    </inferredMetricsTieBreakers>
 </document>

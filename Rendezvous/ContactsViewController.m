@@ -178,6 +178,7 @@
                 break;
             }
         }
+        
         if (isMeeter) {
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
         }else{
