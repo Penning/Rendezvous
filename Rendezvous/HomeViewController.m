@@ -244,8 +244,25 @@
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];
     [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
     
-    [cell.dateLabel setText:[NSString stringWithFormat:@"%@",
-                             [dateFormatter stringFromDate:(NSDate *)[meeting_object valueForKey:@"created_date"]]]];
+    NSDate *createdDate = [meeting_object valueForKey:@"created_date"];
+    
+    NSDateComponents* components = [[NSCalendar currentCalendar] components:(NSHourCalendarUnit|
+                                                                             NSDayCalendarUnit|
+                                                                             NSMinuteCalendarUnit|
+                                                                             NSSecondCalendarUnit)
+                                                                   fromDate:createdDate
+                                                                     toDate:[NSDate date]
+                                                                    options:0];
+    NSString *dateString = @"problem getting date";
+    if (components.day < 1 && components.hour > 0) {
+        dateString = [NSString stringWithFormat:@"%ld hours ago", (long)components.hour];
+    }else if (components.hour < 1 && components.minute > 0){
+        dateString = [NSString stringWithFormat:@"%ld minutes ago", (long)components.minute];
+    }if (components.minute < 1){
+        dateString = [NSString stringWithFormat:@"%ld seconds ago", (long)components.second];
+    }
+    
+    [cell.dateLabel setText:dateString];
     
 
     [cell.adminImageView setImage:[UIImage imageNamed:@"admin_indicator"]];

@@ -514,6 +514,7 @@
     }
     [meetingObject setValue:[foreignMeeting valueForKey:@"num_responded"] forKey:@"num_responded"];
     [meetingObject setValue:[foreignMeeting valueForKey:@"status"] forKey:@"status"];
+    [meetingObject setValue:[foreignMeeting createdAt] forKey:@"created_date"];
     
     if ([appDelegate.user.facebookID isEqualToString:[foreignMeeting valueForKey:@"admin_fb_id"]]) {
         
