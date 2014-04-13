@@ -261,7 +261,7 @@
         }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"closed"]){
             [cell.statusImageView setImage:[UIImage imageNamed:@"closed_meeting"]];
             [cell.rightLabel setText:@""];
-        }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"fianl"]){
+        }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"final"]){
             [cell.statusImageView setImage:[UIImage imageNamed:@"finalized_meeting"]];
             [cell.rightLabel setText:@"Double tap to view location."];
         }
