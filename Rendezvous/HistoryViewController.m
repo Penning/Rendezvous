@@ -171,12 +171,22 @@
     return [sectionInfo numberOfObjects];
 }
 
+#pragma mark - Cell config
 
 - (void)configureCell:(UITableViewCell *)cell1 atIndexPath:(NSIndexPath *)indexPath{
     NSManagedObject *meeting_object = [_fetchedResultsController objectAtIndexPath:indexPath];
     
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    
     [cell1.textLabel setText:[meeting_object valueForKey:@"meeting_name"]];
     [cell1.detailTextLabel setText:[NSString stringWithFormat:@"From: %@", [meeting_object valueForKeyPath:@"admin.name"]]];
+    
+    UITextView *dateView = [[UITextView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 75.0, 40.0f)];
+    [dateView setText:[NSString stringWithFormat:@"%@",
+                       [dateFormatter stringFromDate:((NSDate *)[meeting_object valueForKey:@"created_date"])]]];
+    [cell1 setAccessoryView:dateView];
     
 }
 
