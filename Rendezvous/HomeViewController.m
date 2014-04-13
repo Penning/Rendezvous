@@ -264,13 +264,12 @@
     }
     
     [cell.dateLabel setText:dateString];
-    
+    [cell.titleLabel setText:[meeting_object valueForKey:@"meeting_name"]];
 
     [cell.adminImageView setImage:[UIImage imageNamed:@"admin_indicator"]];
 
     if ([cell.adminFbId isEqualToString:appDelegate.user.facebookID]) {
         // admin
-        [cell.titleLabel setText:[meeting_object valueForKey:@"meeting_name"]];
         
         if ([[meeting_object valueForKey:@"status"]  isEqual: @"open"]) {
             [cell.statusImageView setImage:[UIImage imageNamed:@"open_meeting"]];
@@ -286,7 +285,6 @@
         [cell.adminImageView setHidden:NO];
     }else{
         // not admin
-        [cell.titleLabel setText:[NSString stringWithFormat:@"From: %@", [meeting_object valueForKeyPath:@"admin.name"]]];
         
         if ([[meeting_object valueForKey:@"status"]  isEqual: @"open"]) {
             [cell.statusImageView setImage:[UIImage imageNamed:@"open_meeting"]];

@@ -508,6 +508,13 @@
                                     <action selector="refreshBtnHit:" destination="44V-bZ-Ujm" eventType="touchUpInside" id="wvn-NA-REE"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Active Meetings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LvF-ae-Bvh">
+                                <rect key="frame" x="98" y="432" width="124" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -786,7 +793,7 @@
             </objects>
             <point key="canvasLocation" x="920" y="804"/>
         </scene>
-        <!--Final View Controller-->
+        <!--Final View Controller - Rendezvous-->
         <scene sceneID="KKX-pZ-re0">
             <objects>
                 <viewController storyboardIdentifier="final_view" id="cG2-sg-o8G" customClass="FinalViewController" sceneMemberID="viewController">
@@ -802,12 +809,46 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </mapView>
+                            <view alpha="0.89999999999999991" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gri-GZ-Hoa">
+                                <rect key="frame" x="0.0" y="456" width="320" height="112"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="meetingNameLabel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GU8-h9-Q59">
+                                        <rect key="frame" x="86" y="6" width="149" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" editable="NO" text="meetingAddressTextView" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="VE3-7V-a98">
+                                        <rect key="frame" x="71" y="26" width="178" height="42"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c1L-vb-Q50">
+                                        <rect key="frame" x="92" y="76" width="137" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <state key="normal" title="Open in Maps">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="openInMapsBtnHit:" destination="cG2-sg-o8G" eventType="touchUpInside" id="27L-G3-32t"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="pWP-U0-fND"/>
+                    <navigationItem key="navigationItem" title="Rendezvous" id="pWP-U0-fND"/>
                     <connections>
                         <outlet property="mapView" destination="5we-qu-RG1" id="hOr-WZ-fH7"/>
+                        <outlet property="meetingAddressTextView" destination="VE3-7V-a98" id="pl9-oP-ior"/>
+                        <outlet property="meetingNameLabel" destination="GU8-h9-Q59" id="iPa-1y-uce"/>
+                        <outlet property="underView" destination="gri-GZ-Hoa" id="D4n-7U-6NM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qn4-yH-SJU" userLabel="First Responder" sceneMemberID="firstResponder"/>
