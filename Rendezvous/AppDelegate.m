@@ -249,8 +249,9 @@
             [friendRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                 NSArray *data = [result objectForKey:@"data"];
 
-                for (FBGraphObject<FBGraphUser> *friend in data) {
-                    [self.user.friends addObject:[[Friend alloc] initWithObject:friend]];
+                for (FBGraphObject<FBGraphUser> *fbfriend in data) {
+                    Friend *friend = [[Friend alloc] initWithObject:fbfriend];
+                    [self.user.friends addObject:friend];
 
                     for(PFUser *user in objects) {
                         if([[user valueForKey:@"name"] isEqualToString:friend.name]) {

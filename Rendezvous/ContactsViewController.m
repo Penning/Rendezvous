@@ -21,9 +21,6 @@
     NSString *meetingName;
 }
 
-//@synthesize friends;
-//@synthesize friendsWithApp;
-//@synthesize friendsWithoutApp;
 @synthesize meeters;
 @synthesize meetingObject = _meetingObject;
 @synthesize activityIndicator = _activityIndicator;
@@ -56,8 +53,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     appDelegate = [[UIApplication sharedApplication] delegate];
     [appDelegate setContacts:self];
-//    friends = appDelegate.user.friends;
-//    friendsWithApp = appDelegate.user.friendsWithApp;
 
     if ([meeters count] > 0) {
         NSString *tempMeetingName = @"w/: ";
@@ -79,9 +74,6 @@
         [self.navigationController setToolbarHidden:YES animated:animated];
     }
 
-//    friendsWithApp = [[NSMutableArray alloc] init];
-//    friendsWithoutApp = [[NSMutableArray alloc] init];
-
     [self.tableView reloadData];
 
     if(appDelegate.user.friends.count == 0) {
@@ -93,12 +85,6 @@
         [_activityIndicator startAnimating];
         
         [self.tableView reloadData];
-    } else {
-//        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-//        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-//        [friendsWithApp addObjectsFromArray:[appDelegate.user.friendsWithApp sortedArrayUsingDescriptors:sortDescriptors]];
-//        [friendsWithoutApp addObjectsFromArray:[appDelegate.user.friends sortedArrayUsingDescriptors:sortDescriptors]];
-//        [friendsWithoutApp removeObjectsInArray:friendsWithApp];
     }
 
     [self.tableView reloadData];

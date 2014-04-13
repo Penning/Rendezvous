@@ -35,7 +35,7 @@
             _friends = [[NSMutableArray alloc] init];
             for (FBGraphObject<FBGraphUser> *friend in data) {
                 [_friends addObject:[[Friend alloc] initWithObject:friend]];
-                // NSLog(@"friend :%@", friend);
+//                NSLog(@"friend :%@", friend);
             }
             NSLog(@"Found %lu friends!", (unsigned long)_friends.count);
             
