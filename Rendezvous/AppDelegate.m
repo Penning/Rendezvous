@@ -95,7 +95,7 @@
                 if ([[payload objectForKey:@"type"] isEqualToString:@"invite"]) {
                     // invite
                     
-                    [[[UIAlertView alloc] initWithTitle:@"Rendezvous recieved!"
+                    [[[UIAlertView alloc] initWithTitle:@"Rendezvous Recieved!"
                                                 message:[payload valueForKeyPath:@"aps.alert"]
                                                delegate:self
                                       cancelButtonTitle:@"Later"
