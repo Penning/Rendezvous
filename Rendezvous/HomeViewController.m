@@ -54,7 +54,7 @@
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
     [fetchRequest setEntity:fetchEntity];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"is_old == %@ AND status != 'final'", @NO];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"is_old == %@", @NO];
     [fetchRequest setPredicate:predicate];
     
     _fetchedResultsController = [[NSFetchedResultsController alloc]
@@ -245,9 +245,8 @@
         }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"closed"]){
             [cell.statusImageView setImage:[UIImage imageNamed:@"closed_meeting"]];
             [cell.rightLabel setText:@"Double tap to choose location."];
-        }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"fianl"]){
-            // TODO: set checkmark
-            
+        }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"final"]){
+            [cell.statusImageView setImage:[UIImage imageNamed:@"finalized_meeting"]];
             [cell.rightLabel setText:@"Swipe to delete."];
         }
 
@@ -263,8 +262,7 @@
             [cell.statusImageView setImage:[UIImage imageNamed:@"closed_meeting"]];
             [cell.rightLabel setText:@""];
         }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"fianl"]){
-            // TODO: set checkmark
-            
+            [cell.statusImageView setImage:[UIImage imageNamed:@"finalized_meeting"]];
             [cell.rightLabel setText:@"Double tap to view location."];
         }
         [cell.adminImageView setHidden:YES];
