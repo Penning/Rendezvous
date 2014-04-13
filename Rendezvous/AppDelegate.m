@@ -243,45 +243,56 @@
 
         PFQuery *query = [PFUser query];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if(!error) {
+                FBRequest *friendRequest = [FBRequest requestForGraphPath:@"me/friends?fields=name,picture"];
 
-            FBRequest *friendRequest = [FBRequest requestForGraphPath:@"me/friends?fields=name,picture"];
+                [friendRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                    if(!error) {
+                        NSArray *data = [result objectForKey:@"data"];
 
-            [friendRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                NSArray *data = [result objectForKey:@"data"];
+                        for (FBGraphObject<FBGraphUser> *fbfriend in data) {
+                            Friend *friend = [[Friend alloc] initWithObject:fbfriend];
+                            [self.user.friends addObject:friend];
 
-                for (FBGraphObject<FBGraphUser> *fbfriend in data) {
-                    Friend *friend = [[Friend alloc] initWithObject:fbfriend];
-                    [self.user.friends addObject:friend];
-
-                    for(PFUser *user in objects) {
-                        if([[user valueForKey:@"name"] isEqualToString:friend.name]) {
-                            if(![self.user.friendsWithApp containsObject:friend]) {
-                                NSLog(@"Adding %@", friend.name);
-                                [self.user.friendsWithApp addObject:friend];
-                            }
-                        } else {
-                            if(![self.user.friendsWithoutApp containsObject:friend] && ![self.user.friendsWithApp containsObject:friend]) {
-                                [self.user.friendsWithoutApp addObject:friend];
+                            for(PFUser *user in objects) {
+                                if([[user valueForKey:@"name"] isEqualToString:friend.name]) {
+                                    if(![self.user.friendsWithApp containsObject:friend]) {
+                                        NSLog(@"Adding %@", friend.name);
+                                        [self.user.friendsWithApp addObject:friend];
+                                    }
+                                } else {
+                                    if(![self.user.friendsWithoutApp containsObject:friend] && ![self.user.friendsWithApp containsObject:friend]) {
+                                        [self.user.friendsWithoutApp addObject:friend];
+                                    }
+                                }
                             }
                         }
+
+                        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+                        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+
+                        NSArray *temp = [self.user.friendsWithApp sortedArrayUsingDescriptors:sortDescriptors];
+                        [self.user.friendsWithApp removeAllObjects];
+                        [self.user.friendsWithApp addObjectsFromArray:temp];
+
+                        NSArray *temp2 = [self.user.friendsWithoutApp sortedArrayUsingDescriptors:sortDescriptors];
+                        [self.user.friendsWithoutApp removeAllObjects];
+                        [self.user.friendsWithoutApp addObjectsFromArray:temp2];
+
+                        NSLog(@"Found %lu friends!", (unsigned long)self.user.friends.count);
+                        [((ContactsViewController *)_contacts).activityIndicator stopAnimating];
+                        [((ContactsViewController *)_contacts).tableView reloadData];
+                    } else {
+                        NSLog(@"Facebook Error: %@", error);
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Facebook Error" message:@"Cannot reach Facebook servers. You will not be able to create a new meeting." delegate:self cancelButtonTitle:@"I Understand" otherButtonTitles:nil];
+                        [alert show];
                     }
-                }
-
-                NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-                NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-
-                NSArray *temp = [self.user.friendsWithApp sortedArrayUsingDescriptors:sortDescriptors];
-                [self.user.friendsWithApp removeAllObjects];
-                [self.user.friendsWithApp addObjectsFromArray:temp];
-
-                NSArray *temp2 = [self.user.friendsWithoutApp sortedArrayUsingDescriptors:sortDescriptors];
-                [self.user.friendsWithoutApp removeAllObjects];
-                [self.user.friendsWithoutApp addObjectsFromArray:temp2];
-
-                NSLog(@"Found %lu friends!", (unsigned long)self.user.friends.count);
-                [((ContactsViewController *)_contacts).activityIndicator stopAnimating];
-                [((ContactsViewController *)_contacts).tableView reloadData];
-            }];
+                }];
+            } else {
+                NSLog(@"Parse Error: %@", error);
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Parse Error" message:@"Cannot reach Parse servers. You will not be able to do anything." delegate:self cancelButtonTitle:@"I Understand" otherButtonTitles:nil];
+                [alert show];
+            }
         }];
     }
 
