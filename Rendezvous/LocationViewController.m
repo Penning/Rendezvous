@@ -115,6 +115,7 @@
 //        if(pinView.description isEqual:<#(id)#>)
         pinView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"Pin"];
         pinView.pinColor = MKPinAnnotationColorPurple;
+        pinView.canShowCallout = YES;
 //        pinView.animatesDrop = YES;
 
     }
@@ -278,42 +279,59 @@
 
                 NSLog(@"%f, %f", location.pflocation.latitude, location.pflocation.longitude);
 
+                NSString *postalAddress = [NSString stringWithFormat:@"%@\n%@, %@", location.streetAddress, location.city, location.state];
+                locationParse[@"address"] = postalAddress;
+                NSLog(@"Selected address: %@", postalAddress);
+
                 if(!location.pflocation || (location.pflocation.latitude == 0.000000 || location.pflocation.longitude == 0.000000)) {
                     NSString *address = [NSString stringWithFormat:@"%@, %@", location.streetAddress, location.city];
+
                     CLGeocoder *geocoder = [[CLGeocoder alloc] init];;
                     [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
                         if(!error) {
                             if (placemarks && placemarks.count > 0) {
                                 MKPlacemark *placemark = [[MKPlacemark alloc] initWithPlacemark:[placemarks objectAtIndex:0]];
-                                MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-                                annotation.coordinate = placemark.coordinate ;
 
                                 location.pflocation = [[PFGeoPoint alloc] init];
-                                location.pflocation.latitude = annotation.coordinate.latitude;
-                                location.pflocation.longitude = annotation.coordinate.longitude;
-
-                                NSLog(@"%f, %f", location.pflocation.latitude, location.pflocation.longitude);
-
-                                annotation.title = location.name;
-                                [_mapView addAnnotation:annotation];
-
-                                //Add to zoom
-                                [self zoomToFitMapAnnotations];
+                                location.pflocation.latitude = placemark.coordinate.latitude;
+                                location.pflocation.longitude = placemark.coordinate.longitude;
                             }
                         }
                         else {
                             NSLog(@"Error: %@", error);
                         }
                     }];
-                    [self annotateMap];
                 }
+
+                NSLog(@"Final lat/lng: (%f, %f)", location.pflocation.latitude, location.pflocation.longitude);
 
                 locationParse[@"meeting_geopoint"] = location.pflocation;
 
                 [locationParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    object[@"finalized_location"] = locationParse;
-                    [object saveInBackground];
-                    [appDelegate getMeetingUpdates];
+                    if(!error) {
+                        NSLog(@"Sending location to Parse");
+                        NSLog(@"LocationParse: %@", locationParse);
+                        object[@"finalized_location"] = locationParse;
+
+                        [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                            if(!error) {
+                                NSLog(@"location saved in parse meeting object");
+                                [appDelegate getMeetingUpdates];
+                            } else {
+                                NSLog(@"Error: %@", error);
+                            }
+
+                            if(succeeded) {
+                                NSLog(@"object save success");
+                            }
+                        }];
+                    } else {
+                        NSLog(@"Error: %@", error);
+                    }
+
+                    if(succeeded) {
+                        NSLog(@"locationParse save success");
+                    }
                 }];
 
             }
