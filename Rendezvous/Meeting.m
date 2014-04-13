@@ -63,6 +63,8 @@
     }
     _latitude = [NSNumber numberWithDouble:((PFGeoPoint *)[meeting_object valueForKey:@"final_meeting_location"]).latitude];
     _longitude = [NSNumber numberWithDouble:((PFGeoPoint *)[meeting_object valueForKey:@"final_meeting_location"]).longitude];
+
+    NSLog(@"Lat/Lng, %@, %@", _latitude, _longitude);
     
     return self;
 }

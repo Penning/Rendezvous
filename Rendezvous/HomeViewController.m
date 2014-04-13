@@ -54,7 +54,7 @@
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
     [fetchRequest setEntity:fetchEntity];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"is_old == %@ AND status != 'final'", @NO];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"is_old == %@", @NO];
     [fetchRequest setPredicate:predicate];
     
     _fetchedResultsController = [[NSFetchedResultsController alloc]
@@ -233,41 +233,39 @@
                              [dateFormatter stringFromDate:(NSDate *)[meeting_object valueForKey:@"created_date"]]]];
     
 
+    [cell.adminImageView setImage:[UIImage imageNamed:@"admin_indicator"]];
+
     if ([cell.adminFbId isEqualToString:appDelegate.user.facebookID]) {
         // admin
         [cell.titleLabel setText:[meeting_object valueForKey:@"meeting_name"]];
         
         if ([[meeting_object valueForKey:@"status"]  isEqual: @"open"]) {
-            // TODO: set open circle
-            
+            [cell.statusImageView setImage:[UIImage imageNamed:@"open_meeting"]];
             [cell.rightLabel setText:@"Double tap to close."];
         }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"closed"]){
-            // TODO: set closed circle
-            
+            [cell.statusImageView setImage:[UIImage imageNamed:@"closed_meeting"]];
             [cell.rightLabel setText:@"Double tap to choose location."];
-        }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"fianl"]){
-            // TODO: set checkmark
-            
+        }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"final"]){
+            [cell.statusImageView setImage:[UIImage imageNamed:@"finalized_meeting"]];
             [cell.rightLabel setText:@"Swipe to delete."];
         }
-        
+
+        [cell.adminImageView setHidden:NO];
     }else{
         // not admin
         [cell.titleLabel setText:[NSString stringWithFormat:@"From: %@", [meeting_object valueForKeyPath:@"admin.name"]]];
         
         if ([[meeting_object valueForKey:@"status"]  isEqual: @"open"]) {
-            // TODO: set open circle
-            
+            [cell.statusImageView setImage:[UIImage imageNamed:@"open_meeting"]];
             [cell.rightLabel setText:@"Double tap to RSVP"];
         }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"closed"]){
-            // TODO: set closed circle
-            
+            [cell.statusImageView setImage:[UIImage imageNamed:@"closed_meeting"]];
             [cell.rightLabel setText:@""];
         }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"fianl"]){
-            // TODO: set checkmark
-            
+            [cell.statusImageView setImage:[UIImage imageNamed:@"finalized_meeting"]];
             [cell.rightLabel setText:@"Double tap to view location."];
         }
+        [cell.adminImageView setHidden:YES];
     }
 }
 
