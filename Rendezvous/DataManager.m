@@ -507,7 +507,11 @@
     
     
     // update some meeting info
-    [meetingObject setValue:@NO forKey:@"is_old"];
+    if (((NSNumber *)[meetingObject valueForKey:@"is_old"]).boolValue) {
+        [meetingObject setValue:@YES forKey:@"is_old"];
+    }else {
+        [meetingObject setValue:@NO forKey:@"is_old"];
+    }
     [meetingObject setValue:[foreignMeeting valueForKey:@"num_responded"] forKey:@"num_responded"];
     [meetingObject setValue:[foreignMeeting valueForKey:@"status"] forKey:@"status"];
     
@@ -556,7 +560,7 @@
             if (resultsArray != nil && resultsArray.count > 0) {
                 // delete
                 for (NSManagedObject *o in resultsArray) {
-                    [o setValue:@YES forKey:@"is_old"];
+                    // [o setValue:@YES forKey:@"is_old"];
                 }
                 
                 [appDelegate saveContext];
@@ -689,12 +693,15 @@
 
 - (void) deleteMeetingSoft:(NSManagedObject *)meetingObject{
     
-    NSLog(@"meeting to delete: %@", [meetingObject valueForKey:@"parse_object_id"]);
-    
     // delete on parse
     [self deleteMeetingOnServerWithId:[meetingObject valueForKey:@"parse_object_id"]];
     
-    NSLog(@"deleted on Parse");
+    // put in history
+    [self putInHistory:meetingObject];
+    
+}
+
+- (void) putInHistory:(NSManagedObject *)meetingObject{
     
     // delete local relations
     //
@@ -706,6 +713,22 @@
         }
     }
     [meetingObject setValue:nil forKey:@"invites"];
+    //  accepted
+    NSMutableSet *acpt = [meetingObject mutableSetValueForKey:@"accepted"];
+    for (NSManagedObject *p in acpt) {
+        if ([p valueForKey:@"administors"] == nil) {
+            [appDelegate.managedObjectContext deleteObject:p];
+        }
+    }
+    [meetingObject setValue:nil forKey:@"accepted"];
+    //  declined
+    NSMutableSet *decl = [meetingObject mutableSetValueForKey:@"declined"];
+    for (NSManagedObject *p in decl) {
+        if ([p valueForKey:@"administors"] == nil) {
+            [appDelegate.managedObjectContext deleteObject:p];
+        }
+    }
+    [meetingObject setValue:nil forKey:@"declined"];
     //  reasons
     NSMutableSet *rsns = [meetingObject mutableSetValueForKey:@"reasons"];
     for (NSManagedObject *r in rsns) {
@@ -716,8 +739,8 @@
     // mark as old
     [meetingObject setValue:@YES forKey:@"is_old"];
     
+    // save
     [appDelegate saveContext];
-    NSLog(@"deleted locally");
     
 }
 

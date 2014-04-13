@@ -312,11 +312,17 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
-        if ([[_fetchedResultsController objectAtIndexPath:indexPath] valueForKey:@"admin_fb_id"] isEqualToString:<#(NSString *)#>) {
-            <#statements#>
-        }
         DataManager *dm = [[DataManager alloc] init];
-        [dm deleteMeetingSoft:[_fetchedResultsController objectAtIndexPath:indexPath]];
+        if ([[[_fetchedResultsController objectAtIndexPath:indexPath] valueForKeyPath:@"admin.facebook_id"] isEqualToString:appDelegate.user.facebookID]) {
+            // if admin, delete on parse and mark local as old
+            
+            [dm deleteMeetingSoft:[_fetchedResultsController objectAtIndexPath:indexPath]];
+        }else{
+            // just mark local as old
+            
+            [dm putInHistory:[_fetchedResultsController objectAtIndexPath:indexPath]];
+        }
+        
     }
 }
 

@@ -21,5 +21,6 @@
 - (void) deleteMeetingLocally:(NSManagedObject *)meetingObject;
 
 - (void) deleteMeetingSoft:(NSManagedObject *)meetingObject;
+- (void) putInHistory:(NSManagedObject *)meetingObject;
 
 @end
