@@ -160,6 +160,7 @@
             LocationViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"location_view"];
             LocationSuggestionsLookup *locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];
             locationSuggestionsLookup.locationViewController = vc;
+            NSLog(@"Meeting Selected: %@", notificationMeeting);
             [locationSuggestionsLookup getSuggestions:[[Meeting alloc] fromPFObject:notificationMeeting]];
             
             [((UINavigationController *)self.window.rootViewController)

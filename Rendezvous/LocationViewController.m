@@ -115,7 +115,7 @@
 //        if(pinView.description isEqual:<#(id)#>)
         pinView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"Pin"];
         pinView.pinColor = MKPinAnnotationColorPurple;
-        pinView.animatesDrop = YES;
+//        pinView.animatesDrop = YES;
 
     }
     return pinView;
@@ -276,31 +276,6 @@
                 NSLog(@"%f, %f", location.pflocation.latitude, location.pflocation.longitude);
 
                 if(!location.pflocation || (location.pflocation.latitude == 0.000000 || location.pflocation.longitude == 0.000000)) {
-//                    NSString *address = [NSString stringWithFormat:@"%@, %@", location.streetAddress, location.city];
-//                    [geocoder geocodeAddressString:address completionHandler:^(NSArray* placemarks, NSError* error){
-//                        if(!error) {
-//                            if (placemarks && placemarks.count > 0) {
-//                                MKPlacemark *placemark = [[MKPlacemark alloc] initWithPlacemark:[placemarks objectAtIndex:0]];
-//                                MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-//                                annotation.coordinate = placemark.coordinate ;
-//
-//                                location.pflocation = [[PFGeoPoint alloc] init];
-//                                location.pflocation.latitude = annotation.coordinate.latitude;
-//                                location.pflocation.longitude = annotation.coordinate.longitude;
-//
-//                                NSLog(@"%f, %f", location.pflocation.latitude, location.pflocation.longitude);
-//
-//                                annotation.title = location.name;
-//                                [_mapView addAnnotation:annotation];
-//
-//                                //Add to zoom
-//                                [self zoomToFitMapAnnotations];
-//                            }
-//                        }
-//                        else {
-//                            NSLog(@"Error: %@", error);
-//                        }
-//                    }];
                     [self annotateMap];
                 }
 

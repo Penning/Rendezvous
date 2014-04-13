@@ -76,10 +76,10 @@
 }
 
 - (void) getSuggestions:(Meeting *) meeting {
-    if(latitude == NULL || longitude == NULL) {
-        NSLog(@"No location yet! (%@, %@)", latitude, longitude);
-        return;
-    }
+//    if(latitude == NULL || longitude == NULL) {
+//        NSLog(@"No location yet! (%@, %@)", latitude, longitude);
+//        return;
+//    }
 
     NSLog(@"GETTING LOCATION SUGGESTIONS!!!");
 
