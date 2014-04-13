@@ -81,49 +81,11 @@
 
         // alert
         if ([[payload objectForKey:@"type"] isEqualToString:@"invite"]) {
-            // invite
-            
-            if (!error && [PFUser currentUser]) {
-                
-                // set meeting object
-                notificationMeeting = object;
-
-                // alert
-                if ([[payload objectForKey:@"type"] isEqualToString:@"invite"]) {
-                    // invite
-                    
-                    [[[UIAlertView alloc] initWithTitle:@"Rendezvous Recieved!"
-                                                message:[payload valueForKeyPath:@"aps.alert"]
-                                               delegate:self
-                                      cancelButtonTitle:@"Later"
-                                      otherButtonTitles:@"Accept", @"Accept w/o Location", @"Decline", nil] show];
-                    
-                }else if ([[payload objectForKey:@"type"] isEqualToString:@"choose_location"]){
-                    // choose location
-                    
-                    [[[UIAlertView alloc] initWithTitle:@"Meeting closed!"
-                                                message:[payload valueForKeyPath:@"aps.alert"]
-                                               delegate:self
-                                      cancelButtonTitle:@"Later"
-                                      otherButtonTitles:@"Choose Location", nil] show];
-                    
-                }else if ([[payload objectForKey:@"type"] isEqualToString:@"final"]){
-                    // final
-                    
-                    [[[UIAlertView alloc] initWithTitle:@"Rendezvous!"
-                                                message:[payload valueForKeyPath:@"aps.alert"]
-                                               delegate:self
-                                      cancelButtonTitle:@"Cancel"
-                                      otherButtonTitles:@"View Location", nil] show];
-                    
-                }else{
-                    [self debugAlert:payload];
-                }
-                
-            }else{
-                NSLog(@"Error: %@", error);
-            }
-            
+            [[[UIAlertView alloc] initWithTitle:@"Rendezvous Recieved!"
+                                        message:[payload valueForKeyPath:@"aps.alert"]
+                                       delegate:self
+                              cancelButtonTitle:@"Later"
+                              otherButtonTitles:@"Accept", @"Accept w/o Location", @"Decline", nil] show];
         }else if ([[payload objectForKey:@"type"] isEqualToString:@"choose_location"]){
             // choose location
             
