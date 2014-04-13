@@ -310,28 +310,29 @@
                 [locationParse saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     if(!error) {
                         NSLog(@"Sending location to Parse");
-                        NSLog(@"LocationParse: %@", locationParse);
+//                        NSLog(@"LocationParse: %@", locationParse);
                         object[@"finalized_location"] = locationParse;
+                        object[@"status"] = @"closed";
 
                         [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                             if(!error) {
-                                NSLog(@"location saved in parse meeting object");
+//                                NSLog(@"location saved in parse meeting object");
                                 [appDelegate getMeetingUpdates];
                             } else {
                                 NSLog(@"Error: %@", error);
                             }
-
-                            if(succeeded) {
-                                NSLog(@"object save success");
-                            }
+//
+//                            if(succeeded) {
+//                                NSLog(@"object save success");
+//                            }
                         }];
                     } else {
                         NSLog(@"Error: %@", error);
                     }
-
-                    if(succeeded) {
-                        NSLog(@"locationParse save success");
-                    }
+//
+//                    if(succeeded) {
+//                        NSLog(@"locationParse save success");
+//                    }
                 }];
 
             }
