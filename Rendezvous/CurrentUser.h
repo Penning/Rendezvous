@@ -27,6 +27,7 @@
 //Friend Array
 @property (nonatomic, strong) NSMutableArray *friends;
 @property (nonatomic, strong) NSMutableArray *friendsWithApp;
+@property (nonatomic, strong) NSMutableArray *friendsWithoutApp;
 
 - (void) initFromRequest:(NSDictionary *) userData;
 - (void) getMyInformation;
