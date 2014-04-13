@@ -47,9 +47,6 @@
 - (void) viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     
-    [self.navigationController.navigationBar.topItem setTitle:[_meetingObject valueForKey:@"meeting_name"]];
-    
-    
 }
 
 

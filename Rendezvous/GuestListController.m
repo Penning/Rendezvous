@@ -44,7 +44,9 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    [self.meetingCreatedLabel setText:[NSString stringWithFormat:@"Created: %@",[dateFormatter stringFromDate:[_meetingObject valueForKey:@"created_date"]]]] ;
+    [self.meetingNameLabel setText:[_meetingObject valueForKey:@"meeting_name"]];
+    [self.meetingCreatedLabel setText:[NSString stringWithFormat:@"Created: %@",
+                                       [dateFormatter stringFromDate:[_meetingObject valueForKey:@"created_date"]]]];
     
     // query people
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
