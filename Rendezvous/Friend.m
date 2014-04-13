@@ -30,7 +30,6 @@
 
     _pictureURL = [[[friend objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
     
-    
     return self;
 }
 
