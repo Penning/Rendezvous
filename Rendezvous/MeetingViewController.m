@@ -47,12 +47,9 @@
 - (void) viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     
-    [self.meetingTitleLabel setText:[_meetingObject valueForKey:@"meeting_name"]];
+    [self.navigationController.navigationBar.topItem setTitle:[_meetingObject valueForKey:@"meeting_name"]];
     
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
-    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    [self.meetingCreatedLabel setText:[NSString stringWithFormat:@"Created: %@",[dateFormatter stringFromDate:[_meetingObject valueForKey:@"created_date"]]]] ;
+    
 }
 
 

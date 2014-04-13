@@ -11,5 +11,6 @@
 @interface GuestListController : UITableViewController
 
 @property (strong, nonatomic) NSManagedObject *meetingObject;
+@property (weak, nonatomic) IBOutlet UILabel *meetingCreatedLabel;
 
 @end
