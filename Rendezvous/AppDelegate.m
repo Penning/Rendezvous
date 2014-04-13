@@ -120,7 +120,7 @@
     }else {
         // act
         
-        if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Accept w/ Current Location"]) {
+        if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Accept"]) {
             // accept/decline
 
             // -------Parse location--------
