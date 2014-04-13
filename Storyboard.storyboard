@@ -421,8 +421,9 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Tt-b4-6qe">
                                 <rect key="frame" x="20" y="197" width="280" height="138"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <size key="titleShadowOffset" width="1" height="1"/>
                                 <state key="normal" image="rendezvous_btn">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -1144,7 +1145,7 @@
         <image name="arts" width="24" height="20"/>
         <image name="bars" width="22" height="24"/>
         <image name="coffee" width="24" height="26"/>
-        <image name="home-bg" width="320" height="568"/>
+        <image name="home-bg" width="640" height="1136"/>
         <image name="libraries" width="18" height="26"/>
         <image name="login-button-small" width="151" height="43"/>
         <image name="movietheaters" width="19" height="25"/>
@@ -1155,7 +1156,7 @@
         <image name="rendezvous_btn" width="1235" height="571"/>
         <image name="rendezvous_logo" width="1235" height="571"/>
         <image name="restaurants" width="29" height="23"/>
-        <image name="settings_gear" width="256" height="256"/>
+        <image name="settings_gear" width="512" height="512"/>
         <image name="shopping" width="26" height="19"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
