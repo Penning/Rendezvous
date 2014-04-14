@@ -78,12 +78,8 @@
 - (void) getSuggestions:(Meeting *) meeting {
     NSLog(@"GETTING LOCATION SUGGESTIONS!!!");
 
-    if(locations == nil) {
-        locations = [[NSMutableArray alloc] init];
-    }
-    if(_locationViewController.suggestions == nil) {
-        _locationViewController.suggestions = [[NSMutableArray alloc] init];
-    }
+    locations = [[NSMutableArray alloc] init];
+    _locationViewController.suggestions = [[NSMutableArray alloc] init];
 
     //Using default admin lat/lng when finalized location hasn't been set!
     if(([meeting.latitude isEqual:[NSNumber numberWithInt:0]] && [meeting.longitude isEqual:[NSNumber numberWithInt:0]]) || meeting.isComeToMe) {
@@ -96,12 +92,12 @@
     if(meeting.reasons.count > 0) {
         for(NSString *category in meeting.reasons) {
             NSLog(@"Searching for %@", category);
-            NSString *url = [NSString stringWithFormat:@"http://api.yelp.com/v2/search?category_filter=%@&radius_filter=1600&limit=8&ll=%@,%@", category, meeting.latitude, meeting.longitude];
+            NSString *url = [NSString stringWithFormat:@"http://api.yelp.com/v2/search?category_filter=%@&radius_filter=40000&sort=1&limit=8&ll=%@,%@", category, meeting.latitude, meeting.longitude];
             [self requestFromYelp:[NSURL URLWithString:url] :category];
         }
     } else {
         NSLog(@"Searching for ANY location");
-        NSString *url = [NSString stringWithFormat:@"http://api.yelp.com/v2/search?sort=1&radius_filter=1600&limit=10&ll=%@,%@", meeting.latitude, meeting.longitude];
+        NSString *url = [NSString stringWithFormat:@"http://api.yelp.com/v2/search?sort=1&radius_filter=40000&limit=10&ll=%@,%@", meeting.latitude, meeting.longitude];
         [self requestFromYelp:[NSURL URLWithString:url] :@"None"];
     }
 }
@@ -122,9 +118,14 @@
 
     [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
 
+//        NSLog(@"Response: %@", response);
+//        NSLog(@"Data: %@", data);
+//        NSLog(@"Error: %@", error);
         if (!error) {
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+            NSLog(@"json: %@", json);
             NSArray *results = [json objectForKey:@"businesses"];
+            NSLog(@"RESULTS: %@", results);
             for (NSDictionary *location in results) {
                 MeetingLocation *meetingLocation = [[MeetingLocation alloc] initFromYelp:location :category];
                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", meetingLocation.name];
