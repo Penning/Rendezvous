@@ -93,12 +93,12 @@
 }
 
 - (IBAction)drinksSelected:(id)sender {
-    if(![reasons containsObject:@"bars"]) {
-        [reasons addObject:@"bars"];
+    if(![reasons containsObject:@"nightlife"]) {
+        [reasons addObject:@"nightlife"];
         [_drinks setBackgroundColor:UIColorFromRGB(0x000000)];
     }
     else {
-        [reasons removeObject:@"bars"];
+        [reasons removeObject:@"nightlife"];
         [_drinks setBackgroundColor:UIColorFromRGB(0xffffff)];
     }
 }
