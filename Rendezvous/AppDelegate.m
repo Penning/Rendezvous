@@ -89,7 +89,7 @@
         }else if ([[payload objectForKey:@"type"] isEqualToString:@"choose_location"]){
             // choose location
             
-            [[[UIAlertView alloc] initWithTitle:@"Meeting closed!"
+            [[[UIAlertView alloc] initWithTitle:@"Everyone has responded!"
                                         message:[payload valueForKeyPath:@"aps.alert"]
                                        delegate:self
                               cancelButtonTitle:@"Later"
