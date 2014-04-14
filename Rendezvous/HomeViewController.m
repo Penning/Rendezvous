@@ -333,7 +333,10 @@
     if ([cell.adminFbId isEqualToString:appDelegate.user.facebookID]) {
         // admin
         
-        if ([[meeting_object valueForKey:@"status"]  isEqual: @"open"]) {
+        if ([[meeting_object valueForKey:@"status"]  isEqual: @"initial"]) {
+            [cell.statusImageView setImage:[UIImage imageNamed:@"meeting_open"]];
+            [cell.rightLabel setText:@""];
+        } else if ([[meeting_object valueForKey:@"status"]  isEqual: @"open"]) {
             [cell.statusImageView setImage:[UIImage imageNamed:@"meeting_open"]];
             [cell.rightLabel setText:@"Double tap to choose location."];
         }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"closed"]){

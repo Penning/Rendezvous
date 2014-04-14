@@ -170,23 +170,9 @@
         NSArray *filteredArray = [meeters filteredArrayUsingPredicate:predicate];
         //NSLog(@"FilteredArray: %@", filteredArray);
         
-        if ([cell accessoryType] == UITableViewCellAccessoryNone && [filteredArray count] == 0) {
+        if (![cell isHighlighted]) {
             // add to meeting
-            NSLog(@"checking from didselect");
-
             [meeters addObject:((Friend *)[appDelegate.user.friendsWithApp objectAtIndex:indexPath.row])];
-
-        }else{
-            // remove from meeting
-            NSLog(@"unchecking from didselect");
-            
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            for (Friend *f in meeters) {
-                if ([f.facebookID isEqualToString:((Friend*)[appDelegate.user.friendsWithApp objectAtIndex:indexPath.row]).facebookID]) {
-                    [meeters removeObject:f];
-                    break;
-                }
-            }
         }
 
         if ([meeters count] > 0) {
@@ -202,6 +188,19 @@
         [cell setUserInteractionEnabled:NO];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
+}
+
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    // remove from meeting
+    for (Friend *f in meeters) {
+        if ([f.facebookID isEqualToString:((Friend*)[appDelegate.user.friendsWithApp objectAtIndex:indexPath.row]).facebookID]) {
+            [meeters removeObject:f];
+            NSLog(@"removed %@", f.facebookID);
+            break;
+        }
+    }
+
 }
 
 - (IBAction)okBtnHit:(id)sender {
