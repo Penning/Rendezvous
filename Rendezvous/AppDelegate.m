@@ -81,6 +81,7 @@
 
         // alert
         if ([[payload objectForKey:@"type"] isEqualToString:@"invite"]) {
+            // invite
             [[[UIAlertView alloc] initWithTitle:@"Invite Recieved!"
                                         message:[payload valueForKeyPath:@"aps.alert"]
                                        delegate:self
