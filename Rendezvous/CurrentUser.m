@@ -42,6 +42,7 @@
         }];
     }
     
+    [[PFUser currentUser] setObject:_name forKey:@"name"];
     [[PFUser currentUser] setObject:_facebookID forKey:@"facebook_id"];
     [[PFUser currentUser] saveInBackground];
     
