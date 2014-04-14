@@ -123,9 +123,9 @@
 //        NSLog(@"Error: %@", error);
         if (!error) {
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-            NSLog(@"json: %@", json);
+//            NSLog(@"json: %@", json);
             NSArray *results = [json objectForKey:@"businesses"];
-            NSLog(@"RESULTS: %@", results);
+//            NSLog(@"RESULTS: %@", results);
             for (NSDictionary *location in results) {
                 MeetingLocation *meetingLocation = [[MeetingLocation alloc] initFromYelp:location :category];
                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", meetingLocation.name];
