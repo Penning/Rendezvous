@@ -22,7 +22,7 @@ Parse.Cloud.define("notifyInit", function (request, response) {
             Parse.Push.send({
                 where: pushQuery,
                 data: {
-                    alert: "Rendezvous with " + Parse.User.current().get("name") + "!",
+                    alert: "RSVP to " + Parse.User.current().get("name") + "!",
                     badge: "Increment",
                     type: "invite",
                     meetingId: request.params.meetingId,
@@ -193,33 +193,32 @@ Parse.Cloud.beforeSave("Meeting", function (request, response) {
     else if (meeting.get("status") == "open") {
         alert("beforeSave - meeting status == open");
         meeting.set("just_opened", false);
+        if (meeting.get("isComeToMe") == true) {
+            // creators location is common location by default
+        }
+        else {
+            alert("calculating common lat/long");
+            // get accepters locations and calculate the common lat long
+            var latitude_sum = 0;
+            var longitude_sum = 0;
+            if (meeting.get("meeter_locations") != undefined) {
+                //response.success;
+                for (var i = 0; i < meeting.get("meeter_locations").length; ++i) {
+                    latitude_sum += meeting.get("meeter_locations")[i].latitude;
+                    longitude_sum += meeting.get("meeter_locations")[i].longitude;
+                }
+                alert("latitude sum = " + latitude_sum + " longitude sum = " + longitude_sum);
+                var commonGeoPoint =
+                    new Parse.GeoPoint({ latitude: (latitude_sum / meeting.get("meeter_locations").length), longitude: (longitude_sum / meeting.get("meeter_locations").length) });
+                meeting.set("final_meeting_location", commonGeoPoint);
+            }
+        }
         if (meeting.get("num_responded") == meeting.get("invites").length) {
+            // everyone has responded to the invite -- close meeting and notify leader
             alert("everyone has responded");
             meeting.set("status", "closed");
-            // everyone has responded to the invite -- push notification back to creator
-            if (meeting.get("isComeToMe") == true) {
-                // creators location is common location by default
-            }
-            else {
-                alert("calculating common lat/long");
-                // get accepters locations and calculate the common lat long
-                var latitude_sum = 0;
-                var longitude_sum = 0;
-                if (meeting.get("meeter_locations") != undefined) {
-                    //response.success;
-                    for (var i = 0; i < meeting.get("meeter_locations").length; ++i) {
-                        latitude_sum += meeting.get("meeter_locations")[i].latitude;
-                        longitude_sum += meeting.get("meeter_locations")[i].longitude;
-                    }
-                    alert("latitude sum = " + latitude_sum + " longitude sum = " + longitude_sum);
-                    var commonGeoPoint =
-                        new Parse.GeoPoint({ latitude: (latitude_sum / meeting.get("meeter_locations").length), longitude: (longitude_sum / meeting.get("meeter_locations").length) });
-                    meeting.set("final_meeting_location", commonGeoPoint);
-                }
-            }
             response.success();
         }
-
         else {
             // not everyone has responded yet. 
             response.success();
@@ -332,5 +331,27 @@ Parse.Cloud.afterSave("Meeting", function (request) {
         else {
             //response.error();
         }
+    });
+});
+
+Parse.Cloud.beforeDelete("Meeting", function(request, response){
+   var meeting = request.object;
+    var query = new Parse.Query("Location");
+
+    var meeting = request.object;
+    var location = request.object.get("finalized_location");
+    if (location == undefined) {
+        response.success();
+        return;
+    }
+    
+    location.destroy({
+        success: function(object){
+            alert("location destroyed: objectid = " + object.id);
+            response.success();
+        },
+        error: function(error){
+            response.error();
+        }    
     });
 });
