@@ -150,19 +150,10 @@
         [cell initCellDisplay:[appDelegate.user.friendsWithApp objectAtIndex:indexPath.row]];
         cell.appInstalled = [NSNumber numberWithInt:1];
         [cell.addUserBtn setHidden:YES];
-        
-        if (isMeeter) {
-            NSLog(@"%@ was selected.", cell.contactName.text);
-            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-        }else{
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
-        }
     } else {
         [cell initCellDisplay:[appDelegate.user.friendsWithoutApp objectAtIndex:indexPath.row]];
     }
-    
 
-    
     return cell;
 }
 
