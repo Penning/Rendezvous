@@ -30,6 +30,8 @@
     _state = [location objectForKey:@"state_code"];
     _address = [[location objectForKey:@"display_address"] objectAtIndex:1];
 
+//    NSLog(@"%@", _name);
+
     return self;
 }
 

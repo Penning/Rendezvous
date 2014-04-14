@@ -148,12 +148,12 @@
 }
 
 - (IBAction)studyingSelected:(id)sender {
-    if(![reasons containsObject:@"libraries"]) {
-        [reasons addObject:@"libraries"];
+    if(![reasons containsObject:@"education"]) {
+        [reasons addObject:@"education"];
         [_studying setBackgroundColor:UIColorFromRGB(0x000000)];
     }
     else {
-        [reasons removeObject:@"libraries"];
+        [reasons removeObject:@"education"];
         [_studying setBackgroundColor:UIColorFromRGB(0xffffff)];
     }
 }

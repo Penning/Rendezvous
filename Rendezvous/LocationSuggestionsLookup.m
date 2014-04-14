@@ -97,12 +97,12 @@
     if(meeting.reasons.count > 0) {
         for(NSString *category in meeting.reasons) {
             NSLog(@"Searching for %@", category);
-            NSString *url = [NSString stringWithFormat:@"http://api.yelp.com/v2/search?category_filter=%@&radius_filter=800&limit=8&ll=%@,%@", category, meeting.latitude, meeting.longitude];
+            NSString *url = [NSString stringWithFormat:@"http://api.yelp.com/v2/search?category_filter=%@&radius_filter=1600&limit=8&ll=%@,%@", category, meeting.latitude, meeting.longitude];
             [self requestFromYelp:[NSURL URLWithString:url] :category];
         }
     } else {
         NSLog(@"Searching for ANY location");
-        NSString *url = [NSString stringWithFormat:@"http://api.yelp.com/v2/search?sort=1&radius_filter=800&limit=10&ll=%@,%@", meeting.latitude, meeting.longitude];
+        NSString *url = [NSString stringWithFormat:@"http://api.yelp.com/v2/search?sort=1&radius_filter=1600&limit=10&ll=%@,%@", meeting.latitude, meeting.longitude];
         [self requestFromYelp:[NSURL URLWithString:url] :@"None"];
     }
 }
