@@ -353,6 +353,7 @@
 
 - (void)saveContext
 {
+    
     NSError *error = nil;
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
     if (managedObjectContext != nil) {
@@ -365,6 +366,7 @@
             [((HomeViewController *)_home) reloadMeetings];
         }
     }
+    
 }
 
 #pragma mark - Core Data stack
