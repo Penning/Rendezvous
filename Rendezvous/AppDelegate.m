@@ -305,9 +305,14 @@
                         NSLog(@"Found %lu friends!", (unsigned long)self.user.friends.count);
                         [((ContactsViewController *)_contacts).activityIndicator stopAnimating];
                         [((ContactsViewController *)_contacts).tableView reloadData];
-                    } else {
+                    } else if (_home) {
                         NSLog(@"Facebook Error: %@", error);
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Facebook Error" message:@"Cannot reach Facebook servers. You will not be able to create a new meeting." delegate:self cancelButtonTitle:@"I Understand" otherButtonTitles:nil];
+                        UIAlertView *alert = [[UIAlertView alloc]
+                                              initWithTitle:@"Facebook Error"
+                                              message:@"Cannot reach Facebook servers. You will not be able to create a new meeting."
+                                              delegate:self
+                                              cancelButtonTitle:@"I Understand"
+                                              otherButtonTitles:nil];
                         [alert show];
                     }
                 }];
