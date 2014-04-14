@@ -28,6 +28,7 @@
     UIActivityIndicatorView *activityIndicator;
     PFGeoPoint *geoPoint;
     NSIndexPath *selectedIndex;
+    AppDelegate *appDelegate;
 }
 
 @synthesize parseMeeting = _parseMeeting;
@@ -183,6 +184,8 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
+    appDelegate = ((AppDelegate *)[[UIApplication sharedApplication] delegate]);
+
     activityIndicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.center = CGPointMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0);
     [self.view addSubview: activityIndicator];
@@ -273,7 +276,6 @@
     }
 }
 
-/*
  #pragma mark - Navigation
 
  // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -281,16 +283,14 @@
  {
  // Get the new view controller using [segue destinationViewController].
  // Pass the selected object to the new view controller.
+     [appDelegate getMeetingUpdates];
  }
- */
 
 - (IBAction)finalizeLocation:(id)sender {
     if(!selectedIndex) {
         return;
     }
     NSLog(@"Finalizing location");
-
-    AppDelegate *appDelegate = ((AppDelegate *)[[UIApplication sharedApplication] delegate]);
 
     PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
     [query whereKey:@"objectId" equalTo: [_meeting parseObjectId]];
@@ -343,12 +343,7 @@
                         object[@"status"] = @"closed";
 
                         [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                            if(!error) {
-//                                NSLog(@"location saved in parse meeting object");
-                                [appDelegate getMeetingUpdates];
-                            } else {
-                                NSLog(@"Error: %@", error);
-                            }
+                            [appDelegate getMeetingUpdates];
 //
 //                            if(succeeded) {
 //                                NSLog(@"object save success");

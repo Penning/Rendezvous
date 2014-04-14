@@ -20,7 +20,7 @@
 
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) ObservableMutableArray *suggestions;
+@property (strong, nonatomic) NSMutableArray *suggestions;
 
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 

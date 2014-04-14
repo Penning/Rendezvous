@@ -69,22 +69,21 @@
         longitude = [NSNumber numberWithFloat:currentLocation.coordinate.longitude];
 //        NSLog(@"Admin is @ (%@, %@)", latitude, longitude);
 
-        if(_locationViewController.suggestions.count == 0) {
+        if(_locationViewController.suggestions.count == 0 || locations == nil) {
             [self getSuggestions:_locationViewController.meeting];
         }
     }
 }
 
 - (void) getSuggestions:(Meeting *) meeting {
-//    if(latitude == NULL || longitude == NULL) {
-//        NSLog(@"No location yet! (%@, %@)", latitude, longitude);
-//        return;
-//    }
-
     NSLog(@"GETTING LOCATION SUGGESTIONS!!!");
 
-    locations = [[NSMutableArray alloc] init];
-    _locationViewController.suggestions = [[NSMutableArray alloc] init];
+    if(locations == nil) {
+        locations = [[NSMutableArray alloc] init];
+    }
+    if(_locationViewController.suggestions == nil) {
+        _locationViewController.suggestions = [[NSMutableArray alloc] init];
+    }
 
     //Using default admin lat/lng when finalized location hasn't been set!
     if(([meeting.latitude isEqual:[NSNumber numberWithInt:0]] && [meeting.longitude isEqual:[NSNumber numberWithInt:0]]) || meeting.isComeToMe) {
