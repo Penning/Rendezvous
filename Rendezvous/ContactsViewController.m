@@ -32,6 +32,7 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }
@@ -50,6 +51,8 @@
     if(![_activityIndicator isAnimating]) {
         [self.tableView reloadData];
     }
+    
+    [self.tableView setAllowsMultipleSelection:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
