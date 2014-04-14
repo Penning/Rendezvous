@@ -232,6 +232,7 @@ Parse.Cloud.beforeSave("Meeting", function (request, response) {
             response.success();
             return;
         };
+        meeting.set("just_opened", false);
         alert("saving closed meeting -- setting status to final");
         meeting.set("status", "final");
         response.success();
