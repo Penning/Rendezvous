@@ -21,7 +21,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <inset key="contentEdgeInsets" minX="44" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="Log out" backgroundImage="poi_bg4">
+                                <state key="normal" title="Log out" backgroundImage="yelp2x">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -351,12 +351,22 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Photo Credit to Vijaykaran Kapur &amp; Sumedha Pramod." translatesAutoresizingMaskIntoConstraints="NO" id="IlH-CC-5Pw">
-                                <rect key="frame" x="20" y="0.0" width="280" height="568"/>
+                                <rect key="frame" x="20" y="0.0" width="280" height="114"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Location results powered by " lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="194" translatesAutoresizingMaskIntoConstraints="NO" id="7A9-Ma-XLu">
+                                <rect key="frame" x="25" y="122" width="194" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="yelp_large" translatesAutoresizingMaskIntoConstraints="NO" id="1Z6-t4-nVD">
+                                <rect key="frame" x="212" y="115" width="58" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -364,7 +374,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="klh-02-Yg7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2634" y="-683"/>
+            <point key="canvasLocation" x="2636" y="-592"/>
         </scene>
         <!--View Controller - About us-->
         <scene sceneID="k2p-fx-pKp">
@@ -1253,7 +1263,6 @@
         <image name="movietheaters" width="19" height="25"/>
         <image name="musicvenue" width="23" height="23"/>
         <image name="nightlife" width="22" height="24"/>
-        <image name="poi_bg4" width="151" height="43"/>
         <image name="reasons_bg" width="640" height="1136"/>
         <image name="refresh_btn" width="144" height="144"/>
         <image name="rendezvous_btn" width="1235" height="571"/>
@@ -1262,6 +1271,8 @@
         <image name="settings_gear" width="512" height="512"/>
         <image name="shopping" width="26" height="19"/>
         <image name="yelp" width="40" height="20"/>
+        <image name="yelp2x" width="151" height="43"/>
+        <image name="yelp_large" width="77" height="40"/>
     </resources>
     <color key="tintColor" red="0.19215686269999999" green="0.50196078430000002" blue="0.58823529409999997" alpha="1" colorSpace="calibratedRGB"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
