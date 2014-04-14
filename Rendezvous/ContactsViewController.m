@@ -168,7 +168,7 @@
     if(indexPath.section == 0) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"facebookID = %@", [[appDelegate.user.friendsWithApp objectAtIndex:indexPath.row] facebookID]];
         NSArray *filteredArray = [meeters filteredArrayUsingPredicate:predicate];
-        NSLog(@"FilteredArray: %@", filteredArray);
+        //NSLog(@"FilteredArray: %@", filteredArray);
         
         if ([cell accessoryType] == UITableViewCellAccessoryNone && [filteredArray count] == 0) {
             // add to meeting

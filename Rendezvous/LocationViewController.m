@@ -311,7 +311,7 @@
                 locationParse[@"address"] = postalAddress;
                 NSLog(@"Selected address: %@", postalAddress);
 
-                if(!location.pflocation || (location.pflocation.latitude == 0.000000 || location.pflocation.longitude == 0.000000)) {
+//                if(!location.pflocation || (location.pflocation.latitude == 0.000000 || location.pflocation.longitude == 0.000000)) {
                     NSString *address = [NSString stringWithFormat:@"%@, %@", location.streetAddress, location.city];
 
                     CLGeocoder *geocoder = [[CLGeocoder alloc] init];;
@@ -329,7 +329,7 @@
                             NSLog(@"Error: %@", error);
                         }
                     }];
-                }
+//                }
 
                 NSLog(@"Final lat/lng: (%f, %f)", location.pflocation.latitude, location.pflocation.longitude);
 

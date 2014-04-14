@@ -25,7 +25,13 @@
     NSDictionary *location = [data objectForKey:@"location"];
     _snippetText = [location objectForKey:@"snippet_text"];
 
-    _streetAddress = [[location objectForKey:@"address"] firstObject];
+    if(isnumber([[[location objectForKey:@"address"] firstObject] characterAtIndex:0])) {
+        _streetAddress = [[location objectForKey:@"address"] firstObject];
+    }
+    else {
+        _streetAddress = [[location objectForKey:@"address"] objectAtIndex:1];
+    }
+
     _city = [location objectForKey:@"city"];
     _state = [location objectForKey:@"state_code"];
     _address = [[location objectForKey:@"display_address"] objectAtIndex:1];
