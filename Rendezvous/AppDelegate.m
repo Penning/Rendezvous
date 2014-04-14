@@ -82,17 +82,15 @@
         // alert
         if ([[payload objectForKey:@"type"] isEqualToString:@"invite"]) {
             // invite
-            
-            [[[UIAlertView alloc] initWithTitle:@"Rendezvous recieved!"
+            [[[UIAlertView alloc] initWithTitle:@"Invite Recieved!"
                                         message:[payload valueForKeyPath:@"aps.alert"]
                                        delegate:self
                               cancelButtonTitle:@"Later"
                               otherButtonTitles:@"Accept", @"Accept w/o Location", @"Decline", nil] show];
-            
         }else if ([[payload objectForKey:@"type"] isEqualToString:@"choose_location"]){
             // choose location
             
-            [[[UIAlertView alloc] initWithTitle:@"Meeting closed!"
+            [[[UIAlertView alloc] initWithTitle:@"Everyone has responded!"
                                         message:[payload valueForKeyPath:@"aps.alert"]
                                        delegate:self
                               cancelButtonTitle:@"Later"
@@ -123,7 +121,7 @@
     }else {
         // act
         
-        if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Accept w/ Current Location"]) {
+        if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Accept"]) {
             // accept/decline
 
             // -------Parse location--------
@@ -356,6 +354,7 @@
 
 - (void)saveContext
 {
+    
     NSError *error = nil;
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
     if (managedObjectContext != nil) {
@@ -368,6 +367,7 @@
             [((HomeViewController *)_home) reloadMeetings];
         }
     }
+    
 }
 
 #pragma mark - Core Data stack

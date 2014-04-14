@@ -191,7 +191,7 @@
 
 //        NSLog(@"Button title: %@", [alertView buttonTitleAtIndex:buttonIndex]);
 
-        if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Accept w/ Current Location"]) {
+        if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Accept"]) {
             // accept
 
             // -------Parse location--------
@@ -334,10 +334,10 @@
         // admin
         
         if ([[meeting_object valueForKey:@"status"]  isEqual: @"open"]) {
-            [cell.statusImageView setImage:[UIImage imageNamed:@"open_meeting"]];
-            [cell.rightLabel setText:@"Double tap to close."];
+            [cell.statusImageView setImage:[UIImage imageNamed:@"meeting_open"]];
+            [cell.rightLabel setText:@"Double tap to choose location."];
         }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"closed"]){
-            [cell.statusImageView setImage:[UIImage imageNamed:@"closed_meeting"]];
+            [cell.statusImageView setImage:[UIImage imageNamed:@"meeting_closed"]];
             [cell.rightLabel setText:@"Double tap to choose location."];
         }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"final"]){
             [cell.statusImageView setImage:[UIImage imageNamed:@"finalized_meeting"]];
@@ -349,10 +349,10 @@
         // not admin
         
         if ([[meeting_object valueForKey:@"status"]  isEqual: @"open"]) {
-            [cell.statusImageView setImage:[UIImage imageNamed:@"open_meeting"]];
+            [cell.statusImageView setImage:[UIImage imageNamed:@"meeting_open"]];
             [cell.rightLabel setText:@"Double tap to RSVP"];
         }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"closed"]){
-            [cell.statusImageView setImage:[UIImage imageNamed:@"closed_meeting"]];
+            [cell.statusImageView setImage:[UIImage imageNamed:@"meeting_closed"]];
             [cell.rightLabel setText:@""];
         }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"final"]){
             [cell.statusImageView setImage:[UIImage imageNamed:@"finalized_meeting"]];

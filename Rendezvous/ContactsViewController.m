@@ -150,25 +150,10 @@
         [cell initCellDisplay:[appDelegate.user.friendsWithApp objectAtIndex:indexPath.row]];
         cell.appInstalled = [NSNumber numberWithInt:1];
         [cell.addUserBtn setHidden:YES];
-
-        // show checkmark if meeter
-        BOOL isMeeter = NO;
-        for (Friend *f in meeters) {
-            if ([f.facebookID isEqualToString: ((Friend *)[appDelegate.user.friendsWithApp objectAtIndex:indexPath.row]).facebookID]) {
-                isMeeter = YES;
-                break;
-            }
-        }
-        
-        if (isMeeter) {
-            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-        }else{
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
-        }
     } else {
         [cell initCellDisplay:[appDelegate.user.friendsWithoutApp objectAtIndex:indexPath.row]];
     }
-    
+
     return cell;
 }
 
@@ -184,14 +169,15 @@
         
         if ([cell accessoryType] == UITableViewCellAccessoryNone && [filteredArray count] == 0) {
             // add to meeting
+            NSLog(@"checking from didselect");
 
-            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
             [meeters addObject:((Friend *)[appDelegate.user.friendsWithApp objectAtIndex:indexPath.row])];
 
         }else{
             // remove from meeting
-
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
+            NSLog(@"unchecking from didselect");
+            
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
             for (Friend *f in meeters) {
                 if ([f.facebookID isEqualToString:((Friend*)[appDelegate.user.friendsWithApp objectAtIndex:indexPath.row]).facebookID]) {
                     [meeters removeObject:f];
@@ -203,34 +189,12 @@
         if ([meeters count] > 0) {
             // show toolbar
             [self.navigationController setToolbarHidden:NO animated:YES];
-
-//            NSString *tempMeetingName = @"w/: ";
-//            int count = 0;
-//            for (Friend *f in meeters) {
-//                if (tempMeetingName.length > 20) {
-//                    tempMeetingName = [tempMeetingName stringByAppendingString:@"& more"];
-//                    break;
-//                }else{
-//                    if(count == 0) {
-//                        tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@" %@", f.first_name]];
-//                    } else {
-//                        tempMeetingName = [tempMeetingName stringByAppendingString:[NSString stringWithFormat:@", %@", f.first_name]];
-//                    }
-//                }
-//                count++;
-//            }
-//            if ([tempMeetingName characterAtIndex:tempMeetingName.length-2] == ',') {
-//                tempMeetingName = [tempMeetingName stringByReplacingCharactersInRange:NSMakeRange(tempMeetingName.length-2, 2) withString:@""];
-//            }
-//            meetingName = tempMeetingName;
-//
-//            [self.meetingNameBarBtn setTitle:meetingName];
         }else{
             // hide toolbar
             [self.navigationController setToolbarHidden:YES animated:YES];
         }
 
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
     } else {
         [cell setUserInteractionEnabled:NO];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];

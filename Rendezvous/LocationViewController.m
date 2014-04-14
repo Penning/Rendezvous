@@ -23,6 +23,7 @@
 
 @implementation LocationViewController {
     LocationSuggestionsLookup *locationSuggestionsLookup;
+    NSMutableArray *annotations;
     MKMapRect zoomRect;
     UIActivityIndicatorView *activityIndicator;
     PFGeoPoint *geoPoint;
@@ -51,8 +52,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.refreshControl = [[UIRefreshControl alloc]
-                                        init];
+    self.mapView.delegate = self;
+    self.mapView.showsUserLocation = YES;
+    self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.tintColor = [UIColor blueColor];
     [self.refreshControl addTarget:self action:@selector(updateLocationView) forControlEvents:UIControlEventValueChanged];
 }
@@ -77,6 +79,8 @@
     zoomRect = MKMapRectNull;
     NSLog(@"Geocoding locations");
 
+    annotations = [[NSMutableArray alloc] init];
+
     //Add locations to map
     for(MeetingLocation *location in _suggestions) {
         NSString *address = [NSString stringWithFormat:@"%@, %@", location.streetAddress, location.city];
@@ -94,6 +98,7 @@
 
                     annotation.title = location.name;
                     [_mapView addAnnotation:annotation];
+                    [annotations addObject:annotation];
 
                     //Add to zoom
                     [self zoomToFitMapAnnotations];
@@ -106,19 +111,41 @@
     }
 
     //Add center placemark
+    PFQuery *query = [PFQuery queryWithClassName:@"Meeting"];
+    [query whereKey:@"objectId" equalTo: [_meeting parseObjectId]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if(!error) {
+            _parseMeeting = [objects firstObject];
+            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+            annotation.coordinate = CLLocationCoordinate2DMake(((PFGeoPoint *)[_parseMeeting valueForKey:@"final_meeting_location"]).latitude, ((PFGeoPoint *)[_parseMeeting valueForKey:@"final_meeting_location"]).longitude);
 
+            annotation.title = @"Central Location";
+            [_mapView addAnnotation:annotation];
+
+            //Add to zoom
+            [self zoomToFitMapAnnotations];
+        }
+    }];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
     MKPinAnnotationView *pinView = (MKPinAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Pin"];
-    if (pinView == nil) {
-//        if(pinView.description isEqual:<#(id)#>)
+    if (pinView == nil && ![annotation.title isEqualToString:@"Current Location"]) {
         pinView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"Pin"];
-        pinView.pinColor = MKPinAnnotationColorPurple;
         pinView.canShowCallout = YES;
-//        pinView.animatesDrop = YES;
+    }
 
+    if([annotation.title isEqualToString:@"Current Location"]) {
+
+    } else if([annotation.title isEqualToString:@"Central Location"]) {
+        MKAnnotationView *annotationView = (MKAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Pin"];
+        annotationView = [[MKPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:@"Pin"];
+        annotationView.canShowCallout = YES;
+        [annotationView setImage:[UIImage imageNamed:@"target.png"]];
+        return annotationView;
+    } else {
+        pinView.pinColor = MKPinAnnotationColorGreen;
     }
     return pinView;
 }
