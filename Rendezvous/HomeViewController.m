@@ -125,7 +125,7 @@
     lastSelected = sender.indexPath;
     NSManagedObject *relevantMeeting = [_fetchedResultsController objectAtIndexPath:lastSelected];
     
-    if ([appDelegate.user.facebookID isEqualToString:sender.adminFbId]) {
+    if ([appDelegate.user.facebookID isEqualToString:[relevantMeeting valueForKeyPath:@"admin.facebook_id"]]) {
         // admin
         
         if ([[relevantMeeting valueForKey:@"status"] isEqualToString:@"open"]) {
@@ -351,7 +351,9 @@
         if ([[meeting_object valueForKey:@"status"]  isEqual: @"open"]) {
             [cell.statusImageView setImage:[UIImage imageNamed:@"meeting_open"]];
             [cell.rightLabel setText:@"Double tap to RSVP"];
-        }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"closed"]){
+        }else if ( ([[meeting_object valueForKey:@"status"]  isEqual: @"closed"] && ((NSNumber *)[meeting_object valueForKey:@"user_responded"]).boolValue )||
+                  [[meeting_object valueForKey:@"status"]  isEqual: @"initial"]){
+            
             [cell.statusImageView setImage:[UIImage imageNamed:@"meeting_closed"]];
             [cell.rightLabel setText:@""];
         }else if ([[meeting_object valueForKey:@"status"]  isEqual: @"final"]){

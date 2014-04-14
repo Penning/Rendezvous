@@ -121,6 +121,28 @@
     }else {
         // act
         
+        // query if meeting exists
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity =
+        [NSEntityDescription entityForName:@"Meeting"
+                    inManagedObjectContext:_managedObjectContext];
+        [request setEntity:entity];
+        
+        NSPredicate *predicate =
+        [NSPredicate predicateWithFormat:@"parse_object_id == %@", notificationMeeting.objectId];
+        [request setPredicate:predicate];
+        
+        NSError *error;
+        NSArray *array = [_managedObjectContext executeFetchRequest:request error:&error];
+        
+        NSManagedObject *_localMeeting = nil;
+        if (array != nil && array.count > 0) {
+            // update existing meeting
+            
+            _localMeeting = [array objectAtIndex:0];
+            
+        }
+        
         if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Accept"]) {
             // accept/decline
 
@@ -138,36 +160,43 @@
                 }
 
             }];
-
-//            [_localMeeting setValue:@YES forKey:@"user_responded"];
+            
+            if (_localMeeting)
+                [_localMeeting setValue:@YES forKey:@"user_responded"];
             [self saveContext];
             [self getMeetingUpdates];
         } else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Accept w/o Location"]) {
             // accept/decline
+            
             [notificationMeeting addUniqueObject:self.user.facebookID forKey:@"fb_ids_accepted_users"];
             [notificationMeeting incrementKey:@"num_responded"];
             [notificationMeeting saveInBackground];
 
-//            [_localMeeting setValue:@YES forKey:@"user_responded"];
+            if (_localMeeting)
+                [_localMeeting setValue:@YES forKey:@"user_responded"];
             [self saveContext];
             [self getMeetingUpdates];
         } else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Decline"]) {
             // accept/decline
+            
             [notificationMeeting addUniqueObject:self.user.facebookID forKey:@"fb_ids_declined_users"];
             [notificationMeeting incrementKey:@"num_responded"];
             [notificationMeeting saveInBackground];
 
-//            [_localMeeting setValue:@YES forKey:@"user_responded"];
+            if (_localMeeting)
+                [_localMeeting setValue:@YES forKey:@"user_responded"];
             [self saveContext];
             [self getMeetingUpdates];
         } else if ([[alertView buttonTitleAtIndex:buttonIndex] isEqualToString:@"Choose Location"]){
             // choose location
+            
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle: nil];
             LocationViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"location_view"];
             LocationSuggestionsLookup *locationSuggestionsLookup = [[LocationSuggestionsLookup alloc] init];
             locationSuggestionsLookup.locationViewController = vc;
             //            NSLog(@"Meeting Selected: %@", notificationMeeting);
             vc.meeting = [[Meeting alloc] fromPFObject:notificationMeeting];
+            
             [locationSuggestionsLookup getSuggestions:vc.meeting];
             
             [((UINavigationController *)self.window.rootViewController)

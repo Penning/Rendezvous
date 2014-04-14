@@ -74,7 +74,7 @@
     [meeting_object setValue:@1 forKey:@"num_responded"];
     [meeting_object setValue:@NO forKey:@"is_old"];
     [meeting_object setValue:@NO forKey:@"user_responded"];
-    [meeting_object setValue:@"open" forKey:@"status"];
+    [meeting_object setValue:@"initial" forKey:@"status"];
     
     
     
@@ -246,6 +246,7 @@
     [meetingObject setValue:[foreignMeeting objectForKey:@"description"] forKey:@"meeting_description"];
     [meetingObject setValue:foreignMeeting.objectId forKey:@"parse_object_id"];
     [meetingObject setValue:@NO forKey:@"user_responded"];
+    
     
     // reasons
     //
