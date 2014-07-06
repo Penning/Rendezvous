@@ -19,4 +19,8 @@
 
 @property (strong, nonatomic) NSManagedObject *meetingObject;
 
+@property (strong, nonatomic) IBOutlet UITabBar *contactsFilterBar;
+@property (weak, nonatomic) IBOutlet UITabBarItem *contactsItem;
+@property (weak, nonatomic) IBOutlet UITabBarItem *addressItem;
+
 @end

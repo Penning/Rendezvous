@@ -1,19 +1,18 @@
 //
-//  SettingsRootController.m
+//  AddressBookTableViewController.m
 //  Rendezvous
 //
-//  Created by Adam Oxner on 4/10/14.
+//  Created by Sumedha Pramod on 7/5/14.
 //  Copyright (c) 2014 Penning. All rights reserved.
 //
 
-#import "SettingsRootController.h"
-#import <Parse/Parse.h>
+#import "AddressBookTableViewController.h"
 
-@interface SettingsRootController ()
+@interface AddressBookTableViewController ()
 
 @end
 
-@implementation SettingsRootController
+@implementation AddressBookTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -35,10 +34,6 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -47,18 +42,6 @@
 
 #pragma mark - Table view data source
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    [[tableView cellForRowAtIndexPath:indexPath] setSelected:NO];
-    
-    if([indexPath section] == 0 && [indexPath row] == 1) {
-        [PFUser logOut];
-        [self.navigationController popToRootViewControllerAnimated:YES];
-//        [self.navigationController.visibleViewController viewDidLoad];
-    }
-}
-
-/*
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 #warning Potentially incomplete method implementation.
@@ -72,7 +55,6 @@
     // Return the number of rows in the section.
     return 0;
 }
- */
 
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

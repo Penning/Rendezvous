@@ -26,6 +26,7 @@
 @synthesize meeters;
 @synthesize meetingObject = _meetingObject;
 @synthesize activityIndicator = _activityIndicator;
+@synthesize contactsFilterBar = _contactsFilterBar;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -53,6 +54,7 @@
     }
     
     [self.tableView setAllowsMultipleSelection:YES];
+    [_contactsFilterBar setSelectedItem:_contactsItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -117,12 +119,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(section == 0) {
+    
+    if([_contactsFilterBar.selectedItem isEqual:_contactsItem]) {
         NSLog(@"friendsWithApp: %lu", (unsigned long)appDelegate.user.friendsWithApp.count);
         return [appDelegate.user.friendsWithApp count];
     } else {
@@ -132,10 +135,12 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-
-    if(section == 0) {
+    
+    if([_contactsFilterBar.selectedItem isEqual:_contactsItem]) {
+        NSLog(@"Add to Meeting");
         return @"Add to Meeting";
     } else {
+        NSLog(@"Invite to use Rendezvous");
         return @"Invite to use Rendezvous";
     }
 }
@@ -149,12 +154,12 @@
     }
 
     // Configure the cell...
-    if(indexPath.section == 0) {
+    if([_contactsFilterBar.selectedItem isEqual:_contactsItem]) {
         [cell initCellDisplay:[appDelegate.user.friendsWithApp objectAtIndex:indexPath.row]];
         cell.appInstalled = [NSNumber numberWithInt:1];
-        [cell.addUserBtn setHidden:YES];
     } else {
         [cell initCellDisplay:[appDelegate.user.friendsWithoutApp objectAtIndex:indexPath.row]];
+        [self.tableView reloadData];
     }
 
     return cell;

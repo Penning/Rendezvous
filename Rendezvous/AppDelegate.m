@@ -278,7 +278,9 @@
     
     // Facebook SDK
     [FBAppCall handleDidBecomeActiveWithSession:[PFFacebookUtils session]];
-    
+    if (!FBSession.activeSession.isOpen) {
+        [FBSession openActiveSessionWithAllowLoginUI: YES];
+    }    
     
     // reset badge count
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];

@@ -176,6 +176,19 @@
     [self.tableView reloadData];
 }
 
+- (IBAction)clearMeetings:(id)sender {
+//    DataManager *dm = [[DataManager alloc] init];
+//    if ([[[_fetchedResultsController objectAtIndexPath:indexPath] valueForKeyPath:@"admin.facebook_id"] isEqualToString:appDelegate.user.facebookID]) {
+//        // if admin, delete on parse and mark local as old
+//        
+//        [dm deleteMeetingSoft:[_fetchedResultsController objectAtIndexPath:indexPath]];
+//    }else{
+//        // just mark local as old
+//        
+//        [dm putInHistory:[_fetchedResultsController objectAtIndexPath:indexPath]];
+//    }
+}
+
 #pragma mark - UIAlertView handling
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
