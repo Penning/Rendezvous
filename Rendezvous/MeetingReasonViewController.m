@@ -159,12 +159,12 @@
 }
 
 - (IBAction)musicSelected:(id)sender {
-    if(![reasons containsObject:@"musicvenues"]) {
-        [reasons addObject:@"musicvenues"];
+    if(![reasons containsObject:@"hotelstravels"]) {
+        [reasons addObject:@"hotelstravels"];
         [_music setBackgroundColor:UIColorFromRGB(0x000000)];
     }
     else {
-        [reasons removeObject:@"musicvenues"];
+        [reasons removeObject:@"hotelstravels"];
         [_music setBackgroundColor:UIColorFromRGB(0xffffff)];
     }
 }
