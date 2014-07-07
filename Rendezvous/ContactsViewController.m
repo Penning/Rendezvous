@@ -12,6 +12,7 @@
 #import "ContactsCell.h"
 #import "Meeting.h"
 #import "DataManager.h"
+#import "Friend.h"
 
 @interface ContactsViewController ()
 
@@ -21,6 +22,9 @@
     AppDelegate *appDelegate;
     BOOL useShortcut;
     NSString *meetingName;
+    BOOL hasAppInstalled;
+    ABAddressBookRef addressBook;
+    NSMutableArray *all_contacts;
 }
 
 @synthesize meeters;
@@ -55,6 +59,8 @@
     
     [self.tableView setAllowsMultipleSelection:YES];
     [_contactsFilterBar setSelectedItem:_contactsItem];
+    [_contactsFilterBar setDelegate:self];
+    hasAppInstalled = TRUE;
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -93,6 +99,10 @@
         
         [self.tableView reloadData];
     }
+    
+//    if(appDelegate.user.friendsWithoutApp.count == 0) {
+//        [self getContacts];
+//    }
 
     [self.tableView reloadData];
     
@@ -125,7 +135,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    if([_contactsFilterBar.selectedItem isEqual:_contactsItem]) {
+    if(hasAppInstalled == TRUE) {
         NSLog(@"friendsWithApp: %lu", (unsigned long)appDelegate.user.friendsWithApp.count);
         return [appDelegate.user.friendsWithApp count];
     } else {
@@ -136,7 +146,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     
-    if([_contactsFilterBar.selectedItem isEqual:_contactsItem]) {
+    if(hasAppInstalled == TRUE) {
         NSLog(@"Add to Meeting");
         return @"Add to Meeting";
     } else {
@@ -154,12 +164,11 @@
     }
 
     // Configure the cell...
-    if([_contactsFilterBar.selectedItem isEqual:_contactsItem]) {
+    if(hasAppInstalled == TRUE) {
         [cell initCellDisplay:[appDelegate.user.friendsWithApp objectAtIndex:indexPath.row]];
         cell.appInstalled = [NSNumber numberWithInt:1];
     } else {
         [cell initCellDisplay:[appDelegate.user.friendsWithoutApp objectAtIndex:indexPath.row]];
-        [self.tableView reloadData];
     }
 
     return cell;
@@ -170,9 +179,9 @@
 
     ContactsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"friendCell"];
 
-    if(indexPath.section == 0) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"facebookID = %@", [[appDelegate.user.friendsWithApp objectAtIndex:indexPath.row] facebookID]];
-        NSArray *filteredArray = [meeters filteredArrayUsingPredicate:predicate];
+    if(hasAppInstalled == TRUE) {
+//        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"facebookID = %@", [[appDelegate.user.friendsWithApp objectAtIndex:indexPath.row] facebookID]];
+//        NSArray *filteredArray = [meeters filteredArrayUsingPredicate:predicate];
         //NSLog(@"FilteredArray: %@", filteredArray);
         
         if (![cell isHighlighted]) {
@@ -279,5 +288,106 @@
     [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
- 
+#pragma mark - Tab Bar Delegate
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *) item {
+    if([item isEqual:_contactsItem]) {
+        NSLog(@"CONTACTS SELECTED");
+        hasAppInstalled = TRUE;
+    } else {
+        NSLog(@"ADDRESS BOOK SELECTED");
+        hasAppInstalled = FALSE;
+        [self getContacts];
+    }
+    [self performSelector:@selector(reloadTable) withObject:nil afterDelay:0.25f];
+}
+
+- (void) reloadTable {
+    [self.tableView reloadData];
+}
+
+#pragma mark - Email
+- (IBAction)showEmail:(id)sender {
+    // Email Subject
+    NSString *emailTitle = @"Test Email";
+    // Email Content
+    NSString *messageBody = @"Invite to use ";
+    // To address
+    NSArray *toRecipents = [NSArray arrayWithObject:@"support@appcoda.com"];
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    [mc setSubject:emailTitle];
+    [mc setMessageBody:messageBody isHTML:NO];
+    [mc setToRecipients:toRecipents];
+    
+    // Present mail view controller on screen
+    [self presentViewController:mc animated:YES completion:NULL];
+    
+}
+
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Mail cancelled");
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"Mail saved");
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"Mail sent");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+            break;
+        default:
+            break;
+    }
+    
+    // Close the Mail Interface
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+#pragma mark - ABPeoplePickerNavigationController Delegate method implementation
+
+- (void) getContacts {
+    CFErrorRef * error = NULL;
+    addressBook = ABAddressBookCreateWithOptions(NULL, error);
+    if(all_contacts == nil) {
+        all_contacts = [[NSMutableArray alloc] init];
+    }
+    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+        if (granted) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
+                CFIndex numberOfPeople = ABAddressBookGetPersonCount(addressBook);
+                
+                for(int i = 0; i < numberOfPeople; i++){
+                    ABRecordRef person = CFArrayGetValueAtIndex( allPeople, i );
+                    
+                    NSString *firstName = (__bridge NSString *)(ABRecordCopyValue(person, kABPersonFirstNameProperty));
+                    NSString *lastName = (__bridge NSString *)(ABRecordCopyValue(person, kABPersonLastNameProperty));
+                    NSLog(@"Name:%@ %@", firstName, lastName);
+                    
+                    NSString *email = (__bridge NSString *)(ABRecordCopyValue(person, kABPersonEmailProperty));
+                    
+                    Friend *friend = [[Friend alloc] init];
+                    friend.name = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+                    friend.email = email;
+                    
+                    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", friend.name];
+                    NSArray *filteredArray = [appDelegate.user.friendsWithApp filteredArrayUsingPredicate:predicate];
+                    
+                    if([filteredArray count] == 0) {
+                        [appDelegate.user.friendsWithoutApp addObject:friend];
+                    }
+                }
+                [self.tableView reloadData];
+                NSLog(@"Friends w/o app: \n%@", appDelegate.user.friendsWithoutApp);
+            });
+        }
+    });
+}
+
 @end

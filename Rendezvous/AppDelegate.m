@@ -49,9 +49,9 @@
     // ****************************************************************************
     [PFFacebookUtils initializeFacebook];
 
-//    if (!FBSession.activeSession.isOpen) {
-//        [FBSession openActiveSessionWithAllowLoginUI: YES];
-//    }
+    if (!FBSession.activeSession.isOpen) {
+        [FBSession openActiveSessionWithAllowLoginUI: YES];
+    }
 
     // Register for push notifications
     [application registerForRemoteNotificationTypes:

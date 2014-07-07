@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
 #import "AppDelegate.h"
 
-@interface ContactsViewController : UITableViewController
+@interface ContactsViewController : UITableViewController <UITabBarDelegate, MFMailComposeViewControllerDelegate, ABPeoplePickerNavigationControllerDelegate>
 
 @property (strong, nonatomic) NSMutableArray *meeters;
 
@@ -22,5 +25,7 @@
 @property (strong, nonatomic) IBOutlet UITabBar *contactsFilterBar;
 @property (weak, nonatomic) IBOutlet UITabBarItem *contactsItem;
 @property (weak, nonatomic) IBOutlet UITabBarItem *addressItem;
+
+@property NSString * addressBookNum;
 
 @end
