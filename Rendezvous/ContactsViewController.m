@@ -23,7 +23,6 @@
     BOOL useShortcut;
     NSString *meetingName;
     BOOL hasAppInstalled;
-    ABAddressBookRef addressBook;
     NSMutableArray *all_contacts;
 }
 
@@ -352,42 +351,80 @@
 #pragma mark - ABPeoplePickerNavigationController Delegate method implementation
 
 - (void) getContacts {
-    CFErrorRef * error = NULL;
-    addressBook = ABAddressBookCreateWithOptions(NULL, error);
-    if(all_contacts == nil) {
-        all_contacts = [[NSMutableArray alloc] init];
-    }
-    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-        if (granted) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
-                CFIndex numberOfPeople = ABAddressBookGetPersonCount(addressBook);
-                
-                for(int i = 0; i < numberOfPeople; i++){
-                    ABRecordRef person = CFArrayGetValueAtIndex( allPeople, i );
-                    
-                    NSString *firstName = (__bridge NSString *)(ABRecordCopyValue(person, kABPersonFirstNameProperty));
-                    NSString *lastName = (__bridge NSString *)(ABRecordCopyValue(person, kABPersonLastNameProperty));
-                    NSLog(@"Name:%@ %@", firstName, lastName);
-                    
-                    NSString *email = (__bridge NSString *)(ABRecordCopyValue(person, kABPersonEmailProperty));
-                    
-                    Friend *friend = [[Friend alloc] init];
-                    friend.name = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
-                    friend.email = email;
-                    
-                    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", friend.name];
-                    NSArray *filteredArray = [appDelegate.user.friendsWithApp filteredArrayUsingPredicate:predicate];
-                    
-                    if([filteredArray count] == 0) {
-                        [appDelegate.user.friendsWithoutApp addObject:friend];
-                    }
-                }
-                [self.tableView reloadData];
-                NSLog(@"Friends w/o app: \n%@", appDelegate.user.friendsWithoutApp);
-            });
+//    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(nil, nil);
+//    
+//    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+//        NSArray *folks = (__bridge NSArray *)(ABAddressBookCopyArrayOfAllPeople(addressBook));
+//        NSLog(@"%@",folks);
+//    });
+    
+    ABAddressBookRef addressBook = ABAddressBookCreate(); // create address book reference object
+    NSArray *abContactArray = (__bridge NSArray *)ABAddressBookCopyArrayOfAllPeople(addressBook); // get address book contact array
+    
+    NSInteger totalContacts = [abContactArray count];
+    
+    for(NSUInteger loop= 0 ; loop < totalContacts; loop++) {
+        ABRecordRef record = (__bridge ABRecordRef)[abContactArray objectAtIndex:loop]; // get address book record
+        
+        if(ABRecordGetRecordType(record) ==  kABPersonType) {
+//            ABRecordID recordId = ABRecordGetRecordID(record); // get record id from address book record
+            Friend *f;
+            
+//            f. = [NSString stringWithFormat:@"%d",recordId]; // get record id string from record id
+            
+            NSString *firstNameString = (__bridge NSString*)ABRecordCopyValue(record,kABPersonFirstNameProperty); // fetch contact first name from address book
+            NSString *lastNameString = (__bridge NSString*)ABRecordCopyValue(record,kABPersonLastNameProperty); // fetch contact last name from address book
+            f.name = [NSString stringWithFormat:@"%@ %@", firstNameString, lastNameString];
+            
+//            NSString *phnumber = (__bridge NSString *)ABRecordCopyValue(record, kABPersonPhoneProperty);
+            f.email = (__bridge NSString *)ABRecordCopyValue(record, kABPersonEmailProperty);
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", f.name];
+            NSArray *filteredArray = [appDelegate.user.friendsWithApp filteredArrayUsingPredicate:predicate];
+            
+            if([filteredArray count] == 0) {
+                [appDelegate.user.friendsWithoutApp addObject:f];
+            }
+            NSLog(@"%@", f.name);
         }
-    });
+        [self.tableView reloadData];
+    }
+//    CFErrorRef * error = NULL;
+//    addressBook = ABAddressBookCreateWithOptions(NULL, error);
+//    if(all_contacts == nil) {
+//        all_contacts = [[NSMutableArray alloc] init];
+//    }
+//    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+//        if (granted) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
+//                CFIndex numberOfPeople = ABAddressBookGetPersonCount(addressBook);
+//                
+//                for(int i = 0; i < numberOfPeople; i++){
+//                    ABRecordRef person = CFArrayGetValueAtIndex( allPeople, i );
+//                    
+//                    NSString *firstName = (__bridge NSString *)(ABRecordCopyValue(person, kABPersonFirstNameProperty));
+//                    NSString *lastName = (__bridge NSString *)(ABRecordCopyValue(person, kABPersonLastNameProperty));
+//                    NSLog(@"Name:%@ %@", firstName, lastName);
+//                    
+//                    NSString *email = (__bridge NSString *)(ABRecordCopyValue(person, kABPersonEmailProperty));
+//                    
+//                    Friend *friend = [[Friend alloc] init];
+//                    friend.name = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+//                    friend.email = email;
+//                    
+//                    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name = %@", friend.name];
+//                    NSArray *filteredArray = [appDelegate.user.friendsWithApp filteredArrayUsingPredicate:predicate];
+//                    
+//                    if([filteredArray count] == 0) {
+//                        [appDelegate.user.friendsWithoutApp addObject:friend];
+//                    }
+//                }
+//                [self.tableView reloadData];
+//                NSLog(@"Friends w/o app: \n%@", appDelegate.user.friendsWithoutApp);
+//            });
+//        }
+//    });
 }
 
 @end
